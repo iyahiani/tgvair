@@ -1,0 +1,16 @@
+	<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+  
+	<h:form>
+		<p:menu styleClass="btn-group-vertical" >
+			<p:menuitem value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" styleClass="btn btn-default" title="acceuil" > </p:menuitem>  
+			<p:menuitem value="#{msg.p_role_menu}" action="#{menu.goRole}" styleClass="btn btn-default" title="Rôles"  />
+			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}" styleClass="btn btn-default" title="Utilisateurs" />
+		</p:menu>
+	</h:form>
+</ui:composition>
+

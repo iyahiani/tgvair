@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<ui:composition template="/pages/template/layout.xhtml">
+	<ui:define name="contenu">
+		<h:head>
+			<title></title>
+		</h:head>
+		<h:body>
+			<h:form>
+				<p:panel header="#{msg.p_mdpoublie_titre}" style="width:400px;margin: 0 auto;">
+					<h:panelGrid columns="2" id="grid">
+
+						<h:outputText value="#{msg.p_mdpoublie_mail}" />
+						<p:inputText id="mail" value="" />
+						
+
+					</h:panelGrid>
+					<f:facet name="footer">
+						<p:commandButton id="submit" value="#{msg.libelle_valider}" ajax="false"
+							action="" />
+							<p:commandButton id="cancel" value="#{msg.libelle_annuler}" ajax="false"
+							action="#{login.cancel}"   />
+							
+					</f:facet>
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

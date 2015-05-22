@@ -1,0 +1,15 @@
+<ui:composition template="/pages/template/layout.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">#{msg.p_user_titre}</ui:define>
+	<ui:define name="contenu">
+		<p:dataTable var="user" value="#{userManagedBean.users}">
+			<p:column headerText="#{msg.p_user_role_colonne_id_header}">
+				<h:outputText value="#{user.idUser}"/>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>
