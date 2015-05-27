@@ -17,7 +17,7 @@ public class Train implements ITrain {
 	
 	@Override
 	public int compare() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	} 
 	
@@ -36,12 +36,27 @@ public class Train implements ITrain {
 		return null;
 	}
 	@Override
-	public List<Train> getAllTrains() {
+	public List<ITrain> getAllTrains() {
+		List<ITrain> allTrains = new ArrayList<ITrain>() ;
+		return allTrains ;
+ 	}
+	@Override
+	public List<Train> getTrainByPeriodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public List<Train> getTrainByPeriodes() {
+	public ITrain findTrainByID(ITrain train) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ITrain findTrainByPerdiode(ITrain train) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ITrain findTrainByPerdiode(String periode) {
 		// TODO Auto-generated method stub
 		return null;
 	}

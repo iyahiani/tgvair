@@ -2,7 +2,7 @@ package com.avancial.tgvair;
 
 import java.util.List;
 
-public class Circulation {
+public class Circulation implements ICirculation {
 
 	private Desserte desserte ; 
 	private List<PointsArret>  pointsArret ;
