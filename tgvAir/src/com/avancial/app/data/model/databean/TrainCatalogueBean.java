@@ -1,4 +1,4 @@
-package com.avancial.tgvair.data.model.databean;
+package com.avancial.app.data.model.databean;
 
 import java.io.Serializable;
 import java.util.Date;

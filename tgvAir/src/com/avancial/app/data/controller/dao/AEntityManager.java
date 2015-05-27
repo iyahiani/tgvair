@@ -1,4 +1,4 @@
-package com.avancial.tgvair.data.controller.dao;
+package com.avancial.app.data.controller.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
