@@ -18,7 +18,7 @@ public class Train implements ITrain {
 	@Override
 	public int compare() {
 		
-		return 0;
+		return 1;
 	} 
 	
 	public Train() {
