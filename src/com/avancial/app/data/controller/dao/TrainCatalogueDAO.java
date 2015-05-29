@@ -2,7 +2,9 @@ package com.avancial.app.data.controller.dao;
 
 import java.util.List;
 
-public class TrainCatalogueDAO extends ADAO{
+import com.avancial.socle.data.controller.dao.AbstractDao;
+
+public class TrainCatalogueDAO extends AbstractDao implements CrudDAO{
 
 	@Override
 	public List<?> getAll() {
@@ -11,11 +13,27 @@ public class TrainCatalogueDAO extends ADAO{
 	}
 
 	@Override
-	public Object find(int id) {
+	public Object create(Object o) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
+	@Override
+	public void add(Object o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void upDate(Object o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Object o) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
