@@ -4,32 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Train implements ITrain {
-
-	private String periode ; 
-	private List<String> circulation ;
+	///////////////////
 	
-	public List<String> getCirculation() {
+	//private String periode ; 
+	private List<Circulation> circulation ;
+	
+	///////////////////
+	
+	public List<Circulation> getCirculation() {
 		return circulation;
 	}
-	public void setCirculation(List<String> circulation) {
+	public void setCirculation(List<Circulation> circulation) {
 		this.circulation = circulation;
 	}
 	
-	@Override
-	public int compare() {
+	public String getChaineCompare() {
+		StringBuilder sb = new StringBuilder() ; 
 		
-		return 1;
-	} 
+		for (Circulation circulation : circulation) {
+			sb.append(circulation.getChaineCircu());
+		} 
+		
+		
+		return sb.toString();
+	}
+	
+	@Override
+	public boolean compare(ITrain train) {
+		
+		return (this.getChaineCompare().equalsIgnoreCase(train.getChaineCompare()));
+	}
+	
 	
 	public Train() {
-		this.circulation = new ArrayList<String>() ; 
+		this.circulation = new ArrayList<Circulation>() ; 
 	}
-	public String getPeriode() {
-		return periode;
-	}
-	public void setPeriode(String periode) {
-		this.periode = periode;
-	}
+	
 	@Override
 	public Train getTrainByID() {
 		// TODO Auto-generated method stub
@@ -60,7 +70,5 @@ public class Train implements ITrain {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 	
 }

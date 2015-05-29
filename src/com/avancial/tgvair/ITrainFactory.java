@@ -1,7 +1,9 @@
 package com.avancial.tgvair;
 
+import java.util.List;
+
 public interface ITrainFactory {
 
-	public ITrain createTrainByListPeriode() ; 
-	public ITrain createTrainByID() ; 
+	public ITrain createTrainByID() ;
+	 ITrain createTrainByListCirculation(List<Circulation> circul); 
 }
