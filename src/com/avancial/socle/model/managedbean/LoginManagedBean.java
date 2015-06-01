@@ -46,7 +46,8 @@ public class LoginManagedBean implements Serializable {
       if (this.ihmManagedBean.getOriginalURL() == null) {
          this.ihmManagedBean.setOriginalURL((String) externalContext.getRequestMap().get(RequestDispatcher.FORWARD_REQUEST_URI));
          if (this.ihmManagedBean.getOriginalURL() == null) {
-            this.ihmManagedBean.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
+            this.ihmManagedBean.setOriginalURL(((HttpServletRequest) 
+            		FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
          }
       }
    }

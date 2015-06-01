@@ -28,7 +28,6 @@ public class AManageBean implements Serializable, IManagedBean {
    public String add() throws ASocleException {
       this.closeDialog = false;
       return null;
-
    }
 
    /*

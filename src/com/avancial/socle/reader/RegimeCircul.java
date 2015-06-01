@@ -1,4 +1,4 @@
-package parsingFileTest;
+package com.avancial.socle.reader;
 
 import java.util.Date;
 import java.util.List;

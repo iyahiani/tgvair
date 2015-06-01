@@ -1,4 +1,4 @@
-package parsingFileTest;
+package com.avancial.socle.reader;
 
 public interface ITrain {
 

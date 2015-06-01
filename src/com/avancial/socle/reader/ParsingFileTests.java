@@ -1,4 +1,4 @@
-package parsingFileTest;
+package com.avancial.socle.reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,19 +18,11 @@ public class ParsingFileTests {
 
 public static void main(String[] args) {
 		
-	ReaderFile file1 = new ReaderFile() ; 
-	ReaderFile file2 = new ReaderFile() ; 
-	Map<String, String> res1 = file1.readTxtFile("d:/Users/ismael.yahiani/Desktop/SN5209.txt") ; 
-	Map<String, String> res2 = file1.readCSVFile("d:/Users/ismael.yahiani/Desktop/SN5209_bis.csv") ;
+	IReader file1 = new ReaderTxtFile() ; 
+	IReader file2 = new ReaderTxtFile() ; 
+	file1.readLine("d:/Users/ismael.yahiani/Desktop/SN5209.txt") ; 
+	file1.readLine("d:/Users/ismael.yahiani/Desktop/SN5209_bis.csv") ;
 	
-	for (Map.Entry<String, String> entry : res1.entrySet())
-	{
-		System.out.println(entry.getKey() + "\t" + entry.getValue());
-	}	
-	for (Map.Entry<String, String> entry : res2.entrySet())
-	{
-		System.out.println(entry.getKey() + "\t" + entry.getValue());
-	}	
  }
 }
 
@@ -61,6 +53,14 @@ public static void main(String[] args) {
 			}
 		}  
 	
+	for (Map.Entry<String, String> entry : res1.entrySet())
+	{
+		System.out.println(entry.getKey() + "\t" + entry.getValue());
+	}	
+	for (Map.Entry<String, String> entry : res2.entrySet())
+	{
+		System.out.println(entry.getKey() + "\t" + entry.getValue());
+	}	
 		
 		System.out.println("--------------periodesMap------------------"); 
 		
