@@ -1,4 +1,4 @@
-package com.avancial.socle.reader;
+package com.avancial.reader;
 
 import java.nio.file.Path;
 import java.util.Map;
