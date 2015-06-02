@@ -2,8 +2,9 @@ package com.avancial.parser;
 
 /**
  * 
- * @author ismael.yahiani
- *
+ * @author ismael.yahiani 
+ * cette class permet de parser un fichier SSIM en vue d'alimenté l'objet métier   
+ *elle etend la classe abstraite AParser   
  */
 public class ParserSSIM extends AParser {
 
@@ -19,7 +20,7 @@ public class ParserSSIM extends AParser {
 			if (this.parser != null)
 				this.resultat = parser.parse(ligne);
 			if(!resultat.isEmpty())
-			   this.resultat.concat(";") ;
+			   this.resultat.concat("") ;
 		}
 		return resultat ;
 	}

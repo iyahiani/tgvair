@@ -5,7 +5,8 @@ import com.avancial.parser.IParser;
 
 /**
  * 
- * @author ismael.yahiani    extends AParser
+ * @author ismael.yahiani    
+ * class abstraite qui permet la mise en place du Design Pattern Decorator 
  *
  */
 public abstract class AFilter extends AParser  {

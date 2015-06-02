@@ -3,8 +3,21 @@ package com.avancial.filter;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserSSIM;
 
-public class FilterSSIM extends AFilter {
 
+/**
+ * 
+ * @author ismael.yahiani
+ * la classe FilterSSIM permet d'appliquée des filtres sur les lignes parsées   
+ */
+
+
+public class FilterSSIM extends AFilter {
+/** 
+ * 
+ @author Yahiani Ismail 
+ * @param pars
+ * <h1>Constructor 
+ */
 	public FilterSSIM(IParser pars) {
 		super(pars) ;
 	}

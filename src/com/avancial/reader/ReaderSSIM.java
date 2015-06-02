@@ -12,8 +12,13 @@ public class ReaderSSIM extends AReaderTxt {
 /**
  * 
  * @param fileName 
+ * 
  */
-	 public void readLine(String fileName) {
+	public ReaderSSIM() {
+		
+	}
+	
+	public void readLine(String fileName) {
 		 		
 		BufferedReader br = null;
 		String line = ""; 
