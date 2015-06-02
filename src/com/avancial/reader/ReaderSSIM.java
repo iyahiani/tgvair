@@ -6,7 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import com.avancial.parser.ParserSSIM;
-
+/** 
+ * 
+ * @author ismael.yahiani
+ *  class contenant les methodes pour la Lecture du fichier SSIM  
+ */
 public class ReaderSSIM extends AReaderTxt {
 
 /**

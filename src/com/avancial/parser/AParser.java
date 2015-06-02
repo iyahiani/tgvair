@@ -6,7 +6,7 @@ import com.avancial.tgvair.Circulation;
 /**
  * 
  * @author ismael.yahiani
- *	traiement ligne par ligne du fichier d'import 	
+ *	class abstraite contenant les constructeurs du Pattern Decorator    	
  */
 
 public abstract class AParser implements IParser {
