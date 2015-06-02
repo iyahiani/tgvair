@@ -8,11 +8,19 @@ import com.avancial.tgvair.Circulation;
  * @author ismael.yahiani
  *traiement ligne par ligne du fichier d'import 	
  */
+
+
 public abstract class AParser implements IParser {
 
+	IParser parser ;
+	String resultat ; 
 	
-	@Override
-	public String parse(String ligne) {
-		return ligne;      		
-	}	
+	public AParser(IParser pars) { 
+		parser = pars ;
+	}
+	
+	public AParser() {
+		
+	}
+	
 }

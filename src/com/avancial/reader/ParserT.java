@@ -1,33 +1,20 @@
-package com.avancial.socle.reader;
+package com.avancial.reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ParsingFileTests {
+public class ParserT {
 
-public static void main(String[] args) {
-		
-	IReader file1 = new ReaderTxtFile() ; 
-	IReader file2 = new ReaderTxtFile() ; 
-	file1.readLine("d:/Users/ismael.yahiani/Desktop/SN5209.txt") ; 
-	file1.readLine("d:/Users/ismael.yahiani/Desktop/SN5209_bis.csv") ;
-	
- }
-}
-
-
-/*  String snFile = "d:/Users/ismael.yahiani/Desktop/SN5209_bis.csv";
+	String snFile = "d:/Users/ismael.yahiani/Desktop/SN5209.txt";
 	BufferedReader br = null;
 	String line = ""; 
 	String snSplitBy = " "; 
@@ -35,7 +22,7 @@ public static void main(String[] args) {
 	List<String> field = new ArrayList<String>() ; 
 	Set<String> periodesSet = new HashSet<String>() ;
 	Map<String,String> periodesMap = new HashMap<String, String>();
-	 
+ public ParserT() {	
 	try {
 		br = new BufferedReader(new FileReader(snFile));
 		
@@ -43,42 +30,23 @@ public static void main(String[] args) {
 		        // use Blanc as separator
 			
 			field = Arrays.asList(line.split(",")); 
-			String s = field.get(0).replaceAll("[^a-zA-Z 0-9]", "");
+			String s = field.get(0);
 			
 			if (!s.isEmpty()) {
 				periodesSet.add((String)s.subSequence(13,27)) ;
-				periode.add( (String)s.subSequence(13,27)+(String)s.subSequence(27,34)+"\t"+(String)s.subSequence(140,152)); 
-				periodesMap.put((String)s.subSequence(13,27),(String)s.subSequence(27,34)+"\t"+(String)s.subSequence(140,152));
-				
+				periode.add( (String)s.subSequence(2,27)); 
+				periodesMap.put((String)s.subSequence(13,27),(String)s.subSequence(28,34));
 			}
 		}  
-	
-	for (Map.Entry<String, String> entry : res1.entrySet())
-	{
-		System.out.println(entry.getKey() + "\t" + entry.getValue());
-	}	
-	for (Map.Entry<String, String> entry : res2.entrySet())
-	{
-		System.out.println(entry.getKey() + "\t" + entry.getValue());
-	}	
-		
 		System.out.println("--------------periodesMap------------------"); 
-		
-		for (Map.Entry<String, String> entry : periodesMap.entrySet())
-		{
-			System.out.println(entry.getKey() + "\t" + entry.getValue());
-		}		
-		
+		System.out.println(periodesMap); 
 		
 		System.out.println("------------periodeList--------------------");
-		for (String string : periode) {
-			System.out.println(string);
-		}
-		
-		
+		System.out.println(periode);
+		/*
 		System.out.println("-------------periodesSet--------------------");
 		System.out.println(periodesSet);
-		
+		*/
 			 
 	} catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -95,6 +63,5 @@ public static void main(String[] args) {
 	}
 	
 	System.out.println("Done"); 
-	
+	}
 }
-*/

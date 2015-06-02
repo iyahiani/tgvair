@@ -26,11 +26,11 @@ public class ParsingFileTests {
 			
 			while ((line = br.readLine()) != null) {
 			        // use Blanc as separator
-				
+				line.replaceAll("[^a-zA-Z 0-9]", "") ;
 				field = Arrays.asList(line.trim()); 
 				String s = field.get(0);
 				if (!s.isEmpty()) {
-					periode.add( (String)s.subSequence(15,28)); 
+					periode.add( (String)s.subSequence(142,152)); 
 				}
 			}  
 			

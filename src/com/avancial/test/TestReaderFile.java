@@ -7,26 +7,23 @@ import junit.framework.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
-import com.avancial.socle.reader.IReader;
-import com.avancial.socle.reader.ReaderTxtFile;
-import com.avancial.socle.reader.ReaderXmlFile;
+import com.avancial.reader.IReader;
+import com.avancial.reader.ReaderSSIM;
+import com.avancial.reader.ReaderXmlFile;
 
 public class TestReaderFile {
 
 	@SuppressWarnings("deprecation")
 	@Test 
 	public void testFileEquals() {
-		IReader file = new ReaderTxtFile() ;
+		IReader file = new ReaderSSIM() ;
 		file = new ReaderXmlFile() ;
-			
-		IReader file2 = new ReaderTxtFile() ; 
+		IReader file2 = new ReaderSSIM() ; 
 	}
 	
 	@Test 
 	public void testNotNull() {
-		IReader file = new ReaderTxtFile() ;
-		
-		
+		IReader file = new ReaderSSIM() ;
 	}
 	
 }

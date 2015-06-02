@@ -3,14 +3,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.avancial.socle.reader.ReaderTxtFile;
+import com.avancial.reader.ReaderSSIM;
 
 
 
 
 @RunWith (value = Suite.class) 
 //@SuiteClasses(value = { TestTrain.class})
-@SuiteClasses(value = { ReaderTxtFile.class})
+@SuiteClasses(value = { ReaderTest.class})
 public class TestApp {
 	
 	public TestApp() {
