@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.avancial.reader.IReader;
 import com.avancial.reader.ReaderSSIM;
-import com.avancial.reader.ReaderXmlFile;
+
 
 public class TestReaderFile {
 
@@ -17,7 +17,7 @@ public class TestReaderFile {
 	@Test 
 	public void testFileEquals() {
 		IReader file = new ReaderSSIM() ;
-		file = new ReaderXmlFile() ;
+		
 		IReader file2 = new ReaderSSIM() ; 
 	}
 	

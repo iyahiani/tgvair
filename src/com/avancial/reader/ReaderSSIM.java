@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.avancial.parser.ParserSSIM;
+
 public class ReaderSSIM extends AReaderTxt {
 
 /**
@@ -15,7 +17,6 @@ public class ReaderSSIM extends AReaderTxt {
 		 		
 		BufferedReader br = null;
 		String line = ""; 
-				 
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 			while ((line = br.readLine()) != null) {

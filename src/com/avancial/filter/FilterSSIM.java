@@ -8,11 +8,13 @@ public class FilterSSIM extends AFilter {
 	public FilterSSIM(IParser pars) {
 		super(pars) ;
 	}
-
 	@Override
 	public String parse(String ligne) {
 		
-		return ligne+"Je suis le filtre SSIM.";
+		if (this.parser!=null)
+			  return this.parser.parse(ligne) ; 
+		
+		return ligne;
 	}
 	
 	

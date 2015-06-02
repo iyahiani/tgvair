@@ -5,22 +5,14 @@ import com.avancial.parser.IParser;
 
 /**
  * 
- * @author ismael.yahiani
+ * @author ismael.yahiani    extends AParser
  *
  */
-public class AFilter extends AParser  {
+public abstract class AFilter extends AParser  {
 
 	public AFilter(IParser pars) {
 		super(pars);
-		
 	}
 
-	@Override
-	public String parse(String ligne) {
-		
-		return null;
-	}
-
-	
 	
 }
