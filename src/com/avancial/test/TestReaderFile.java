@@ -12,7 +12,11 @@ import org.junit.Test;
 import com.avancial.reader.IReader;
 import com.avancial.reader.ReaderSSIM;
 
-
+/**
+ * 
+ * @author ismael.yahiani
+ * classe des tests unitaires sur les objet Reader
+ */
 public class TestReaderFile {
 
 	@Test 
@@ -21,8 +25,7 @@ public class TestReaderFile {
 		String line;
 		while ((line=file.readLine())!=null) {
 			System.out.println(line);
-			System.out.println(line.substring(28,34));
-		}
+			}
 		org.junit.Assert.assertNotNull(file.readLine()) ;
 		
 	}

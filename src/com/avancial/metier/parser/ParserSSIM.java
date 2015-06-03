@@ -14,7 +14,6 @@ public class ParserSSIM extends AParser {
 	public ParserSSIM(IParser par) {
 		super(par);
 	}
-
 	
 	@Override
 	public String parse(String ligne) {
@@ -42,14 +41,3 @@ public class ParserSSIM extends AParser {
 		return sb.toString() ;
 	}
 }
-
-
-/*
- * 
- * 			sb.append(resultat.subSequence(13, 27));
-			sb.append(resultat.subSequence(28, 34));
-			sb.append(resultat.subSequence(35, 40));
-			sb.append(resultat.subSequence(40, 44));
-			sb.append(resultat.subSequence(55, 60));
-			sb.append(resultat.subSequence(142, 152));
- */

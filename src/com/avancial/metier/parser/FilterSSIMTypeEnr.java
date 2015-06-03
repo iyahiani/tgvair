@@ -5,18 +5,13 @@ import com.avancial.parser.IParser;
 
 /**
  * 
- * @author ismael.yahiani Permet de filter la ssim en enlevant les
+ * @author ismael.yahiani 
+ * Permet de filter la ssim en enlevant les
  *         enregistrements de type 4
  * 
  */
 
 public class FilterSSIMTypeEnr extends AFilter {
-	/**
-	 * 
-	 @author Yahiani Ismail
-	 * @param pars
-	 *            <h1>Constructor
-	 */
 	public FilterSSIMTypeEnr(IParser pars) {
 		super(pars);
 	}
