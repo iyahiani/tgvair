@@ -1,4 +1,4 @@
-package com.avancial.tgvair;
+package com.avancial.tgvair.metier;
 
 import java.util.ArrayList;
 import java.util.List;

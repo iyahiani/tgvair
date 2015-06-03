@@ -5,10 +5,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.avancial.tgvair.Circulation;
-import com.avancial.tgvair.ITrain;
-import com.avancial.tgvair.ITrainFactory;
-import com.avancial.tgvair.TrainFactory;
+import com.avancial.tgvair.metier.Circulation;
+import com.avancial.tgvair.metier.ITrain;
+import com.avancial.tgvair.metier.ITrainFactory;
+import com.avancial.tgvair.metier.TrainFactory;
 
 
 public class TestTrain {

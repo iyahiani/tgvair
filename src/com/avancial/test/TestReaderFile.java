@@ -1,5 +1,7 @@
 package com.avancial.test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Map;
 
 import junit.framework.Assert;
@@ -13,17 +15,16 @@ import com.avancial.reader.ReaderSSIM;
 
 public class TestReaderFile {
 
-	@SuppressWarnings("deprecation")
 	@Test 
-	public void testFileEquals() {
-		IReader file = new ReaderSSIM() ;
+	public void testFileEquals() throws IOException {
+		IReader file = new ReaderSSIM("D:/Users/ismael.yahiani/Documents/SN5209.txt") ;
+		String line;
+		while ((line=file.readLine())!=null) {
+			System.out.println(line);
+		}
+		org.junit.Assert.assertNotNull(file.readLine()) ;
 		
-		IReader file2 = new ReaderSSIM() ; 
 	}
 	
-	@Test 
-	public void testNotNull() {
-		IReader file = new ReaderSSIM() ;
-	}
 	
 }

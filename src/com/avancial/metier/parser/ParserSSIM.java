@@ -1,4 +1,7 @@
-package com.avancial.parser;
+package com.avancial.metier.parser;
+
+import com.avancial.parser.AParser;
+import com.avancial.parser.IParser;
 
 /**
  * 
@@ -14,15 +17,21 @@ public class ParserSSIM extends AParser {
 
 	@Override
 	public String parse(String ligne) {
-		
+
+		StringBuilder sb = new StringBuilder() ;
 		if (!ligne.isEmpty()) {
-			// ligne.replaceAll("[^a-zA-Z 0-9]", "");
 			if (this.parser != null)
 				this.resultat = parser.parse(ligne);
-			if(!resultat.isEmpty())
-			   this.resultat.concat("") ;
+			if(!resultat.isEmpty()) 
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()));
+				sb.append(resultat.subSequence(13, 27));
+				/*sb.append(resultat.subSequence(35, 40));
+				sb.append(resultat.subSequence(40, 44));
+				sb.append(resultat.subSequence(55, 60));
+				sb.append(resultat.subSequence(142, 152)); 	*/
+			  
 		}
-		return resultat ;
+		return sb.toString() ;
 	}
 }
 

@@ -16,12 +16,12 @@ import java.util.Set;
 
 public class ParsingFileTests {
 
-public static void main(String[] args) {
+public static void main(String[] args) throws IOException {
 		
-	IReader file1 = new ReaderSSIM() ; 
-	IReader file2 = new ReaderSSIM() ; 
-	file1.readLine("d:/Users/ismael.yahiani/Desktop/SN5209.txt") ; 
-	file1.readLine("d:/Users/ismael.yahiani/Desktop/SN5209_bis.csv") ;
+	IReader file1 = new ReaderSSIM("d:/Users/ismael.yahiani/Desktop/SN5209.txt") ; 
+	IReader file2 = new ReaderSSIM("d:/Users/ismael.yahiani/Desktop/SN5209_bis.csv") ; 
+	file1.readLine() ; 
+	file1.readLine() ;
 	
  }
 }

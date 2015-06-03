@@ -10,7 +10,7 @@ import com.avancial.reader.ReaderSSIM;
 
 @RunWith (value = Suite.class) 
 //@SuiteClasses(value = { TestTrain.class})
-@SuiteClasses(value = { ReaderTest.class})
+ //@SuiteClasses(value = { ReaderTest.class})
 public class TestApp {
 	
 	public TestApp() {

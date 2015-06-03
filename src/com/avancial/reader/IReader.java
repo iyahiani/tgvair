@@ -1,5 +1,6 @@
 package com.avancial.reader;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
 /**
@@ -9,5 +10,5 @@ import java.util.Map;
  */
 public interface IReader {
 
-		public void readLine(String fileName);
+		public String readLine() throws IOException;
 }
