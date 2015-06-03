@@ -77,7 +77,7 @@ public enum TGVAIR_enumParserSSIM {
 	private String typeEnr;
 	
 	
-		private TGVAIR_enumParserSSIM(String type) {
+	private TGVAIR_enumParserSSIM(String type) {
 		this.setTypeEnr(type);
 	}
 	private TGVAIR_enumParserSSIM() {
