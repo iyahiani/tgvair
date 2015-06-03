@@ -21,6 +21,7 @@ public class TestReaderFile {
 		String line;
 		while ((line=file.readLine())!=null) {
 			System.out.println(line);
+			System.out.println(line.substring(28,34));
 		}
 		org.junit.Assert.assertNotNull(file.readLine()) ;
 		

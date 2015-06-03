@@ -13,7 +13,7 @@ public class FilterEncodage extends AFilter {
 		
 		if (this.parser!=null)
 		  return this.parser.parse(ligne).replaceAll("[^a-zA-Z 0-9]", ""); 
-		return ligne.replaceAll("[^a-zA-Z 0-9]", "");
+		return ligne.replaceAll("[^a-zA-Z 0-9 +]", "");
 	}
 
 }

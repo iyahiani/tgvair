@@ -15,6 +15,7 @@ public class ParserSSIM extends AParser {
 		super(par);
 	}
 
+	
 	@Override
 	public String parse(String ligne) {
 
@@ -24,12 +25,19 @@ public class ParserSSIM extends AParser {
 				this.resultat = parser.parse(ligne);
 			if(!resultat.isEmpty()) 
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()));
-				sb.append(resultat.subSequence(13, 27));
-				/*sb.append(resultat.subSequence(35, 40));
-				sb.append(resultat.subSequence(40, 44));
-				sb.append(resultat.subSequence(55, 60));
-				sb.append(resultat.subSequence(142, 152)); 	*/
-			  
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_IDENTIFIANT_TRANCHE.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_IDENTIFIANT_TRANCHE.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_PERIODE_CIRCULATION.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_PERIODE_CIRCULATION.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_JOURS_CIRCULATION.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_JOURS_CIRCULATION.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_GARE_DEPART.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_GARE_DEPART.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_HEURE_DEPART.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_HEURE_DEPART.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_DIFFERENCE_GMT_DEPART.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_DIFFERENCE_GMT_DEPART.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_GARE_ARRIVER.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_GARE_ARRIVER.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_HEURE_ARRIVER.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_HEURE_ARRIVER.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_DIFFERENCE_GMT_ARRIVER.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_DIFFERENCE_GMT_ARRIVER.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_INDICATEUR_FER.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_INDICATEUR_FER.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionFin()));
+				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin()));
 		}
 		return sb.toString() ;
 	}
