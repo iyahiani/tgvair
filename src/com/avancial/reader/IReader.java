@@ -8,7 +8,8 @@ import java.util.Map;
  * @author ismael.yahiani
  *  Interface des traitements de lecture 
  */
-public interface IReader {
+public interface IReader  {
 
-		public String readLine() throws IOException;
+		public String readLine() throws IOException ;
+		
 }

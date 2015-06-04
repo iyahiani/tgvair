@@ -24,7 +24,7 @@ public class ReaderSSIM extends AReaderTxt {
 		this.br = new BufferedReader(new FileReader(path));
 	}
 
-	public String readLine() throws IOException {
+	public String readLine() throws IOException  {
 
 		return this.br.readLine();
 	}
