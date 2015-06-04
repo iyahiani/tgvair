@@ -8,9 +8,11 @@ import com.avancial.tgvair.metier.Train;
 
 public class TrainDAO implements ITrain {
 
+	
 	public TrainDAO() {
 		
 	}
+	
 	@Override
 	public boolean compare(ITrain train) {
 		
@@ -62,9 +64,5 @@ public class TrainDAO implements ITrain {
 		
 		return null;
 	}
-	
-	
-
-	
 	
 }

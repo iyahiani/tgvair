@@ -33,6 +33,4 @@ public class Train{
 		this.circulation = new ArrayList<Circulation>() ; 
 	}
 	
-	
-	
 }
