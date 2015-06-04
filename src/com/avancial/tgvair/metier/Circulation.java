@@ -14,7 +14,6 @@ public class Circulation implements ICirculation {
 	
 	public Circulation() {
 		
-		
 	}	
 	public String getChaineCircu() {
 		StringBuilder sb = new StringBuilder(); 

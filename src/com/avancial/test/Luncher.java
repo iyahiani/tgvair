@@ -1,6 +1,9 @@
 package com.avancial.test;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import com.avancial.metier.parser.FilterEncodage;
 import com.avancial.metier.parser.FilterSSIMTypeEnr;
@@ -9,7 +12,7 @@ import com.avancial.metier.parser.TGVAIR_enumParserCirculation;
 import com.avancial.reader.IReader;
 import com.avancial.reader.ReaderSSIM;
 import com.avancial.tgvair.metier.Circulation;
-import com.avancial.tgvair.metier.CirculationDAO;
+import com.avanciale.metier.DAO.CirculationDAO;
 
 public class Luncher {
 
@@ -21,62 +24,19 @@ public class Luncher {
 		 * FilterEncodage(null))); String
 		 * chaine=parsSSim.parse("je suis une chaine.") ;
 		 */
-		// IReader read = new
-		// ReaderSSIM("D:/Users/ismael.yahiani/Documents/SN5209.txt") ;
-
+		
 		IReader read = new ReaderSSIM(
 				"D:/Users/ismael.yahiani/Documents/SN5209.txt");
 		ParserSSIM par = new ParserSSIM(new FilterSSIMTypeEnr(
 				new FilterEncodage(null)));
-		String file;
+		String file; String chaine;
 		Circulation circul = new Circulation();
+		CirculationDAO circulDAO = new CirculationDAO(circul);
 		while ((file = read.readLine()) != null) {
-
-			String chaine = par.parse(file);
-			// CirculationDAO circDAO = new CirculationDAO(circulation) ;
-			// circDAO.getCirculation() ;
-			// if (file.length()>0) System.out.println(file.substring(25,32));
-			// System.out.println(circulation.getChaineCircu() );
-			if (chaine.length() > 0) {
-				circul.setDateDebut(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
-								.getPostionFin()));
-				circul.setDateFin(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
-								.getPostionFin()));
-				circul.setDestination(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_DESTINATION
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_DESTINATION
-								.getPostionFin()));
-				circul.setOrigine(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_ORGINE
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_ORGINE
-								.getPostionFin()));
-				circul.setHeureDepart(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_HEURE_DEPART
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_HEURE_DEPART
-								.getPostionFin()));
-				circul.setHeureArrivee(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_HEURE_ARRIVER
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_HEURE_ARRIVER
-								.getPostionFin()));
-				circul.setJoursCirculation(chaine.substring(
-						TGVAIR_enumParserCirculation.POSITION_JOURS_CIRCULATION
-								.getPostionDebut(),
-						TGVAIR_enumParserCirculation.POSITION_JOURS_CIRCULATION
-								.getPostionFin()));
-				System.out.println(circul.getChaineCircu());
-			}
+			chaine = par.parse(file);
+			
+			if (chaine.length()>0) 
+				System.out.println(circulDAO.getCirculation(chaine).getDateDebut());					
 		}
-
 	}
-
 }

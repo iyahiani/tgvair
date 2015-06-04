@@ -2,6 +2,8 @@ package com.avancial.tgvair.metier;
 
 import java.util.List;
 
+import com.avanciale.metier.DAO.TrainDAO;
+
 public class TrainFactory implements ITrainFactory {
 
 	/**
@@ -11,7 +13,7 @@ public class TrainFactory implements ITrainFactory {
 	@Override
 	public ITrain createTrainByListCirculation(List<Circulation> circul) {
 		
-		ITrain train = new Train() ; 
+		ITrain train = new TrainDAO() ; 
 		train.setCirculation(circul); 		
 		return train ;
 	}

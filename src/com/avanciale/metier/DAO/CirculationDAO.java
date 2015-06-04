@@ -1,9 +1,14 @@
-package com.avancial.tgvair.metier;
+package com.avanciale.metier.DAO;
 
 import java.io.IOException;
 
 import com.avancial.metier.parser.TGVAIR_enumParserCirculation;
-
+import com.avancial.tgvair.metier.Circulation;
+/**
+ * 
+ * @author ismael.yahiani
+ *  cette Classe offre des fonctionnalités pour l'objet Circulation  
+ */
 public class CirculationDAO {
 
 	private Circulation circul;
