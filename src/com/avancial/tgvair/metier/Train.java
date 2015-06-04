@@ -24,8 +24,7 @@ public class Train implements ITrain {
 		for (Circulation circulation : circulation) {
 			sb.append(circulation.getChaineCircu());
 		} 
-		
-		
+				
 		return sb.toString();
 	}
 	

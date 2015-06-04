@@ -14,14 +14,14 @@ public class Circulation implements ICirculation {
 	
 	public Circulation() {
 		
-	}
-	
+		
+	}	
 	public String getChaineCircu() {
 		StringBuilder sb = new StringBuilder(); 
 		sb.append(this.getDateDebut());
 		sb.append(this.getDateFin());
-		sb.append(this.getHeureArrivee());
 		sb.append(this.getHeureDepart());
+		sb.append(this.getHeureArrivee());
 		sb.append(this.getOrigine());
 		sb.append(this.getDestination());
 		sb.append(this.getJoursCirculation());
@@ -84,32 +84,4 @@ public class Circulation implements ICirculation {
 		this.joursCirculation = joursCirculation;
 	}
 	
-	
-	
  }
-/**
- * 
- *private Desserte desserte ; 
-private RegimeCirculation regime ; 	
-
-	public Circulation() {
-
-}
-	public RegimeCirculation getRegime() {
-	return regime;
-}
-public void setRegime(RegimeCirculation regime) {
-	this.regime = regime;
-}
-	public Desserte getDesserte() {
-		return desserte;
-	}
-	public void setDesserte(Desserte desserte) {
-		this.desserte = desserte;
-	}
-	
-	public String SB() {
-		String chaine ="" ; 
-		return chaine;
-	}/
- */

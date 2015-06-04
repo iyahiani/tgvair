@@ -12,8 +12,7 @@ import com.avancial.tgvair.metier.TrainFactory;
 
 
 public class TestTrain {
-
-	   
+   
 	   @Test
 	   public void testTrainsIdentiques() {
 		   ITrain train1 ;
@@ -44,10 +43,8 @@ public class TestTrain {
 		   ITrainFactory factory =new TrainFactory();
 		   train1=factory.createTrainByListCirculation(listCircu);
 		   train2=factory.createTrainByListCirculation(listCircu);
-		   Assert.assertTrue(train1.compare(train2));
-		   
-	   }
-
+		   Assert.assertTrue(train1.compare(train2));   
+	   }	   
 	   
 	   @Test
 	   public void testTrainsDifferents() {

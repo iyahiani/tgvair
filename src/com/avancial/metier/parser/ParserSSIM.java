@@ -19,10 +19,12 @@ public class ParserSSIM extends AParser {
 	public String parse(String ligne) {
 
 		StringBuilder sb = new StringBuilder() ;
+		
 		if (!ligne.isEmpty()) {
 			if (this.parser != null)
 				this.resultat = parser.parse(ligne);
 			if(!resultat.isEmpty()) {
+
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()));
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_IDENTIFIANT_TRANCHE.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_IDENTIFIANT_TRANCHE.getPositionFin()));
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin()));
@@ -37,8 +39,8 @@ public class ParserSSIM extends AParser {
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_INDICATEUR_FER.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_INDICATEUR_FER.getPositionFin()));
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionFin()));
 				sb.append(resultat.subSequence(TGVAIR_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin()));
-			}
-				
+			
+			}	
 		}
 		return sb.toString() ;
 	}
