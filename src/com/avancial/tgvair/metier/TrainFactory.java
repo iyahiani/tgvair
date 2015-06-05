@@ -2,7 +2,7 @@ package com.avancial.tgvair.metier;
 
 import java.util.List;
 
-import com.avanciale.metier.DAO.TrainDAO;
+import com.avanciale.TGVAIR.DAO.TrainDAO;
 
 public class TrainFactory implements ITrainFactory {
 

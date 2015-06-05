@@ -1,70 +1,53 @@
-package com.avanciale.metier.DAO;
+package com.avanciale.TGVAIR.DAO;
 
-import java.io.IOException;
+import java.util.List;
 
-import com.avancial.metier.parser.TGVAIR_enumParserCirculation;
+import com.avancial.socle.data.controller.dao.AbstractDao;
+import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.SocleExceptionManager;
+import com.avancial.tgvair.DataBeans.CirculationDataBean;
 import com.avancial.tgvair.metier.Circulation;
+
 /**
  * 
- * @author ismael.yahiani
- *  cette Classe offre des fonctionnalités pour l'objet Circulation  
+ * @author ismael.yahiani cette Classe offre des fonctionnalités pour l'objet
+ *         Circulation
  */
-public class CirculationDAO {
+public class CirculationDAO extends AbstractDao implements IDAO {
 
-	private Circulation circul;
-
-	public CirculationDAO(Circulation circulation) {
-		this.circul = circulation;
+	private Circulation circul ;  
+	public CirculationDAO() {
+	}
+	@Override
+	public void save(Object t) throws ASocleException {
+		
+		try {
+	         this.getEntityManager().getTransaction().begin();
+	         this.getEntityManager().persist(t );
+	         this.getEntityManager().flush();
+	         this.getEntityManager().getTransaction().commit();
+	      } catch (Exception e) {
+	         this.getEntityManager().getTransaction().rollback();
+	         throw SocleExceptionManager.getException(e);
+	      }
 	}
 
-	public Circulation getCirculation(String chaine) throws IOException {
-
-		if (chaine.length() > 0) {
-
-			circul.setDateDebut(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
-							.getPostionFin()));
-			circul.setDateFin(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
-							.getPostionFin()));
-			circul.setDestination(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_DESTINATION
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_DESTINATION
-							.getPostionFin()));
-			circul.setOrigine(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_ORGINE
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_ORGINE
-							.getPostionFin()));
-			circul.setHeureDepart(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_HEURE_DEPART
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_HEURE_DEPART
-							.getPostionFin()));
-			circul.setHeureArrivee(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_HEURE_ARRIVER
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_HEURE_ARRIVER
-							.getPostionFin()));
-			circul.setJoursCirculation(chaine.substring(
-					TGVAIR_enumParserCirculation.POSITION_JOURS_CIRCULATION
-							.getPostionDebut(),
-					TGVAIR_enumParserCirculation.POSITION_JOURS_CIRCULATION
-							.getPostionFin()));
-		}
-
-		return this.circul;
+	@Override
+	public void update(Object t) {
+		
 	}
-	
-	public Circulation findCircul() {
-		return null ;
+
+	@Override
+	public void delete(Object t) {
+		
+	}
+
+	@Override
+	public List<?> getAll() {
+		
+		return null;
 	}
 	
 	
-	
+
 }
