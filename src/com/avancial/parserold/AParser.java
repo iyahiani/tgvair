@@ -1,4 +1,4 @@
-package com.avancial.parser;
+package com.avancial.parserold;
 
 import com.avancial.reader.IReader;
 import com.avancial.tgvair.metier.Circulation;
