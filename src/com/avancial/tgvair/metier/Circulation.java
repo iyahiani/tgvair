@@ -1,52 +1,88 @@
 package com.avancial.tgvair.metier;
 
-import java.util.List;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 import com.avancial.metier.parser.TGVAIR_enumParserCirculation;
 import com.avancial.tgvair.DataBeans.CirculationDataBean;
 
 public class Circulation implements ICirculation {
 
-	private String dateDebut ; 
-	private String dateFin ;
-	private String heureArrivee ; 
-	private String heureDepart ; 
-	private String origine ; 
-	private String destination ;
-	private String joursCirculation ;
+	private Date dateDebut;
+	private Date dateFin;
+	private String heureArrivee;
+	private String heureDepart;
+	private String origine;
+	private String destination;
+	private String joursCirculation;
+	private String indicateurFer;
+	private String compagnieTrain;
+	private String numeroTrain;
 	
-	private CirculationDataBean circulationDataBean ;
+	public String getIndicateurFer() {
+		return indicateurFer;
+	}
+
+	public void setIndicateurFer(String indicateurFer) {
+		this.indicateurFer = indicateurFer;
+	}
+
+	public String getCompagnieTrain() {
+		return compagnieTrain;
+	}
+
+	public void setCompagnieTrain(String compagnieTrain) {
+		this.compagnieTrain = compagnieTrain;
+	}
+
+	public String getNumeroTrain() {
+		return numeroTrain;
+	}
+
+	public void setNumeroTrain(String numeroTrain) {
+		this.numeroTrain = numeroTrain;
+	}
+
 	
+
+	private CirculationDataBean circulationDataBean;
+
 	public Circulation() {
-		
-	}	
+
+	}
+
+	@SuppressWarnings("deprecation")
 	public String getChaineCircu() {
-		StringBuilder sb = new StringBuilder(); 
-		sb.append(this.getDateDebut());
-		sb.append(this.getDateFin());
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getDateDebut().toGMTString());
+		sb.append(this.getDateFin().toGMTString());
 		sb.append(this.getHeureDepart());
 		sb.append(this.getHeureArrivee());
 		sb.append(this.getOrigine());
 		sb.append(this.getDestination());
 		sb.append(this.getJoursCirculation());
-		return sb.toString() ; 
+		sb.append(this.getIndicateurFer());
+		sb.append(this.getCompagnieTrain());
+		sb.append(this.getNumeroTrain());
+		return sb.toString();
 	}
-	
-	public Circulation getCirculation(String chaine) {
 
-		Circulation circul = new Circulation() ;
+	public Circulation getCirculation(String chaine) throws ParseException {
+		DecimalFormat formatter =  new DecimalFormat("000000") ; 
+		Circulation circul = new Circulation();
 		if (chaine.length() > 0) {
 
-			circul.setDateDebut(chaine.substring(
+			circul.setDateDebut(ParsingDate.toDate(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
-							.getPostionFin()));
-			circul.setDateFin(chaine.substring(
+							.getPostionFin())));
+			circul.setDateFin(ParsingDate.toDate(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
-							.getPostionFin()));
+							.getPostionFin())));
 			circul.setDestination(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_DESTINATION
 							.getPostionDebut(),
@@ -72,24 +108,40 @@ public class Circulation implements ICirculation {
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_JOURS_CIRCULATION
 							.getPostionFin()));
+			circul.setIndicateurFer(chaine.substring(
+					TGVAIR_enumParserCirculation.POSITION_INDICATEUR_FER
+							.getPostionDebut(),
+					TGVAIR_enumParserCirculation.POSITION_INDICATEUR_FER
+							.getPostionFin()));
+			circul.setCompagnieTrain(chaine.substring(
+					TGVAIR_enumParserCirculation.POSITION_COMPAGNIE_TRAIN
+							.getPostionDebut(),
+					TGVAIR_enumParserCirculation.POSITION_COMPAGNIE_TRAIN
+							.getPostionFin()));
+		circul.setNumeroTrain(chaine.substring(
+					TGVAIR_enumParserCirculation.POSITION_NUMERO_TRAIN
+							.getPostionDebut(),
+					TGVAIR_enumParserCirculation.POSITION_NUMERO_TRAIN
+							.getPostionFin()));
+
 		}
 
 		return circul;
 	}
 
-	public String getDateDebut() {
+	public Date getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(String dateDebut) {
+	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public String getDateFin() {
+	public Date getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(String dateFin) {
+	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
 	}
 
@@ -135,9 +187,9 @@ public class Circulation implements ICirculation {
 
 	public CirculationDataBean getCirculationDatabean(Circulation circulation) {
 		circulationDataBean = new CirculationDataBean();
-		circulationDataBean.setDestination(circulation.getDestination()); 
+		circulationDataBean.setDestination(circulation.getDestination());
 		circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
-		circulationDataBean.setHeureDepart(circulation.getHeureDepart()); 
-		return circulationDataBean ;
+		circulationDataBean.setHeureDepart(circulation.getHeureDepart());
+		return circulationDataBean;
 	}
- }
+}

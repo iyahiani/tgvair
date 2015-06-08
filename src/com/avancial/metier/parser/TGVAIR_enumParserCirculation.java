@@ -28,7 +28,22 @@ public enum TGVAIR_enumParserCirculation {
 	/**
 	 * position des jours de circulation
 	 */
-	POSITION_JOURS_CIRCULATION (25,32) ; 
+	POSITION_JOURS_CIRCULATION (25,32), 
+	/**
+	 * position Indicateur Fer
+	 */
+	
+	POSITION_INDICATEUR_FER(61,62), 
+	/**
+	 * position Compagnie Train 
+	 */
+	
+	POSITION_COMPAGNIE_TRAIN(62,64),
+	/**
+	 * position Numéro du Train
+	 */
+	POSITION_NUMERO_TRAIN(64,70) ;
+	; 
 	
 	private int postionDebut ; 
 	private int postionFin ;

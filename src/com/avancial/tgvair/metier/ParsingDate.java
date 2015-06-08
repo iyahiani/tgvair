@@ -14,10 +14,10 @@ public class ParsingDate {
 	
 	public static Date toDate(String date) throws ParseException {
 		
-		String format = "dd MMM yy" ;
+		String format = "ddMMMyy" ;
  		SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.ENGLISH) ; 
-		Date d = sdf.parse("15 APR 15") ;
-		return d ;
+		Date d = sdf.parse(date);
+		return d;
 		
 	}
 }
