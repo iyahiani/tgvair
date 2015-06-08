@@ -11,8 +11,8 @@ public class FilterEncodage extends AFilter {
 
    @Override
    public String parse(String ligne) {
-      ligne.replaceAll("[^a-zA-Z 0-9]", "");
-      if (this.parser != null)
+      ligne=ligne.replaceAll("[^a-zA-Z 0-9 +]", "") ;
+	   if (this.parser != null)
          return this.parser.parse(ligne);
       return ligne;
    }

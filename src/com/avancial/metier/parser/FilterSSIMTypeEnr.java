@@ -19,9 +19,10 @@ public class FilterSSIMTypeEnr extends AFilter {
 
       if (ligne.substring(TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(), TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()).equals(TGVAIR_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
          ligne = "";
-      // Si parser est null ou que la chaine est vide, on interrompt le process
+      // Si parser est null ou que la chaine est vide, on interrompt le
+      // process
       if (this.parser != null && !ligne.isEmpty())
-         ligne = this.parser.parse(ligne);
+         this.parser.parse(ligne);
 
       return ligne;
    }

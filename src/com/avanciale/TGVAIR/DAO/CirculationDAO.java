@@ -13,13 +13,15 @@ import com.avancial.tgvair.metier.Circulation;
  * @author ismael.yahiani cette Classe offre des fonctionnalités pour l'objet
  *         Circulation
  */
-public class CirculationDAO extends AbstractDao implements IDAO {
+public class CirculationDAO extends AbstractDao {
 
-	private Circulation circul ;  
+	private CirculationDataBean circulationDataBean ; 
+	
 	public CirculationDAO() {
+		
 	}
-	@Override
-	public void save(Object t) throws ASocleException {
+
+	public void save(CirculationDataBean t) throws ASocleException {
 		
 		try {
 	         this.getEntityManager().getTransaction().begin();
@@ -28,18 +30,10 @@ public class CirculationDAO extends AbstractDao implements IDAO {
 	         this.getEntityManager().getTransaction().commit();
 	      } catch (Exception e) {
 	         this.getEntityManager().getTransaction().rollback();
+	         this.getEntityManager().close();
 	         throw SocleExceptionManager.getException(e);
+	         
 	      }
-	}
-
-	@Override
-	public void update(Object t) {
-		
-	}
-
-	@Override
-	public void delete(Object t) {
-		
 	}
 
 	@Override
