@@ -1,4 +1,4 @@
-package com.avancial.tgvair.metier;
+package com.avancial.metier.parser;
 
 public enum TGVAIR_Enum_Date_Parser {
 
