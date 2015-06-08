@@ -101,9 +101,9 @@
 			<artifactId>primefaces</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>parser</groupId>
+			<groupId>avancial.fr</groupId>
 			<artifactId>parser</artifactId>
-  	</dependency>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -153,7 +153,7 @@
 				<version>5.1</version>
 			</dependency>
 			<dependency>
-				<groupId>parser</groupId>
+				<groupId>avancial.fr</groupId>
 				<artifactId>parser</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>

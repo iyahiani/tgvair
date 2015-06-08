@@ -5,15 +5,16 @@ import com.avancial.parser.IParser;
 
 public class FilterEncodage extends AFilter {
 
-	public FilterEncodage(IParser pars) {
-		super(pars) ;
-	}
-	@Override
-	public String parse(String ligne) {
-		
-		if (this.parser!=null)
-		  return this.parser.parse(ligne).replaceAll("[^a-zA-Z 0-9]", ""); 
-		return ligne.replaceAll("[^a-zA-Z 0-9 +]", "");
-	}
+   public FilterEncodage(IParser pars) {
+      super(pars);
+   }
+
+   @Override
+   public String parse(String ligne) {
+      ligne.replaceAll("[^a-zA-Z 0-9]", "");
+      if (this.parser != null)
+         return this.parser.parse(ligne);
+      return ligne;
+   }
 
 }
