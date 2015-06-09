@@ -4,33 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Train {
-   // /////////////////
 
-   // private String periode ;
-   private List<Circulation> circulation;
+	private List<Circulation> circulation;
 
-   // /////////////////
+	public List<Circulation> getCirculation() {
+		return this.circulation;
+	}
 
-   public List<Circulation> getCirculation() {
-      return this.circulation;
-   }
+	public void setCirculation(List<Circulation> circulation) {
+		this.circulation = circulation;
+	}
 
-   public void setCirculation(List<Circulation> circulation) {
-      this.circulation = circulation;
-   }
+	public String getChaineCompare() {
+		StringBuilder sb = new StringBuilder();
 
-   public String getChaineCompare() {
-      StringBuilder sb = new StringBuilder();
+		for (Circulation circulation : this.circulation) {
+			sb.append(circulation.getChaineCircu());
+		}
 
-      for (Circulation circulation : this.circulation) {
-         sb.append(circulation.getChaineCircu());
-      }
+		return sb.toString();
+	}
 
-      return sb.toString();
-   }
+	public Train() {
+		this.circulation = new ArrayList<>();
+	}
 
-   public Train() {
-      this.circulation = new ArrayList<>();
-   }
-
+	
 }

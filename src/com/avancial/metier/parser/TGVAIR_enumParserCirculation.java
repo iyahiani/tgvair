@@ -42,18 +42,28 @@ public enum TGVAIR_enumParserCirculation {
 	/**
 	 * position Numéro du Train
 	 */
-	POSITION_NUMERO_TRAIN(64,70) ;
-	; 
+	POSITION_NUMERO_TRAIN(64,70), 
+	/**
+	 * valeur de la compagnie de train 
+	 */
+	VALEUR_COMPAGNIE_TRAIN("SN") 
+	;
+	 
 	
 	private int postionDebut ; 
 	private int postionFin ;
+	private String compagnieTrain ;
 	
 	private TGVAIR_enumParserCirculation(int debut, int fin) {
 	
 		this.postionDebut= debut ; 
 		this.postionFin = fin ; 
 	}
-
+	
+	private TGVAIR_enumParserCirculation(String compagnieTrain) {
+		this.compagnieTrain = compagnieTrain ;
+	}
+	
 	public int getPostionDebut() {
 		return postionDebut;
 	}
@@ -69,5 +79,14 @@ public enum TGVAIR_enumParserCirculation {
 	public void setPostionFin(int postionFin) {
 		this.postionFin = postionFin;
 	}
+
+	public String getCompagnieTrain() {
+		return compagnieTrain;
+	}
+
+	public void setCompagnieTrain(String compagnieTrain) {
+		this.compagnieTrain = compagnieTrain;
+	}
+	
 	
 }

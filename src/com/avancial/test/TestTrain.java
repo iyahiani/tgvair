@@ -1,5 +1,6 @@
 package com.avancial.test;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -20,20 +21,20 @@ public class TestTrain {
 		   
 		   Circulation circul1 = new Circulation() ; 
 		   Circulation circul2 = new Circulation();
-		   circul1.setDateDebut("01JAN15");
-		   circul1.setDateFin("30JAN15");
+		   circul1.setDateDebut(new Date ("01JAN15"));
+		   circul1.setDateFin(new Date("30JAN15"));
 		   circul1.setOrigine("CDG");
 		   circul1.setDestination("MAR");
-		   circul1.setHeureArrivee("1500"); 
-		   circul1.setHeureDepart("1515");
+		   circul1.setHeureArrivee(1500); 
+		   circul1.setHeureDepart(1515);
 		   circul1.setJoursCirculation("123");
 		   
-		   circul2.setDateDebut("01JAN15");
-		   circul2.setDateFin("30JAN15");
+		   circul2.setDateDebut(new Date("01JAN15"));
+		   circul2.setDateFin(new Date("30JAN15"));
 		   circul2.setOrigine("CDG");
 		   circul2.setDestination("MAR");
-		   circul2.setHeureArrivee("1500"); 
-		   circul2.setHeureDepart("1515");
+		   circul2.setHeureArrivee(1500); 
+		   circul2.setHeureDepart(1515);
 		   circul2.setJoursCirculation("123");
 		   
 		   List<Circulation> listCircu = new ArrayList<Circulation>() ; 
@@ -53,20 +54,20 @@ public class TestTrain {
 		   
 		   Circulation circul1 = new Circulation() ; 
 		   Circulation circul2 = new Circulation();
-		   circul1.setDateDebut("01JAN15");
-		   circul1.setDateFin("30JAN15");
+		   circul1.setDateDebut(new Date("01JAN15"));
+		   circul1.setDateFin(new Date("30JAN15"));
 		   circul1.setOrigine("CDG");
 		   circul1.setDestination("MAR");
-		   circul1.setHeureArrivee("1500"); 
-		   circul1.setHeureDepart("1515");
+		   circul1.setHeureArrivee(1500); 
+		   circul1.setHeureDepart(1515);
 		   circul1.setJoursCirculation("123");
 		   
-		   circul2.setDateDebut("01JAN15");
-		   circul2.setDateFin("30JAN15");
+		   circul2.setDateDebut(new Date("01JAN15"));
+		   circul2.setDateFin(new Date("30JAN15"));
 		   circul2.setOrigine("CDG");
 		   circul2.setDestination("MAR");
-		   circul2.setHeureArrivee("1500"); 
-		   circul2.setHeureDepart("1515");
+		   circul2.setHeureArrivee(1500); 
+		   circul2.setHeureDepart(1515);
 		   circul2.setJoursCirculation("123");
 		   
 		   List<Circulation> listCircu = new ArrayList<Circulation>() ;
@@ -76,20 +77,20 @@ public class TestTrain {
 		   
 		    circul1 = new Circulation() ; 
 		    circul2 = new Circulation();
-		   circul1.setDateDebut("01JAN15");
-		   circul1.setDateFin("30JAN15");
+		   circul1.setDateDebut(new Date("01JAN15"));
+		   circul1.setDateFin(new Date("30JAN15"));
 		   circul1.setOrigine("CDG");
 		   circul1.setDestination("MAR");
-		   circul1.setHeureArrivee("1500"); 
-		   circul1.setHeureDepart("1515");
+		   circul1.setHeureArrivee(1500); 
+		   circul1.setHeureDepart(1515);
 		   circul1.setJoursCirculation("123");
 		   
-		   circul2.setDateDebut("01JAN15");
-		   circul2.setDateFin("30JAN15");
+		   circul2.setDateDebut(new Date("01JAN15"));
+		   circul2.setDateFin(new Date("30JAN15"));
 		   circul2.setOrigine("CDG");
 		   circul2.setDestination("MAR");
-		   circul2.setHeureArrivee("1500"); 
-		   circul2.setHeureDepart("1515");
+		   circul2.setHeureArrivee(1500); 
+		   circul2.setHeureDepart(1515);
 		   circul2.setJoursCirculation("1234");
 		   
 		   listCircu2.add(circul1); 

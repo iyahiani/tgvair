@@ -23,4 +23,6 @@ public interface ITrain {
 	public String getTrainOD() ;
 
 	public String getChaineCompare();
+	
+	
 }

@@ -1,8 +1,11 @@
 package com.avancial.tgvair.metier;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import com.avancial.metier.parser.TGVAIR_enumParserCirculation;
 import com.avancial.tgvair.DataBeans.CirculationDataBean;
@@ -11,8 +14,8 @@ public class Circulation implements ICirculation {
 
 	private Date dateDebut;
 	private Date dateFin;
-	private String heureArrivee;
-	private String heureDepart;
+	private int heureArrivee;
+	private int heureDepart;
 	private String origine;
 	private String destination;
 	private String joursCirculation;
@@ -54,9 +57,12 @@ public class Circulation implements ICirculation {
 
 	@SuppressWarnings("deprecation")
 	public String getChaineCircu() {
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.getDateDebut().toGMTString());
-		sb.append(this.getDateFin().toGMTString());
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy", Locale.ENGLISH);
+		
+		sb.append(sdf.format(this.getDateDebut()));
+		sb.append(sdf.format(this.getDateFin()));
 		sb.append(this.getHeureDepart());
 		sb.append(this.getHeureArrivee());
 		sb.append(this.getOrigine());
@@ -69,16 +75,16 @@ public class Circulation implements ICirculation {
 	}
 
 	public Circulation getCirculation(String chaine) throws ParseException {
-		DecimalFormat formatter =  new DecimalFormat("000000") ; 
+		
 		Circulation circul = new Circulation();
 		if (chaine.length() > 0) {
 
-			circul.setDateDebut(ParsingDate.toDate(chaine.substring(
+			circul.setDateDebut(ParsingDateCirculSSIM.toDate(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_DATE_DEBUT_CIRCU
 							.getPostionFin())));
-			circul.setDateFin(ParsingDate.toDate(chaine.substring(
+			circul.setDateFin(ParsingDateCirculSSIM.toDate(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_DATE_FIN_CIRCU
@@ -93,16 +99,16 @@ public class Circulation implements ICirculation {
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_ORGINE
 							.getPostionFin()));
-			circul.setHeureDepart(chaine.substring(
+			circul.setHeureDepart(Integer.parseInt(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_HEURE_DEPART
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_HEURE_DEPART
-							.getPostionFin()));
-			circul.setHeureArrivee(chaine.substring(
+							.getPostionFin())));
+			circul.setHeureArrivee(Integer.valueOf(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_HEURE_ARRIVER
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_HEURE_ARRIVER
-							.getPostionFin()));
+							.getPostionFin())));
 			circul.setJoursCirculation(chaine.substring(
 					TGVAIR_enumParserCirculation.POSITION_JOURS_CIRCULATION
 							.getPostionDebut(),
@@ -123,7 +129,6 @@ public class Circulation implements ICirculation {
 							.getPostionDebut(),
 					TGVAIR_enumParserCirculation.POSITION_NUMERO_TRAIN
 							.getPostionFin()));
-
 		}
 
 		return circul;
@@ -145,19 +150,19 @@ public class Circulation implements ICirculation {
 		this.dateFin = dateFin;
 	}
 
-	public String getHeureArrivee() {
+	public int getHeureArrivee() {
 		return heureArrivee;
 	}
 
-	public void setHeureArrivee(String heureArrivee) {
+	public void setHeureArrivee(int heureArrivee) {
 		this.heureArrivee = heureArrivee;
 	}
 
-	public String getHeureDepart() {
+	public int getHeureDepart() {
 		return heureDepart;
 	}
 
-	public void setHeureDepart(String heureDepart) {
+	public void setHeureDepart(int heureDepart) {
 		this.heureDepart = heureDepart;
 	}
 
@@ -188,8 +193,8 @@ public class Circulation implements ICirculation {
 	public CirculationDataBean getCirculationDatabean(Circulation circulation) {
 		circulationDataBean = new CirculationDataBean();
 		circulationDataBean.setDestination(circulation.getDestination());
-		circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
-		circulationDataBean.setHeureDepart(circulation.getHeureDepart());
+		//circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
+		//circulationDataBean.setHeureDepart(circulation.getHeureDepart());
 		return circulationDataBean;
 	}
 }

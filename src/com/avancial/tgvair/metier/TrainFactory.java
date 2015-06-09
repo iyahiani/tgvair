@@ -7,14 +7,14 @@ import com.avanciale.TGVAIR.DAO.TrainDAO;
 public class TrainFactory implements ITrainFactory {
 
 	/**
-	 * @return 
+	 * @return la Factory de la classe train
 	 *  
 	 */
 	@Override
 	public ITrain createTrainByListCirculation(List<Circulation> circul) {
 		
 		ITrain train = new TrainDAO() ; 
-		train.setCirculation(circul); 		
+		train.setCirculation(circul);  		
 		return train ;
 	}
 									

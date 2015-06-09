@@ -1,6 +1,7 @@
 package com.avancial.test;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import com.avancial.tgvair.metier.Circulation;
 public class CirculationTest {
 
    @Test
-   public void circulTest() throws IOException {
+   public void circulTest() throws IOException, ParseException {
       IReader reader = new ReaderSSIM("D:/Users/ismael.yahiani/Documents/SN5209.txt");
       String ligneSSIM;
       Circulation circul = new Circulation();

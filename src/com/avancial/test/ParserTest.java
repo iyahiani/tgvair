@@ -25,4 +25,3 @@ public class ParserTest {
    }
 }
 
-// / new FilterSSIM(new FilterEncodage()) .Je suis le filtre encodage.
