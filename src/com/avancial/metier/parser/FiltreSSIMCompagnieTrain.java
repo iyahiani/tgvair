@@ -19,7 +19,7 @@ public class FiltreSSIMCompagnieTrain extends AFilter {
 			ligne = "";
 		
 		if (this.parser != null && !ligne.isEmpty())
-			this.parser.parse(ligne);
+			return this.parser.parse(ligne);
 
 		return ligne;
 	}

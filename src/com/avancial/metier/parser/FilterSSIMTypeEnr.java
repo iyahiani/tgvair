@@ -11,6 +11,7 @@ import com.avancial.parser.IParser;
  */
 
 public class FilterSSIMTypeEnr extends AFilter {
+	
 	public FilterSSIMTypeEnr(IParser pars) {
 		super(pars);
 	}
@@ -25,7 +26,7 @@ public class FilterSSIMTypeEnr extends AFilter {
 			ligne = "";
 
 		if (this.parser != null && !ligne.isEmpty())
-			this.parser.parse(ligne);
+			return this.parser.parse(ligne);
 
 		return ligne;
 	}
