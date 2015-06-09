@@ -11,7 +11,7 @@ public class CirculationFactory implements ICirculation {
 	public List<Circulation> getCirculList() {
 
 		List<Circulation> listCircul = new ArrayList<Circulation>();
-
+		
 		return listCircul;
 	}
 
