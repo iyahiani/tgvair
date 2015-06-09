@@ -12,7 +12,7 @@ import com.avancial.parser.IParser;
 import com.avancial.reader.IReader;
 import com.avancial.reader.ReaderSSIM;
 import com.avancial.tgvair.metier.Circulation;
-import com.avancial.tgvair.metier.CirculationFactory;
+import com.avancial.tgvair.metier.TGVAIRFactory;
 
 public class CirculationTest {
 
@@ -20,7 +20,7 @@ public class CirculationTest {
    public void circulTest() throws IOException, ParseException {
       IReader reader = new ReaderSSIM("D:/Users/ismael.yahiani/Documents/SN5209.txt");
       String ligneSSIM;
-      CirculationFactory circul = new CirculationFactory();
+      TGVAIRFactory circul = new TGVAIRFactory();
 
       IParser par = new ParserSSIM(new FilterSSIMTypeEnr(new FilterEncodage(null)));
       while ((ligneSSIM = reader.readLine()) != null) {
