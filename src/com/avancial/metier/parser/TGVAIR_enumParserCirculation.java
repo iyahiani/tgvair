@@ -42,11 +42,11 @@ public enum TGVAIR_enumParserCirculation {
 	/**
 	 * position Numéro du Train
 	 */
-	POSITION_NUMERO_TRAIN(64,70), 
+	POSITION_NUMERO_TRAIN(64,70)
 	/**
 	 * valeur de la compagnie de train 
 	 */
-	VALEUR_COMPAGNIE_TRAIN("SN") 
+	
 	;
 	 
 	
