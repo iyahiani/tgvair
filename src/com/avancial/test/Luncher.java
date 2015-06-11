@@ -30,7 +30,7 @@ public class Luncher {
 			chaine = par.parse(file);
 			if (chaine.length() > 0) {
 			test = par.getSSIMResult(chaine);
-			System.out.println(test);
+			System.out.println(test.size());
 			}
 		}
 	}
