@@ -20,9 +20,9 @@ public class FilterSSIMTypeEnr extends AFilter {
 	public String parse(String ligne) {
 
 		if (ligne.substring(
-				TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(),
-				TGVAIR_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin())
-				.equals(TGVAIR_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
+				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(),
+				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin())
+				.equals(APP_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
 			ligne = "";
 
 		if (this.parser != null && !ligne.isEmpty())

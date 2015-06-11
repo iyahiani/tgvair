@@ -7,7 +7,7 @@ package com.avancial.metier.parser;
  * @author ismael.yahiani
  *
  */
-public enum TGVAIR_enumParserSSIM {
+public enum APP_enumParserSSIM {
 	/**
 	 * Position du type de l'enregistrement
 	 */
@@ -79,12 +79,12 @@ public enum TGVAIR_enumParserSSIM {
 	private String typeEnr;
 	private String CompagnieTrain;
 
-	private TGVAIR_enumParserSSIM(String type) {
+	private APP_enumParserSSIM(String type) {
 		this.setTypeEnr(type);
 		this.setCompagnieTrain(type);
 	}
 
-	private TGVAIR_enumParserSSIM(int position, int longueur) {
+	private APP_enumParserSSIM(int position, int longueur) {
 
 		this.positionDebut = position;
 		this.postionFin = longueur;

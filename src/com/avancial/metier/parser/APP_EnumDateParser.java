@@ -1,6 +1,6 @@
 package com.avancial.metier.parser;
 
-public enum TGVAIR_Enum_Date_Parser {
+public enum APP_EnumDateParser {
 
 	POSITION_JOUR_debPeriode(0,2) ,
 	POSITION_MOIS_debPeriode(2,5) ,
@@ -10,7 +10,7 @@ public enum TGVAIR_Enum_Date_Parser {
 	private int positionFin ;
 	
 	
-	TGVAIR_Enum_Date_Parser(int deb, int fin) {
+	APP_EnumDateParser(int deb, int fin) {
 		this.positionDebut = deb ; 
 		this.positionFin = fin ;	
 	}

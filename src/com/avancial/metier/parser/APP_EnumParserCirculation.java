@@ -1,6 +1,20 @@
 package com.avancial.metier.parser;
 
-public enum TGVAIR_enumParserCirculation {
+public enum APP_enumParserCirculation {
+	
+	/**
+	 * Position type enregistrement 
+	 */
+	POSITION_TYPE_ENREGISTREMENT(0,1) ,
+	/**
+	 * Position de l'identifiant de la tranche
+	 */
+	POSITION_IDENTIFIANT_TRANCHE(1, 9),
+	/**
+	 * position du Rang du tronçon
+	 */
+	POSITION_RANG_TRANCON(9, 11),
+
 	/**
 	 * position de la date de debut de la circulation
 	 */
@@ -13,6 +27,14 @@ public enum TGVAIR_enumParserCirculation {
 	 * Position de l'heure de depart
 	 */
 	POSITION_HEURE_DEPART(37,41), 
+	/**
+	 * Diffrence GMT au depart
+	 */
+	POSITION_DIFF_GMT_DEPART(41,46), 
+	/**
+	 * Diffrence GMT au ARRIVER
+	 */
+	POSITION_DIFF_GMT_ARRIVER(55,60),
 	/**
 	 * Position de l'heure d'arriver 
 	 */
@@ -54,13 +76,13 @@ public enum TGVAIR_enumParserCirculation {
 	private int postionFin ;
 	private String compagnieTrain ;
 	
-	private TGVAIR_enumParserCirculation(int debut, int fin) {
+	private APP_enumParserCirculation(int debut, int fin) {
 	
 		this.postionDebut= debut ; 
 		this.postionFin = fin ; 
 	}
 	
-	private TGVAIR_enumParserCirculation(String compagnieTrain) {
+	private APP_enumParserCirculation(String compagnieTrain) {
 		this.compagnieTrain = compagnieTrain ;
 	}
 	

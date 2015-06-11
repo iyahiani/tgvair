@@ -3,6 +3,8 @@ package com.avancial.test;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.avancial.metier.parser.FilterEncodage;
 import com.avancial.metier.parser.FilterSSIMTypeEnr;
@@ -20,15 +22,15 @@ public class Luncher {
 		IReader reader = new ReaderSSIM(
 				"D:/Users/ismael.yahiani/Documents/SN5209.txt");
 		String file, chaine;
-		TGVAIRFactory factory = new TGVAIRFactory();
-		ArrayList<Circulation> listCircul = new ArrayList<Circulation>();
+
+		Map<String, String> test = new HashMap<String, String>() ; 
 		ParserSSIM par = new ParserSSIM(new FilterEncodage(
 				new FiltreSSIMCompagnieTrain(new FilterSSIMTypeEnr(null))));
 		while ((file = reader.readLine()) != null) {
 			chaine = par.parse(file);
 			if (chaine.length() > 0) {
-				Circulation circulation = factory.getCirculation(chaine);
-				listCircul.add(circulation);
+			test = par.getSSIMResult(chaine);
+			System.out.println(test);
 			}
 		}
 	}

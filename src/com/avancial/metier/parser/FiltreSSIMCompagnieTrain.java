@@ -13,9 +13,9 @@ public class FiltreSSIMCompagnieTrain extends AFilter {
 	@Override
 	public String parse(String ligne) {
 		if (!ligne.substring(
-				TGVAIR_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionDebut(),
-				TGVAIR_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionFin())
-				.equals(TGVAIR_enumParserSSIM.VALEUR_COMPAGNIE_TRAIN.getCompagnieTrain()))
+				APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionDebut(),
+				APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionFin())
+				.equals(APP_enumParserSSIM.VALEUR_COMPAGNIE_TRAIN.getCompagnieTrain()))
 			ligne = "";
 		
 		if (this.parser != null && !ligne.isEmpty())
