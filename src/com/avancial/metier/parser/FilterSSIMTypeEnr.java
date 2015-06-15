@@ -7,31 +7,35 @@ import com.avancial.parser.IParser;
 
 /**
  * 
- * @author ismael.yahiani Permet de filter la ssim en enlevant les enregistrements de type 4
+ * @author ismael.yahiani Permet de filter la ssim en enlevant les
+ *         enregistrements de type 4
  * 
  */
 
 public class FilterSSIMTypeEnr extends AFilter {
 
-   public FilterSSIMTypeEnr(IParser pars) {
-      super(pars);
-   }
+	public FilterSSIMTypeEnr(IParser pars) {
+		super(pars);
+	}
 
-   @Override
-   public String parse(String ligne) {
+	@Override
+	public String parse(String ligne) {
 
-      if (ligne.substring(APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(), APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()).equals(APP_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
-         ligne = "";
+		if (ligne.substring(
+				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(),
+				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()).equals(
+				APP_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
+			ligne = "";
 
-      if (this.parser != null && !ligne.isEmpty())
-         return this.parser.parse(ligne);
+		if (this.parser != null && !ligne.isEmpty())
+			return this.parser.parse(ligne);
 
-      return ligne;
-   }
+		return ligne;
+	}
 
-   @Override
-   public Map<String, String> getParsedResult() {
+	@Override
+	public Map<String, String> getParsedResult() {
 
-      return null;
-   }
+		return null;
+	}
 }
