@@ -14,7 +14,7 @@ public class ReaderSSIM extends AReaderTxt {
 	/**
 	 * 
 	 * @param fileName
-	 * lecture du fichier SSIM ligne par ligne
+	 *            lecture du fichier SSIM ligne par ligne
 	 **/
 	String path;
 	BufferedReader br;
@@ -24,8 +24,9 @@ public class ReaderSSIM extends AReaderTxt {
 		this.br = new BufferedReader(new FileReader(path));
 	}
 
-	public String readLine() throws IOException  {
-
-		return this.br.readLine();
+	public String readLine() throws IOException {
+	
+		return this.br.readLine() ;
+	
 	}
 }

@@ -26,6 +26,7 @@ public class FilterSSIMTypeEnr extends AFilter {
 				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()).equals(
 				APP_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
 			ligne = "";
+		
 
 		if (this.parser != null && !ligne.isEmpty())
 			return this.parser.parse(ligne);

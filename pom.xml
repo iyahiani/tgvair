@@ -10,15 +10,16 @@
 		<snapshotRepository>
 			<id>AvancialSnapShots</id>
 			<name>Internal Releases</name>
-			<url>http://vanguard:8081/nexus/content/repositories/AvancialSnapShots/</url>
-			  <releases><enabled>false</enabled></releases>
-         <snapshots><enabled>true</enabled></snapshots>
+			<url>http://vanguard:8081/nexus/content/repositories/AvancialSnapShots/
+			</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</snapshotRepository>
 	</distributionManagement>
-
-
-
-
 	<build>
 
 		<sourceDirectory>src</sourceDirectory>
@@ -63,6 +64,10 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -161,6 +166,11 @@
 				<groupId>avancial.fr</groupId>
 				<artifactId>parser</artifactId>
 				<version>0.0.2-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.8</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
