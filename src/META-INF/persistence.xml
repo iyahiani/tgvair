@@ -10,7 +10,6 @@
 		<class>com.avancial.socle.data.model.databean.UtilisateurDataBean</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
-
 		<properties>
 
 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/socle" />

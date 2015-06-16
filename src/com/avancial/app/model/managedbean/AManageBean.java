@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.socle.model.managedbean;
+package com.avancial.app.model.managedbean;
 
 import java.io.Serializable;
 

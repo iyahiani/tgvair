@@ -1,4 +1,4 @@
-package com.avancial.socle.model.managedbean;
+package com.avancial.app.model.managedbean;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,7 +57,8 @@ public class LoginManagedBean implements Serializable {
     * @throws IOException
     */
    public void login() throws IOException {
-      ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    
+	  ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
       HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 
       try {

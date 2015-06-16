@@ -12,12 +12,14 @@
 			<name>Internal Releases</name>
 			<url>http://vanguard:8081/nexus/content/repositories/AvancialSnapShots/
 			</url>
+		
 			<releases>
 				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
+	
 		</snapshotRepository>
 	</distributionManagement>
 	<build>
