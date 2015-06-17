@@ -67,7 +67,7 @@ public enum APP_enumParserSSIM {
    /**
     * Valeur du type des enregistrements de type4
     */
-   VALEUR_TYPE4("4"),
+   VALEUR_TYPE3("3"),
    /**
 	 *	 
 	 */

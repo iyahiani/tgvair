@@ -21,10 +21,10 @@ public class FilterSSIMTypeEnr extends AFilter {
 	@Override
 	public String parse(String ligne) {
 
-		if (ligne.substring(
+		if (!ligne.substring(
 				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionDebut(),
 				APP_enumParserSSIM.POSITION_TYPE_ENR.getPositionFin()).equals(
-				APP_enumParserSSIM.VALEUR_TYPE4.getTypeEnr()))
+				APP_enumParserSSIM.VALEUR_TYPE3.getTypeEnr()))
 			ligne = "";
 		
 

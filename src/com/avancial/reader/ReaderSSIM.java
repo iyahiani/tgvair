@@ -25,8 +25,16 @@ public class ReaderSSIM extends AReaderTxt {
 	}
 
 	public String readLine() throws IOException {
-	
-		return this.br.readLine() ;
-	
+		
+		String ligne, temp;
+		
+		ligne = this.br.readLine();
+		
+		if (ligne != null && ligne.length() < 12 && ligne.charAt(0) == '3') {
+			temp = this.br.readLine() ; 
+			ligne = ligne.concat(temp);
+			return  ligne ; 
+		}
+		return ligne;
 	}
 }
