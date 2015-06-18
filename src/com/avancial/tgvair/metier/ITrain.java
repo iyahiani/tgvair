@@ -10,19 +10,10 @@ public interface ITrain {
 
 	public List<ITrain> getAllTrains();
 
-	public List<Train> getTrainByPeriodes();
-
-	public ITrain findTrainByID(ITrain train);
-
-	public ITrain findTrainByPerdiode(String periode);
-
-	public ITrain findTrainByPerdiode(ITrain train);
+	public ITrain findTrainByID(int[] train, String ligne);
 
 	public void setCirculation(List<Circulation> circulation); 
-	
-	public String getTrainOD() ;
 
 	public String getChaineCompare();
-	
-	
+		
 }

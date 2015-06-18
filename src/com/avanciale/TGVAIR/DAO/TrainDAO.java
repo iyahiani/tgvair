@@ -1,10 +1,16 @@
 package com.avanciale.TGVAIR.DAO;
 import java.util.List;
+
+import com.avancial.metier.parser.APP_enumParserSSIM;
+import com.avancial.metier.parser.FilterEncodage;
+import com.avancial.metier.parser.FilterSSIMTypeEnr;
+import com.avancial.parser.IParser;
+import com.avancial.parser.ParserFixedLength;
 import com.avancial.tgvair.metier.Circulation;
 import com.avancial.tgvair.metier.ITrain;
 import com.avancial.tgvair.metier.Train;
 
-public class TrainDAO implements ITrain {
+public class TrainDAO implements ITrain{
 
 	public TrainDAO() {
 
@@ -12,43 +18,25 @@ public class TrainDAO implements ITrain {
 
 	@Override
 	public boolean compare(ITrain train) {
-
+		
 		return false;
 	}
 
 	@Override
 	public Train getTrainByID() {
-
+		
 		return null;
 	}
 
 	@Override
 	public List<ITrain> getAllTrains() {
-
+		
 		return null;
 	}
 
 	@Override
-	public List<Train> getTrainByPeriodes() {
-
-		return null;
-	}
-
-	@Override
-	public ITrain findTrainByID(ITrain train) {
-
-		return null;
-	}
-
-	@Override
-	public ITrain findTrainByPerdiode(String periode) {
-
-		return null;
-	}
-
-	@Override
-	public ITrain findTrainByPerdiode(ITrain train) {
-
+	public ITrain findTrainByID(int[] train,String ligne) {
+		
 		return null;
 	}
 
@@ -58,15 +46,9 @@ public class TrainDAO implements ITrain {
 
 	@Override
 	public String getChaineCompare() {
-
+		
 		return null;
 	}
 
-	@Override
-	public String getTrainOD() {
-		
-		return null;
-		
-	}
-
+	
 }

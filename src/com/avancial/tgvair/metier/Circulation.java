@@ -17,8 +17,17 @@ public class Circulation  {
 	private String joursCirculation;
 	private String indicateurFer;
 	private String compagnieTrain;
-	private String numeroTrain;
+	private int numeroTrain;
+	private String periode ; 
 	
+	public String getPeriode() {
+		return periode;
+	}
+
+	public void setPeriode(String periode) {
+		this.periode = periode;
+	}
+
 	public String getIndicateurFer() {
 		return indicateurFer;
 	}
@@ -35,12 +44,12 @@ public class Circulation  {
 		this.compagnieTrain = compagnieTrain;
 	}
 
-	public String getNumeroTrain() {
+	public int getNumeroTrain() {
 		return numeroTrain;
 	}
 
-	public void setNumeroTrain(String numeroTrain) {
-		this.numeroTrain = numeroTrain;
+	public void setNumeroTrain(int i) {
+		this.numeroTrain = i;
 	}
 
 	private CirculationDataBean circulationDataBean;
@@ -55,8 +64,8 @@ public class Circulation  {
 		StringBuilder sb = new StringBuilder();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy", Locale.ENGLISH);
 		
-		sb.append(sdf.format(this.getDateDebut()));
-		sb.append(sdf.format(this.getDateFin()));
+		sb.append(this.getDateDebut());
+		sb.append(this.getDateFin());
 		sb.append(this.getHeureDepart());
 		sb.append(this.getHeureArrivee());
 		sb.append(this.getOrigine());
@@ -67,8 +76,6 @@ public class Circulation  {
 		sb.append(this.getNumeroTrain());
 		return sb.toString();
 	}
-
-	
 
 	public Date getDateDebut() {
 		return dateDebut;

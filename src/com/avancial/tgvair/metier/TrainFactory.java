@@ -13,7 +13,7 @@ public class TrainFactory implements ITrainFactory {
 	@Override
 	public ITrain createTrainByListCirculation(List<Circulation> circul) {
 		
-		ITrain train = new TrainDAO() ; 
+		TrainDAO train = new TrainDAO() ; 
 		train.setCirculation(circul);  		
 		return train ;
 	}

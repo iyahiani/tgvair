@@ -3,11 +3,27 @@ package com.avancial.tgvair.metier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Train {
+import com.avancial.metier.parser.APP_enumParserSSIM;
+import com.avancial.metier.parser.FilterEncodage;
+import com.avancial.metier.parser.FilterSSIMTypeEnr;
+import com.avancial.parser.IParser;
+import com.avancial.parser.ParserFixedLength;
 
-	private List<Circulation> circulation;
+public class Train implements ITrain{
 
-	public List<Circulation> getCirculation() {
+	private int[] numTrain ;
+	
+    private List<Circulation> circulation;
+
+	public int[] getNumTrain() {
+		return numTrain;
+	}
+
+	public void setNumTrain(int[] numTrain) {
+		this.numTrain = numTrain;
+	}
+    
+    public List<Circulation> getCirculation() {
 		return this.circulation;
 	}
 
@@ -16,6 +32,7 @@ public class Train {
 	}
 
 	public String getChaineCompare() {
+	
 		StringBuilder sb = new StringBuilder();
 
 		for (Circulation circulation : this.circulation) {
@@ -29,5 +46,26 @@ public class Train {
 		this.circulation = new ArrayList<>();
 	}
 
-	
+	@Override
+	public boolean compare(ITrain train) {
+		
+		return false;
+	}
+
+	@Override
+	public Train getTrainByID() {
+		
+		return null;
+	}
+
+	@Override
+	public List<ITrain> getAllTrains() {
+		
+		return null;
+	}
+
+	@Override
+	public ITrain findTrainByID(int[] train, String ligne) {
+		return null ;
+	}
 }

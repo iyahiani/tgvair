@@ -6,7 +6,7 @@ import java.util.Timer;
 public class TrainCatalogue {
 
 	private String Nom_compagnie;
-	private int Numero_Train_Cat;
+	private int[] Numero_Train_Cat;
 	private String flight_number;
 	private String origine;
 	private String depart;
@@ -26,11 +26,11 @@ public class TrainCatalogue {
 		Nom_compagnie = nom_compagnie;
 	}
 
-	public int getNumero_Train_Cat() {
+	public int[] getNumero_Train_Cat() {
 		return Numero_Train_Cat;
 	}
 
-	public void setNumero_Train_Cat(int numero_Train_Cat) {
+	public void setNumero_Train_Cat(int[] numero_Train_Cat) {
 		Numero_Train_Cat = numero_Train_Cat;
 	}
 
