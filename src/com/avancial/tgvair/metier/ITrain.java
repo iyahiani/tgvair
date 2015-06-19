@@ -7,6 +7,8 @@ public interface ITrain {
 	public boolean compare(ITrain train);
 
 	public Train getTrainByID();
+	
+	public void addCirculation (Circulation circultation );
 
 	public List<ITrain> getAllTrains();
 
@@ -15,5 +17,7 @@ public interface ITrain {
 	public void setCirculation(List<Circulation> circulation); 
 
 	public String getChaineCompare();
+	
+	public List<Circulation> getCirculations();
 		
 }

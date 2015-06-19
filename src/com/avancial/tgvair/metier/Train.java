@@ -63,4 +63,15 @@ public class Train implements ITrain{
 	public ITrain findTrainByID(int[] train, String ligne) {
 		return null ;
 	}
+
+	@Override
+	public void addCirculation(Circulation circultation) {
+		this.circulation.add(circultation);
+	}
+
+	@Override
+	public List<Circulation> getCirculations() {
+		
+		return this.circulation;
+	}
 }

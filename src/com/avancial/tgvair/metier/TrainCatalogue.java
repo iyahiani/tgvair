@@ -1,9 +1,11 @@
 package com.avancial.tgvair.metier;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-public class TrainCatalogue {
+public class TrainCatalogue implements ITrainCatalogue{
 
 	private String Nom_compagnie;
 	private int[] Numero_Train_Cat;
@@ -14,11 +16,11 @@ public class TrainCatalogue {
 	private Date heure_Arriver;
 	private String jours_Circulation_Compagnie;
 	private List<Date> Exception;
-
-	public TrainCatalogue() {
+	
+ 	public TrainCatalogue() {
 	
 	}
-
+ 	
 	public String getNom_compagnie() {
 		return Nom_compagnie;
 	}
@@ -26,7 +28,7 @@ public class TrainCatalogue {
 	public void setNom_compagnie(String nom_compagnie) {
 		Nom_compagnie = nom_compagnie;
 	}
-
+	
 	public int[] getNumero_Train_Cat() {
 		return Numero_Train_Cat;
 	}
@@ -54,7 +56,7 @@ public class TrainCatalogue {
 	public String getDepart() {
 		return depart;
 	}
-
+	
 	public void setDepart(String depart) {
 		this.depart = depart;
 	}
@@ -87,9 +89,30 @@ public class TrainCatalogue {
 	public List<Date> getException() {
 		return Exception;
 	}
-
+	
 	public void setException(List<Date> exception) {
 		Exception = exception;
 	}
-
+	
+	@Override
+	public boolean verifyTrainCatalogueExceptionInPeriode(Date dateDebut, Date dateFin) {
+		
+		GregorianCalendar compt = new GregorianCalendar() ; 
+		compt.setTime(dateDebut);
+		
+		while(compt.getTime().before(dateFin)) {
+			for (Date d :this.getException()) {
+				if (d.equals(compt.getTime())) return true ;
+			} 
+			compt.add(Calendar.DAY_OF_YEAR,1);
+		}
+		return false;
+	}
+	
+	@Override
+	public List<TrainCatalogue> trainsImpactéInPeriode() {
+		
+		return null;
+	}
+	
 }
