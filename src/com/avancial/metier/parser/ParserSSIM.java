@@ -47,9 +47,14 @@ public class ParserSSIM extends AParser {
 						APP_enumParserSSIM.POSITION_RANG_TRANCON
 								.getPositionFin()));
 				sb.append(ligne.subSequence(
-						APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION
+						APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT
 								.getPositionDebut(),
-						APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION
+						APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT
+								.getPositionFin()));
+				sb.append(ligne.subSequence(
+						APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
+								.getPositionDebut(),
+						APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
 								.getPositionFin()));
 				sb.append(ligne.subSequence(
 						APP_enumParserSSIM.POSITION_JOURS_CIRCULATION

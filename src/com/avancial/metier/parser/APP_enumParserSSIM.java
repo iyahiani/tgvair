@@ -22,7 +22,8 @@ public enum APP_enumParserSSIM {
    /**
     * position de la Periode de circulation
     */
-   POSITION_PERIODE_CIRCULATION(13, 27),
+   POSITION_PERIODE_CIRCULATION_DEBUT(13, 20),
+   POSITION_PERIODE_CIRCULATION_FIN(20, 27),
    /**
     * position des Jours de Circulation
     */
