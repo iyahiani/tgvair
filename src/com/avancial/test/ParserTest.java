@@ -8,7 +8,6 @@ import org.junit.Test;
 import com.avancial.metier.parser.APP_enumParserSSIM;
 import com.avancial.metier.parser.FilterEncodage;
 import com.avancial.metier.parser.FilterSSIMTypeEnr;
-import com.avancial.metier.parser.ParserSSIM;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 
@@ -44,4 +43,23 @@ public class ParserTest {
 				APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.name())
 				.equals("SN"));
 	}
+	
+	/**
+	 * On veut tester la création d'un objet train en partant de la ssim et en prenant en compte le catalogue
+	 * 
+	 */
+	@Test
+	public void testOMFromSSIM(){
+		
+		//Récupérer les trains du catalogue
+		
+		//Parser la ssim en prenant en compte le catalogue
+		
+		
+		
+		
+		
+		
+	}
+	
 }

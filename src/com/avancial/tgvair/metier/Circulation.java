@@ -64,8 +64,8 @@ public class Circulation  {
 		StringBuilder sb = new StringBuilder();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy", Locale.ENGLISH);
 		
-		sb.append(this.getDateDebut());
-		sb.append(this.getDateFin());
+		//sb.append(this.getDateDebut());
+		//sb.append(this.getDateFin());
 		sb.append(this.getHeureDepart());
 		sb.append(this.getHeureArrivee());
 		sb.append(this.getOrigine());
@@ -74,9 +74,10 @@ public class Circulation  {
 		sb.append(this.getIndicateurFer());
 		sb.append(this.getCompagnieTrain());
 		sb.append(this.getNumeroTrain());
+		sb.append(this.getPeriode());
 		return sb.toString();
 	}
-
+	
 	public Date getDateDebut() {
 		return dateDebut;
 	}

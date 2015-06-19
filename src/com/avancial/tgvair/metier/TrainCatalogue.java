@@ -1,7 +1,7 @@
 package com.avancial.tgvair.metier;
 
 import java.util.Date;
-import java.util.Timer;
+import java.util.List;
 
 public class TrainCatalogue {
 
@@ -13,9 +13,10 @@ public class TrainCatalogue {
 	private Date heure_Depart;
 	private Date heure_Arriver;
 	private String jours_Circulation_Compagnie;
-	private Date Exception;
+	private List<Date> Exception;
 
 	public TrainCatalogue() {
+	
 	}
 
 	public String getNom_compagnie() {
@@ -83,11 +84,11 @@ public class TrainCatalogue {
 		this.jours_Circulation_Compagnie = jours_Circulation_Compagnie;
 	}
 
-	public Date getException() {
+	public List<Date> getException() {
 		return Exception;
 	}
 
-	public void setException(Date exception) {
+	public void setException(List<Date> exception) {
 		Exception = exception;
 	}
 

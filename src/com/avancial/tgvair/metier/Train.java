@@ -3,12 +3,6 @@ package com.avancial.tgvair.metier;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avancial.metier.parser.APP_enumParserSSIM;
-import com.avancial.metier.parser.FilterEncodage;
-import com.avancial.metier.parser.FilterSSIMTypeEnr;
-import com.avancial.parser.IParser;
-import com.avancial.parser.ParserFixedLength;
-
 public class Train implements ITrain{
 
 	private int[] numTrain ;
@@ -34,10 +28,11 @@ public class Train implements ITrain{
 	public String getChaineCompare() {
 	
 		StringBuilder sb = new StringBuilder();
-
+		
 		for (Circulation circulation : this.circulation) {
 			sb.append(circulation.getChaineCircu());
-		}
+			sb.append("\n");
+			}
 
 		return sb.toString();
 	}

@@ -15,7 +15,7 @@ public class TrainFactory implements ITrainFactory {
 		
 		TrainDAO train = new TrainDAO() ; 
 		train.setCirculation(circul);  		
-		return train ;
+		return train;
 	}
 									
 	@Override

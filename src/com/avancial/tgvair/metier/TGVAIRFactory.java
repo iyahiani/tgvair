@@ -4,12 +4,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avancial.metier.parser.APP_enumParserCirculation;
-
 /**
  * 
  * @author ismael.yahiani 
- *  cette class permet d'insatancié l'ensemble des objets métier 
+ *  cette class permet d'insatancié l'ensemble des objets métier TGVAIR
  */
 public class TGVAIRFactory {
 
@@ -26,7 +24,6 @@ public class TGVAIRFactory {
 		Circulation circul = new Circulation();
 
 		if (chaine.length() > 0) {
-
 			
 		}
 
@@ -36,11 +33,10 @@ public class TGVAIRFactory {
 	public Train getTrain(ArrayList<Circulation> listCircul) {
 				
 		Train train = new Train()  ;
-		String temp ; 
+		
 		
 		train.setCirculation(listCircul);
 		return train ;
 	}
 	
-
 }
