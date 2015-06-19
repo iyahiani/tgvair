@@ -1,12 +1,11 @@
 package com.avancial.metier.parser;
 
-import java.util.List;
 import java.util.Map;
 
-import com.avancial.parser.AParser;
+import com.avancial.parser.AFilter;
 import com.avancial.parser.IParser;
 
-public class FiltreCatalogue extends AParser {
+public class FiltreCatalogue extends AFilter {
 
 	private int[] numTrains;
 	
