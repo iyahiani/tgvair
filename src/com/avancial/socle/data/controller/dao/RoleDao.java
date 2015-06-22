@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+
 import com.avancial.socle.data.model.databean.RoleDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
@@ -16,6 +18,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  */
 public class RoleDao extends AbstractDao {
 
+	private static Logger log  =Logger.getLogger(RoleDao.class) ;
    @SuppressWarnings("unchecked")
    @Override
    public List<RoleDataBean> getAll() {
@@ -32,7 +35,8 @@ public class RoleDao extends AbstractDao {
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback(); 
+         log.info(e.getMessage());
          throw SocleExceptionManager.getException(e);
       }
    }
@@ -43,6 +47,7 @@ public class RoleDao extends AbstractDao {
          this.getEntityManager().remove(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
+        
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);

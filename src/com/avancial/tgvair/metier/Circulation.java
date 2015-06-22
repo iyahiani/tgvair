@@ -1,12 +1,13 @@
 package com.avancial.tgvair.metier;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import com.avancial.tgvair.DataBeans.CirculationDataBean;
 
-public class Circulation  {
+public class Circulation implements ICirculation {
 
 	private Date dateDebut;
 	private Date dateFin;
@@ -17,9 +18,9 @@ public class Circulation  {
 	private String joursCirculation;
 	private String indicateurFer;
 	private String compagnieTrain;
-	private int numeroTrain ; 
-	private String periode ; 
-	
+	private int numeroTrain;
+	private String periode;
+
 	public int getNumeroTrain() {
 		return numeroTrain;
 	}
@@ -52,7 +53,6 @@ public class Circulation  {
 		this.compagnieTrain = compagnieTrain;
 	}
 
-	
 	private CirculationDataBean circulationDataBean;
 
 	public Circulation() {
@@ -61,12 +61,12 @@ public class Circulation  {
 
 	@SuppressWarnings("deprecation")
 	public String getChaineCircu() {
-		
+
 		StringBuilder sb = new StringBuilder();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy", Locale.ENGLISH);
-		
-		//sb.append(this.getDateDebut());
-		//sb.append(this.getDateFin());
+
+		// sb.append(this.getDateDebut());
+		// sb.append(this.getDateFin());
 		sb.append(this.getHeureDepart());
 		sb.append(this.getHeureArrivee());
 		sb.append(this.getOrigine());
@@ -77,7 +77,7 @@ public class Circulation  {
 		sb.append(this.getPeriode());
 		return sb.toString();
 	}
-	
+
 	public Date getDateDebut() {
 		return dateDebut;
 	}
@@ -137,13 +137,55 @@ public class Circulation  {
 	public CirculationDataBean getCirculationDatabean(Circulation circulation) {
 		circulationDataBean = new CirculationDataBean();
 		circulationDataBean.setDestination(circulation.getDestination());
-		//circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
-		//circulationDataBean.setHeureDepart(circulation.getHeureDepart());
+		// circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
+		// circulationDataBean.setHeureDepart(circulation.getHeureDepart());
 		return circulationDataBean;
-	} 
-	
-      public boolean ComparePeriode(Circulation circul) {
-    	  if (this.getPeriode().equals(circul.getPeriode())) return true ;
-    	  return false ; 
-      }
+	}
+
+	@Override
+	public boolean comparePeriode(Circulation circul) {
+
+		if (this.getPeriode().equals(circul.getPeriode()))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean compareOrigine(Circulation circul) {
+
+		if (this.getOrigine().equals(circul.getOrigine()))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean compareDestination(Circulation circul) {
+
+		if (this.getDestination().equals(circul.getDestination()))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean compareJoursCircul(Circulation circul) {
+
+		if (this.getJoursCirculation().equals(circul.getJoursCirculation()))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean compareHeureArriver(Circulation circul) {
+		if (this.getHeureArrivee() == circul.getHeureArrivee())
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean compareHeuredepart(Circulation circul) {
+		if (this.getHeureDepart()== circul.getHeureDepart())
+			return true;
+		return false;
+	}
+
 }

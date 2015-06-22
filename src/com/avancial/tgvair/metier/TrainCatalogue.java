@@ -11,7 +11,16 @@ public class TrainCatalogue implements ITrainCatalogue{
 	private int[] Numero_Train_Cat;
 	private String flight_number;
 	private String origine;
-	private String depart;
+	private String destination;
+	private String periodeValidité ; 
+	public String getPeriodeValidité() {
+		return periodeValidité;
+	}
+
+	public void setPeriodeValidité(String periodeValidité) {
+		this.periodeValidité = periodeValidité;
+	}
+
 	private Date heure_Depart;
 	private Date heure_Arriver;
 	private String jours_Circulation_Compagnie;
@@ -53,12 +62,12 @@ public class TrainCatalogue implements ITrainCatalogue{
 		this.origine = origine;
 	}
 
-	public String getDepart() {
-		return depart;
+	public String getDestination() {
+		return destination;
 	}
 	
-	public void setDepart(String depart) {
-		this.depart = depart;
+	public void setDestination(String depart) {
+		this.destination = depart;
 	}
 
 	public Date getHeure_Depart() {
