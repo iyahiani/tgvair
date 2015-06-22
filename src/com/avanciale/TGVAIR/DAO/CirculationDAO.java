@@ -17,10 +17,7 @@ public class CirculationDAO extends AbstractDao {
 
 	private CirculationDataBean circulationDataBean ; 
 	
-	public CirculationDAO() {
-		
-	}
-
+	
 	public void save(CirculationDataBean t) throws ASocleException {
 		
 		try {

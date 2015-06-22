@@ -140,5 +140,10 @@ public class Circulation  {
 		//circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
 		//circulationDataBean.setHeureDepart(circulation.getHeureDepart());
 		return circulationDataBean;
-	}
+	} 
+	
+      public boolean ComparePeriode(Circulation circul) {
+    	  if (this.getPeriode().equals(circul.getPeriode())) return true ;
+    	  return false ; 
+      }
 }

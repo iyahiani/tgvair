@@ -33,8 +33,6 @@ public class TGVAIRFactory {
 	public Train getTrain(ArrayList<Circulation> listCircul) {
 				
 		Train train = new Train()  ;
-		
-		
 		train.setCirculation(listCircul);
 		return train ;
 	}

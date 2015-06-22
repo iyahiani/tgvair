@@ -24,7 +24,7 @@ public class Train implements ITrain{
 	public void setCirculation(List<Circulation> circulation) {
 		this.circulation = circulation;
 	}
-
+	
 	public String getChaineCompare() {
 	
 		StringBuilder sb = new StringBuilder();
@@ -44,7 +44,7 @@ public class Train implements ITrain{
 	@Override
 	public boolean compare(ITrain train) {
 		
-		return false;
+			return false;
 	}
 
 	@Override
@@ -68,10 +68,11 @@ public class Train implements ITrain{
 	public void addCirculation(Circulation circultation) {
 		this.circulation.add(circultation);
 	}
-
+	
 	@Override
 	public List<Circulation> getCirculations() {
 		
 		return this.circulation;
 	}
+	
 }

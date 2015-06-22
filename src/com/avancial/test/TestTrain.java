@@ -14,6 +14,7 @@ import com.avancial.metier.parser.FilterSSIMTypeEnr;
 import com.avancial.metier.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
+import com.avancial.tgvair.DataBeans.TarinDataBean;
 import com.avancial.tgvair.metier.Circulation;
 import com.avancial.tgvair.metier.ITrain;
 import com.avancial.tgvair.metier.ITrainFactory;
@@ -120,7 +121,7 @@ public class TestTrain {
 	public void testTrainCatalogue() {
 
 		List<String> listCircul = new ArrayList<String>();
-		
+
 		listCircul
 				.add("3 SG00156601P19SEP1519SEP15     6  FRGNB07000700+0100  FRECE07050705+0100  TERB                                                           87  FSN885112");
 		listCircul
@@ -131,15 +132,15 @@ public class TestTrain {
 				.add("3 SG00156604P19SEP1519SEP15     6  FRLEY07210721+0100  FRHVV07250725+0100  TERB                                                           87  FSN885113");
 		listCircul
 				.add("3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885112");
-		
-		String s = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885112" ;
-		String ss = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885113" ;
+
+		String s = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885112";
+		String ss = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885113";
 		int[] num_train = { 885112, 885113 };
-		List<Date> exceptions  = new ArrayList<Date>() ;
-		exceptions.add(new Date(121214)) ;
-		exceptions.add(new Date(120115)) ;
-		exceptions.add(new Date(120215)) ;
-		exceptions.add(new Date(120315)) ;
+		List<Date> exceptions = new ArrayList<Date>();
+		exceptions.add(new Date(121214));
+		exceptions.add(new Date(120115));
+		exceptions.add(new Date(120215));
+		exceptions.add(new Date(120315));
 		TrainCatalogue trainCatalogue = new TrainCatalogue();
 		trainCatalogue.setNumero_Train_Cat(num_train);
 		trainCatalogue.setDepart("1334");
@@ -153,62 +154,88 @@ public class TestTrain {
 				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
 				APP_enumParserSSIM.getNames());
 
-				Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat()[0]),
-						Integer.valueOf(s.substring(
-								APP_enumParserSSIM.POSITION_NUM_TRAIN
-										.getPositionDebut(),
-								APP_enumParserSSIM.POSITION_NUM_TRAIN
-										.getPositionFin())));
-				
-		}	
-	
+		Assert.assertEquals(Integer.valueOf(trainCatalogue
+				.getNumero_Train_Cat()[0]), Integer.valueOf(s.substring(
+				APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
+				APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
+
+	}
 	@Test
-	public void instancierTrainSSIm(){
+	public void instancierTrainSSIm() {
+
+		IParser par = new ParserFixedLength(new FilterEncodage(
+				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
+				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
+				APP_enumParserSSIM.getNames());
+
+		ArrayList<String> listLegs = new ArrayList();
+
+		listLegs.add("3 BR00000101W26APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003");
+		listLegs.add("4 BR00000101W              01921CHZWECHWIL1 GL  GL                                                                                                                                                           00000004");
+		listLegs.add("3 BR00000102W26APR1510MAY15      7 CHWIL07190719+0100  CHZTG07240724+0100  TICB                                                           70  FSN000224                                                      00000005");
+		listLegs.add("3 BR00000101W14MAY1517MAY15   4  7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000006");
+
+		String numTrain = "";
+		String numTrainSSIM = " ";
+		ITrain train = new Train();
+
+		for (String legs : listLegs) {
+
+			if (!par.parse(legs).equals("")) {
+				numTrainSSIM = par.getParsedResult().get(
+						APP_enumParserSSIM.POSITION_NUM_TRAIN.name());
+				if (!numTrain.equals(numTrainSSIM)) {
+
+					// Nouveau train
+					numTrain = numTrainSSIM;
+					train = new Train();
+					Circulation circul = new Circulation();
+					train.addCirculation(circul);
+				} else {
+					// / nouvelle circulation
+					Circulation circul = new Circulation();
+					train.addCirculation(circul);
+				}
+			}
+		}
+
 		
+		Assert.assertTrue("Test", train.getCirculations().size() == 3);
+	}
+
+	@Test
+	public void comparePeriodes() {
+
+		String chaine1 = "3 BR00000101W30APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
+		String chaine2 = "3 BR00000101W26APR1530APR15     6  CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
 		
-		
+		Circulation circul = new Circulation();
+		Circulation circul2 = new Circulation();
 
 		IParser par = new ParserFixedLength(new FilterEncodage(
 				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
 				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
 				APP_enumParserSSIM.getNames());
 		
-		ArrayList<String> listLegs=new ArrayList();
-		
-		
-		listLegs.add("3 BR00000101W26APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003");
-		listLegs.add("4 BR00000101W              01921CHZWECHWIL1 GL  GL                                                                                                                                                           00000004");
-		listLegs.add("3 BR00000102W26APR1510MAY15      7 CHWIL07190719+0100  CHZTG07240724+0100  TICB                                                           70  FSN000224                                                      00000005");
-		listLegs.add("3 BR00000101W14MAY1517MAY15   4  7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000006");
-		
-		String numTrain="";
-		String numTrainSSIM=" " ;
-		ITrain train=new Train();
-		for (String legs : listLegs) {
-			
-			if (!par.parse(legs).equals("")) {
-				numTrainSSIM=par.getParsedResult().get(APP_enumParserSSIM.POSITION_NUM_TRAIN.name());
-				if (!numTrain.equals(numTrainSSIM)) {
-					//Nouveau train
-					numTrain=numTrainSSIM;
-					train=new Train();
-					Circulation circul=new Circulation();
-					train.addCirculation(circul);
-				}
-				else {
-					Circulation circul=new Circulation();
-					train.addCirculation(circul);
-				}
-					
-				
-			}
+		if (!par.parse(chaine1).equals("")) {
+			circul.setPeriode(par.getParsedResult().get(
+					APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT
+							.name())
+					+ par.getParsedResult().get(
+							APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
+									.name()));
 		}
 		
-		System.out.println(train.getCirculations().size());
-		
-		Assert.assertTrue("Test", train.getCirculations().size()==3);
-		
+		if (!par.parse(chaine2).equals("")) {
+			
+			circul2.setPeriode(par.getParsedResult().get(
+					APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT
+							.name())
+					+ par.getParsedResult().get(
+							APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
+									.name()));
+		}
+
+		Assert.assertTrue(circul.ComparePeriode(circul2));
 	}
-	
-	
 }

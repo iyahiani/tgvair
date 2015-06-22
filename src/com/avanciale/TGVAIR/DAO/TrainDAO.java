@@ -50,5 +50,15 @@ public class TrainDAO implements ITrain{
 		return null;
 	}
 
+	@Override
+	public void addCirculation(Circulation circultation) {
+	}
+
+	@Override
+	public List<Circulation> getCirculations() {
+		
+		return null;
+	}
+
 	
 }
