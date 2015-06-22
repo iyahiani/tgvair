@@ -18,6 +18,5 @@ public class ConvertDateStringToDate {
  		SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.ENGLISH) ; 
 		Date d = sdf.parse(date);
 		return d;
-		
 	}
 }
