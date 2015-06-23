@@ -18,30 +18,37 @@ import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
 import com.avancial.reader.ReaderSSIM;
+import com.avancial.socle.data.controller.dao.AbstractEntityManager;
+import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.tgvair.DataBeans.CirculationDataBean;
 import com.avancial.tgvair.metier.Circulation;
+import com.avancial.tgvair.metier.ITrain;
 import com.avancial.tgvair.metier.Train;
 import com.avancial.tgvair.metier.TrainCatalogue;
+import com.avancial.tgvair.util.ConvertDateStringToDate;
+import com.avanciale.TGVAIR.DAO.CirculationDAO;
 
 public class Luncher2 {
 
 	public static void main(String[] args) throws IOException, ParseException {
 
 		List<String> listCirculSSIM = new ArrayList<String>();
-		List<Date> exceptions = new ArrayList<Date>(); 
-		
-		DateFormat df = new SimpleDateFormat("ddMMMyy",Locale.US) ;
-		
-		exceptions.add(df.parse("12JAN15"));
+		List<Date> exceptions = new ArrayList<Date>();
+
+		DateFormat df = new SimpleDateFormat("ddMMMyy", Locale.US);
+
+		exceptions.add(df.parse("14JUL15"));
 		exceptions.add(df.parse("12FEB15"));
-		exceptions.add(df.parse("12MAR15"));
-		int[] num_train = { 885112, 885113 };
+		exceptions.add(df.parse("01MAY15"));
+		String[] num_train = {"885112", "885113" };
+		Circulation circul = new Circulation();
 
 		// /////////////////////// Train Catalogue
 
 		TrainCatalogue trainCatalogue = new TrainCatalogue();
 		trainCatalogue.setNumero_Train_Cat(num_train);
-		trainCatalogue.setDepart("1334");
-		trainCatalogue.setException(exceptions)	;
+		trainCatalogue.setDestination("1334");
+		trainCatalogue.setException(exceptions);
 		trainCatalogue.setFlight_number("");
 		trainCatalogue.setNom_compagnie("AF");
 		trainCatalogue.setJours_Circulation_Compagnie("12346");
@@ -50,39 +57,30 @@ public class Luncher2 {
 		
 		IReader reader = new ReaderSSIM(
 				"D:/Users/ismael.yahiani/Documents/parsOut.txt");
-
-		IParser par = new ParserFixedLength(
-				new FilterEncodage(new FilterSSIMTypeEnr(
-						new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null,
-								trainCatalogue.getNumero_Train_Cat())))), 
+		IParser par = new ParserFixedLength(new FilterEncodage(
+				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(
+						new FiltreCatalogue(null,
+								trainCatalogue.getNumero_Train_Cat())))),
 				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
 				APP_enumParserSSIM.getNames());
 
-		// /////////////////////////////// TRAIN ET CIRCULATION
+		///////////////////////////////// TRAIN ET CIRCULATION
 
-		Train train = new Train();
-		Circulation circul = new Circulation();
+		Train train = new Train();	
+		
 		List<Circulation> circulationList = new ArrayList<Circulation>();
 		String s, ss;
-
-		// //////////////////////////////    Tests 
-
+		 
+		//////////////////////////////// Tests 
+		
 		while ((s = reader.readLine()) != null) {
-
-			ss = par.parse(s);
-			if (!ss.isEmpty())
-				System.out.println(par.getParsedResult().get(
-						"POSITION_NUM_TRAIN")
-						+ "\t"
-						+ par.getParsedResult().get(
-								"POSITION_JOURS_CIRCULATION")
-						+ "SSIM"
-						+ "\t"
-						+trainCatalogue.getJours_Circulation_Compagnie() 
-						+"\t"
-						+trainCatalogue.getException()
-						+ par.getParsedResult().get(
-								"POSITION_PERIODE_CIRCULATION"));
+			if (!s.isEmpty()) {
+				 par.parse(s);
+				 System.out.println(par.getParsedResult()); 
+				
+			} 
+			
+			
 		}
 	}
 }

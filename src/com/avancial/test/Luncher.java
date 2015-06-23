@@ -18,6 +18,7 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
 
 import com.avancial.metier.parser.APP_enumParserSSIM;
 import com.avancial.metier.parser.FilterEncodage;
@@ -28,6 +29,9 @@ import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
 import com.avancial.reader.ReaderSSIM;
+import com.avancial.tgvair.metier.ITrain;
+import com.avancial.tgvair.metier.Train;
+import com.avancial.tgvair.util.ConvertDateStringToDate;
 
 public class Luncher {
 
@@ -35,36 +39,44 @@ public class Luncher {
 			SchedulerException {
 
 		IReader reader = new ReaderSSIM(
-				"D:/Users/ismael.yahiani/Documents/in.txt.part.0.txt");// D:/Users/ismael.yahiani/Documents/in.txt.part.0.txt/in.txt.part.0.txt
+				"D:/Users/ismael.yahiani/Documents/in.txt");// .txt.part.0
+															// D:/Users/ismael.yahiani/Documents/in.txt.part.0.txt/in.txt.part.0.txt
 		String file, chaine;
-		Date date = Calendar.getInstance().getTime();
-		
-		File output = new File
-		 ("D:/Users/ismael.yahiani/Documents/parsOut.txt") ;
-		
+		Date date;
+
+		File output = new File("D:/Users/ismael.yahiani/Documents/parsOut.txt");
+		File mapoutput = new File(
+				"D:/Users/ismael.yahiani/Documents/mapOut.txt");
 		Map<String, String> test = new HashMap<String, String>();
 		List<String> sb = new ArrayList<String>();
-		int i = 0 ; 
-		IParser par =new FilterEncodage(
-				new FilterSSIMTypeEnr(null));
-		
-		 FileWriter fw = new FileWriter(output.getAbsoluteFile());
-		 BufferedWriter bw = new BufferedWriter(fw);
-		 
-		while ((reader!=null)&&(file = reader.readLine()) != null) {	
+		int i = 0;
+		IParser par = new ParserFixedLength(new FilterEncodage(
+				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
+				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
+				APP_enumParserSSIM.getNames());
+		ITrain train = new Train() ; 
+	
+		FileWriter fw = new FileWriter(output.getAbsoluteFile());
+		FileWriter fwmap = new FileWriter(mapoutput.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		BufferedWriter bwmap = new BufferedWriter(fwmap);
+		date = Calendar.getInstance().getTime();
+		System.out.println(date);
+
+		while ((file = reader.readLine()) != null ) {
 			chaine = par.parse(file);
-			if (chaine.length() > 0 ) {
-				bw.write(chaine); 
-				bw.write("\n");
+			if (chaine.length() > 0) {
+				
 			}
 		}
+		//
 		bw.close();
 		date = Calendar.getInstance().getTime();
 		System.out.println(date);
 
 	}
 }
-
+//
 // System.out.println(chaine.substring(APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionDebut(),
 // APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionFin()));
 // test = par.getSSIMResult(chaine);

@@ -13,13 +13,13 @@ public class LunchCatalogueReader {
 			String ligne;
 			IReader reader = new ReaderSSIM(
 					"D:/Users/ismael.yahiani/Documents/ProgrammeTGVAIRAF.csv");
-			
+			ligne = reader.readLine();
 			while ((ligne = reader.readLine()) != null) {
 				System.out.println(ligne);
 					String[] rslt = ligne.split(";");
 				
 				for (int i = 0; i < rslt.length; i++) {
-					
+					System.out.println(rslt[i]);
 				}
 			}
 		} catch (IOException e) {

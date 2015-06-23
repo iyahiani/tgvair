@@ -7,14 +7,14 @@ import com.avancial.parser.IParser;
 
 public class FiltreCatalogue extends AFilter {
 
-	private int[] numTrains;
+	private String[] numTrains;
 	
 	
 	public FiltreCatalogue(IParser pars) {
 		super(pars);
 	}
 
-	public FiltreCatalogue(IParser pars, int[] numTrains) {
+	public FiltreCatalogue(IParser pars, String[] numTrains) {
 		super(pars);
 		this.numTrains = numTrains;
 	}
@@ -26,8 +26,8 @@ public class FiltreCatalogue extends AFilter {
 			if (this.parser != null)
 				line = this.parser.parse(line);
 
-		for (int i : this.numTrains) {
-			if (i == Integer.valueOf(line.substring(
+		for (String i : this.numTrains) {
+			if (i.equals(line.substring(
 					APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
 					APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())))
 				return line; 

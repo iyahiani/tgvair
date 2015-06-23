@@ -46,7 +46,23 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<properties>
+		<slf4j.version>1.7.7</slf4j.version>
+	</properties>
 	<dependencies>
+	<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+ 		<dependency>
+ 		<groupId>avancial.fr</groupId>
+ 		<artifactId>parser</artifactId> 	
+ 		</dependency>
+	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
@@ -107,10 +123,7 @@
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>avancial.fr</groupId>
-			<artifactId>parser</artifactId>
-		</dependency>
+		
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -154,25 +167,31 @@
 				<artifactId>hibernate-jpa-2.1-api</artifactId>
 				<version>1.0.0.Final</version>
 			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.11</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
 				<version>5.1</version>
 			</dependency>
 			<dependency>
-				<groupId>avancial.fr</groupId>
-				<artifactId>parser</artifactId>
-				<version>0.0.2-SNAPSHOT</version>
-			</dependency>
-			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
 				<version>3.8</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>avancial.fr</groupId>
+				<artifactId>parser</artifactId>
+				<version>0.0.2-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

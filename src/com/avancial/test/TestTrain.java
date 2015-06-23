@@ -135,7 +135,7 @@ public class TestTrain {
 
 		String s = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885112";
 		String ss = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885113";
-		int[] num_train = { 885112, 885113 };
+		String[] num_train = { "885112", "885113" };
 		List<Date> exceptions = new ArrayList<Date>();
 		exceptions.add(new Date(121214));
 		exceptions.add(new Date(120115));

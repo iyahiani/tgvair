@@ -8,7 +8,7 @@ import java.util.List;
 public class TrainCatalogue implements ITrainCatalogue{
 
 	private String Nom_compagnie;
-	private int[] Numero_Train_Cat;
+	private String[] Numero_Train_Cat;
 	private String flight_number;
 	private String origine;
 	private String destination;
@@ -48,11 +48,11 @@ public class TrainCatalogue implements ITrainCatalogue{
 		Nom_compagnie = nom_compagnie;
 	}
 	
-	public int[] getNumero_Train_Cat() {
+	public String[] getNumero_Train_Cat() {
 		return Numero_Train_Cat;
 	}
 
-	public void setNumero_Train_Cat(int[] numero_Train_Cat) {
+	public void setNumero_Train_Cat(String[] numero_Train_Cat) {
 		Numero_Train_Cat = numero_Train_Cat;
 	}
 

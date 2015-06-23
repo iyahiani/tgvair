@@ -1,5 +1,8 @@
 package com.avancial.tgvair.util;
 
+import java.io.IOException;
+
+import javax.management.RuntimeErrorException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -31,9 +34,9 @@ public class MyLog4jListener implements ServletContextListener {
 				+ System.getProperty("file.separator") + "log4j.properties";
 
 		if (file != null) {
+		
 				PropertyConfigurator.configure(prefix + file);
 			    System.out.println("Log4J Logging started for: " + prefix + file);
-			
 		} else {
 			System.out
 					.println("Log4J Is not configured for application Application: "

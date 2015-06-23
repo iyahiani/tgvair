@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Train implements ITrain{
 
-	private int[] numTrain ;
+	private String[] numTrain ;
 	
     private List<Circulation> circulation;
 
-	public int[] getNumTrain() {
+	public String[] getNumTrain() {
 		return numTrain;
 	}
 
-	public void setNumTrain(int[] numTrain) {
+	public void setNumTrain(String[] numTrain) {
 		this.numTrain = numTrain;
 	}
     

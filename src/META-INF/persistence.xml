@@ -8,6 +8,7 @@
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
 		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean</class>
 		<class>com.avancial.socle.data.model.databean.UtilisateurDataBean</class>
+		<class>com.avancial.tgvair.DataBeans.CirculationDataBean</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
