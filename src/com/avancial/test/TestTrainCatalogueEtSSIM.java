@@ -42,7 +42,6 @@ public class TestTrainCatalogueEtSSIM {
 
 		Date temp = trainCatalogue.getPeriodeValiditeDebut();
 		Date temp2 = cir.getDateDebut();
-
 		c.setTime(temp);
 		c2.setTime(temp2);
 
