@@ -97,7 +97,8 @@ public class LoginManagedBean implements Serializable {
 			HttpServletRequest request = (HttpServletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
 			request.logout();
-			this.ihmManagedBean.setCurrentUser(null);
+			this.ihmManagedBean.setCurrentUser(null); 
+			log.fatal("login_deconnexion_ok"+getLogin());
 			ContextController.addInfoMessage("login_deconnexion_ok");
 		} catch (ServletException e) {
 			e.printStackTrace();

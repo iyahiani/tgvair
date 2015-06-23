@@ -1,0 +1,1 @@
+select * from socle_user ; 

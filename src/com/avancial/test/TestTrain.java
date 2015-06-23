@@ -158,8 +158,8 @@ public class TestTrain {
 				.getNumero_Train_Cat()[0]), Integer.valueOf(s.substring(
 				APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
 				APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
-		
 	}
+	
 	@Test
 	public void instancierTrainSSIm() {
 
