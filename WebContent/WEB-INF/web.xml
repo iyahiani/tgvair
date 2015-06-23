@@ -16,6 +16,7 @@
 		<servlet-name>FacesServlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
 	<context-param>
 		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -25,10 +26,12 @@
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>resources.application</param-value>
 	</context-param>
+	 
 	<!--<context-param> <param-name>primefaces.THEME</param-name> <param-value>bootstrap</param-value> 
 		</context-param> -->
 	<listener>
-		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+		<!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> modifier le 23/06/2015--> 
+		<listener-class>com.avancial.tgvair.util.MyLog4jListener</listener-class>
 	</listener>
 	<resource-env-ref>
 		<resource-env-ref-name>BeanManager</resource-env-ref-name>

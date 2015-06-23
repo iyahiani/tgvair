@@ -32,33 +32,33 @@ public class Circulation implements ICirculation {
 	public String getPeriode() {
 		return periode;
 	}
-
+	
 	public void setPeriode(String periode) {
 		this.periode = periode;
 	}
-
+	
 	public String getIndicateurFer() {
 		return indicateurFer;
 	}
-
+	
 	public void setIndicateurFer(String indicateurFer) {
 		this.indicateurFer = indicateurFer;
 	}
-
+	
 	public String getCompagnieTrain() {
 		return compagnieTrain;
 	}
-
+	
 	public void setCompagnieTrain(String compagnieTrain) {
 		this.compagnieTrain = compagnieTrain;
 	}
-
+	
 	private CirculationDataBean circulationDataBean;
 
 	public Circulation() {
 
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	public String getChaineCircu() {
 
@@ -151,39 +151,39 @@ public class Circulation implements ICirculation {
 	}
 
 	@Override
-	public boolean compareOrigine(Circulation circul) {
+	public boolean compareOrigine(String origine) {
 
-		if (this.getOrigine().equals(circul.getOrigine()))
+		if (this.getOrigine().equals(origine))
 			return true;
 		return false;
 	}
 
 	@Override
-	public boolean compareDestination(Circulation circul) {
+	public boolean compareDestination(String destination) {
 
-		if (this.getDestination().equals(circul.getDestination()))
+		if (this.getDestination().equals(destination))
 			return true;
 		return false;
 	}
 
 	@Override
-	public boolean compareJoursCircul(Circulation circul) {
+	public boolean compareJoursCircul(String jourCircul) {
 
-		if (this.getJoursCirculation().equals(circul.getJoursCirculation()))
+		if (this.getJoursCirculation().equals(jourCircul))
 			return true;
 		return false;
 	}
 
 	@Override
-	public boolean compareHeureArriver(Circulation circul) {
-		if (this.getHeureArrivee() == circul.getHeureArrivee())
+	public boolean compareHeureArriver(int heureArriver) {
+		if (this.getHeureArrivee() == heureArriver)
 			return true;
 		return false;
 	}
 
 	@Override
-	public boolean compareHeuredepart(Circulation circul) {
-		if (this.getHeureDepart()== circul.getHeureDepart())
+	public boolean compareHeuredepart(int heureDepart) {
+		if (this.getHeureDepart()== heureDepart)
 			return true;
 		return false;
 	}

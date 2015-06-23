@@ -7,9 +7,9 @@ public interface ICirculation {
 	
 
 	public boolean comparePeriode(Circulation circul); 
-	public boolean compareOrigine(Circulation circul) ;
-	public boolean compareDestination(Circulation circul) ;
-	public boolean compareJoursCircul(Circulation circul) ; 
-	public boolean compareHeureArriver(Circulation circul) ;
-	public boolean compareHeuredepart(Circulation circul) ;
+	public boolean compareOrigine(String origine) ;
+	public boolean compareDestination(String destination) ;
+	public boolean compareJoursCircul(String joursCircul) ; 
+	public boolean compareHeureArriver(int heureArriver) ;
+	public boolean compareHeuredepart(int heureDepart) ;
 }

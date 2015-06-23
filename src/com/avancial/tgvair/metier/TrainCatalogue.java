@@ -12,15 +12,25 @@ public class TrainCatalogue implements ITrainCatalogue{
 	private String flight_number;
 	private String origine;
 	private String destination;
-	private String periodeValidité ; 
-	public String getPeriodeValidité() {
-		return periodeValidité;
+	private Date periodeValiditeDebut ; 
+	private Date periodeValiditeFin ; 
+	
+	public Date getPeriodeValiditeDebut() {
+		return periodeValiditeDebut;
 	}
-
-	public void setPeriodeValidité(String periodeValidité) {
-		this.periodeValidité = periodeValidité;
+	
+	public void setPeriodeValiditeDebut(Date periodeValidité) {
+		this.periodeValiditeDebut = periodeValidité;
 	}
-
+	
+	public Date getPeriodeValiditeFin() {
+		return periodeValiditeFin;
+	}
+	
+	public void setPeriodeValiditeFin(Date periodeValiditeFin) {
+		this.periodeValiditeFin = periodeValiditeFin;
+	}
+	
 	private Date heure_Depart;
 	private Date heure_Arriver;
 	private String jours_Circulation_Compagnie;
