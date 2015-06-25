@@ -2,8 +2,10 @@ package com.avancial.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -23,24 +25,29 @@ public class TestTrainCatalogueEtSSIM {
 		SimpleDateFormat sdf = new SimpleDateFormat("ddmmyy");
 		TrainCatalogue trainCatalogue = new TrainCatalogue();
 		Train train = new Train();
-
+		List<Circulation> circulationList = new ArrayList<Circulation>(); 
 		boolean adapt = false;
 
-		trainCatalogue.setPeriodeValiditeDebut(sdf.parse("010115"));
-		trainCatalogue.setPeriodeValiditeFin(sdf.parse("300715"));
-		trainCatalogue.setDestination("CDG");
-		trainCatalogue.setOrigine("Lile");
-		trainCatalogue.setJours_Circulation_Compagnie("12346");
-
+		
 		Circulation cir = new Circulation();
 		cir.setDateDebut(sdf.parse("030115"));
 		cir.setDateFin(sdf.parse("150115"));
 		cir.setOrigine("Lile");
 		cir.setDestination("CDG");
 		cir.setJoursCirculation("12346");
-		train.addCirculation(cir);
+		circulationList.add(cir);
+		trainCatalogue.setCirculations(circulationList); 
+		
+		circulationList = new ArrayList<Circulation>();
+		cir = new Circulation();
+		cir.setDateDebut(sdf.parse("030115"));
+		cir.setDateFin(sdf.parse("150115"));
+		cir.setOrigine("Lile");
+		cir.setDestination("CDG");
+		cir.setJoursCirculation("12346");
+		train.setCirculation(circulationList);
 
-		Date temp = trainCatalogue.getPeriodeValiditeDebut();
+		Date temp = trainCatalogue.getCirculations().get(0).getDateDebut() ;
 		Date temp2 = cir.getDateDebut();
 		c.setTime(temp);
 		c2.setTime(temp2);
@@ -52,7 +59,7 @@ public class TestTrainCatalogueEtSSIM {
 		while (c.getTime().before(cir.getDateFin())) {
 
 			if (!cir.compareJoursCircul(trainCatalogue
-					.getJours_Circulation_Compagnie())) {
+					.getCirculations().get(0).getJoursCirculation())) {
 				
 				adapt = true;
 				break;
