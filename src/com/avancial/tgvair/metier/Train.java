@@ -44,7 +44,25 @@ public class Train implements ITrain{
 	@Override
 	public boolean compare(ITrain train) {
 		
-			return false;
+		boolean adapt = false ; 
+		for (Circulation ssimcircul : this.getCirculations()) {
+
+			for (Circulation catalCircul : train.getCirculations()) {
+
+				if ((ssimcircul.getDateDebut()
+						.after(catalCircul.getDateDebut()))
+						&& (ssimcircul.getDateFin().before(catalCircul
+								.getDateFin()))) {
+					if (!ssimcircul.getJoursCirculation().equals(
+							catalCircul.getJoursCirculation()))
+						{adapt = true; break ;} 
+					if (ssimcircul.getHeureArrivee() != catalCircul
+							.getHeureArrivee())
+						{adapt = true ;break ; }
+				}
+			}
+		}
+			return adapt ; 
 	}
 
 	@Override
