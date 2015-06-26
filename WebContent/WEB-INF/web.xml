@@ -31,7 +31,7 @@
 		</context-param> -->
 	<listener>
 		<!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> modifier le 23/06/2015--> 
-		<listener-class>com.avancial.tgvair.util.MyLog4jListener</listener-class>
+		<listener-class>com.avancial.tgvair.util.Log4jListener</listener-class>
 	</listener>
 	<resource-env-ref>
 		<resource-env-ref-name>BeanManager</resource-env-ref-name>
