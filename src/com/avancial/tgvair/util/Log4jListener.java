@@ -1,5 +1,6 @@
 package com.avancial.tgvair.util;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
@@ -20,20 +21,18 @@ public class Log4jListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
 		ServletContext ctx = e.getServletContext();
-		//PropertyConfigurator.configure("log4j.properties"); 
-		//PropertyConfigurator.configure(getClass().getResource("log4j.properties")); 
-		Properties props = new Properties();
+		Properties prop = new Properties() ; 
 		try {
-			//props.load(new FileInputStream("WEB-INF/log4j.properties")); 
-			props.load(getClass().getResourceAsStream("log4j.properties"));
+			prop.load(new FileInputStream("D:/log4j.proporties"));
 		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-		
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-		PropertyConfigurator.configure(props);
-	    System.out.println("Log4J Logging started for: ");
+		} 
+		System.out.println("context Log4j chargé");
+		
 		}
 	}
 

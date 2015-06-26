@@ -13,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.avancial.socle.data.controller.dao.UtilisateurDao;
@@ -80,9 +81,9 @@ public class LoginManagedBean implements Serializable {
 			String url = this.ihmManagedBean.getOriginalURL();
 			this.ihmManagedBean.setOriginalURL(null);
 			externalContext.redirect(url); 
-			log.info("login Success");
+			log.log(Level.INFO, "user connecter");
 		} catch (ServletException e) {
-			log.error("login ERROR");
+			log.log(Level.ERROR, e.getMessage());
 			ContextController.addErrorMessage("login_connexion_erreur");
 		}
 	}
