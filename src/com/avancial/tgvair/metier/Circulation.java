@@ -1,6 +1,5 @@
 package com.avancial.tgvair.metier;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -9,17 +8,17 @@ import com.avancial.tgvair.DataBeans.CirculationDataBean;
 
 public class Circulation implements ICirculation {
 
-	private Date dateDebut;
-	private Date dateFin;
-	private int heureArrivee;
-	private int heureDepart;
-	private String origine;
-	private String destination;
-	private String joursCirculation;
-	private String indicateurFer;
-	private String compagnieTrain;
-	private int numeroTrain;
-	private String periode;
+	private Date dateDebut	;
+	private Date dateFin	;
+	private int heureArrivee	;
+	private int heureDepart	;
+	private String origine	;
+	private String destination	;
+	private String joursCirculation	;
+	private String indicateurFer	;
+	private String compagnieTrain	;
+	private int numeroTrain	;
+	private String periode	;
 
 	public int getNumeroTrain() {
 		return numeroTrain;
@@ -59,7 +58,6 @@ public class Circulation implements ICirculation {
 
 	}
 	
-	@SuppressWarnings("deprecation")
 	public String getChaineCircu() {
 
 		StringBuilder sb = new StringBuilder();
@@ -143,49 +141,41 @@ public class Circulation implements ICirculation {
 	}
 
 	@Override
-	public boolean comparePeriode(Circulation circul) {
+	public boolean compare(Circulation circul) {
+		boolean adapter = false ; 
+		if (((this.getDateDebut()
+				.after(circul.getDateDebut()))
+				&& (this.getDateDebut().before(circul
+						.getDateFin())))
+						|| 
+						((this.getDateFin()
+								.after(circul.getDateDebut()))
+								&& (this.getDateFin().before(circul
+										.getDateFin())))) {
 
-		if (this.getPeriode().equals(circul.getPeriode()))
-			return true;
-		return false;
+			if (!this.getJoursCirculation().equals(
+					circul.getJoursCirculation()))
+				adapter =true ;
+
+			if (this.getHeureArrivee() != circul
+					.getHeureArrivee())
+				adapter = true ; 
+			
+			if (this.getHeureDepart() != circul
+					.getHeureDepart())
+				adapter = true ;
+			
+			if (!this.getDestination().equals(circul
+					.getDestination()))
+				adapter = true ; 
+			if (!this.getOrigine().equals(circul
+					.getOrigine()))
+				adapter = true ;  
+			
+		}
+		return adapter ;
 	}
 
-	@Override
-	public boolean compareOrigine(String origine) {
-
-		if (this.getOrigine().equals(origine))
-			return true;
-		return false;
-	}
-
-	@Override
-	public boolean compareDestination(String destination) {
-
-		if (this.getDestination().equals(destination))
-			return true;
-		return false;
-	}
-
-	@Override
-	public boolean compareJoursCircul(String jourCircul) {
-
-		if (this.getJoursCirculation().equals(jourCircul))
-			return true;
-		return false;
-	}
-
-	@Override
-	public boolean compareHeureArriver(int heureArriver) {
-		if (this.getHeureArrivee() == heureArriver)
-			return true;
-		return false;
-	}
-
-	@Override
-	public boolean compareHeuredepart(int heureDepart) {
-		if (this.getHeureDepart()== heureDepart)
-			return true;
-		return false;
-	}
+	
 
 }

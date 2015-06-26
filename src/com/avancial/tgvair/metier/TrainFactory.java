@@ -4,23 +4,24 @@ import java.util.List;
 
 import com.avanciale.TGVAIR.DAO.TrainDAO;
 
+/**
+ * 
+ * @author ismael.yahiani
+ *la factory Train permet de creer des objets de type train 
+ */
 public class TrainFactory implements ITrainFactory {
 
-	/**
-	 * @return la Factory de la classe train
-	 *  
-	 */
 	@Override
-	public ITrain createTrainByListCirculation(List<Circulation> circul) {
+	public ITrain createTrain() {
 		
-		TrainDAO train = new TrainDAO() ; 
-		train.setCirculation(circul);  		
-		return train;
+		ITrain train = new Train() ; 
+		return train ; 
 	}
-									
+
 	@Override
-	public ITrain createTrainByID() {
+	public ITrain createTrainByListCirculation(List<Circulation> listCircu) {
 		
 		return null;
-	}	
+	}
+	
 }

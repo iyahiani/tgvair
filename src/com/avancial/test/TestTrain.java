@@ -143,11 +143,11 @@ public class TestTrain {
 		exceptions.add(new Date(120315));
 		TrainCatalogue trainCatalogue = new TrainCatalogue();
 		trainCatalogue.setNumero_Train_Cat(num_train);
-		trainCatalogue.setDestination("1334");
-		trainCatalogue.setException(exceptions);
+		//trainCatalogue.setDestination("1334");
+		//trainCatalogue.setException(exceptions);
 		trainCatalogue.getFlight_number();
 		trainCatalogue.setNom_compagnie("AF");
-		trainCatalogue.setJours_Circulation_Compagnie("12346");
+		//trainCatalogue.setJours_Circulation_Compagnie("12346");
 
 		IParser par = new ParserFixedLength(new FilterEncodage(
 				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
@@ -235,6 +235,6 @@ public class TestTrain {
 							APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
 									.name()));
 		}
-		Assert.assertTrue(circul.comparePeriode(circul2));
+		Assert.assertTrue(circul.compare(circul2));
 	}
 }

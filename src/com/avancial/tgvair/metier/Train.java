@@ -3,11 +3,11 @@ package com.avancial.tgvair.metier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Train implements ITrain{
+public class Train implements ITrain {
 
-	private String[] numTrain ;
-	
-    private List<Circulation> circulation;
+	private String[] numTrain;
+
+	private List<Circulation> circulation;
 
 	public String[] getNumTrain() {
 		return numTrain;
@@ -16,23 +16,23 @@ public class Train implements ITrain{
 	public void setNumTrain(String[] numTrain) {
 		this.numTrain = numTrain;
 	}
-    
-    public List<Circulation> getCirculation() {
+
+	public List<Circulation> getCirculation() {
 		return this.circulation;
 	}
 
 	public void setCirculation(List<Circulation> circulation) {
 		this.circulation = circulation;
 	}
-	
+
 	public String getChaineCompare() {
-	
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Circulation circulation : this.circulation) {
 			sb.append(circulation.getChaineCircu());
 			sb.append("\n");
-			}
+		}
 
 		return sb.toString();
 	}
@@ -41,56 +41,39 @@ public class Train implements ITrain{
 		this.circulation = new ArrayList<>();
 	}
 
-	@Override
-	public boolean compare(ITrain train) {
-		
-		boolean adapt = false ; 
-		for (Circulation ssimcircul : this.getCirculations()) {
-
-			for (Circulation catalCircul : train.getCirculations()) {
-
-				if ((ssimcircul.getDateDebut()
-						.after(catalCircul.getDateDebut()))
-						&& (ssimcircul.getDateFin().before(catalCircul
-								.getDateFin()))) {
-					if (!ssimcircul.getJoursCirculation().equals(
-							catalCircul.getJoursCirculation()))
-						{adapt = true; break ;} 
-					if (ssimcircul.getHeureArrivee() != catalCircul
-							.getHeureArrivee())
-						{adapt = true ;break ; }
-				}
-			}
-		}
-			return adapt ; 
-	}
-
-	@Override
-	public Train getTrainByID() {
-		
-		return null;
-	}
-
-	@Override
-	public List<ITrain> getAllTrains() {
-		
-		return null;
-	}
-
-	@Override
-	public ITrain findTrainByID(int[] train, String ligne) {
-		return null ;
-	}
 
 	@Override
 	public void addCirculation(Circulation circultation) {
 		this.circulation.add(circultation);
 	}
-	
+
 	@Override
 	public List<Circulation> getCirculations() {
-		
 		return this.circulation;
 	}
-	
+
+	@Override
+	public boolean compare(TrainCatalogue train) {
+		boolean adapter = false;
+		
+		for (Circulation ssimcircul : this.getCirculations()) {
+
+			for (Circulation catalCircul : train.getCirculations()) {
+
+				if (ssimcircul.compare(catalCircul)) return adapter=true ; 
+			}
+		}
+		return adapter;
+	}
+
+	@Override
+	public boolean compare(ITrain train) {
+
+		return false;
+	}
+
+	@Override
+	public void adapt(TrainCatalogue train) {
+	}
+
 }

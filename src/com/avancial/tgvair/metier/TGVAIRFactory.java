@@ -11,12 +11,7 @@ import java.util.List;
  */
 public class TGVAIRFactory {
 
-	public List<Circulation> getCirculList() {
-
-		List<Circulation> listCircul = new ArrayList<Circulation>();
-		
-		return listCircul;
-	}
+	
 
 	
 	public Circulation getCirculation(String chaine) throws ParseException {
@@ -33,7 +28,7 @@ public class TGVAIRFactory {
 	public Train getTrain(ArrayList<Circulation> listCircul) {
 				
 		Train train = new Train()  ;
-		train.setCirculation(listCircul);
+		
 		return train ;
 	}
 	

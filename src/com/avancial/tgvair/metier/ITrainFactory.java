@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface ITrainFactory {
 
-	public ITrain createTrainByID() ;
-	 ITrain createTrainByListCirculation(List<Circulation> circul); 
-}
+	public ITrain createTrain ();
+
+	public ITrain createTrainByListCirculation(List<Circulation> listCircu);
+	}

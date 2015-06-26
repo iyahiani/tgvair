@@ -9,55 +9,12 @@ import com.avancial.parser.ParserFixedLength;
 import com.avancial.tgvair.metier.Circulation;
 import com.avancial.tgvair.metier.ITrain;
 import com.avancial.tgvair.metier.Train;
+import com.avancial.tgvair.metier.TrainCatalogue;
 
-public class TrainDAO implements ITrain{
+public class TrainDAO {
 
 	public TrainDAO() {
 
-	}
-
-	@Override
-	public boolean compare(ITrain train) {
-		
-		return false;
-	}
-
-	@Override
-	public Train getTrainByID() {
-		
-		return null;
-	}
-
-	@Override
-	public List<ITrain> getAllTrains() {
-		
-		return null;
-	}
-
-	@Override
-	public ITrain findTrainByID(int[] train,String ligne) {
-		
-		return null;
-	}
-
-	@Override
-	public void setCirculation(List<Circulation> circulation) {
-	}
-
-	@Override
-	public String getChaineCompare() {
-		
-		return null;
-	}
-
-	@Override
-	public void addCirculation(Circulation circultation) {
-	}
-
-	@Override
-	public List<Circulation> getCirculations() {
-		
-		return null;
 	}
 
 	
