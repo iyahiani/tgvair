@@ -143,11 +143,11 @@ public class TestTrain {
 		exceptions.add(new Date(120315));
 		TrainCatalogue trainCatalogue = new TrainCatalogue();
 		trainCatalogue.setNumero_Train_Cat(num_train);
-		//trainCatalogue.setDestination("1334");
-		//trainCatalogue.setException(exceptions);
+		// trainCatalogue.setDestination("1334");
+		// trainCatalogue.setException(exceptions);
 		trainCatalogue.getFlight_number();
 		trainCatalogue.setNom_compagnie("AF");
-		//trainCatalogue.setJours_Circulation_Compagnie("12346");
+		// trainCatalogue.setJours_Circulation_Compagnie("12346");
 
 		IParser par = new ParserFixedLength(new FilterEncodage(
 				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
@@ -159,7 +159,7 @@ public class TestTrain {
 				APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
 				APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
 	}
-	
+
 	@Test
 	public void instancierTrainSSIm() {
 
@@ -199,7 +199,6 @@ public class TestTrain {
 			}
 		}
 
-		
 		Assert.assertTrue("Test", train.getCirculations().size() == 3);
 	}
 
@@ -207,8 +206,9 @@ public class TestTrain {
 	public void comparePeriodes() {
 
 		String chaine1 = "3 BR00000101W30APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
+
 		String chaine2 = "3 BR00000101W26APR1530APR15     6  CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
-		
+
 		Circulation circul = new Circulation();
 		Circulation circul2 = new Circulation();
 
@@ -216,7 +216,7 @@ public class TestTrain {
 				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
 				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
 				APP_enumParserSSIM.getNames());
-		
+
 		if (!par.parse(chaine1).equals("")) {
 			circul.setPeriode(par.getParsedResult().get(
 					APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT
@@ -225,9 +225,9 @@ public class TestTrain {
 							APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
 									.name()));
 		}
-		
+
 		if (!par.parse(chaine2).equals("")) {
-			
+
 			circul2.setPeriode(par.getParsedResult().get(
 					APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT
 							.name())
@@ -236,5 +236,43 @@ public class TestTrain {
 									.name()));
 		}
 		Assert.assertTrue(circul.compare(circul2));
+	}
+
+	@Test
+	public void getCatalogCirculFromSSIM() {
+
+		Circulation circulation = new Circulation();
+		TrainCatalogue trainCatalogue = new TrainCatalogue();
+		Train train = new Train();
+		String chaine1 = "3 BR00000101W30APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
+		String chaine2 = "3 BR00000101W26APR1530APR15     6  CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
+
+		IParser par = new ParserFixedLength(new FilterEncodage(
+				new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))),
+				APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
+				APP_enumParserSSIM.getNames()); 
+		
+		String rslt = par.parse(chaine1);
+		circulation.setCompagnieTrain(par.getParsedResult().get(
+				"POSITION_COMPAGNIE_TRAIN"));
+		circulation.setOrigine(par.getParsedResult()
+				.get("POSITION_GARE_DEPART"));
+		circulation.setDestination(par.getParsedResult().get(
+				"POSITION_GARE_ARRIVER"));
+		
+		train.addCirculation(circulation);
+		circulation = new Circulation();
+		rslt = par.parse(chaine2);
+		circulation.setCompagnieTrain(par.getParsedResult().get(
+				"POSITION_COMPAGNIE_TRAIN"));
+		circulation.setOrigine(par.getParsedResult()
+				.get("POSITION_GARE_DEPART")); 
+		circulation.setDestination(par.getParsedResult().get(
+				"POSITION_GARE_ARRIVER")); 
+		
+		trainCatalogue.addCirculation(circulation);
+		
+		Assert.assertEquals(train.getCirculations().toString(),
+				trainCatalogue.getCirculations().toString());
 	}
 }
