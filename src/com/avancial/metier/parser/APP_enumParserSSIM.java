@@ -64,7 +64,10 @@ public enum APP_enumParserSSIM {
     * position du Numéro du train réel à la gare de départ du tronçon
     */
    POSITION_NUM_TRAIN(145, 151),
-
+   /** 
+    * position code restriction de trafic 
+   */
+   POSITION_RESTRICTION_TRAFIC(157, 167),
    /**
     * Valeur du type des enregistrements de type4
     */
