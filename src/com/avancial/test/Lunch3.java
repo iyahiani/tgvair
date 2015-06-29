@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.avancial.metier.parser.APP_enumParserSSIM;
 import com.avancial.metier.parser.FilterEncodage;
 import com.avancial.metier.parser.FilterSSIMTypeEnr;
@@ -20,16 +22,19 @@ import com.avancial.tgvair.util.ConvertDateStringToDate;
 
 public class Lunch3 {
 
-	public static void main(String[] args) throws IOException, ParseException {
 
+	
+	public static void main(String[] args) throws IOException, ParseException {
 		TrainCatalogue trainReference = new TrainCatalogue();
 		ITrain trainSSIM = new Train();
 		String[] num = { "885112", "885113" };
 		Circulation circulation = new Circulation();
 		
 		// ////////////////////////////////////////////////////////////
+		
 		List<String> CataloglistCircul = new ArrayList<String>();
 		List<String> SSIMlistCircul = new ArrayList<String>();
+		
 		// ////////////////////////////////////////////////////////////
 		
 		List<Circulation> catalogList = new ArrayList<Circulation>();
@@ -56,7 +61,8 @@ public class Lunch3 {
 				.add("3 SG00156604P19JUL1519AUG15    56  FRLEY07210721+0100  FRHVV07250725+0100  TERB                                                           87  FSN885113");
 		SSIMlistCircul
 				.add("3 SG00156604P02JAN1502FEB15     6  FRLEY07060706+0100  FRHVV07200720+0100  TERB                                                           87  FSN885113");
-
+		
+		
 		for (String i : CataloglistCircul) {
 			
 			par.parse(i);
@@ -92,9 +98,9 @@ public class Lunch3 {
 
 			catalogList.add(circulation);
 		}
-		
 		trainReference.setCirculations(catalogList);
 		trainReference.setFlight_number("AF7257");
+		
 		
 		for (String j : SSIMlistCircul) {
 
@@ -139,7 +145,8 @@ public class Lunch3 {
 			for (Circulation catalCircul : trainReference.getCirculations()) {
 
 				if (ssimcircul.compare(catalCircul)) 
-					System.out.println(ssimcircul.getChaineCircu());
+					System.out.println(ssimcircul.getChaineCircu())	;	 
+					
 				}
 			}
 		}
