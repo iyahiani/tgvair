@@ -1,5 +1,6 @@
 package com.avancial.tgvair.metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrainCatalogue implements ITrainCatalogue {
@@ -10,7 +11,7 @@ public class TrainCatalogue implements ITrainCatalogue {
 	private List<Circulation> circulations;
 
 	public TrainCatalogue() {
-
+		this.circulations = new ArrayList<Circulation>() ;
 	}
 
 	public String getNom_compagnie() {
@@ -22,19 +23,19 @@ public class TrainCatalogue implements ITrainCatalogue {
 	}
 
 	public void setCirculations(List<Circulation> circulations) {
-		this.circulations = circulations;
+		this.circulations = circulations   ;	
 	}
 
 	public void setNom_compagnie(String nom_compagnie) {
-		Nom_compagnie = nom_compagnie;
+		Nom_compagnie = nom_compagnie  ;
 	}
 
 	public String[] getNumero_Train_Cat() {
-		return Numero_Train_Cat;
+		return Numero_Train_Cat  ;
 	}
 
 	public void setNumero_Train_Cat(String[] numero_Train_Cat) {
-		Numero_Train_Cat = numero_Train_Cat;
+		Numero_Train_Cat = numero_Train_Cat  ;
 	}
 
 	public String getFlight_number() {
