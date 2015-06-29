@@ -44,9 +44,8 @@ public class Luncher {
 		String file, chaine;
 		Date date;
 
-		File output = new File("D:/Users/ismael.yahiani/Documents/parsOut.txt");
-		File mapoutput = new File(
-				"D:/Users/ismael.yahiani/Documents/mapOut.txt");
+		File output = new File("D:/Users/ismael.yahiani/Documents/in.txt.part.0.txt");
+	
 		Map<String, String> test = new HashMap<String, String>();
 		List<String> sb = new ArrayList<String>();
 		int i = 0;
@@ -56,21 +55,17 @@ public class Luncher {
 				APP_enumParserSSIM.getNames());
 		ITrain train = new Train() ; 
 	
-		FileWriter fw = new FileWriter(output.getAbsoluteFile());
-		FileWriter fwmap = new FileWriter(mapoutput.getAbsoluteFile());
-		BufferedWriter bw = new BufferedWriter(fw);
-		BufferedWriter bwmap = new BufferedWriter(fwmap);
 		date = Calendar.getInstance().getTime();
 		System.out.println(date);
 
 		while ((file = reader.readLine()) != null ) {
 			chaine = par.parse(file);
 			if (chaine.length() > 0) {
-				
+				System.out.println(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
 			}
 		}
 		//
-		bw.close();
+		
 		date = Calendar.getInstance().getTime();
 		System.out.println(date);
 

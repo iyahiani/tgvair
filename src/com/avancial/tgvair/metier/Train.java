@@ -8,20 +8,13 @@ public class Train implements ITrain {
 	private String[] numTrain	;
 
 	private List<Circulation> circulation	;
-	
-	
-	public Train(String[] numTrain) {
-		super();
-		this.numTrain = numTrain;
-		this.circulation = new ArrayList<Circulation>();
-	}
 
 	public String[] getNumTrain() {
 		return numTrain;
 	}
 	
 	public void setNumTrain(String[] numTrain) {
-		this.numTrain = numTrain	;
+		this.numTrain = numTrain   ;
 	}
 	
 	public List<Circulation> getCirculation() {
@@ -34,12 +27,12 @@ public class Train implements ITrain {
 	
 	public String getChaineCompare() {
 
-		StringBuilder sb = new StringBuilder();
-
+		StringBuilder sb = new StringBuilder()	;
 		for (Circulation circulation : this.circulation) {
 			sb.append(circulation.getChaineCircu())	;
 			sb.append("\n")	;
-		}
+		} 
+		
 		return sb.toString()	;
 	}
 	

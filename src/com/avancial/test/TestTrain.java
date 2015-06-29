@@ -255,8 +255,10 @@ public class TestTrain {
 		String rslt = par.parse(chaine1);
 		circulation.setCompagnieTrain(par.getParsedResult().get(
 				"POSITION_COMPAGNIE_TRAIN"));
+		
 		circulation.setOrigine(par.getParsedResult()
 				.get("POSITION_GARE_DEPART"));
+		
 		circulation.setDestination(par.getParsedResult().get(
 				"POSITION_GARE_ARRIVER"));
 		
@@ -272,7 +274,7 @@ public class TestTrain {
 		
 		trainCatalogue.addCirculation(circulation);
 		
-		Assert.assertEquals(train.getCirculations().toString(),
-				trainCatalogue.getCirculations().toString());
+		Assert.assertEquals(train.getCirculations().size(),
+				trainCatalogue.getCirculations().size());
 	}
 }
