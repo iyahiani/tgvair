@@ -10,7 +10,11 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
+/**
+ * 
+ * @author ismael.yahiani
+ * initialisation de l'api de logging "Log4j"  
+ */
 public class Log4jListener implements ServletContextListener {
 
 	private static Logger log = Logger.getLogger(Log4jListener.class) ;
@@ -26,12 +30,10 @@ public class Log4jListener implements ServletContextListener {
 		try {
 			props.load(new FileInputStream("log4j.properties"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+
 			e1.printStackTrace();
 		}
-		
 		PropertyConfigurator.configure(props);
-			System.out.println("context Log4j chargé");  
 		}
 	}
 

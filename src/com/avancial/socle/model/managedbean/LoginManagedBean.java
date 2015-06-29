@@ -80,7 +80,7 @@ public class LoginManagedBean implements Serializable {
 			String url = this.ihmManagedBean.getOriginalURL();
 			this.ihmManagedBean.setOriginalURL(null);
 			externalContext.redirect(url); 
-			log.log(Level.INFO, "user connecter");
+			log.log(Level.INFO, "user connecter"+this.login);
 		} catch (ServletException e) {
 			log.log(Level.ERROR, e.getMessage());
 			ContextController.addErrorMessage("login_connexion_erreur");

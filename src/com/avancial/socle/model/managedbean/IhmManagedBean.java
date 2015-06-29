@@ -52,7 +52,7 @@ public class IhmManagedBean implements Serializable {
 		try {
 			HttpServletRequest request = (HttpServletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
-			log.info("deconnection");
+			log.info("deconnection"+this.getCurrentUser().getLoginUser());
 			request.logout();
 			this.setCurrentUser(null);
 			ContextController.addInfoMessage("login_deconnexion_ok");
