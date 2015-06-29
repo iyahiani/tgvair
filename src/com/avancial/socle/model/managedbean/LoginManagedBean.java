@@ -73,7 +73,6 @@ public class LoginManagedBean implements Serializable {
 				.getExternalContext();
 		HttpServletRequest request = (HttpServletRequest) externalContext
 				.getRequest();
-
 		try {
 			request.login(this.login, this.password);
 			this.ihmManagedBean.setCurrentUser(this.utilisateurDao

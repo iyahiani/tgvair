@@ -70,7 +70,8 @@ public class IhmManagedBean implements Serializable {
 	 */
 	public String goLogin() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
+				.getExternalContext(); 
+		log.info("Connection");
 		this.setOriginalURL((String) externalContext.getRequestMap().get(
 				RequestDispatcher.FORWARD_REQUEST_URI));
 		// FIXME A Commenter
