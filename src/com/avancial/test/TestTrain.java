@@ -1,5 +1,6 @@
 package com.avancial.test;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,6 @@ import com.avancial.metier.parser.FilterSSIMTypeEnr;
 import com.avancial.metier.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
-import com.avancial.tgvair.DataBeans.TarinDataBean;
 import com.avancial.tgvair.metier.Circulation;
 import com.avancial.tgvair.metier.ITrain;
 import com.avancial.tgvair.metier.ITrainCatalogue;
@@ -235,26 +235,47 @@ public class TestTrain {
 							APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN
 									.name()));
 		}
+		
 		Assert.assertTrue(circul.compare(circul2));
 	}
 	
 	@Test
-	public void getCatalogCirculFromSSIM() {
+	public void getCatalogCirculFromSSIM() throws ParseException {
 		
+		ITrain trainSSIM=new Train()	;
+		ITrainCatalogue trainCatalogue=new TrainCatalogue()	;
+		ITrain train = new Train()	;	
+		Circulation circul = new Circulation() ;
+		Circulation circul2 = new Circulation() ;
+		Circulation circul3 = new Circulation() ;
+		train=trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue)	; 
 		
-		ITrain trainSSIM=new Train();
-		ITrainCatalogue trainCatalogue=new TrainCatalogue();
-		ITrain train = new Train();
+		circul = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRLLE#FRMLW#0700#0730"); 
+		circul2 = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRMLW#FRCDG#0730#0800") ; 
+		circul3 = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRLLE#FRCDG#0700#0800") ; 
 		
+		trainSSIM.addCirculation(circul);
+		trainSSIM.addCirculation(circul2);
+		trainCatalogue.addCirculation(circul3) ; 		 
+      
+		train = trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue) ; 
 		
-		train=trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue);
-		
-		train.getGareOrigine.equals(trainCatalogue.getGareOrigine);
-		train.getGareDestination.equals(trainCatalogue.getGareDestination);
-		
-		
-				
-		
-		
+      //Assert.assertTrue(train.compare(trainSSIM))  ;
+		//Assert.assertTrue(trainSSIM.getGareOrigine().equals(trainCatalogue.getGareOrigine()) ) ;
+			
 	}
+	public static Circulation createWithStringPeriode(String periode) throws ParseException {
+
+      Circulation circulation = new Circulation();
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+      circulation.setDateDebut(new Date(sdf.parse(periode.split("#")[0]).getTime()));
+      circulation.setDateFin(new Date(sdf.parse(periode.split("#")[1]).getTime()));
+      circulation.setJoursCirculation(periode.split("#")[2]);  
+      circulation.setOrigine(periode.split("#")[3]);
+      circulation.setDestination(periode.split("#")[4]); 
+      circulation.setHeureDepart(Integer.valueOf(periode.split("#")[5])); 
+      circulation.setHeureArrivee(Integer.valueOf(periode.split("#")[6]));
+      return circulation;
+   }
+	
 }

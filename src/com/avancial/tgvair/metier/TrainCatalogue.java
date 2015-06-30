@@ -45,8 +45,20 @@ public class TrainCatalogue implements ITrainCatalogue {
 	public void setFlight_number(String flight_number) {
 		this.flight_number = flight_number;
 	}
-
+	@Override
 	public void addCirculation(Circulation circulation) {
 		this.circulations.add(circulation);
+	}
+
+	@Override
+	public String getGareOrigine() {
+		
+		return this.getCirculations().get(0).getOrigine();
+	}
+
+	@Override
+	public String getGareDestination() {
+		
+		return getCirculations().get(getCirculations().size()-1).getDestination() ;
 	}
 }

@@ -4,7 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 public interface ITrainCatalogue {
-	
+
+	String getGareOrigine();
+
+	String getGareDestination();
+	public List<Circulation> getCirculations();
+	public void addCirculation(Circulation circulation);
 /**
  * 
  * @param dateDebut : date de début de la périoide de circulation 
