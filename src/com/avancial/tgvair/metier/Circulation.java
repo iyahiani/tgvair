@@ -142,8 +142,8 @@ public class Circulation implements ICirculation {
 
 	@Override
 	public boolean compare(Circulation circul) {
-		boolean adapter = false ; 
-		if (((this.getDateDebut()
+		boolean equal =false; 
+		/*if (((this.getDateDebut()
 				.after(circul.getDateDebut()))
 				&& (this.getDateDebut().before(circul
 						.getDateFin())))
@@ -151,31 +151,21 @@ public class Circulation implements ICirculation {
 						((this.getDateFin()
 								.after(circul.getDateDebut()))
 								&& (this.getDateFin().before(circul
-										.getDateFin())))) {
+										.getDateFin())))) {*/
 
-			if (!this.getJoursCirculation().equals(
-					circul.getJoursCirculation()))
-				adapter =true ;
-
-			if (this.getHeureArrivee() != circul
-					.getHeureArrivee())
-				adapter = true ; 
-			
-			if (this.getHeureDepart() != circul
-					.getHeureDepart())
-				adapter = true ;
-			
-			if (!this.getDestination().equals(circul
-					.getDestination()))
-				adapter = true ; 
-			if (!this.getOrigine().equals(circul
-					.getOrigine()))
-				adapter = true ;  
-			
-		}
-		return adapter ;
+			if (this.getJoursCirculation().equals(
+					circul.getJoursCirculation())&&
+			    (this.getHeureArrivee() == circul
+					.getHeureArrivee())&&
+				 (this.getHeureDepart() == circul
+					.getHeureDepart())&&
+				(this.getDestination().equals(circul
+					.getDestination()))&&
+				 (this.getOrigine().equals(circul
+					.getOrigine()))) {
+			   equal = true ; 
+			}
+		//}
+		return equal ;
 	}
-
-	
-
 }

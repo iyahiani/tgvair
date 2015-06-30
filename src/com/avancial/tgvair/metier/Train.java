@@ -51,18 +51,19 @@ public class Train implements ITrain {
    }
 
    @Override
-   public boolean compare(TrainCatalogue train) {
-      boolean adapter = false;
+   public boolean compare(ITrainCatalogue train) {
+     
+      boolean equal = false;
 
       for (Circulation ssimcircul : this.getCirculations()) {
 
          for (Circulation catalCircul : train.getCirculations()) {
 
             if (ssimcircul.compare(catalCircul))
-               return adapter = true;
+                equal = true;
          }
       }
-      return adapter;
+      return equal;
    }
 
    @Override
@@ -71,19 +72,19 @@ public class Train implements ITrain {
    }
 
    @Override
-   public void adapt(TrainCatalogue train) {
-
+   public ITrainCatalogue adapt(TrainCatalogue train) {
+     return null; 
    }
-
+   
    @Override
    public String getGareOrigine() {
       return this.getCirculation().get(0).getOrigine();
    }
-
+   
    @Override
    public String getGareDestination() {
 
-      return this.getCirculation().get(getCirculation().size() - 1).getDestination();
+      return this.getCirculation().get(getCirculation().size()-1).getDestination();
    }
 
    @Override
@@ -92,22 +93,21 @@ public class Train implements ITrain {
 
       Circulation circulation = null;
       for (Circulation circulSSIM : this.getCirculations()) {
-         if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
+         if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {   // manque un test sur la periode
             circulation = new Circulation();
             circulation.setOrigine(circulSSIM.getOrigine());
             circulation.setDateDebut(circulSSIM.getDateDebut());
             circulation.setDateFin(circulSSIM.getDateFin());
+            circulation.setHeureDepart(circulSSIM.getHeureDepart());
             circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
          }
          else if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()))  {
             circulation.setDestination(circulSSIM.getDestination());
+            circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
             train.addCirculation(circulation);
             circulation = null;
          }
       }
-
-      return train;
-
+      return train   ;
    }
-
 }
