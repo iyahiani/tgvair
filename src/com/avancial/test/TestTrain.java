@@ -225,16 +225,18 @@ public class TestTrain {
       ITrain trainSSIM = new Train();
       ITrainCatalogue trainCatalogue = new TrainCatalogue();
       ITrain train = new Train();
+      
       Circulation circul = new Circulation();
       Circulation circul2 = new Circulation();
       Circulation circul3 = new Circulation();
       Circulation circul4 = new Circulation();
+      
       train = trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue);
       circul = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRLLE#FRMLW#0700#0730");
       circul2 = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRMLW#FRXYZ#0730#0800");
       circul4 = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRXYZ#FRCDG#0830#0910");
       circul3 = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRMLW#FRCDG#0730#0910");
-
+      
       trainSSIM.addCirculation(circul) ;
       trainSSIM.addCirculation(circul2)  ;
       trainSSIM.addCirculation(circul4)  ;

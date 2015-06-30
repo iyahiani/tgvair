@@ -29,8 +29,8 @@ public class Lunch3 {
 		
 		//////////////////////////////////////////////////////////////
 		
-		List<String> CataloglistCircul = new ArrayList<String>();
-		List<String> SSIMlistCircul = new ArrayList<String>();
+		List<String> CataloglistCircul = new ArrayList<String>()	;
+		List<String> SSIMlistCircul = new ArrayList<String>()	;
 		
 		//////////////////////////////////////////////////////////////
 		
