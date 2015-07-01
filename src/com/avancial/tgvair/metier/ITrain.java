@@ -1,6 +1,8 @@
 package com.avancial.tgvair.metier;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface ITrain {
 
@@ -16,5 +18,6 @@ public interface ITrain {
 	
 	public List<Circulation> getCirculations();
 	public ITrain getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue);
+   public Map<Date, String> creerMapJoursCircul();
 		
 }

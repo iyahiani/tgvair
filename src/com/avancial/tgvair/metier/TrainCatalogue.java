@@ -61,4 +61,10 @@ public class TrainCatalogue implements ITrainCatalogue {
 		
 		return getCirculations().get(getCirculations().size()-1).getDestination() ;
 	}
+
+   @Override
+   public String[] getAllTrainID() {
+      
+      return null;
+   }
 }

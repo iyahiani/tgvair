@@ -1,7 +1,10 @@
 package com.avancial.tgvair.metier;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Train implements ITrain {
 
@@ -109,5 +112,19 @@ public class Train implements ITrain {
          }
       }
       return train   ;
+   }
+
+   /**
+    * cette methode retourne une map de tout les jours de circulation
+    */
+   @Override
+   public Map<Date, String> creerMapJoursCircul() {
+      
+     Map<Date,String> listJoursCircul = new HashMap<Date, String>(); 
+     List<Circulation> list = this.getCirculations() ;
+     for (Circulation circulation : list) {
+      listJoursCircul.put(circulation.getDateDebut(),circulation.getJoursCirculation()); 
+   }
+     return listJoursCircul ;
    }
 }

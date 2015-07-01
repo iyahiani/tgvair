@@ -4,22 +4,45 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<ui:define name="title">
-	</ui:define>
 	<ui:define name="contenu">
+		
+		<script src="resources/js/local.js" type="text/javascript"></script>
+		
+		<h:panelGrid columns="3" style="margin-bottom:10px;margin-left:10px;"
+			cellpadding="50" rendered="true">
 
-		<h:form>
-			<h:panelGrid columns="3" cellpadding="5"> 
-			<p:outputLabel value="Numero du Train :"></p:outputLabel>
-			<p:inputText></p:inputText>
-			<p:inputText></p:inputText>
+			<h:panelGrid columns="1">
+				<h:outputLabel value="Numéro(s) Train(s) :"></h:outputLabel>
+				<h:panelGrid columns="2"
+					style="margin-bottom:10px;margin-left:10px;">
+					<p:inputText></p:inputText>
+					<p:inputText></p:inputText>
+				</h:panelGrid>
 			</h:panelGrid>
-			<h:panelGrid columns="3" cellpadding="5"> 
-            <p:outputLabel value="Numero du Train :"></p:outputLabel>
-            <p:inputText></p:inputText>
-            <p:inputText></p:inputText>
-            </h:panelGrid>
-		</h:form>
-
+			<h:panelGrid columns="1" style="margin-bottom:10px;margin-left:10px;">
+				<p:outputLabel for="popup" value="Valide Du :" />
+				<p:calendar id="popup" showOn="both" locale="fr" />
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="margin-bottom:10px;margin-left:10px;">
+				<p:outputLabel for="popup" value="Au:" />
+				<p:calendar id="popup2" value="#{trainManagedBean.date}" locale="fr"
+					showOn="both" />
+			</h:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid columns="2" style="margin-bottom:10px; margin-left:10px;"
+			rendered="true" cellpadding="50">
+			<h:panelGrid columns="1" style="margin-left:10px; margin-bottom:4px">
+				<p:outputLabel value="Origine"></p:outputLabel>
+				<p:selectOneMenu value="" effect="fold" editable="true">
+					<f:selectItem itemLabel="AF" itemValue="" />
+					<f:selectItems value="" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="margin-left:10px;margin-bottom:10px;">
+				<p:outputLabel for="HeureDep" value="Depart:" />
+				<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
+					locale="fr" showOn="both" />
+			</h:panelGrid>
+		</h:panelGrid>
 	</ui:define>
 </ui:composition>
