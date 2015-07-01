@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	lang="#{ihmManagedBean.language}">
+<f:view locale="#{ihmManagedBean.locale}">
+   <h:head>
+		<title>
+			<ui:insert name="title">#{msg.nom_application}</ui:insert>
+		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	     <meta http-equiv="X-UA-Conpatible" content="IE=edge" /> 
+	     <meta charset="utf-8"  /> 
+		<!--<h:outputStylesheet library="css" name="style.css" />-->   
+		<h:outputStylesheet library="css" name="bootstrap/css/bootstrap.min.css"/>
+		<h:outputScript name="bootstrap/js/bootstrap.js" /> 
+		<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputScript library="js" name="js/tooltip.js" />
+		
+	</h:head>
+	<h:body> 
+	
+		<p:layout id="layoutPrincipal" fullPage="true" >
+			
+			<div class="jumbotron">
+			<p:layoutUnit position="north" resizable="true" collapsible="true" >
+				<ui:include src="/pages/tgvair/template/header.xhtml" />
+			</p:layoutUnit>
+			</div>
+			<p:layoutUnit position="south" resizable="true" collapsible="true"
+				style="text-align:center;">
+				<ui:include src="/pages/tgvair/template/footer.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="west" size="200"
+				header="#{msg.p_menuDroite_titre}" resizable="true"
+				collapsible="true">
+				<ui:include src="/pages/tgvair/template/menu.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<ui:insert name="contenu" />
+			</p:layoutUnit>
+		</p:layout>
+		
+	</h:body> 
+	
+</f:view>
+</html>

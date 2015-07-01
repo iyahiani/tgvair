@@ -32,5 +32,6 @@ public class MenuManagedBean implements Serializable {
 
    public static String goUser() {
       return ConstantSocle.NAVIGATION_USER.toString();
-   }
+   } 
+   
 }

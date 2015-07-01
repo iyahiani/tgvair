@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+  
+	<h:form>
+		<p:menu styleClass="btn-group-vertical" >
+			  
+			<p:menuitem value="#{msg.p_catalogue_menu}" action="#{menutgvair.goCatalogue}" styleClass="btn btn-default" title="Rôles"  />
+			<p:menuitem value="#{msg.p_train_menu}" action="#{menutgvair.goTrain}" styleClass="btn btn-default" title="Utilisateurs" /> 
+			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menutgvair.goAjustement}" styleClass="btn btn-default" title="Utilisateurs" />
+			<p:menuitem value="#{msg.p_CompAerien_menu}" action="#{menutgvair.goCompagnieAerienne}" styleClass="btn btn-default" title="Utilisateurs" />
+			<p:menuitem value="#{msg.p_point_arret}" action="#{menutgvair.goPointArret}" styleClass="btn btn-default" title="Utilisateurs" />
+		</p:menu>
+	</h:form>
+</ui:composition>
+

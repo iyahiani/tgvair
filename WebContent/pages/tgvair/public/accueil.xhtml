@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/tgvair/template/layout.xhtml">
+	<ui:define name="contenu">
+		<h:head>
+
+			<title>#{msg.p_user_role_titre}</title>
+		</h:head>
+
+		<h:body>
+			<h1>#{msg.p_accueil_texte_accueil}</h1>
+	<ui:repeat var="table" value="#{paramGetterBean.getParamsFromCollection('directories')}">
+	<h:outputText value="#{table.name}"></h:outputText>
+	<h:outputText value=" : #{table.value}"></h:outputText><br/>
+	</ui:repeat>
+<br/>
+			<h:outputText>
+				<!-- value="#{paramGetterBean.getParam('directories','SOCLE_tmp').value}"> -->
+			</h:outputText>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>
