@@ -252,8 +252,8 @@ public class TestTrain {
 
       Circulation circulation = new Circulation();
       SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-      circulation.setDateDebut(new Date(sdf.parse(periode.split("#")[0]).getTime()));
-      circulation.setDateFin(new Date(sdf.parse(periode.split("#")[1]).getTime()));
+      circulation.setDateDebut(sdf.parse(periode.split("#")[0]));
+      circulation.setDateFin(sdf.parse(periode.split("#")[1]));
       circulation.setJoursCirculation(periode.split("#")[2]);
       circulation.setOrigine(periode.split("#")[3]);
       circulation.setDestination(periode.split("#")[4]);

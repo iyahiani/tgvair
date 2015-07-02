@@ -1,7 +1,10 @@
 package com.avancial.tgvair.metier;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TrainCatalogue implements ITrainCatalogue {
 
@@ -67,4 +70,38 @@ public class TrainCatalogue implements ITrainCatalogue {
       
       return null;
    }
+
+   @Override
+   public Map<Date, String> getDateJourCirculMap() {
+      Date dateDebut = new Date() ;
+      Date datefin = new Date() ;
+      Map<Date, String> mapCirucl = new TreeMap<Date, String>();
+      for (Circulation c : this.getCirculations()) { 
+         dateDebut = c.getDateDebut() ; 
+         datefin = c.getDateFin() ; 
+         
+      }
+   return mapCirucl ;
+   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

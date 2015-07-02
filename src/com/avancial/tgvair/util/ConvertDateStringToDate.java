@@ -14,7 +14,7 @@ public class ConvertDateStringToDate {
 	
 	public static Date toDate(String date) throws ParseException {
 		
-		String format = "ddMMMyy" ;
+		String format = "ddMMMyy" ; 
  		SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.ENGLISH) ; 
 		Date d = sdf.parse(date);
 		return d;

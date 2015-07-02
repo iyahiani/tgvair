@@ -18,6 +18,7 @@ public interface ITrain {
 	
 	public List<Circulation> getCirculations();
 	public ITrain getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue);
-   public Map<Date, String> creerMapJoursCircul();
+   public Map<Date, Circulation> creerMapJoursCircul();
+   
 		
 }

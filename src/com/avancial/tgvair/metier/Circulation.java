@@ -70,9 +70,8 @@ public class Circulation implements ICirculation {
 		sb.append(this.getOrigine());
 		sb.append(this.getDestination());
 		sb.append(this.getJoursCirculation());
-		sb.append(this.getIndicateurFer());
-		sb.append(this.getCompagnieTrain());
-		sb.append(this.getPeriode());
+		sb.append(this.dateDebut) ;
+		sb.append(this.dateFin) ;
 		return sb.toString();
 	}
 

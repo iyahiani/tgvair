@@ -3,8 +3,10 @@ package com.avancial.tgvair.metier;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Train implements ITrain {
 
@@ -55,7 +57,7 @@ public class Train implements ITrain {
 
    @Override
    public boolean compare(ITrainCatalogue train) {
-     
+
       boolean equal = false;
 
       for (Circulation ssimcircul : this.getCirculations()) {
@@ -63,7 +65,7 @@ public class Train implements ITrain {
          for (Circulation catalCircul : train.getCirculations()) {
 
             if (ssimcircul.compare(catalCircul))
-                equal = true;
+               equal = true;
          }
       }
       return equal;
@@ -76,18 +78,18 @@ public class Train implements ITrain {
 
    @Override
    public ITrainCatalogue adapt(TrainCatalogue train) {
-     return null; 
+      return null;
    }
-   
+
    @Override
    public String getGareOrigine() {
       return this.getCirculation().get(0).getOrigine();
    }
-   
+
    @Override
    public String getGareDestination() {
 
-      return this.getCirculation().get(getCirculation().size()-1).getDestination();
+      return this.getCirculation().get(getCirculation().size() - 1).getDestination();
    }
 
    @Override
@@ -96,35 +98,36 @@ public class Train implements ITrain {
 
       Circulation circulation = null;
       for (Circulation circulSSIM : this.getCirculations()) {
-         if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {   // manque un test sur la periode
+         if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
             circulation = new Circulation();
             circulation.setOrigine(circulSSIM.getOrigine());
             circulation.setDateDebut(circulSSIM.getDateDebut());
             circulation.setDateFin(circulSSIM.getDateFin());
             circulation.setHeureDepart(circulSSIM.getHeureDepart());
             circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
-         }
-         else if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()))  {
+         } else if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination())) {
             circulation.setDestination(circulSSIM.getDestination());
             circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
             train.addCirculation(circulation);
             circulation = null;
          }
       }
-      return train   ;
+      return train;
    }
 
    /**
-    * cette methode retourne une map de tout les jours de circulation
+    * cette methode retourne une map des jours de circulation et de leurs dates
     */
    @Override
-   public Map<Date, String> creerMapJoursCircul() {
+   public Map<Date, Circulation> creerMapJoursCircul() {
+
+      Map<Date, Circulation> listJoursCircul = new TreeMap<Date, Circulation>();
       
-     Map<Date,String> listJoursCircul = new HashMap<Date, String>(); 
-     List<Circulation> list = this.getCirculations() ;
-     for (Circulation circulation : list) {
-      listJoursCircul.put(circulation.getDateDebut(),circulation.getJoursCirculation()); 
-   }
-     return listJoursCircul ;
+      for (Circulation circulation : this.getCirculations()) {
+         
+         if(!listJoursCircul.containsKey(circulation.getDateDebut()))
+         listJoursCircul.put(circulation.getDateDebut(), circulation);
+      }
+      return listJoursCircul;
    }
 }

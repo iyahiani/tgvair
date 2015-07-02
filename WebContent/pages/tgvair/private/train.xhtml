@@ -4,10 +4,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	   
 	<ui:define name="contenu">
-		
-		<script src="resources/js/local.js" type="text/javascript"></script>
-		
+    <ui:define name="js"><script type="text/javascript" src="resources/js/fr.js"/></ui:define>
+   
 		<h:panelGrid columns="3" style="margin-bottom:10px;margin-left:10px;"
 			cellpadding="50" rendered="true">
 
@@ -19,6 +19,7 @@
 					<p:inputText></p:inputText>
 				</h:panelGrid>
 			</h:panelGrid>
+			 <ui:insert name="js">   </ui:insert> 
 			<h:panelGrid columns="1" style="margin-bottom:10px;margin-left:10px;">
 				<p:outputLabel for="popup" value="Valide Du :" />
 				<p:calendar id="popup" showOn="both" locale="fr" />

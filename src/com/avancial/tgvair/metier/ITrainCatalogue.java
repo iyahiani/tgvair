@@ -2,6 +2,7 @@ package com.avancial.tgvair.metier;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface ITrainCatalogue {
 
@@ -19,6 +20,8 @@ public interface ITrainCatalogue {
  * cette methode verifie si les dates des exceptions de circulations des train catalogue,  
  * sont inclusent dans les periodes fournit par la SSIM  
  */
+
+   Map<Date, String> getDateJourCirculMap();
 
 	
 	/**

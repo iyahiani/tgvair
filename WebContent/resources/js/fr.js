@@ -1,4 +1,4 @@
-PrimeFaces.locales ['fr'] = {
+PrimeFaces.locales['fr'] = {
     closeText: 'Fermer',
     prevText: 'Précédent',
     nextText: 'Suivant',
