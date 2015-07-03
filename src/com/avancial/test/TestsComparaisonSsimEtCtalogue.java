@@ -57,6 +57,7 @@ public class TestsComparaisonSsimEtCtalogue {
             circulation.setDateFin(ConvertDateStringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN.name())));
             circulation.setOrigine(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
             circulation.setDestination(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_ARRIVER.name()));
+            circulation.setNumeroTrain(Integer.valueOf(par.getParsedResult().get(APP_enumParserSSIM.POSITION_NUM_TRAIN.name())));
             trainSSIM.addCirculation(circulation);
          }
       }

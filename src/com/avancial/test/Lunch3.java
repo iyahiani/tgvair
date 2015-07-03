@@ -139,7 +139,7 @@ public class Lunch3 {
 
 			for (Circulation catalCircul : trainReference.getCirculations()) {
 				
-				if (ssimcircul.compare(catalCircul)) 
+				if (ssimcircul.compareCirculation(catalCircul)) 
 					
 					System.out.println(ssimcircul.getChaineCircu())	;	  
 				}

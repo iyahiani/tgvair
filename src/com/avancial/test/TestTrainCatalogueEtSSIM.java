@@ -58,7 +58,7 @@ public class TestTrainCatalogueEtSSIM {
 
 		while (c.getTime().before(cir.getDateFin())) {
 
-			if (!cir.compare(trainCatalogue
+			if (!cir.compareCirculation(trainCatalogue
 					.getCirculations().get(0))) {
 				
 				adapt = true;
