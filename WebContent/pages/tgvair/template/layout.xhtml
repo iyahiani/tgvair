@@ -14,35 +14,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	     <meta http-equiv="X-UA-Conpatible" content="IE=edge" /> 
 	     <meta charset="utf-8"  /> 
-		<!--<h:outputStylesheet library="css" name="style.css" />-->   
+		<h:outputStylesheet library="css" name="style.css" />   
 		<h:outputStylesheet library="css" name="bootstrap/css/bootstrap.min.css"/>
 		<h:outputScript name="bootstrap/js/bootstrap.js" /> 
 		<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputScript library="js" name="js/tooltip.js" /> 
-        <script type="text/javascript" src="resources/js/fr.js" />
+        <h:outputScript name="js/fr.js" />
 		
 	</h:head>
 	<h:body> 
-	
-		<p:layout id="layoutPrincipal" fullPage="true" >
-			
+			<p:layout id="layoutPrincipal" fullPage="true" >	
 			<div class="jumbotron">
 			<p:layoutUnit position="north" resizable="true" collapsible="true" >
 				<ui:include src="/pages/tgvair/template/header.xhtml" />
 			</p:layoutUnit>
 			</div>
 			<p:layoutUnit position="south" resizable="true" collapsible="true"
-				style="text-align:center;">
+				style="text-align:center;" >
 				<ui:include src="/pages/tgvair/template/footer.xhtml" />
 			</p:layoutUnit>
 
 			<p:layoutUnit position="west" size="200"
 				header="#{msg.p_menuDroite_titre}" resizable="true"
-				collapsible="true">
+				collapsible="true" >
 				<ui:include src="/pages/tgvair/template/menu.xhtml" />
 			</p:layoutUnit>
 
-			<p:layoutUnit position="center">
+			<p:layoutUnit position="center" >
 				<ui:insert name="contenu" />
 			</p:layoutUnit>
 		</p:layout>

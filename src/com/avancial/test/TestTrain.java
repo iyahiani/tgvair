@@ -216,7 +216,7 @@ public class TestTrain {
          circul2.setPeriode(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())
                + par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN.name()));
       }
-      Assert.assertTrue(circul.compare(circul2));
+      Assert.assertTrue(circul.compareCirculation(circul2));
    }
 
    @Test
