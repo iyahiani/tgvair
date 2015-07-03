@@ -12,7 +12,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
 import com.avancial.socle.data.controller.dao.RoleDao;
@@ -27,182 +26,161 @@ import com.avancial.socle.resources.constants.ConstantSocle;
 @Named("roleManagedBean")
 @ViewScoped
 public class RoleManagedBean extends AManageBean {
-	/**
+   /**
     * 
     */
-	private static final long serialVersionUID = 1L;
-	private List<RoleDataBean> roles;
-	private String nomTechnique;
-	private String libelle;
-	private static final Logger log = Logger.getLogger(RoleManagedBean.class);
+   private static final long  serialVersionUID = 1L;
+   private List<RoleDataBean> roles;
+   private String             nomTechnique;
+   private String             libelle;
 
-	@Inject
-	private RoleDataBean roleSelected;
+   @Inject
+   private RoleDataBean       roleSelected;
 
-	/**
-	 * Constructeur
-	 */
-	public RoleManagedBean() {
-		this.roles = new ArrayList<>();
-		this.reload();
+   /**
+    * Constructeur
+    */
+   public RoleManagedBean() {
+      this.roles = new ArrayList<>();
+      this.reload();
 
-	}
+   }
 
-	public void reload() {
-		this.roles.clear();
-		this.roles.addAll(new RoleDao().getAll());
-	}
+   public void reload() {
+      this.roles.clear();
+      this.roles.addAll(new RoleDao().getAll());
+   }
 
-	public void initProperties() {
-		this.libelle = "";
-		this.nomTechnique = "";
-	}
+   public void initProperties() {
+      this.libelle = "";
+      this.nomTechnique = "";
+   }
 
-	/**
-	 * @return
-	 * @throws ASocleException
-	 */
-	@Override
-	public String add() throws ASocleException {
-		super.add();
-		RoleDataBean roleDataBean = new RoleDataBean();
-		roleDataBean.setLabelRole(this.libelle);
-		roleDataBean.setTechnicalNameRole(this.nomTechnique);
-		RoleDao dao = new RoleDao();
+   /**
+    * @return
+    * @throws ASocleException
+    */
+   @Override
+   public String add() throws ASocleException {
+      super.add();
+      RoleDataBean roleDataBean = new RoleDataBean();
+      roleDataBean.setLabelRole(this.libelle);
+      roleDataBean.setTechnicalNameRole(this.nomTechnique);
+      RoleDao dao = new RoleDao();
 
-		try {
-			dao.save(roleDataBean);
-			FacesContext.getCurrentInstance().addMessage(
-					ConstantSocle.PAGE_ID_MESSAGES.toString(),
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "message",
-							"Le rôle a été créé."));
-			RequestContext.getCurrentInstance().update(":dataTable");
-			this.closeDialog = true;
+      try {
+         dao.save(roleDataBean);
+         FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le rôle a été créé."));
+         RequestContext.getCurrentInstance().update(":dataTable");
+         this.closeDialog = true;
+      } catch (ASocleException e) {
+         FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         e.printStackTrace();
+      }
 
-		} catch (ASocleException e) {
-			FacesContext.getCurrentInstance().addMessage(
-					ConstantSocle.DIALOG_ADD_MESSAGES.toString(),
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e
-							.getClientMessage()));
-			e.printStackTrace();
+      return null;
+   }
 
-		}
+   @Override
+   public String update() throws ASocleException {
+      super.update();
+      if (null != this.roleSelected) {
+         RoleDao dao = new RoleDao();
+         try {
+            dao.update(this.roleSelected);
+            FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifié"));
+            this.closeDialog = true;
+         } catch (ASocleException e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         }
+      }
+      return null;
+   }
 
-		return null;
-	}
+   @Override
+   public String delete() throws ASocleException {
+      super.delete();
+      if (null != this.roleSelected) {
+         RoleDao dao = new RoleDao();
+         try {
+            dao.delete(this.roleSelected);
+            FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            this.closeDialog = true;
+         } catch (ASocleException e) {
+            FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
+         }
+      }
+      return null;
+   }
 
-	@Override
-	public String update() throws ASocleException {
-		super.update();
-		if (null != this.roleSelected) {
-			RoleDao dao = new RoleDao();
-			try {
-				dao.update(this.roleSelected);
-				FacesContext.getCurrentInstance().addMessage(
-						ConstantSocle.PAGE_ID_MESSAGES.toString(),
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "message",
-								"Enregistrement modifié"));
-				this.closeDialog = true;
-			} catch (ASocleException e) {
-				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(
-						ConstantSocle.DIALOG_UPD_MESSAGES.toString(),
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"message", e.getClientMessage()));
-			}
-		}
-		return null;
-	}
+   /**
+    * @return the roleList
+    */
+   public List<RoleDataBean> getRoles() {
+      return this.roles;
+   }
 
-	@Override
-	public String delete() throws ASocleException {
-		super.delete();
-		if (null != this.roleSelected) {
-			RoleDao dao = new RoleDao();
-			try {
-				dao.delete(this.roleSelected);
-				FacesContext.getCurrentInstance().addMessage(
-						ConstantSocle.PAGE_ID_MESSAGES.toString(),
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "message",
-								"Enregistrement supprimé"));
-				this.closeDialog = true;
-			} catch (ASocleException e) {
-				FacesContext.getCurrentInstance().addMessage(
-						ConstantSocle.DIALOG_DEL_MESSAGES.toString(),
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"message", "Enregistrement non effacé"));
-			}
-		}
-		return null;
-	}
+   /**
+    * @return the nomtechnique
+    */
+   public String getNomTechnique() {
+      return this.nomTechnique;
+   }
 
-	/**
-	 * @return the roleList
-	 */
-	public List<RoleDataBean> getRoles() {
-		return this.roles;
-	}
+   /**
+    * @param nomtechnique
+    *           the nomtechnique to set
+    */
+   public void setNomTechnique(String nomtechnique) {
+      this.nomTechnique = nomtechnique;
+   }
 
-	/**
-	 * @return the nomtechnique
-	 */
-	public String getNomTechnique() {
-		return this.nomTechnique;
-	}
+   /**
+    * @return the libelle
+    */
+   public String getLibelle() {
+      return this.libelle;
+   }
 
-	/**
-	 * @param nomtechnique
-	 *            the nomtechnique to set
-	 */
-	public void setNomTechnique(String nomtechnique) {
-		this.nomTechnique = nomtechnique;
-	}
+   /**
+    * @param libelle
+    *           the libelle to set
+    */
+   public void setLibelle(String libelle) {
+      this.libelle = libelle;
+   }
 
-	/**
-	 * @return the libelle
-	 */
-	public String getLibelle() {
-		return this.libelle;
-	}
+   /**
+    * get value for roleSelected
+    * 
+    * @return the roleSelected
+    */
+   public RoleDataBean getRoleSelected() {
 
-	/**
-	 * @param libelle
-	 *            the libelle to set
-	 */
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
+      return this.roleSelected;
+   }
 
-	/**
-	 * get value for roleSelected
-	 * 
-	 * @return the roleSelected
-	 */
-	public RoleDataBean getRoleSelected() {
+   /**
+    * sets value for roleSelected
+    * 
+    * @param roleSelected
+    *           the roleSelected to set
+    */
+   public void setRoleSelected(RoleDataBean roleSelected) {
+      if (null != roleSelected) {
+         this.roleSelected = roleSelected;
+         this.libelle = roleSelected.getLabelRole();
+         this.nomTechnique = roleSelected.getTechnicalNameRole();
+      }
+   }
 
-		return this.roleSelected;
-	}
+   public Boolean getCloseDialog() {
+      return this.closeDialog;
+   }
 
-	/**
-	 * sets value for roleSelected
-	 * 
-	 * @param roleSelected
-	 *            the roleSelected to set
-	 */
-	public void setRoleSelected(RoleDataBean roleSelected) {
-		if (null != roleSelected) {
-			this.roleSelected = roleSelected;
-			this.libelle = roleSelected.getLabelRole();
-			this.nomTechnique = roleSelected.getTechnicalNameRole();
-		}
-	}
-
-	public Boolean getCloseDialog() {
-		return this.closeDialog;
-	}
-
-	public void setCloseDialog(Boolean closeDialog) {
-		this.closeDialog = closeDialog;
-	}
+   public void setCloseDialog(Boolean closeDialog) {
+      this.closeDialog = closeDialog;
+   }
 
 }

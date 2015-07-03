@@ -21,7 +21,7 @@ public interface ITrainCatalogue {
  * sont inclusent dans les periodes fournit par la SSIM  
  */
 
-   Map<Date, String> getDateJourCirculMap();
+   
 
 	
 	/**

@@ -1,6 +1,7 @@
 package com.avancial.tgvair.metier;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -64,7 +65,7 @@ public class Train implements ITrain {
 
          for (Circulation catalCircul : train.getCirculations()) {
 
-            if (ssimcircul.compare(catalCircul))
+            if (ssimcircul.compareCirculation(catalCircul))
                equal = true;
          }
       }
@@ -118,16 +119,28 @@ public class Train implements ITrain {
    /**
     * cette methode retourne une map des jours de circulation et de leurs dates
     */
-   @Override
-   public Map<Date, Circulation> creerMapJoursCircul() {
 
-      Map<Date, Circulation> listJoursCircul = new TreeMap<Date, Circulation>();
-      
-      for (Circulation circulation : this.getCirculations()) {
+   @Override
+   public Map<Date, Circulation> getDateJourCirculMap() {
+      Calendar dateDebut = Calendar.getInstance();
+      Calendar dateFin = Calendar.getInstance();
+
+      Map<Date, Circulation> mapCirucl = new TreeMap<Date, Circulation>();
+      for (Circulation c : this.getCirculations()) {
+         dateDebut.setTime(c.getDateDebut());
+         dateFin.setTime(c.getDateFin());
+
+         while (!dateDebut.getTime().after(dateFin.getTime())) {
+
+           if (c.getJoursCirculation().contains(String.valueOf(dateDebut.get(Calendar.DAY_OF_WEEK)-1)))
+               mapCirucl.put(dateDebut.getTime(), c);
+           if(dateDebut.get(Calendar.DAY_OF_WEEK)-1==0 && c.getJoursCirculation().contains("7")) 
+              mapCirucl.put(dateDebut.getTime(), c);
+           dateDebut.add(Calendar.DATE, 1);
+         }
          
-         if(!listJoursCircul.containsKey(circulation.getDateDebut()))
-         listJoursCircul.put(circulation.getDateDebut(), circulation);
       }
-      return listJoursCircul;
+
+      return mapCirucl;
    }
 }

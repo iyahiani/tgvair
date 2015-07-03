@@ -12,7 +12,6 @@ package com.avancial.socle.exceptions;
  */
 public class SocleExceptionManager {
 
-	
    public static ASocleException getException(Exception e) {
 
       ISocleExceptionBuilder builder = new SocleExceptionBuilderSqlDuplicateId(null, e);

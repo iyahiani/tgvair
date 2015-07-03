@@ -3,6 +3,7 @@ package com.avancial.test;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -59,13 +60,40 @@ public class TestsComparaisonSsimEtCtalogue {
             trainSSIM.addCirculation(circulation);
          }
       }
-      ITrainCatalogue trainCatalogue = new TrainCatalogue();
-      Circulation circulation2 = new Circulation();
-      circulation2 = TestTrain.createWithStringPeriode("01/01/2015#01/08/2015#12567#FRMLW#FRAET#1449#1627");
-      System.out.println(circulation2.getDateFin());
-      trainCatalogue.addCirculation(circulation2); 
-      Map<Date,String> dateEtjoursCircuCatalog = new TreeMap<Date, String>();
-      //dateEtjoursCircuCatalog = trainCatalogue.getDateJourCirculMap() ;
-      train = trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue); 
+
+      // ////////// NOTE : la methode creerMapJoursCircul dans Train ET la
+      // methode getDateJourCirculMap dans Train Catalogue se ressemble
+
+      TrainCatalogue trainCatalogue = new TrainCatalogue();
+      Circulation circulation2, cc = new Circulation();
+      circulation2 = TestTrain.createWithStringPeriode("01/01/2015#31/08/2015#12567#FRMLW#FRAET#1449#1627");
+      cc = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#12567#FRMLW#FRAET#1449#1630");
+      // System.out.println(trainSSIM.creerMapJoursCircul());
+      trainCatalogue.addCirculation(circulation2);
+      trainCatalogue.addCirculation(cc);
+      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
+      Map<Date, Circulation> dateEtjoursCircuSSIM = new TreeMap<Date, Circulation>();
+
+      // remplir la map relatife au vrais jours de service
+
+      dateEtjoursCircuCatalog = trainCatalogue.getDateJourCirculMap();
+      //dateEtjoursCircuSSIM = trainSSIM.getDateJourCirculMap();
+      // System.out.println(dateEtjoursCircuSSIM );
+      // System.out.println(dateEtjoursCircuCatalog);
+      train = trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue);
+      dateEtjoursCircuSSIM = train.getDateJourCirculMap();
+     
+      for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
+         for (Map.Entry<Date, Circulation> entrySSIM : dateEtjoursCircuSSIM.entrySet()) {
+
+            if (entryCatalog.getKey().equals(entrySSIM.getKey()))
+               if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
+                  System.out.println("catalogue = " + entryCatalog.getKey() +"\t"
+                        + "SSIM = " + entrySSIM.getKey() + "\t" + "CatalogueCircul"+"\t"+entryCatalog.getValue().getChaineCircu()
+                        +"\t" + "SSIM Circul"+""+entrySSIM.getValue().getChaineCircu());
+               }
+         }
+      }
    }
+
 }

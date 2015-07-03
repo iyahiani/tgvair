@@ -94,7 +94,7 @@ public class Lunch3 {
 			catalogList.add(circulation);
 		}
 		
-		trainReference.setCirculations(catalogList)	;
+		trainReference.setCirculation(catalogList)	;
 		trainReference.setFlight_number("AF7257")	;
 		
 		for (String j : SSIMlistCircul) {

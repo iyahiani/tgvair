@@ -36,7 +36,7 @@ public class TestTrainCatalogueEtSSIM {
 		cir.setDestination("CDG");
 		cir.setJoursCirculation("12346");
 		circulationList.add(cir);
-		trainCatalogue.setCirculations(circulationList); 
+		trainCatalogue.setCirculation(circulationList); 
 		
 		circulationList = new ArrayList<Circulation>();
 		cir = new Circulation();

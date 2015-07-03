@@ -8,163 +8,149 @@ import com.avancial.tgvair.DataBeans.CirculationDataBean;
 
 public class Circulation implements ICirculation {
 
-	private Date dateDebut	;
-	private Date dateFin	;
-	private int heureArrivee	;
-	private int heureDepart	;
-	private String origine	;
-	private String destination	;
-	private String joursCirculation	;
-	private String indicateurFer	;
-	private String compagnieTrain	;
-	private int numeroTrain	;
-	private String periode	;
+   private Date dateDebut;
+   private Date dateFin;
+   private int heureArrivee;
+   private int heureDepart;
+   private String origine;
+   private String destination;
+   private String joursCirculation;
+   private String indicateurFer;
+   private String compagnieTrain;
+   private int numeroTrain;
+   private String periode;
 
-	public int getNumeroTrain() {
-		return numeroTrain;
-	}
+   public int getNumeroTrain() {
+      return numeroTrain;
+   }
 
-	public void setNumeroTrain(int numeroTrain) {
-		this.numeroTrain = numeroTrain;
-	}
+   public void setNumeroTrain(int numeroTrain) {
+      this.numeroTrain = numeroTrain;
+   }
 
-	public String getPeriode() {
-		return periode;
-	}
-	
-	public void setPeriode(String periode) {
-		this.periode = periode;
-	}
-	
-	public String getIndicateurFer() {
-		return indicateurFer;
-	}
-	
-	public void setIndicateurFer(String indicateurFer) {
-		this.indicateurFer = indicateurFer;
-	}
-	
-	public String getCompagnieTrain() {
-		return compagnieTrain;
-	}
-	
-	public void setCompagnieTrain(String compagnieTrain) {
-		this.compagnieTrain = compagnieTrain;
-	}
-	
-	private CirculationDataBean circulationDataBean;
+   public String getPeriode() {
+      return periode;
+   }
 
-	public Circulation() {
+   public void setPeriode(String periode) {
+      this.periode = periode;
+   }
 
-	}
-	
-	public String getChaineCircu() {
+   public String getIndicateurFer() {
+      return indicateurFer;
+   }
 
-		StringBuilder sb = new StringBuilder();
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy", Locale.ENGLISH);
+   public void setIndicateurFer(String indicateurFer) {
+      this.indicateurFer = indicateurFer;
+   }
 
-		// sb.append(this.getDateDebut());
-		// sb.append(this.getDateFin());
-		sb.append(this.getHeureDepart());
-		sb.append(this.getHeureArrivee());
-		sb.append(this.getOrigine());
-		sb.append(this.getDestination());
-		sb.append(this.getJoursCirculation());
-		sb.append(this.dateDebut) ;
-		sb.append(this.dateFin) ;
-		return sb.toString();
-	}
+   public String getCompagnieTrain() {
+      return compagnieTrain;
+   }
 
-	public Date getDateDebut() {
-		return dateDebut;
-	}
+   public void setCompagnieTrain(String compagnieTrain) {
+      this.compagnieTrain = compagnieTrain;
+   }
 
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
-	}
+   private CirculationDataBean circulationDataBean;
 
-	public Date getDateFin() {
-		return dateFin;
-	}
+   public Circulation() {
 
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
-	}
+   }
 
-	public int getHeureArrivee() {
-		return heureArrivee;
-	}
+   public String getChaineCircu() {
 
-	public void setHeureArrivee(int heureArrivee) {
-		this.heureArrivee = heureArrivee;
-	}
+      StringBuilder sb = new StringBuilder();
+      SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy", Locale.ENGLISH);
 
-	public int getHeureDepart() {
-		return heureDepart;
-	}
+      // sb.append(this.getDateDebut());
+      // sb.append(this.getDateFin());
+      sb.append(this.getHeureDepart());
+      sb.append(this.getHeureArrivee());
+      sb.append(this.getOrigine());
+      sb.append(this.getDestination());
+      sb.append(this.getJoursCirculation());
+      // sb.append(this.dateDebut) ;
+      // sb.append(this.dateFin) ;
+      return sb.toString();
+   }
 
-	public void setHeureDepart(int heureDepart) {
-		this.heureDepart = heureDepart;
-	}
+   public Date getDateDebut() {
+      return dateDebut;
+   }
 
-	public String getOrigine() {
-		return origine;
-	}
+   public void setDateDebut(Date dateDebut) {
+      this.dateDebut = dateDebut;
+   }
 
-	public void setOrigine(String origine) {
-		this.origine = origine;
-	}
+   public Date getDateFin() {
+      return dateFin;
+   }
 
-	public String getDestination() {
-		return destination;
-	}
+   public void setDateFin(Date dateFin) {
+      this.dateFin = dateFin;
+   }
 
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
+   public int getHeureArrivee() {
+      return heureArrivee;
+   }
 
-	public String getJoursCirculation() {
-		return joursCirculation;
-	}
+   public void setHeureArrivee(int heureArrivee) {
+      this.heureArrivee = heureArrivee;
+   }
 
-	public void setJoursCirculation(String joursCirculation) {
-		this.joursCirculation = joursCirculation;
-	}
+   public int getHeureDepart() {
+      return heureDepart;
+   }
 
-	public CirculationDataBean getCirculationDatabean(Circulation circulation) {
-		circulationDataBean = new CirculationDataBean();
-		circulationDataBean.setDestination(circulation.getDestination());
-		// circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
-		// circulationDataBean.setHeureDepart(circulation.getHeureDepart());
-		return circulationDataBean;
-	}
+   public void setHeureDepart(int heureDepart) {
+      this.heureDepart = heureDepart;
+   }
 
-	@Override
-	public boolean compare(Circulation circul) {
-		boolean equal =false; 
-		/*if (((this.getDateDebut()
-				.after(circul.getDateDebut()))
-				&& (this.getDateDebut().before(circul
-						.getDateFin())))
-						|| 
-						((this.getDateFin()
-								.after(circul.getDateDebut()))
-								&& (this.getDateFin().before(circul
-										.getDateFin())))) {*/
+   public String getOrigine() {
+      return origine;
+   }
 
-			if (this.getJoursCirculation().equals(
-					circul.getJoursCirculation())&&
-			    (this.getHeureArrivee() == circul
-					.getHeureArrivee())&&
-				 (this.getHeureDepart() == circul
-					.getHeureDepart())&&
-				(this.getDestination().equals(circul
-					.getDestination()))&&
-				 (this.getOrigine().equals(circul
-					.getOrigine()))) {
-			   equal = true ; 
-			}
-		//}
-		return equal ;
-	}
+   public void setOrigine(String origine) {
+      this.origine = origine;
+   }
+
+   public String getDestination() {
+      return destination;
+   }
+
+   public void setDestination(String destination) {
+      this.destination = destination;
+   }
+
+   public String getJoursCirculation() {
+      return joursCirculation;
+   }
+
+   public void setJoursCirculation(String joursCirculation) {
+      this.joursCirculation = joursCirculation;
+   }
+
+   public CirculationDataBean getCirculationDatabean(Circulation circulation) {
+      circulationDataBean = new CirculationDataBean();
+      circulationDataBean.setDestination(circulation.getDestination());
+      // circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
+      // circulationDataBean.setHeureDepart(circulation.getHeureDepart());
+      return circulationDataBean;
+   }
+
+   @Override
+   public boolean compareCirculation(Circulation circul) {
+
+      if (!this.getOrigine().equalsIgnoreCase(circul.getOrigine()))
+         return false;
+      else if (!this.getDestination().equalsIgnoreCase(circul.getDestination()))
+         return false;
+      else if (this.getHeureArrivee() != circul.getHeureArrivee())
+         return false;
+      else if (this.getHeureDepart() != circul.getHeureDepart())
+         return false;
+
+      return true;
+   }
 }

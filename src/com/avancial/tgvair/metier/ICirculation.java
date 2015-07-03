@@ -4,5 +4,6 @@ import java.text.ParseException;
 
 public interface ICirculation {
 
-	public boolean compare(Circulation circul ) ;
+	public boolean compareCirculation(Circulation circul ) ; 
+	
 	}

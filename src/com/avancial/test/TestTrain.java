@@ -251,7 +251,7 @@ public class TestTrain {
    public static Circulation createWithStringPeriode(String periode) throws ParseException {
 
       Circulation circulation = new Circulation();
-      SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
       circulation.setDateDebut(sdf.parse(periode.split("#")[0]));
       circulation.setDateFin(sdf.parse(periode.split("#")[1]));
       circulation.setJoursCirculation(periode.split("#")[2]);

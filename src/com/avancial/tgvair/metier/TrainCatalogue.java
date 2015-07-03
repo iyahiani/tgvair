@@ -1,107 +1,66 @@
 package com.avancial.tgvair.metier;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class TrainCatalogue implements ITrainCatalogue {
+public class TrainCatalogue extends Train implements ITrainCatalogue {
 
-	private String Nom_compagnie;
-	private String[] Numero_Train_Cat;
-	private String flight_number;
-	private List<Circulation> circulations;
+   private String Nom_compagnie;
+   private String[] Numero_Train_Cat;
+   private String flight_number;
+   
 
-	public TrainCatalogue() {
-		this.circulations = new ArrayList<Circulation>() ;
-	}
+   public TrainCatalogue() {
+      super();
+   }
 
-	public String getNom_compagnie() {
-		return Nom_compagnie;
-	}
+   public String getNom_compagnie() {
+      return Nom_compagnie;
+   }
 
-	public List<Circulation> getCirculations() {
-		return circulations;
-	}
+   public void setNom_compagnie(String nom_compagnie) {
+      Nom_compagnie = nom_compagnie;
+   }
 
-	public void setCirculations(List<Circulation> circulations) {
-		this.circulations = circulations   ;	
-	}
+   public String[] getNumero_Train_Cat() {
+      return Numero_Train_Cat;
+   }
 
-	public void setNom_compagnie(String nom_compagnie) {
-		Nom_compagnie = nom_compagnie  ;
-	}
+   public void setNumero_Train_Cat(String[] numero_Train_Cat) {
+      Numero_Train_Cat = numero_Train_Cat;
+   }
 
-	public String[] getNumero_Train_Cat() {
-		return Numero_Train_Cat  ;
-	}
+   public String getFlight_number() {
+      return flight_number;
+   }
 
-	public void setNumero_Train_Cat(String[] numero_Train_Cat) {
-		Numero_Train_Cat = numero_Train_Cat  ;
-	}
+   public void setFlight_number(String flight_number) {
+      this.flight_number = flight_number;
+   }
 
-	public String getFlight_number() {
-		return flight_number;
-	}
+  
+   @Override
+   public String getGareOrigine() {
 
-	public void setFlight_number(String flight_number) {
-		this.flight_number = flight_number;
-	}
-	@Override
-	public void addCirculation(Circulation circulation) {
-		this.circulations.add(circulation);
-	}
+      return this.getCirculations().get(0).getOrigine();
+   }
 
-	@Override
-	public String getGareOrigine() {
-		
-		return this.getCirculations().get(0).getOrigine();
-	}
+   @Override
+   public String getGareDestination() {
 
-	@Override
-	public String getGareDestination() {
-		
-		return getCirculations().get(getCirculations().size()-1).getDestination() ;
-	}
+      return getCirculations().get(getCirculations().size() - 1).getDestination();
+   }
 
    @Override
    public String[] getAllTrainID() {
-      
+
       return null;
    }
 
-   @Override
-   public Map<Date, String> getDateJourCirculMap() {
-      Date dateDebut = new Date() ;
-      Date datefin = new Date() ;
-      Map<Date, String> mapCirucl = new TreeMap<Date, String>();
-      for (Circulation c : this.getCirculations()) { 
-         dateDebut = c.getDateDebut() ; 
-         datefin = c.getDateFin() ; 
-         
-      }
-   return mapCirucl ;
-   }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
