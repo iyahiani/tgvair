@@ -30,7 +30,7 @@ public class ReaderSSIM extends AReaderTxt {
 		
 		ligne = this.br.readLine();
 		
-		if (ligne != null && ligne.length() < 12 && ligne.charAt(0) == '3') {
+ 		if (ligne != null && ligne.length() < 12 && ligne.charAt(0) == '3') {
 			temp = this.br.readLine() ; 
 			ligne = ligne.concat(temp);
 			return  ligne ; 

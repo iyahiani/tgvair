@@ -17,14 +17,14 @@ public class Circulation implements ICirculation {
    private String joursCirculation;
    private String indicateurFer;
    private String compagnieTrain;
-   private int numeroTrain;
+   private String numeroTrain;
    private String periode;
 
-   public int getNumeroTrain() {
+   public String getNumeroTrain() {
       return numeroTrain;
    }
 
-   public void setNumeroTrain(int numeroTrain) {
+   public void setNumeroTrain(String numeroTrain) {
       this.numeroTrain = numeroTrain;
    }
 

@@ -242,10 +242,7 @@ public class TestTrain {
       trainSSIM.addCirculation(circul4)  ;
       trainCatalogue.addCirculation(circul3) ;
       train = trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue)   ;
-      
       Assert.assertTrue(train.compare(trainCatalogue)) ;
-     
-      // ) ;
    }
 
    public static Circulation createWithStringPeriode(String periode) throws ParseException {

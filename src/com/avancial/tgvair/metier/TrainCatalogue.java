@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class TrainCatalogue extends Train implements ITrainCatalogue {
 
    private String Nom_compagnie;
-   private String[] Numero_Train_Cat;
+   private String Numero_Train_Cat;
    private String flight_number;
    
 
@@ -27,12 +27,12 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
       Nom_compagnie = nom_compagnie;
    }
 
-   public String[] getNumero_Train_Cat() {
+   public String getNumero_Train_Cat() {
       return Numero_Train_Cat;
    }
 
-   public void setNumero_Train_Cat(String[] numero_Train_Cat) {
-      Numero_Train_Cat = numero_Train_Cat;
+   public void setNumero_Train_Cat(String numero_Train_Cat) {
+      this.Numero_Train_Cat = numero_Train_Cat;
    }
 
    public String getFlight_number() {

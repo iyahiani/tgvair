@@ -11,15 +11,15 @@ import java.util.TreeMap;
 
 public class Train implements ITrain {
 
-   private String[] numTrain;
+   private String numTrain;
 
    private List<Circulation> circulation;
 
-   public String[] getNumTrain() {
+   public String getNumTrain() {
       return numTrain;
    }
 
-   public void setNumTrain(String[] numTrain) {
+   public void setNumTrain(String numTrain) {
       this.numTrain = numTrain;
    }
 
@@ -96,9 +96,9 @@ public class Train implements ITrain {
    @Override
    public ITrain getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue) {
       ITrain train = new Train();
-
       Circulation circulation = null;
       for (Circulation circulSSIM : this.getCirculations()) {
+
          if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
             circulation = new Circulation();
             circulation.setOrigine(circulSSIM.getOrigine());
@@ -132,13 +132,13 @@ public class Train implements ITrain {
 
          while (!dateDebut.getTime().after(dateFin.getTime())) {
 
-           if (c.getJoursCirculation().contains(String.valueOf(dateDebut.get(Calendar.DAY_OF_WEEK)-1)))
+            if (c.getJoursCirculation().contains(String.valueOf(dateDebut.get(Calendar.DAY_OF_WEEK) - 1)))
                mapCirucl.put(dateDebut.getTime(), c);
-           if(dateDebut.get(Calendar.DAY_OF_WEEK)-1==0 && c.getJoursCirculation().contains("7")) 
-              mapCirucl.put(dateDebut.getTime(), c);
-           dateDebut.add(Calendar.DATE, 1);
+            if (dateDebut.get(Calendar.DAY_OF_WEEK) - 1 == 0 && c.getJoursCirculation().contains("7"))
+               mapCirucl.put(dateDebut.getTime(), c);
+            dateDebut.add(Calendar.DATE, 1);
          }
-         
+
       }
 
       return mapCirucl;
