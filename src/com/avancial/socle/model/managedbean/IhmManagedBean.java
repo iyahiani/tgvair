@@ -54,7 +54,7 @@ public class IhmManagedBean implements Serializable {
       } catch (ServletException e) {
          e.printStackTrace();
       }
-      return ConstanteTGVAIR.NAVIGATION_ACCUEIL.toString();
+      return ConstanteTGVAIR.NAVIGATION_ACCEUIl.toString();
    }
 
    /**

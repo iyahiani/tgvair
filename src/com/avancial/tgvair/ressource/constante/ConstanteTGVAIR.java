@@ -8,9 +8,7 @@ public enum ConstanteTGVAIR {
    NAVIGATION_CATALOGUE("/pages/tgvair/private/catalogue?faces-redirect=true"),
    NAVIGATION_POINTARRET("/pages/tgvair/private/pointArret?faces-redirect=true"),
    NAVIGATION_COMPAGNIEAERIENNE("/pages/tgvair/private/compagnieAerienne?faces-redirect=true"), 
-   NAVIGATION_ACCEUIl("/pages/tgvair/public/accueil?faces-redirect=true"),
-   NAVIGATION_ACCUEIL("/pages/public/accueil?faces-redirect=true"),
-   
+   NAVIGATION_ACCEUIl("/pages/tgvair/public/accueil?faces-redirect=true"),   
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true");
    
    private String constante; 
