@@ -97,6 +97,7 @@ public class Train implements ITrain {
    public ITrain getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue) {
       ITrain train = new Train();
       Circulation circulation = null;
+      
       for (Circulation circulSSIM : this.getCirculations()) {
 
          if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {

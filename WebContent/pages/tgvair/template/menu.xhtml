@@ -8,11 +8,11 @@
 	<h:form>
 		<p:menu styleClass="btn-group-vertical" style="width : 100%">
 			  
-			<p:menuitem value="#{msg.p_catalogue_menu}" action="#{menutgvair.goCatalogue}" styleClass="btn btn-default" title="Rôles"  />
-			<p:menuitem value="#{msg.p_train_menu}" action="#{menutgvair.goTrain}" styleClass="btn btn-default" title="Utilisateurs" /> 
-			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menutgvair.goAjustement}" styleClass="btn btn-default" title="Utilisateurs" />
-			<p:menuitem value="#{msg.p_CompAerien_menu}" action="#{menutgvair.goCompagnieAerienne}" styleClass="btn btn-default" title="Utilisateurs" />
-			<p:menuitem value="#{msg.p_point_arret}" action="#{menutgvair.goPointArret}" styleClass="btn btn-default" title="Utilisateurs" />
+			<p:menuitem value="#{msg.p_catalogue_menu}" action="#{menutgvair.goCatalogue}" styleClass="btn btn-default" title="Rôles" rendered="#{ihmManagedBean.isLogged()}"  />
+			<p:menuitem value="#{msg.p_train_menu}" action="#{menutgvair.goTrain}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}" /> 
+			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menutgvair.goAjustement}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}"  />
+			<p:menuitem value="#{msg.p_CompAerien_menu}" action="#{menutgvair.goCompagnieAerienne}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}" />
+			<p:menuitem value="#{msg.p_point_arret}" action="#{menutgvair.goPointArret}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}" />
 		</p:menu>
 	</h:form>
 </ui:composition>
