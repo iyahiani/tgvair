@@ -123,7 +123,11 @@
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>avancial.fr</groupId>
+			<artifactId>reader</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -192,6 +196,11 @@
 				<groupId>avancial.fr</groupId>
 				<artifactId>parser</artifactId>
 				<version>0.0.2-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>avancial.fr</groupId>
+				<artifactId>reader</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

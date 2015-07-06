@@ -6,21 +6,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avancial.metier.parser.APP_enumParserSSIM;
-import com.avancial.metier.parser.FilterEncodage;
-import com.avancial.metier.parser.FilterSSIMTypeEnr;
-import com.avancial.metier.parser.FiltreCatalogue;
-import com.avancial.metier.parser.FiltreSSIMCompagnieTrain;
+import com.avancial.app.business.parser.APP_enumParserSSIM;
+import com.avancial.app.business.parser.FilterEncodage;
+import com.avancial.app.business.parser.FilterSSIMTypeEnr;
+import com.avancial.app.business.parser.FiltreCatalogue;
+import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
+import com.avancial.app.business.reader.ReaderSSIM;
+import com.avancial.app.business.train.Circulation;
+import com.avancial.app.business.train.ITrain;
+import com.avancial.app.business.train.ITrainCatalogue;
+import com.avancial.app.business.train.Train;
+import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.resources.utils.ConvertDateStringToDate;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
-import com.avancial.reader.ReaderSSIM;
-import com.avancial.tgvair.metier.Circulation;
-import com.avancial.tgvair.metier.ITrain;
-import com.avancial.tgvair.metier.ITrainCatalogue;
-import com.avancial.tgvair.metier.Train;
-import com.avancial.tgvair.metier.TrainCatalogue;
-import com.avancial.tgvair.util.ConvertDateStringToDate;
 
 public class Lunch3 {
 
