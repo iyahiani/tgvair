@@ -12,9 +12,11 @@ import com.avancial.socle.params.beans.ParamBeanGeneric;
  * @author bruno
  *
  */
-public class ParamReaderDBDirectory extends ParamReaderDB {
+public class ParamReaderDBDirectory extends AParamReaderDB {
 
    /**
+    * Classe servant à lire les paramètres "Répertoire" stockés en base de données
+    * 
     * @param dao
     */
    public ParamReaderDBDirectory(AbstractDao dao) {
@@ -28,13 +30,18 @@ public class ParamReaderDBDirectory extends ParamReaderDB {
     */
    @Override
    public void loadParams(String paramsName) throws Exception {
-      super.loadParams(paramsName);
-      for (Object bean : this.getDao().getAll()) {
+      try {
+         super.loadParams(paramsName);
+         for (Object bean : this.getDao().getAll()) {
 
-         IParamBean iParamBean = new ParamBeanGeneric();
-         iParamBean.setName(((RefDirectoryDataBean) bean).getTechnicalNameRefDirectory());
-         iParamBean.SetValue(((RefDirectoryDataBean) bean).getPathRefDirectory());
-         this.colIParamBeans.add(iParamBean);
+            IParamBean iParamBean = new ParamBeanGeneric();
+            iParamBean.setName(((RefDirectoryDataBean) bean).getTechnicalNameRefDirectory());
+            iParamBean.SetValue(((RefDirectoryDataBean) bean).getPathRefDirectory());
+            this.colIParamBeans.add(iParamBean);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
       }
+
    }
 }

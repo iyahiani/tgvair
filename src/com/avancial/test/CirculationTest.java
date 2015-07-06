@@ -8,6 +8,7 @@ import org.junit.Test;
 import com.avancial.app.business.parser.FilterEncodage;
 import com.avancial.app.business.parser.FilterSSIMTypeEnr;
 import com.avancial.app.business.parser.ParserSSIM;
+import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.business.train.TGVAIRFactory;
 import com.avancial.parser.IParser;
 import com.avancial.reader.IReader;

@@ -11,9 +11,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.socle.data.model.databean.UtilisateurDataBean;
 import com.avancial.socle.resources.ContextController;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * Managed Bean de gestion du header
@@ -25,10 +25,10 @@ import com.avancial.socle.resources.ContextController;
 @SessionScoped
 public class IhmManagedBean implements Serializable {
 
-   private static final long   serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
    private UtilisateurDataBean currentUser;
-   private String              originalURL;
-   private Locale              locale;
+   private String originalURL;
+   private Locale locale;
 
    /**
     * Teste si il y a un utilisateur de connecté
@@ -53,7 +53,7 @@ public class IhmManagedBean implements Serializable {
       } catch (ServletException e) {
          e.printStackTrace();
       }
-      return APP_TgvAir.NAVIGATION_ACCEUIl.toString();
+      return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
 
    /**
@@ -68,7 +68,7 @@ public class IhmManagedBean implements Serializable {
       if (this.getOriginalURL() == null) {
          this.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
       }
-      return APP_TgvAir.NAVIGATION_LOGIN.toString();
+      return SOCLE_constants.NAVIGATION_LOGIN.toString();
 
    }
 
