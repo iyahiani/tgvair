@@ -6,8 +6,8 @@ import java.util.Map;
 
 public interface ITrain {
 
-	public boolean compare(ITrainCatalogue train);
 	public boolean compare(ITrain train);
+	public void adapte(Date d, Circulation c);
 	public String getGareOrigine() ;
 	public String getGareDestination() ;
 	public ITrainCatalogue adapt(TrainCatalogue train) ;
@@ -17,7 +17,7 @@ public interface ITrain {
 	public String getChaineCompare();
 	
 	public List<Circulation> getCirculations();
-	public ITrain getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue);
+	public ITrain getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue);
     
    public Map<Date, Circulation> getDateJourCirculMap();    //sont pareils
    

@@ -11,7 +11,8 @@ public interface ITrainCatalogue {
 	String getGareDestination();
 	public List<Circulation> getCirculations();
 	public void addCirculation(Circulation circulation); 
-	public String[] getAllTrainID() ;
+	public String[] getAllTrainID() ; 
+	public void compareSSIM(ITrain train) ;
 /**
  * 
  * @param dateDebut : date de début de la périoide de circulation 

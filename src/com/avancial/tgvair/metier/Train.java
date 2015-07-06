@@ -57,27 +57,6 @@ public class Train implements ITrain {
    }
 
    @Override
-   public boolean compare(ITrainCatalogue train) {
-
-      boolean equal = false;
-
-      for (Circulation ssimcircul : this.getCirculations()) {
-
-         for (Circulation catalCircul : train.getCirculations()) {
-
-            if (ssimcircul.compareCirculation(catalCircul))
-               equal = true;
-         }
-      }
-      return equal;
-   }
-
-   @Override
-   public boolean compare(ITrain train) {
-      return false;
-   }
-
-   @Override
    public ITrainCatalogue adapt(TrainCatalogue train) {
       return null;
    }
@@ -94,31 +73,40 @@ public class Train implements ITrain {
    }
 
    @Override
-   public ITrain getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue) {
+   /**
+    * @author ismael.yahiani
+    * récupére le train référencé dans le catalogie à partir de la SSIM 
+    */
+   public ITrain getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue) {
       ITrain train = new Train();
       Circulation circulation = null;
-      
-      for (Circulation circulSSIM : this.getCirculations()) {
 
-         if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
-            circulation = new Circulation();
-            circulation.setOrigine(circulSSIM.getOrigine());
-            circulation.setDateDebut(circulSSIM.getDateDebut());
-            circulation.setDateFin(circulSSIM.getDateFin());
-            circulation.setHeureDepart(circulSSIM.getHeureDepart());
-            circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
-         } else if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination())) {
-            circulation.setDestination(circulSSIM.getDestination());
-            circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
-            train.addCirculation(circulation);
-            circulation = null;
-         }
+      for (Circulation circulSSIM : this.getCirculations()) {
+         for (String num : trainCatalogue.getNumero_Train_Cat())
+            if (circulSSIM.getNumeroTrain().equalsIgnoreCase(num)) {
+               if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
+                  circulation = new Circulation();
+                  circulation.setOrigine(circulSSIM.getOrigine());
+                  circulation.setDateDebut(circulSSIM.getDateDebut());
+                  circulation.setDateFin(circulSSIM.getDateFin());
+                  circulation.setHeureDepart(circulSSIM.getHeureDepart());
+                  circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
+                  circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
+               } else if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
+                  circulation.setDestination(circulSSIM.getDestination());
+                  circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
+                  train.addCirculation(circulation);
+                  circulation = null;
+               }
+
+            }
       }
       return train;
    }
 
    /**
-    * cette methode retourne une map des jours de circulation et de leurs dates
+    * @author ismael.yahiani cette methode retourne une map des jours de
+    *         circulation et de leurs dates
     */
 
    @Override
@@ -143,5 +131,58 @@ public class Train implements ITrain {
       }
 
       return mapCirucl;
+   }
+
+   /**
+    * retourne false si les circulation ne sont pas pareilles
+    */
+   @Override
+   public boolean compare(ITrain train) {
+
+      boolean comp = true;
+
+      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
+      Map<Date, Circulation> dateEtjoursCircuSSIM = new TreeMap<Date, Circulation>();
+
+      dateEtjoursCircuCatalog = this.getDateJourCirculMap();
+      dateEtjoursCircuSSIM = train.getDateJourCirculMap();
+
+      for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
+         for (Map.Entry<Date, Circulation> entrySSIM : dateEtjoursCircuSSIM.entrySet()) {
+
+            if (entryCatalog.getKey().equals(entrySSIM.getKey()))
+               if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
+
+                  System.out.println("catalogue = " + entryCatalog.getKey() + "\t" + "SSIM = " 
+                  + entrySSIM.getKey() + "\t"
+                        + "CatalogueCircul" 
+                  + "\t" + entryCatalog.getValue().getChaineCircu() 
+                  + "\t" + "SSIM Circul"+ " " 
+                  + entrySSIM.getValue().getChaineCircu());
+
+                  // return false;
+               }
+         }
+      }
+      return comp;
+   }
+
+   /**
+    * @author ismael.yahiani adapte les cicrculation dans les catalogues
+    */
+   @Override
+   public void adapte(Date d, Circulation c) {
+      boolean comp = true;
+
+      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
+
+      dateEtjoursCircuCatalog = this.getDateJourCirculMap();
+
+      for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
+
+         if (entryCatalog.getKey().equals(d))
+            entryCatalog.setValue(c);
+      }
+
    }
 }

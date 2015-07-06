@@ -38,8 +38,9 @@ public class TestsComparaisonSsimEtCtalogue {
       IReader reader = new ReaderSSIM("D:/Users/ismael.yahiani/Documents/SN5232.txt");
       String chaine;
       String[] num = { "005232","005233" };
+      
       Circulation circulation;
-
+      
       SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy");
       IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num)))), APP_enumParserSSIM.getBegins(),
             APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getNames());
@@ -66,36 +67,16 @@ public class TestsComparaisonSsimEtCtalogue {
       // ////////// NOTE : la methode creerMapJoursCircul dans Train ET la
       // methode getDateJourCirculMap dans Train Catalogue se ressemble
       
+      
       TrainCatalogue trainCatalogue = new TrainCatalogue();
       Circulation circulation2, cc = new Circulation();
       circulation2 = TestTrain.createWithStringPeriode("01/01/2015#31/08/2015#12567#FRMLW#FRAET#1449#1627");
-      
       trainCatalogue.addCirculation(circulation2);
-       
-      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
-      Map<Date, Circulation> dateEtjoursCircuSSIM = new TreeMap<Date, Circulation>();
-
-      // remplir la map relatife au vrais jours de service
       
-      dateEtjoursCircuCatalog = trainCatalogue.getDateJourCirculMap()   ;
       train = trainSSIM.getTrainAPartirDuCatalogue(trainCatalogue);
-     
-      dateEtjoursCircuSSIM = train.getDateJourCirculMap();
+         
+         System.out.println(trainCatalogue.compare(train)); 
       
-      
-      
-    for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
-         for (Map.Entry<Date, Circulation> entrySSIM : dateEtjoursCircuSSIM.entrySet()) {
-
-            if (entryCatalog.getKey().equals(entrySSIM.getKey()))
-               if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
-                  System.out.println("catalogue = " + entryCatalog.getKey() +"\t"
-                        + "SSIM = " + entrySSIM.getKey() + "\t" + 
-                        "CatalogueCircul"+"\t"+entryCatalog.getValue().getChaineCircu()
-                        +"\t" + "SSIM Circul"+" "+entrySSIM.getValue().getChaineCircu());
-               }
-         }
-      }
    }
 
 }

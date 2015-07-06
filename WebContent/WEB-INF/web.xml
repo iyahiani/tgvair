@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>TGV AIR</display-name>
 	<welcome-file-list>
-		<welcome-file>pages/public/accueil.xhtml</welcome-file>
+		<welcome-file>pages/tgvair/public/accueil.xhtml</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>FacesServlet</servlet-name>
