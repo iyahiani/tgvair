@@ -5,14 +5,13 @@ import java.text.ParseException;
 
 import org.junit.Test;
 
-import com.avancial.metier.parser.FilterEncodage;
-import com.avancial.metier.parser.FilterSSIMTypeEnr;
-import com.avancial.metier.parser.ParserSSIM;
+import com.avancial.app.business.parser.FilterEncodage;
+import com.avancial.app.business.parser.FilterSSIMTypeEnr;
+import com.avancial.app.business.parser.ParserSSIM;
+import com.avancial.app.business.reader.ReaderSSIM;
+import com.avancial.app.business.train.TGVAIRFactory;
 import com.avancial.parser.IParser;
 import com.avancial.reader.IReader;
-import com.avancial.reader.ReaderSSIM;
-import com.avancial.tgvair.metier.Circulation;
-import com.avancial.tgvair.metier.TGVAIRFactory;
 
 public class CirculationTest {
 

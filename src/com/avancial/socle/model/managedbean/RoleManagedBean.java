@@ -17,7 +17,7 @@ import org.primefaces.context.RequestContext;
 import com.avancial.socle.data.controller.dao.RoleDao;
 import com.avancial.socle.data.model.databean.RoleDataBean;
 import com.avancial.socle.exceptions.ASocleException;
-import com.avancial.socle.resources.constants.ConstantSocle;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * @author bruno.legloahec
@@ -70,11 +70,11 @@ public class RoleManagedBean extends AManageBean {
 
       try {
          dao.save(roleDataBean);
-         FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le rôle a été créé."));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le rôle a été créé."));
          RequestContext.getCurrentInstance().update(":dataTable");
          this.closeDialog = true;
       } catch (ASocleException e) {
-         FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          e.printStackTrace();
       }
 
@@ -88,11 +88,11 @@ public class RoleManagedBean extends AManageBean {
          RoleDao dao = new RoleDao();
          try {
             dao.update(this.roleSelected);
-            FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifié"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifié"));
             this.closeDialog = true;
          } catch (ASocleException e) {
             e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          }
       }
       return null;
@@ -105,10 +105,10 @@ public class RoleManagedBean extends AManageBean {
          RoleDao dao = new RoleDao();
          try {
             dao.delete(this.roleSelected);
-            FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
             this.closeDialog = true;
          } catch (ASocleException e) {
-            FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
          }
       }
       return null;

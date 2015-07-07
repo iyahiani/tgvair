@@ -4,17 +4,37 @@
 package com.avancial.socle.exceptions;
 
 /**
- * C'est le point d'entrée pour le client.
- * Il est chargé de contruire la chaine des Exception builder.
+ * C'est le point d'entrée pour le client. Il est chargé de contruire la chaine
+ * des Exception builder.
  * 
  * @author bruno.legloahec
  *
  */
 public class SocleExceptionManager {
+   protected static ASocleExceptionFinder finder = null;
 
-   public static ASocleException getException(Exception e) {
-
-      ISocleExceptionBuilder builder = new SocleExceptionBuilderSqlDuplicateId(null, e);
-      return builder.getSocleException();
+   public SocleExceptionManager(Exception e) {
+      this.init(e);
    }
+
+   @SuppressWarnings("static-method")
+   protected void init(Exception e) {
+      ASocleExceptionFinder finder = new SocleExceptionFinderSqlDuplicateId(null, e);
+
+      // A laisser à la fin. Doit pointer sur le dernier finder
+      SocleExceptionManager.finder = finder;
+   }
+
+   /**
+    * 
+    * @param finder
+    */
+   public static void add(ASocleExceptionFinder finder) {
+      SocleExceptionManager.finder = finder;
+   }
+
+   public static ASocleException getException() {
+      return SocleExceptionManager.finder.getSocleException();
+   }
+
 }

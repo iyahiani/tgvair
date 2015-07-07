@@ -9,19 +9,19 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.avancial.metier.parser.APP_enumParserSSIM;
-import com.avancial.metier.parser.FilterEncodage;
-import com.avancial.metier.parser.FilterSSIMTypeEnr;
-import com.avancial.metier.parser.FiltreSSIMCompagnieTrain;
+import com.avancial.app.business.parser.APP_enumParserSSIM;
+import com.avancial.app.business.parser.FilterEncodage;
+import com.avancial.app.business.parser.FilterSSIMTypeEnr;
+import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
+import com.avancial.app.business.train.Circulation;
+import com.avancial.app.business.train.ITrain;
+import com.avancial.app.business.train.ITrainCatalogue;
+import com.avancial.app.business.train.ITrainFactory;
+import com.avancial.app.business.train.Train;
+import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.business.train.TrainFactory;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
-import com.avancial.tgvair.metier.Circulation;
-import com.avancial.tgvair.metier.ITrain;
-import com.avancial.tgvair.metier.ITrainCatalogue;
-import com.avancial.tgvair.metier.ITrainFactory;
-import com.avancial.tgvair.metier.Train;
-import com.avancial.tgvair.metier.TrainCatalogue;
-import com.avancial.tgvair.metier.TrainFactory;
 
 public class TestTrain {
 

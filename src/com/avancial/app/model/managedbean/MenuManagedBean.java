@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.socle.resources.constants.ConstantSocle;
 
 /**
@@ -32,6 +33,26 @@ public class MenuManagedBean implements Serializable {
 
    public static String goUser() {
       return ConstantSocle.NAVIGATION_USER.toString();
-   } 
-   
+   }
+
+   public static String goAjustement() {
+      return APP_TgvAir.NAVIGATION_AJUSTEMENT.toString();
+   }
+
+   public static String goCatalogue() {
+      return APP_TgvAir.NAVIGATION_CATALOGUE.toString();
+   }
+
+   public static String goCompagnieAerienne() {
+      return APP_TgvAir.NAVIGATION_COMPAGNIEAERIENNE.toString();
+   }
+
+   public static String goPointArret() {
+      return APP_TgvAir.NAVIGATION_POINTARRET.toString();
+   }
+
+   public static String goTrain() {
+      return APP_TgvAir.NAVIGATION_TRAIN.toString();
+   }
+
 }

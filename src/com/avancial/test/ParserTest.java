@@ -5,9 +5,9 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.avancial.metier.parser.APP_enumParserSSIM;
-import com.avancial.metier.parser.FilterEncodage;
-import com.avancial.metier.parser.FilterSSIMTypeEnr;
+import com.avancial.app.business.parser.APP_enumParserSSIM;
+import com.avancial.app.business.parser.FilterEncodage;
+import com.avancial.app.business.parser.FilterSSIMTypeEnr;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 

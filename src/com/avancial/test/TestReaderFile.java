@@ -9,8 +9,8 @@ import junit.framework.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
+import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.reader.IReader;
-import com.avancial.reader.ReaderSSIM;
 
 /**
  * 

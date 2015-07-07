@@ -12,20 +12,11 @@
 			<p:layoutUnit position="west" minSize="100" >
 				<h:graphicImage name="private/image/avancialLogo.gif"
 					id="avancialLogo" />
-					
-				<h:panelGrid columns="2" styleClass="">
-					<h:commandLink action="#{ihmManagedBean.setLanguage('fr')}">		
-						<h:graphicImage name="private/langue/fr.png" title="Langue Française" /> 
-					</h:commandLink> 
-					<h:commandLink action="#{ihmManagedBean.setLanguage('en')}" title="English Langage">  	
-						<h:graphicImage name="private/langue/en.png" /> 
-					</h:commandLink>
-				</h:panelGrid> 
 			</p:layoutUnit> 
 			
-			<p:layoutUnit position="center" styleClass="panel panel-info">
+			<p:layoutUnit position="center" styleClass="panel panel-info noBorder">
 				
-				<h:panelGrid columns="1" >
+				<h:panelGrid columns="1">
 					<h:outputText value="#{msg.libelle_bienvenue} #{ihmManagedBean.currentUser.nomUser}."
 						rendered="#{ihmManagedBean.isLogged()}" />
 					<h:outputText

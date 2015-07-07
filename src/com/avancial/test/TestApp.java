@@ -3,7 +3,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.avancial.reader.ReaderSSIM;
+import com.avancial.app.business.reader.ReaderSSIM;
 
 
 

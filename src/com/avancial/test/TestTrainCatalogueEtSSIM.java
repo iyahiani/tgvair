@@ -11,9 +11,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.avancial.tgvair.metier.Circulation;
-import com.avancial.tgvair.metier.Train;
-import com.avancial.tgvair.metier.TrainCatalogue;
+import com.avancial.app.business.train.Circulation;
+import com.avancial.app.business.train.Train;
+import com.avancial.app.business.train.TrainCatalogue;
 
 public class TestTrainCatalogueEtSSIM {
 

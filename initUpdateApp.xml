@@ -3,9 +3,12 @@
 		Création d'un nouveau projet
 	</description>
 
+	<condition property="lecteur" value="c:">
+		<contains string="${user.name}" substring="legloahec" casesensitive="false" />
+	</condition>
+	<property name="lecteur" value="d:" />
 
-	<property name="source" location="D:\Users/${user.name}/Desktop/appSocle" />
-	<!-- 	<property name="source" location="c:\Users/${user.name}/Desktop/appSocle" />-->
+	<property name="source" location="${lecteur}\Users/${user.name}/Desktop/appSocle" />
 
 	<property name="source.webcontent" location="${source}/WebContent" />
 	<property name="dest.webcontent" location="WebContent/" />
@@ -126,7 +129,7 @@
 			</fileset>
 		</copy>
 
-	<echo>Copie des pages</echo>
+		<echo>Copie des pages</echo>
 		<copy todir="${dest.webcontent.resources}" verbose="true" overwrite="true">
 			<fileset dir="${source.webcontent.resources}">
 

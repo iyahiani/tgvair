@@ -6,10 +6,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
   
 	<h:form>
-		<p:menu styleClass="btn-group-vertical" >
-			<p:menuitem value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" styleClass="btn btn-default" title="acceuil" > </p:menuitem>  
-			<p:menuitem value="#{msg.p_role_menu}" action="#{menu.goRole}" styleClass="btn btn-default" title="Rôles"  />
-			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}" styleClass="btn btn-default" title="Utilisateurs" />
+		<p:menu styleClass="btn-group-vertical" style="width : 100%">
+			  
+			<p:menuitem value="#{msg.p_catalogue_menu}" action="#{menu.goCatalogue}" styleClass="btn btn-default" title="Rôles" rendered="#{ihmManagedBean.isLogged()}"  />
+			<p:menuitem value="#{msg.p_train_menu}" action="#{menu.goTrain}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}" /> 
+			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menu.goAjustement}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}"  />
+			<p:menuitem value="#{msg.p_CompAerien_menu}" action="#{menu.goCompagnieAerienne}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}" />
+			<p:menuitem value="#{msg.p_point_arret}" action="#{menu.goPointArret}" styleClass="btn btn-default" title="Utilisateurs" rendered="#{ihmManagedBean.isLogged()}" />
 		</p:menu>
 	</h:form>
 </ui:composition>
