@@ -57,8 +57,27 @@ public class Train implements ITrain {
    }
 
    @Override
-   public ITrainCatalogue adapt(TrainCatalogue train) {
-      return null;
+   public Map<Date, Circulation> adapt(TrainCatalogue train) {
+
+      boolean comp = true;
+
+      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
+      Map<Date, Circulation> dateEtjoursCircuSSIM = new TreeMap<Date, Circulation>();
+
+      dateEtjoursCircuCatalog = this.getDateJourCirculMap();
+      dateEtjoursCircuSSIM = train.getDateJourCirculMap();
+
+      for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
+         for (Map.Entry<Date, Circulation> entrySSIM : dateEtjoursCircuSSIM.entrySet()) {
+
+            if (entryCatalog.getKey().equals(entrySSIM.getKey()))
+               if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
+                  
+                 entryCatalog.setValue(entrySSIM.getValue()) ;
+               }
+         }
+      }
+         return dateEtjoursCircuCatalog ;
    }
 
    @Override
@@ -82,8 +101,8 @@ public class Train implements ITrain {
       Circulation circulation = null;
 
       for (Circulation circulSSIM : this.getCirculations()) {
-         for (String num : trainCatalogue.getNumero_Train_Cat())
-            if (circulSSIM.getNumeroTrain().equalsIgnoreCase(num)) {
+         for (String num : trainCatalogue.getNumero_Train_Cat()) {
+            if (num.equalsIgnoreCase(circulSSIM.getNumeroTrain())) {
                if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
                   circulation = new Circulation();
                   circulation.setOrigine(circulSSIM.getOrigine());
@@ -98,9 +117,10 @@ public class Train implements ITrain {
                   train.addCirculation(circulation);
                   circulation = null;
                }
-
             }
+         }
       }
+
       return train;
    }
 
@@ -137,52 +157,30 @@ public class Train implements ITrain {
     * retourne false si les circulation ne sont pas pareilles
     */
    @Override
-   public boolean compare(ITrain train) {
-
+   public boolean compare(Map<Date, Circulation> cat, Map<Date, Circulation> ssim) {
       boolean comp = true;
 
-      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
-      Map<Date, Circulation> dateEtjoursCircuSSIM = new TreeMap<Date, Circulation>();
-
-      dateEtjoursCircuCatalog = this.getDateJourCirculMap();
-      dateEtjoursCircuSSIM = train.getDateJourCirculMap();
-
-      for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
-         for (Map.Entry<Date, Circulation> entrySSIM : dateEtjoursCircuSSIM.entrySet()) {
+     
+      
+      for (Map.Entry<Date, Circulation> entryCatalog : cat.entrySet()) {
+         for (Map.Entry<Date, Circulation> entrySSIM : ssim.entrySet()) {
 
             if (entryCatalog.getKey().equals(entrySSIM.getKey()))
                if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
-
-                  System.out.println("catalogue = " + entryCatalog.getKey() + "\t" + "SSIM = " 
-                  + entrySSIM.getKey() + "\t"
-                        + "CatalogueCircul" 
-                  + "\t" + entryCatalog.getValue().getChaineCircu() 
-                  + "\t" + "SSIM Circul"+ " " 
-                  + entrySSIM.getValue().getChaineCircu());
-
-                  // return false;
+                 return false ; 
                }
          }
+         
       }
-      return comp;
+      return true;
    }
 
    /**
     * @author ismael.yahiani adapte les cicrculation dans les catalogues
     */
+  
    @Override
-   public void adapte(Date d, Circulation c) {
-      boolean comp = true;
-
-      Map<Date, Circulation> dateEtjoursCircuCatalog = new TreeMap<Date, Circulation>();
-
-      dateEtjoursCircuCatalog = this.getDateJourCirculMap();
-
-      for (Map.Entry<Date, Circulation> entryCatalog : dateEtjoursCircuCatalog.entrySet()) {
-
-         if (entryCatalog.getKey().equals(d))
-            entryCatalog.setValue(c);
-      }
+   public void modifierCircul(TrainCatalogue trainCat) {
 
    }
 }

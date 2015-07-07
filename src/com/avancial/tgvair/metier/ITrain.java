@@ -6,11 +6,12 @@ import java.util.Map;
 
 public interface ITrain {
 
-	public boolean compare(ITrain train);
-	public void adapte(Date d, Circulation c);
+	public boolean compare(Map<Date, Circulation> cat, Map<Date, Circulation> ssim) ; 
+	
+	
 	public String getGareOrigine() ;
 	public String getGareDestination() ;
-	public ITrainCatalogue adapt(TrainCatalogue train) ;
+	public Map<Date,Circulation> adapt(TrainCatalogue train) ;
 	public void addCirculation (Circulation circultation );
 	public void setCirculation(List<Circulation> circulation); 
 
@@ -20,6 +21,7 @@ public interface ITrain {
 	public ITrain getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue);
     
    public Map<Date, Circulation> getDateJourCirculMap();    //sont pareils
-   
+  
+   public void modifierCircul(TrainCatalogue trainCat) ;
 		
 }
