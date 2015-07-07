@@ -17,6 +17,7 @@ import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
 import com.avancial.app.business.train.ITrainCatalogue;
 import com.avancial.app.business.train.ITrainFactory;
+import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.TrainFactory;
@@ -34,18 +35,18 @@ public class TestTrain {
       Circulation circul2 = new Circulation();
       circul1.setDateDebut(new Date("01JAN15"));
       circul1.setDateFin(new Date("30JAN15"));
-      circul1.setOrigine("CDG");
-      circul1.setDestination("MAR");
-      circul1.setHeureArrivee(1500);
-      circul1.setHeureDepart(1515);
+      circul1.getJourCirculation().setOrigine("CDG");
+      circul1.getJourCirculation().setDestination("MAR");
+      circul1.getJourCirculation().setHeureArrivee(1500);
+      circul1.getJourCirculation().setHeureDepart(1515);
       circul1.setJoursCirculation("123");
 
       circul2.setDateDebut(new Date("01JAN15"));
       circul2.setDateFin(new Date("30JAN15"));
-      circul2.setOrigine("CDG");
-      circul2.setDestination("MAR");
-      circul2.setHeureArrivee(1500);
-      circul2.setHeureDepart(1515);
+      circul2.getJourCirculation().setOrigine("CDG");
+      circul2.getJourCirculation().setDestination("MAR");
+      circul2.getJourCirculation().setHeureArrivee(1500);
+      circul2.getJourCirculation().setHeureDepart(1515);
       circul2.setJoursCirculation("123");
 
       List<Circulation> listCircu = new ArrayList<Circulation>();
@@ -68,18 +69,18 @@ public class TestTrain {
       Circulation circul2 = new Circulation();
       circul1.setDateDebut(new Date("01JAN15"));
       circul1.setDateFin(new Date("30JAN15"));
-      circul1.setOrigine("CDG");
-      circul1.setDestination("MAR");
-      circul1.setHeureArrivee(1500);
-      circul1.setHeureDepart(1515);
+      circul1.getJourCirculation().setOrigine("CDG");
+      circul1.getJourCirculation().setDestination("MAR");
+      circul1.getJourCirculation().setHeureArrivee(1500);
+      circul1.getJourCirculation().setHeureDepart(1515);
       circul1.setJoursCirculation("123");
 
       circul2.setDateDebut(new Date("01JAN15"));
       circul2.setDateFin(new Date("30JAN15"));
-      circul2.setOrigine("CDG");
-      circul2.setDestination("MAR");
-      circul2.setHeureArrivee(1500);
-      circul2.setHeureDepart(1515);
+      circul2.getJourCirculation().setOrigine("CDG");
+      circul2.getJourCirculation().setDestination("MAR");
+      circul2.getJourCirculation().setHeureArrivee(1500);
+      circul2.getJourCirculation().setHeureDepart(1515);
       circul2.setJoursCirculation("123");
 
       List<Circulation> listCircu = new ArrayList<Circulation>();
@@ -91,18 +92,18 @@ public class TestTrain {
       circul2 = new Circulation();
       circul1.setDateDebut(new Date("01JAN15"));
       circul1.setDateFin(new Date("30JAN15"));
-      circul1.setOrigine("CDG");
-      circul1.setDestination("MAR");
-      circul1.setHeureArrivee(1500);
-      circul1.setHeureDepart(1515);
+      circul1.getJourCirculation().setOrigine("CDG");
+      circul1.getJourCirculation().setDestination("MAR");
+      circul1.getJourCirculation().setHeureArrivee(1500);
+      circul1.getJourCirculation().setHeureDepart(1515);
       circul1.setJoursCirculation("123");
 
       circul2.setDateDebut(new Date("01JAN15"));
       circul2.setDateFin(new Date("30JAN15"));
-      circul2.setOrigine("CDG");
-      circul2.setDestination("MAR");
-      circul2.setHeureArrivee(1500);
-      circul2.setHeureDepart(1515);
+      circul2.getJourCirculation().setOrigine("CDG");
+      circul2.getJourCirculation().setDestination("MAR");
+      circul2.getJourCirculation().setHeureArrivee(1500);
+      circul2.getJourCirculation().setHeureDepart(1515);
       circul2.setJoursCirculation("1234");
 
       listCircu2.add(circul1);
@@ -147,15 +148,15 @@ public class TestTrain {
 
       IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
 
-<<<<<<< HEAD
+
       Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)),
             Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
-=======
-      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat()[0]), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
->>>>>>> f219dc85a30245e988cb2553770233fb0d45a137
+
+      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
+
    }
 
-   @Test
+  // @Test
    public void instancierTrainSSIm() {
 
       IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
@@ -169,7 +170,7 @@ public class TestTrain {
 
       String numTrain = "";
       String numTrainSSIM = " ";
-      ITrain train = new Train();
+      Train train = new Train();
 
       for (String legs : listLegs) {
 
@@ -242,17 +243,46 @@ public class TestTrain {
 
    public static Circulation createWithStringPeriode(String periode) throws ParseException {
 
-      Circulation circulation = new Circulation();
-      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-      circulation.setDateDebut(sdf.parse(periode.split("#")[0]));
-      circulation.setDateFin(sdf.parse(periode.split("#")[1]));
-      circulation.setJoursCirculation(periode.split("#")[2]);
-      circulation.setOrigine(periode.split("#")[3]);
-      circulation.setDestination(periode.split("#")[4]);
-      circulation.setHeureDepart(Integer.valueOf(periode.split("#")[5]));
-      circulation.setHeureArrivee(Integer.valueOf(periode.split("#")[6]));
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")   ;
+      Circulation circulation = new Circulation()  ; 
+       int heureArrivee=Integer.valueOf(periode.split("#")[6]);
+       int heureDepart=Integer.valueOf(periode.split("#")[5]);
+       String origine=periode.split("#")[3];
+       String destination=periode.split("#")[4];
+       Date dateCircul=sdf.parse(periode.split("#")[0]);
+       JourCirculation joursCircul = new JourCirculation(dateCircul,heureDepart,heureArrivee,origine,destination,true) ;
+      circulation.setJourCirculation(joursCircul);
+      
+      circulation.setDateDebut(sdf.parse(periode.split("#")[0]))  ;
+      circulation.setDateFin(sdf.parse(periode.split("#")[1])) ;
+      circulation.setJoursCirculation(periode.split("#")[2])   ;
 
       return circulation;
    }
+   
+   @Test
+   public void workflow() throws ParseException {
+
+      ITrainCatalogue trainCatalogue=new TrainCatalogue();
+           
+      //Train issu de la SSIM
+      
+      TrainFactory factory=new TrainFactory()   ;
+      Train trainSSIM=new Train()   ;
+      Train train = new Train()  ;
+      
+      Circulation circul = new Circulation() ;
+      Circulation circul2 = new Circulation()   ; 
+      circul = createWithStringPeriode("01/01/2015#15/01/2015#1234567#FRLLE#FRMLW#0700#0730" )  ;
+      circul2 = createWithStringPeriode("01/01/2015#15/01/2015#123457#FRLLE#FRMLW#0730#0800")  ; 
+      train.addCirculation(circul);
+      trainSSIM.addCirculation(circul2);
+      
+      train.adapt(trainSSIM); 
+      System.out.println(train.getJoursCirculation());
+      Assert.assertTrue(train.compare(trainSSIM) )  ;                   
+      
+   }
+   
 
 }

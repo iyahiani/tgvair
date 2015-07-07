@@ -48,13 +48,13 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
    @Override
    public String getGareOrigine() {
 
-      return this.getCirculations().get(0).getOrigine();
+      return this.getCirculations().get(0).getJourCirculation().getOrigine();
    }
 
    @Override
    public String getGareDestination() {
 
-      return getCirculations().get(getCirculations().size() - 1).getDestination();
+      return getCirculations().get(getCirculations().size() - 1).getJourCirculation().getDestination();
    }
 
    @Override
@@ -68,10 +68,7 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
      
    }
 
-   public TrainCatalogue buildCirculation() {
-      
-      return null;
-   }
+  
 
 
 }
