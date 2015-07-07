@@ -69,6 +69,12 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
    }
 
   
-
+   public ITrain  getTrainCatalogueComplet() {
+      
+      Train train = new TrainCatalogue() ; 
+      
+      
+      return train ;
+   }
 
 }

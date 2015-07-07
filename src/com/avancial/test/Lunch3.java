@@ -27,13 +27,14 @@ import com.avancial.reader.IReader;
 
 public class Lunch3 {
 
-   public static ITrain getTrainSSIM(String path) throws IOException, ParseException {
+   public static List<ITrain> getTrainSSIM(String path,List<ITR> ) throws IOException, ParseException {
       IReader reader = new ReaderSSIM(path);// "D:/Users/ismael.yahiani/Documents/ssim_6.txt"
       String chaine;
       String[] num = { "001111", "001112", "001113", "001115", "001117", "002222", "002223" };
       //
       // ///////// Instantiation Des Trains SSIM
 
+      
       ITrain trainsSSIM = new Train();
       ITrain trainCat = new Train();
 
@@ -161,9 +162,9 @@ public class Lunch3 {
          Train train = new Train();  
          
          train = trainSSIM.getTrainAPartirDuCatalogue(trainCat);
+        
          if(!train.compare(trainSSIM)) {
-            
-            train.adapt(trainSSIM); 
+           train.adapt(trainSSIM); 
            System.out.println(train);
             
            
