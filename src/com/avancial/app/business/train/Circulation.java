@@ -63,6 +63,7 @@ public class Circulation implements ICirculation {
       // sb.append(this.getDateFin());
       sb.append(this.getOrigine());
 
+<<<<<<< HEAD
       sb.append("\t") ;
       sb.append(this.getHeureDepart());sb.append("\t") ;
       sb.append(this.getDestination());sb.append("\t") ;
@@ -72,12 +73,26 @@ public class Circulation implements ICirculation {
       sb.append(this.getDateFin()) ; 
       //sb.append(this.getJoursCirculation());
 
+=======
+      sb.append("\t");
+>>>>>>> f219dc85a30245e988cb2553770233fb0d45a137
       sb.append(this.getHeureDepart());
+      sb.append("\t");
       sb.append(this.getDestination());
+      sb.append("\t");
       sb.append(this.getHeureArrivee());
+      sb.append("\t");
       sb.append(this.getNumeroTrain());
+      sb.append("\t");
+      sb.append(this.getDateDebut());
+      sb.append("\t");
+      sb.append(this.getDateFin());
+      // sb.append(this.getJoursCirculation());
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f219dc85a30245e988cb2553770233fb0d45a137
       return sb.toString();
    }
 

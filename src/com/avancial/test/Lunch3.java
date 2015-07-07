@@ -17,7 +17,6 @@ import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
-import com.avancial.app.business.train.ITrainCatalogue;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.resources.utils.ConvertDateStringToDate;
@@ -37,8 +36,7 @@ public class Lunch3 {
       ITrain trainSSIM = new Train();
 
       SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy");
-      IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num)))), APP_enumParserSSIM.getBegins(),
-            APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getNames());
+      IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num)))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
 
       while ((chaine = reader.readLine()) != null) {
 
@@ -110,27 +108,30 @@ public class Lunch3 {
       listTrainsCat.add(trainCata2);
       listTrainsCat.add(trainCata3);
       listTrainsCat.add(trainCata4);
+<<<<<<< HEAD
       
       ////////////////////////////////////////////////////  Construction Map des Train Catalogue 
       
+=======
+      // ////////////////////////////////////////////////// Construction Map des Train Catalogue
+
+>>>>>>> f219dc85a30245e988cb2553770233fb0d45a137
       Map<Date, Circulation> listTrainsAdapte = new TreeMap<Date, Circulation>();
-     
+
       for (TrainCatalogue t : listTrainsCat) {
-         listTrainsAdapte.putAll(t.getDateJourCirculMap()); 
+         listTrainsAdapte.putAll(t.getDateJourCirculMap());
       }
-      ////////////////AFFICHAGE Map Trains catalogue
-      
+      // //////////////AFFICHAGE Map Trains catalogue
+
       for (Map.Entry<Date, Circulation> entryCatalog : listTrainsAdapte.entrySet()) {
 
-         System.out.println(entryCatalog.getKey()+"\t" 
-               + entryCatalog.getValue().getChaineCircu());
+         System.out.println(entryCatalog.getKey() + "\t" + entryCatalog.getValue().getChaineCircu());
       }
 
       System.out.println("---------------------------------TRAIN REFERENTIEL------------------------------------------");
       for (TrainCatalogue trainCat : listTrainsCat) {
 
-         System.out.println(trainCat.getNumero_Train_Cat() 
-                  + "\t" + trainCat.getCirculation().get(0).getChaineCircu());
+         System.out.println(trainCat.getNumero_Train_Cat() + "\t" + trainCat.getCirculation().get(0).getChaineCircu());
 
       }
 

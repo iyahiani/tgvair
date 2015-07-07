@@ -172,7 +172,11 @@ public class Train implements ITrain {
                         + entryCatalog.getValue().getChaineCircu() + "\t"
                         + "SSIM Circul" + " " + entrySSIM.getValue().getChaineCircu());
 
+<<<<<<< HEAD
                   // return false;
+=======
+                  return false;
+>>>>>>> f219dc85a30245e988cb2553770233fb0d45a137
 
                }
          }
