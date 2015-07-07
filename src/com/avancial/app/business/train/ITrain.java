@@ -7,6 +7,7 @@ import java.util.Map;
 public interface ITrain {
 
 	public boolean compare(Map<Date, Circulation> cat, Map<Date, Circulation> ssim) ; 
+	public boolean compare(ITrain train) ; 
 	
 	
 	public String getGareOrigine() ;

@@ -62,7 +62,7 @@ public class Circulation implements ICirculation {
       // sb.append(this.getDateDebut());
       // sb.append(this.getDateFin());
       sb.append(this.getOrigine());
-<<<<<<< HEAD:src/com/avancial/tgvair/metier/Circulation.java
+
       sb.append("\t") ;
       sb.append(this.getHeureDepart());sb.append("\t") ;
       sb.append(this.getDestination());sb.append("\t") ;
@@ -71,13 +71,13 @@ public class Circulation implements ICirculation {
       sb.append(this.getDateDebut()) ; sb.append("\t") ;
       sb.append(this.getDateFin()) ; 
       //sb.append(this.getJoursCirculation());
-=======
+
       sb.append(this.getHeureDepart());
       sb.append(this.getDestination());
       sb.append(this.getHeureArrivee());
       sb.append(this.getNumeroTrain());
 
->>>>>>> 37c560360daed887e81568b4db7b9de61cef4118:src/com/avancial/app/business/train/Circulation.java
+
       return sb.toString();
    }
 

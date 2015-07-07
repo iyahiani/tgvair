@@ -65,6 +65,11 @@ public class Lunch3 {
    public static void main(String[] args) throws IOException, ParseException {
 
       ITrain trainSSIM = getTrainSSIM("D:/Users/ismael.yahiani/Documents/ssim_1.txt");
+      ITrain trainSSIM2 = getTrainSSIM("D:/Users/ismael.yahiani/Documents/ssim_2.txt");
+      ITrain trainSSIM3 = getTrainSSIM("D:/Users/ismael.yahiani/Documents/ssim_3.txt");
+      ITrain trainSSIM4 = getTrainSSIM("D:/Users/ismael.yahiani/Documents/ssim_4.txt");
+      ITrain trainSSIM5 = getTrainSSIM("D:/Users/ismael.yahiani/Documents/ssim_5.txt");
+      ITrain trainSSIM6 = getTrainSSIM("D:/Users/ismael.yahiani/Documents/ssim_6.txt");
       // ///////////// creation des num de trains catalogue
 
       // //////////////////// Creation des circulations
@@ -82,7 +87,7 @@ public class Lunch3 {
       trainCata1.addCirculation(c1);
       trainCata1.setNumero_Train_Cat("001111");
       trainCata1.setNumero_Train_Cat("001112");
-
+      
       TrainCatalogue trainCata2 = new TrainCatalogue();
       trainCata2.addCirculation(c2);
       trainCata2.setNumero_Train_Cat("001113");
@@ -101,10 +106,11 @@ public class Lunch3 {
       // trains.add(numTrain1);trains.add(numTrain2);trains.add(numTrain3);trains.add(numTrain4);
 
       List<TrainCatalogue> listTrainsCat = new ArrayList<TrainCatalogue>();
-      listTrainsCat.add(trainCata1);
+      listTrainsCat.add(trainCata1);  
       listTrainsCat.add(trainCata2);
       listTrainsCat.add(trainCata3);
       listTrainsCat.add(trainCata4);
+      
       ////////////////////////////////////////////////////  Construction Map des Train Catalogue 
       
       Map<Date, Circulation> listTrainsAdapte = new TreeMap<Date, Circulation>();
@@ -129,21 +135,23 @@ public class Lunch3 {
       }
 
       System.out.println("-----------------------Train SSIM----------------------------------");
-
+      
       for (TrainCatalogue trainCat : listTrainsCat) {
 
          ITrain train = new Train();
-         train = trainSSIM.getTrainAPartirDuCatalogue(trainCat);
+         train = trainSSIM.getTrainAPartirDuCatalogue(trainCat)   ;
          for (Circulation c : train.getCirculations()) {
-            System.out.println(c.getChaineCircu());
+            System.out.println(c.getChaineCircu()) ;
          }
 
       }
-
+      
+      
+      
       System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
 
       for (TrainCatalogue trainCat : listTrainsCat) {
-
+         
          ITrain train = new Train();
          train = trainSSIM.getTrainAPartirDuCatalogue(trainCat);
       }

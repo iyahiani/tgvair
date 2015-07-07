@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 public class Train implements ITrain {
 
-   private String            numTrain;
+   private String numTrain;
 
    private List<Circulation> circulation;
 
@@ -72,12 +72,12 @@ public class Train implements ITrain {
 
             if (entryCatalog.getKey().equals(entrySSIM.getKey()))
                if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
-                  
-                 entryCatalog.setValue(entrySSIM.getValue()) ;
+
+                  entryCatalog.setValue(entrySSIM.getValue());
                }
          }
       }
-         return dateEtjoursCircuCatalog ;
+      return dateEtjoursCircuCatalog;
    }
 
    @Override
@@ -125,7 +125,8 @@ public class Train implements ITrain {
    }
 
    /**
-    * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
+    * @author ismael.yahiani cette methode retourne une map des jours de
+    *         circulation et de leurs dates
     */
 
    @Override
@@ -159,24 +160,23 @@ public class Train implements ITrain {
    public boolean compare(Map<Date, Circulation> cat, Map<Date, Circulation> ssim) {
       boolean comp = true;
 
-     
-      
       for (Map.Entry<Date, Circulation> entryCatalog : cat.entrySet()) {
          for (Map.Entry<Date, Circulation> entrySSIM : ssim.entrySet()) {
 
             if (entryCatalog.getKey().equals(entrySSIM.getKey()))
                if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
-<<<<<<< HEAD:src/com/avancial/tgvair/metier/Train.java
-                 return false ; 
-=======
 
-                  System.out.println("catalogue = " + entryCatalog.getKey() + "\t" + "SSIM = " + entrySSIM.getKey() + "\t" + "CatalogueCircul" + "\t" + entryCatalog.getValue().getChaineCircu() + "\t" + "SSIM Circul" + " " + entrySSIM.getValue().getChaineCircu());
+                  //return false;
+                  System.out.println("catalogue = " + entryCatalog.getKey() + "\t"
+                  + "SSIM = " + entrySSIM.getKey() + "\t" + "CatalogueCircul" + "\t"
+                        + entryCatalog.getValue().getChaineCircu() + "\t"
+                        + "SSIM Circul" + " " + entrySSIM.getValue().getChaineCircu());
 
                   // return false;
->>>>>>> 37c560360daed887e81568b4db7b9de61cef4118:src/com/avancial/app/business/train/Train.java
+
                }
          }
-         
+
       }
       return true;
    }
@@ -184,9 +184,36 @@ public class Train implements ITrain {
    /**
     * @author ismael.yahiani adapte les cicrculation dans les catalogues
     */
-  
+
    @Override
    public void modifierCircul(TrainCatalogue trainCat) {
+      
+   }
 
+   @Override
+   public boolean compare(ITrain train) {
+      boolean comp = true;
+      Map<Date, Circulation> cat = new TreeMap<Date, Circulation>();
+      Map<Date, Circulation> ssim = new TreeMap<Date, Circulation>();
+      for (Map.Entry<Date, Circulation> entryCatalog : cat.entrySet()) {
+         for (Map.Entry<Date, Circulation> entrySSIM : ssim.entrySet()) {
+
+            if (entryCatalog.getKey().equals(entrySSIM.getKey()))
+               if (!entryCatalog.getValue().compareCirculation(entrySSIM.getValue())) {
+
+                  //return false;
+                  System.out.println("catalogue = " + entryCatalog.getKey() + "\t"
+                  + "SSIM = " + entrySSIM.getKey() + "\t" + "CatalogueCircul" + "\t"
+                        + entryCatalog.getValue().getChaineCircu() + "\t"
+                        + "SSIM Circul" + " " + entrySSIM.getValue().getChaineCircu());
+
+                  // return false;
+
+               }
+         }
+
+      }
+      return true;
+     
    }
 }

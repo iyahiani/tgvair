@@ -131,14 +131,14 @@ public class TestTrain {
 
       String s = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885112";
       String ss = "3 SG00156605P19SEP1519SEP15     6  FRHVV07260726+0100  FRHVX07340734+0100  TERB                                                           87  FSN885113";
-      String[] num_train = { "885112", "885113" };
+      List<String> num_train = new ArrayList<String>();
       List<Date> exceptions = new ArrayList<Date>();
       exceptions.add(new Date(121214));
       exceptions.add(new Date(120115));
       exceptions.add(new Date(120215));
       exceptions.add(new Date(120315));
       TrainCatalogue trainCatalogue = new TrainCatalogue();
-      trainCatalogue.setNumero_Train_Cat(num_train);
+      trainCatalogue.setNumero_Train_Cat("885112");trainCatalogue.setNumero_Train_Cat("885113");
       // trainCatalogue.setDestination("1334");
       // trainCatalogue.setException(exceptions);
       trainCatalogue.getFlight_number();
@@ -148,7 +148,7 @@ public class TestTrain {
       IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds(),
             APP_enumParserSSIM.getNames());
 
-      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat()[0]),
+      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)),
             Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
    }
 
@@ -223,7 +223,7 @@ public class TestTrain {
    public void getCatalogCirculFromSSIM() throws ParseException {
 
       ITrain trainSSIM = new Train();
-      ITrainCatalogue trainCatalogue = new TrainCatalogue();
+      TrainCatalogue trainCatalogue = new TrainCatalogue();
       ITrain train = new Train();
       
       Circulation circul = new Circulation();
