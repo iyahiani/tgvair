@@ -11,13 +11,11 @@ import java.util.TreeMap;
 public class TrainCatalogue extends Train implements ITrainCatalogue {
 
    private String Nom_compagnie;
-   private List<String> numero_Train_Cat;
    private String flight_number;
-   
 
    public TrainCatalogue() {
       super();
-      numero_Train_Cat = new ArrayList<String>() ;
+
    }
 
    public String getNom_compagnie() {
@@ -28,14 +26,6 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
       Nom_compagnie = nom_compagnie;
    }
 
-   public List<String> getNumero_Train_Cat() {
-      return numero_Train_Cat;
-   }
-
-   public void setNumero_Train_Cat(String numero_Train_Cat) {
-      this.numero_Train_Cat.add(numero_Train_Cat) ;
-   }
-
    public String getFlight_number() {
       return flight_number;
    }
@@ -44,7 +34,6 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
       this.flight_number = flight_number;
    }
 
-  
    @Override
    public String getGareOrigine() {
 
@@ -64,17 +53,26 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
    }
 
    @Override
-   public void compareSSIM(ITrain train) { 
-     
+   public void compareSSIM(ITrain train) {
+
    }
 
-  
-   public ITrain  getTrainCatalogueComplet() {
-      
-      Train train = new TrainCatalogue() ; 
-      
-      
-      return train ;
+   public ITrain getTrainCatalogueComplet() {
+
+      Train train = new TrainCatalogue();
+
+      return train;
    }
 
+   @Override
+   public Train getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue) {
+
+      return null;
+   }
+
+   @Override
+   public List<String> getTrainNumeros() {
+      
+      return this.;
+   }
 }
