@@ -16,7 +16,6 @@ import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
 import com.avancial.app.business.train.ITrainFactory;
-import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.TrainFactory;
@@ -280,9 +279,9 @@ public class TestTrain {
       // On sauvegardera ce train à l'issue de sa création dans le catalogue.
       Train trainFromCatalogue = trainCatalogue.getTrain();
       trainFromCatalogue.remplirJoursCirculations();
-      System.out.println(trainFromCatalogue);
+      System.out.println("1" + trainFromCatalogue);
       trainFromCatalogue.calculeCirculationFromJoursCirculation();
-      System.out.println(trainFromCatalogue);
+      System.out.println("2" + trainFromCatalogue);
 
       // Train issu de la SSIM
       // C'est un train qui circule entre les gares FRAAA, FRBBB, FRCCC et FFDDD
