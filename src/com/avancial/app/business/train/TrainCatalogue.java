@@ -15,6 +15,8 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
       super(listeNumeros, listeCirculations);
 
    }
+   public TrainCatalogue() {
+   }
 
    public Train getTrain() {
 
@@ -49,12 +51,7 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
       return null;
    }
 
-   @Override
-   public List<String> getTrainNumeros() {
-
-      return this.listeNumeros;
-   }
-
+  
    /**
     * @return the nomCompagnie
     */

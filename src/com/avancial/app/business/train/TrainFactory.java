@@ -21,9 +21,9 @@ public class TrainFactory implements ITrainFactory {
       return null;
    }
 
-   public static Train createTrainComplet(ITrainCatalogue trainCatalogue) {
+   public static Train createTrainComplet(TrainCatalogue trainCatalogue) {
 
-      Train train = new Train(trainCatalogue.getTrainNumeros(), trainCatalogue.getCirculations());
+      Train train = new Train(trainCatalogue.getListeNumeros(), trainCatalogue.getCirculations());
 
       return train;
    }

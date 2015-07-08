@@ -107,7 +107,7 @@ public class Circulation implements ICirculation {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       sb.append("----------------------" + "\n");
-      sb.append(this.getDateDebut() + " -- " + this.getDateFin() + "\n");
+      sb.append(this.getDateDebut() + " -- " + this.getDateFin() +" -- " +this.joursCirculation+ "\n");
       sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
       sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n");
       return sb.toString();
@@ -130,7 +130,7 @@ public class Circulation implements ICirculation {
       sb.append(this.getDateDebut());
       sb.append("\t");
       sb.append(this.getDateFin());
-      // sb.append(this.getJoursCirculation());
+      sb.append(this.getJoursCirculation());
       return sb.toString();
    }
 

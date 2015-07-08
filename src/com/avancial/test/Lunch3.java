@@ -27,7 +27,7 @@ import com.avancial.reader.IReader;
 
 public class Lunch3 {
 
-   public static List<ITrain> getTrainSSIM(String path,List<ITR> ) throws IOException, ParseException {
+   public static ITrain getTrainSSIM(String path ) throws IOException, ParseException {
       IReader reader = new ReaderSSIM(path);// "D:/Users/ismael.yahiani/Documents/ssim_6.txt"
       String chaine;
       String[] num = { "001111", "001112", "001113", "001115", "001117", "002222", "002223" };
@@ -45,16 +45,18 @@ public class Lunch3 {
       while ((chaine = reader.readLine()) != null) {
 
          par.parse(chaine);
-
+         
          if (!par.getParsedResult().isEmpty()) {
+           
             Circulation circulation = new Circulation();
-
-            JourCirculation jourCirculation = new JourCirculation(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())), Integer.valueOf(par
-                  .getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_DEPART.name())), Integer.valueOf(par.getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_ARRIVER.name())), par
-                  .getParsedResult().get("POSITION_GARE_DEPART"), par.getParsedResult().get("POSITION_GARE_ARRIVER"), true);
-
-            circulation.setJourCirculation(jourCirculation);
-
+            circulation.setOrigine(par
+                  .getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
+            circulation.setDestination(par
+                  .getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_ARRIVER.name()));
+            circulation.setHeureArrivee(Integer.valueOf(par
+                  .getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_ARRIVER.name())));
+            circulation.setHeureDepart(Integer.valueOf(par
+                  .getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_DEPART.name())));
             circulation.setJoursCirculation(par.getParsedResult().get(APP_enumParserSSIM.POSITION_JOURS_CIRCULATION.name()));
             circulation.setDateDebut(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
             circulation.setDateFin(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
@@ -89,25 +91,26 @@ public class Lunch3 {
 
       // //////////// Creation Des Trains Catalogues et i,initialisation des
       // Valeurs
-
+      
+      
       TrainCatalogue trainCata1 = new TrainCatalogue();
-      trainCata1.addCirculation(c1);
-      trainCata1.setNumero_Train_Cat("001111");
-      trainCata1.setNumero_Train_Cat("001112");
+      trainCata1.addCirculation(c1); 
+      trainCata1.getListeNumeros().add("001111");
+      trainCata1.getListeNumeros().add("001112");
 
       TrainCatalogue trainCata2 = new TrainCatalogue();
       trainCata2.addCirculation(c2);
-      trainCata2.setNumero_Train_Cat("001113");
+      trainCata2.getListeNumeros().add("001113");
 
       TrainCatalogue trainCata3 = new TrainCatalogue();
       trainCata3.addCirculation(c3);
-      trainCata3.setNumero_Train_Cat("001115");
-      trainCata3.setNumero_Train_Cat("002222");
-      trainCata3.setNumero_Train_Cat("002223");
+      trainCata3.getListeNumeros().add("001115");
+      trainCata3.getListeNumeros().add("002222");
+      trainCata3.getListeNumeros().add("002223");
 
       TrainCatalogue trainCata4 = new TrainCatalogue();
       trainCata4.addCirculation(c4);
-      trainCata4.setNumero_Train_Cat("001117");
+      trainCata4.getListeNumeros().add("001117");
 
       // List<StringBuilder> trains = new ArrayList<StringBuilder> () ;
       // trains.add(numTrain1);trains.add(numTrain2);trains.add(numTrain3);trains.add(numTrain4);
@@ -130,43 +133,47 @@ public class Lunch3 {
          listTrainsAdapte.putAll(t.getJoursCirculation());
       }
       // //////////////AFFICHAGE Map Trains catalogue
-
+     
       for (Map.Entry<Date, JourCirculation> entryCatalog : listTrainsAdapte.entrySet()) {
 
-         System.out.println( entryCatalog.getValue());
+         //System.out.println( entryCatalog.getValue());
       }
 
       System.out.println("---------------------------------TRAIN REFERENTIEL------------------------------------------");
       for (TrainCatalogue trainCat : listTrainsCat) {
 
-         System.out.println(trainCat.getNumero_Train_Cat() + "\t" + trainCat.getCirculations().get(0).getChaineCircu());
+        // System.out.println(trainCat.getListeNumeros() + "\t" + trainCat.getCirculations().get(0).getChaineCircu());
 
       }
 
       System.out.println("-----------------------Train SSIM----------------------------------");
 
-      for (TrainCatalogue trainCat : listTrainsCat) {
+     /* for (TrainCatalogue trainCat : listTrainsCat) {
 
          Train train = new Train();
-         train = trainSSIM.getTrainAPartirDuCatalogue(trainCat);
-         
-            System.out.println(train);
-         
+         train = trainSSIM.getTrainSSIMRestreint(trainCat);
+         System.out.println(train);
+      }*/
 
-      }
-
-      System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
+     System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
 
       for (TrainCatalogue trainCat : listTrainsCat) {
 
-         Train train = new Train();  
+         System.out.println("____________TRAIN DU CATALOGUE___________");
+         Train train = trainCat.getTrain();
+         System.out.println(train);
          
-         train = trainSSIM.getTrainAPartirDuCatalogue(trainCat);
-        
-         if(!train.compare(trainSSIM)) {
-           train.adapt(trainSSIM); 
+         System.out.println("____________SSIM RESTREINT___________");
+         Train trainSSIMRestreint = trainSSIM.getTrainSSIMRestreint(trainCat);
+        System.out.println(trainSSIMRestreint);
+         
+        System.out.println("____________TRAIN APRES ADAPT___________");
+         
+       
+        if(!train.compare(trainSSIMRestreint)) {
+           train.adapt(trainSSIMRestreint); 
+          train.calculeCirculationFromJoursCirculation();
            System.out.println(train);
-            
            
          }
       }

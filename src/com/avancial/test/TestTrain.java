@@ -247,12 +247,15 @@ public class TestTrain {
       int heureDepart = Integer.valueOf(periode.split("#")[5]);
       String origine = periode.split("#")[3];
       String destination = periode.split("#")[4];
-      Date dateCircul = sdf.parse(periode.split("#")[0]);
-      JourCirculation joursCircul = new JourCirculation(dateCircul, heureDepart, heureArrivee, origine, destination, true);
-      // circulation.setJourCirculation(joursCircul);
+      Date dateDebut = sdf.parse(periode.split("#")[0]);
+      Date dateFin = sdf.parse(periode.split("#")[1]);
 
-      circulation.setDateDebut(sdf.parse(periode.split("#")[0]));
-      circulation.setDateFin(sdf.parse(periode.split("#")[1]));
+      circulation.setDateDebut(dateDebut);
+      circulation.setDateFin(dateFin);
+      circulation.setHeureDepart(heureDepart);
+      circulation.setHeureArrivee(heureArrivee);
+      circulation.setOrigine(origine);
+      circulation.setDestination(destination);
       circulation.setJoursCirculation(periode.split("#")[2]);
 
       return circulation;

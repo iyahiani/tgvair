@@ -23,6 +23,7 @@ public interface ITrain {
 
    boolean compare(ITrain train);
 
-   public Train getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue);
+   public Train getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue); 
+   public Train getTrainSSIMRestreint(TrainCatalogue trainCatalogue)  ;
 
 }

@@ -81,7 +81,9 @@ public class JourCirculation {
       sb.append(this.flagCirculation ? "-C-" : "-N-");
       sb.append("Date de circulation : " + this.dateCircul.toString());
       sb.append("Heure de départ : " + this.heureDepart);
+      sb.append("Gare Depart : " + this.origine);
       sb.append("Heure d'arrivée : " + this.heureArrivee);
+      sb.append("Gare Arriver : " + this.destination);
 
       return sb.toString();
 
