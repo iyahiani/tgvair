@@ -4,7 +4,8 @@ import java.util.List;
 
 /**
  * 
- * @author ismael.yahiani la factory Train permet de creer des objets de type train
+ * @author ismael.yahiani la factory Train permet de creer des objets de type
+ *         train
  */
 public class TrainFactory implements ITrainFactory {
 
@@ -21,7 +22,7 @@ public class TrainFactory implements ITrainFactory {
       return null;
    }
 
-   public ITrain createTrainComplet(ITrainCatalogue trainCatalogue) {
+   public static ITrain createTrainComplet(ITrainCatalogue trainCatalogue) {
 
       Train train = new Train(trainCatalogue.getTrainNumeros(), trainCatalogue.getCirculations());
 
@@ -29,7 +30,8 @@ public class TrainFactory implements ITrainFactory {
    }
 
    /**
-    * @author ismael.yahiani récupére le train référencé dans le catalogie à partir de la SSIM
+    * @author ismael.yahiani récupére le train référencé dans le catalogie à
+    *         partir de la SSIM
     */
    public ITrain getTrainSSIMRestreint(TrainCatalogue trainCatalogue) {
       Train train = new Train();
@@ -48,7 +50,8 @@ public class TrainFactory implements ITrainFactory {
                   circulation.setDateFin(circulSSIM.getDateFin());
 
                   circulation.setJourCirculation(circulSSIM.getJourCirculation());
-                  // circulation.getJourCirculation().setHeureDepart(circulSSIM.getJourCirculation().getHeureDepart()) ;
+                  // circulation.getJourCirculation().setHeureDepart(circulSSIM.getJourCirculation().getHeureDepart())
+                  // ;
 
                   circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
                   circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
