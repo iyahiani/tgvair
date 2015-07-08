@@ -36,7 +36,7 @@ public class TestTrainCatalogueEtSSIM {
 		cir.setDestination("CDG");
 		cir.setJoursCirculation("12346");
 		circulationList.add(cir);
-		trainCatalogue.setCirculation(circulationList); 
+		trainCatalogue.setCirculations(circulationList); 
 		
 		circulationList = new ArrayList<Circulation>();
 		cir = new Circulation();
@@ -45,7 +45,7 @@ public class TestTrainCatalogueEtSSIM {
 		cir.setOrigine("Lile");
 		cir.setDestination("CDG");
 		cir.setJoursCirculation("12346");
-		train.setCirculation(circulationList);
+		train.setCirculations(circulationList);
 
 		Date temp = trainCatalogue.getCirculations().get(0).getDateDebut() ;
 		Date temp2 = cir.getDateDebut();

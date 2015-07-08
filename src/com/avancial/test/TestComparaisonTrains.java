@@ -26,8 +26,8 @@ public class TestComparaisonTrains {
       
       circul5 = TestTrain.createWithStringPeriode("01/02/2015#15/03/2015#1234 567#FRXYZ#FRCDG#0730#0910");
       
-      ITrainCatalogue trainCatalogue =  new TrainCatalogue() ;
-      ITrainCatalogue trainCatalogueSSIM=  new TrainCatalogue() ; 
+      TrainCatalogue trainCatalogue =  new TrainCatalogue() ;
+      TrainCatalogue trainCatalogueSSIM=  new TrainCatalogue() ; 
       ITrain train = new Train() ;
       ITrain trainSSIM = new Train(); 
       trainCatalogueSSIM.addCirculation(circul5);

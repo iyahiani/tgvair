@@ -1,22 +1,72 @@
 package com.avancial.app.business.train;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
-import com.avancial.app.data.model.databean.CirculationDataBean;
+import com.avancial.app.resources.utils.StringToDate;
 
 public class Circulation implements ICirculation {
 
-   private Date   dateDebut;
-   private Date   dateFin;
-   private int    heureArrivee;
-   private int    heureDepart;
    private String origine;
    private String destination;
+   private int heureDepart;
+   private int heureArrivee;
+   private Date dateDebut;
+   private Date dateFin;
    private String joursCirculation;
    private String indicateurFer;
    private String compagnieTrain;
    private String numeroTrain;
    private String periode;
+
+   /**
+    * @author ismael.yahiani cette methode retourne une map des jours de
+    *         circulation et de leurs dates
+    */
+
+   public Map<Date, JourCirculation> getDateJourCirculMap() {
+      Calendar dateDebut = Calendar.getInstance();
+      Calendar dateFin = Calendar.getInstance();
+
+      Map<Date, JourCirculation> mapCirucl = new TreeMap<>();
+
+      dateDebut.setTime(this.getDateDebut());
+      dateFin.setTime(this.getDateFin());
+      boolean bCircule;
+      while (!dateDebut.getTime().after(dateFin.getTime())) {
+         // verifie si il circule
+         if (this.getJoursCirculation().contains(StringToDate.JavaDays2FrenchDays(dateDebut)))
+
+            bCircule = true;
+         // /////////////////////////////
+         else
+            bCircule = false;
+
+         mapCirucl.put(dateDebut.getTime(), new JourCirculation(dateDebut.getTime(), this.getHeureDepart(), this.getHeureArrivee(), this.getOrigine(), this.getDestination(), bCircule));
+
+         dateDebut.add(Calendar.DATE, 1);
+
+      }
+
+      return mapCirucl;
+   }
+
+   @Override
+   public boolean compareCirculation(Circulation circul) {
+
+      if (!this.getOrigine().equalsIgnoreCase(circul.getOrigine()))
+         return false;
+      else if (!this.getDestination().equalsIgnoreCase(circul.getDestination()))
+         return false;
+      else if (this.getHeureArrivee() != circul.getHeureArrivee())
+         return false;
+      else if (this.getHeureDepart() != circul.getHeureDepart())
+         return false;
+
+      return true;
+   }
 
    public String getNumeroTrain() {
       return this.numeroTrain;
@@ -50,8 +100,6 @@ public class Circulation implements ICirculation {
       this.compagnieTrain = compagnieTrain;
    }
 
-   private CirculationDataBean circulationDataBean;
-
    public Circulation() {
 
    }
@@ -59,10 +107,8 @@ public class Circulation implements ICirculation {
    public String getChaineCircu() {
 
       StringBuilder sb = new StringBuilder();
-      // sb.append(this.getDateDebut());
-      // sb.append(this.getDateFin());
-      sb.append(this.getOrigine());
 
+      sb.append(this.getOrigine());
       sb.append("\t");
       sb.append(this.getHeureDepart());
       sb.append("\t");
@@ -76,7 +122,6 @@ public class Circulation implements ICirculation {
       sb.append("\t");
       sb.append(this.getDateFin());
       // sb.append(this.getJoursCirculation());
-
       return sb.toString();
    }
 
@@ -96,38 +141,6 @@ public class Circulation implements ICirculation {
       this.dateFin = dateFin;
    }
 
-   public int getHeureArrivee() {
-      return this.heureArrivee;
-   }
-
-   public void setHeureArrivee(int heureArrivee) {
-      this.heureArrivee = heureArrivee;
-   }
-
-   public int getHeureDepart() {
-      return this.heureDepart;
-   }
-
-   public void setHeureDepart(int heureDepart) {
-      this.heureDepart = heureDepart;
-   }
-
-   public String getOrigine() {
-      return this.origine;
-   }
-
-   public void setOrigine(String origine) {
-      this.origine = origine;
-   }
-
-   public String getDestination() {
-      return this.destination;
-   }
-
-   public void setDestination(String destination) {
-      this.destination = destination;
-   }
-
    public String getJoursCirculation() {
       return this.joursCirculation;
    }
@@ -136,26 +149,63 @@ public class Circulation implements ICirculation {
       this.joursCirculation = joursCirculation;
    }
 
-   public CirculationDataBean getCirculationDatabean(Circulation circulation) {
-      this.circulationDataBean = new CirculationDataBean();
-      this.circulationDataBean.setDestination(circulation.getDestination());
-      // circulationDataBean.setHeureArriver(circulation.getHeureArrivee());
-      // circulationDataBean.setHeureDepart(circulation.getHeureDepart());
-      return this.circulationDataBean;
+   /**
+    * @return the origine
+    */
+   public String getOrigine() {
+      return this.origine;
    }
 
-   @Override
-   public boolean compareCirculation(Circulation circul) {
+   /**
+    * @param origine
+    *           the origine to set
+    */
+   public void setOrigine(String origine) {
+      this.origine = origine;
+   }
 
-      if (!this.getOrigine().equalsIgnoreCase(circul.getOrigine()))
-         return false;
-      else if (!this.getDestination().equalsIgnoreCase(circul.getDestination()))
-         return false;
-      else if (this.getHeureArrivee() != circul.getHeureArrivee())
-         return false;
-      else if (this.getHeureDepart() != circul.getHeureDepart())
-         return false;
+   /**
+    * @return the destination
+    */
+   public String getDestination() {
+      return this.destination;
+   }
 
-      return true;
+   /**
+    * @param destination
+    *           the destination to set
+    */
+   public void setDestination(String destination) {
+      this.destination = destination;
+   }
+
+   /**
+    * @return the heureDepart
+    */
+   public int getHeureDepart() {
+      return this.heureDepart;
+   }
+
+   /**
+    * @param heureDepart
+    *           the heureDepart to set
+    */
+   public void setHeureDepart(int heureDepart) {
+      this.heureDepart = heureDepart;
+   }
+
+   /**
+    * @return the heureArrivee
+    */
+   public int getHeureArrivee() {
+      return this.heureArrivee;
+   }
+
+   /**
+    * @param heureArrivee
+    *           the heureArrivee to set
+    */
+   public void setHeureArrivee(int heureArrivee) {
+      this.heureArrivee = heureArrivee;
    }
 };
