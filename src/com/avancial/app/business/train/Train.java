@@ -163,10 +163,11 @@ public class Train implements ITrain {
       for (Circulation circul : this.listeCirculations) {
 
          for (Entry<Date, JourCirculation> entry : circul.getDateJourCirculMap().entrySet()) {
+            // Si on ne trouve pas le jour, on ajoute
             if (!this.listeJoursCirculation.containsKey(entry.getKey()))
                this.listeJoursCirculation.put(entry.getKey(), entry.getValue());
             else {
-
+               // Si on le trouve, on ne met à jour qu'en cas de circulation
                if (entry.getValue().isFlagCirculation())
                   this.listeJoursCirculation.put(entry.getKey(), entry.getValue());
 
@@ -189,6 +190,7 @@ public class Train implements ITrain {
    @Override
    public void adapt(ITrain train) {
 
+      this.remplirJoursCirculations();
       for (Entry<Date, JourCirculation> jourCirculation : this.listeJoursCirculation.entrySet()) {
 
          if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) {
@@ -202,8 +204,9 @@ public class Train implements ITrain {
                this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
             }
 
-         } else
-            this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
+         }
+         // else
+         // this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
       }
 
    }
