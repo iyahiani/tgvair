@@ -3,24 +3,23 @@ package com.avancial.app.business.train;
 import java.util.Date;
 
 public class JourCirculation {
-   private int heureArrivee;
-   private int heureDepart;
-   private String origine;
-   private String destination;
-   private Date dateCircul;
-   private boolean flagCirculation ; 
+   private int     heureArrivee;
+   private int     heureDepart;
+   private String  origine;
+   private String  destination;
+   private Date    dateCircul;
+   private boolean flagCirculation;
 
-   public JourCirculation( Date dateCircul,int heureDepart,int heureArrivee,String origine,String destination, boolean flagCircul) {
-      this.dateCircul=dateCircul;
-      this.heureDepart=heureDepart;
-      this.heureArrivee=heureArrivee;
-      this.origine=origine;
-      this.destination=destination; 
-      this.flagCirculation = flagCircul ;
-      
+   public JourCirculation(Date dateCircul, int heureDepart, int heureArrivee, String origine, String destination, boolean flagCircul) {
+      this.dateCircul = dateCircul;
+      this.heureDepart = heureDepart;
+      this.heureArrivee = heureArrivee;
+      this.origine = origine;
+      this.destination = destination;
+      this.flagCirculation = flagCircul;
+
    }
-   
-   
+
    public int getHeureArrivee() {
       return this.heureArrivee;
    }
@@ -74,18 +73,26 @@ public class JourCirculation {
 
       return true;
    }
-   
+
    @Override
    public String toString() {
-      
-      StringBuilder sb=new StringBuilder();
-      sb.append(this.flagCirculation?"-C-":"-N-");
-      sb.append("Date de circulation : "+this.dateCircul.toString());
-      sb.append("Heure de départ : "+this.heureDepart);
-      sb.append("Heure d'arrivée : "+this.heureArrivee);
-      
+
+      StringBuilder sb = new StringBuilder();
+      sb.append(this.flagCirculation ? "-C-" : "-N-");
+      sb.append("Date de circulation : " + this.dateCircul.toString());
+      sb.append("Heure de départ : " + this.heureDepart);
+      sb.append("Heure d'arrivée : " + this.heureArrivee);
+
       return sb.toString();
-      
+
+   }
+
+   public boolean isFlagCirculation() {
+      return this.flagCirculation;
+   }
+
+   public void setFlagCirculation(boolean flagCirculation) {
+      this.flagCirculation = flagCirculation;
    }
 
 }

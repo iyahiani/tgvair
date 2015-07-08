@@ -11,10 +11,10 @@ public class Circulation implements ICirculation {
 
    private String origine;
    private String destination;
-   private int heureDepart;
-   private int heureArrivee;
-   private Date dateDebut;
-   private Date dateFin;
+   private int    heureDepart;
+   private int    heureArrivee;
+   private Date   dateDebut;
+   private Date   dateFin;
    private String joursCirculation;
    private String indicateurFer;
    private String compagnieTrain;
@@ -22,8 +22,7 @@ public class Circulation implements ICirculation {
    private String periode;
 
    /**
-    * @author ismael.yahiani cette methode retourne une map des jours de
-    *         circulation et de leurs dates
+    * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
     */
 
    public Map<Date, JourCirculation> getDateJourCirculMap() {
@@ -102,6 +101,16 @@ public class Circulation implements ICirculation {
 
    public Circulation() {
 
+   }
+
+   @Override
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("----------------------" + "\n");
+      sb.append(this.getDateDebut() + " -- " + this.getDateFin() + "\n");
+      sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
+      sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n");
+      return sb.toString();
    }
 
    public String getChaineCircu() {

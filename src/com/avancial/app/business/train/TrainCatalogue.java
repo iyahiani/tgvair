@@ -16,8 +16,7 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
 
    }
 
-   @Override
-   public ITrain getTrain() {
+   public Train getTrain() {
 
       return TrainFactory.createTrainComplet(this);
    }

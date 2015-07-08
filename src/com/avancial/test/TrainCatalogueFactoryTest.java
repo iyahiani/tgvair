@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.avancial.app.business.train.Circulation;
-import com.avancial.app.business.train.ITrainCatalogue;
 import com.avancial.app.business.train.TrainCatalogue;
 
 public class TrainCatalogueFactoryTest {
 
-   public static ITrainCatalogue create(String periode) throws ParseException {
+   public static TrainCatalogue create(String periode) throws ParseException {
 
       ArrayList<String> listeNumeros = new ArrayList<>();
       listeNumeros.add("1000");
@@ -20,7 +19,7 @@ public class TrainCatalogueFactoryTest {
       ArrayList<Circulation> listeCirculations = new ArrayList<>();
       listeCirculations.add(circul);
 
-      ITrainCatalogue trainCatalogue = new TrainCatalogue(listeNumeros, listeCirculations);
+      TrainCatalogue trainCatalogue = new TrainCatalogue(listeNumeros, listeCirculations);
 
       return trainCatalogue;
    }

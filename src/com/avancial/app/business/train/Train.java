@@ -13,9 +13,9 @@ import com.avancial.app.resources.utils.StringToDate;
 
 public class Train implements ITrain {
 
-   protected List<String> listeNumeros;
+   protected List<String>               listeNumeros;
    protected Map<Date, JourCirculation> listeJoursCirculation;
-   protected List<Circulation> listeCirculations;
+   protected List<Circulation>          listeCirculations;
 
    /**
     * @author Yahiani Ismail
@@ -29,8 +29,8 @@ public class Train implements ITrain {
    }
 
    @Override
-   public void addCirculation(Circulation circultation) {
-      this.listeCirculations.add(circultation);
+   public void addCirculation(Circulation circulation) {
+      this.listeCirculations.add(circulation);
       this.remplirJoursCirculations();
    }
 
@@ -44,21 +44,28 @@ public class Train implements ITrain {
       this.remplirJoursCirculations();
       Circulation circulation = null;
       ArrayList<String> jours = new ArrayList<>();
+      this.listeCirculations.clear();
       for (JourCirculation jourCirculation : this.listeJoursCirculation.values()) {
-         if (null == circulation && jourCirculation.isFlagCirculation()) {
+
+         if (null == circulation) {
             circulation = this.initCirculationFromJourDeCirculation(jourCirculation);
+
             jours.clear();
             for (int i = 1; i <= 7; i++)
                jours.add(" ");
             Calendar cal = new GregorianCalendar();
             cal.setTime(jourCirculation.getDateCircul());
-            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)));
-            jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)), "1");
-         } else if (this.compareJourDeCirculation2Circulation(jourCirculation, circulation, jours)) {
+            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
+            jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, "1");
+         }
+
+         if (this.compareJourDeCirculation2Circulation(jourCirculation, circulation, jours)) {
             Calendar cal = new GregorianCalendar();
             cal.setTime(jourCirculation.getDateCircul());
             // C'est la même circulation, on enrichit
+            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
             jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)), "1");
+            circulation.setDateFin(jourCirculation.getDateCircul());
          } else {
             // C'est une nouvelle circulation, on ajoute la précédente et on en
             // crée une nouvelle
@@ -68,9 +75,10 @@ public class Train implements ITrain {
                if (jours.get(i).equals("") || jours.get(i).equals("0"))
                   builder.append(" ");
                else
-                  builder.append(i);
+                  builder.append(i + 1);
             }
             circulation.setJoursCirculation(builder.toString());
+
             this.addCirculation(circulation);
             circulation = this.initCirculationFromJourDeCirculation(jourCirculation);
             jours.clear();
@@ -89,6 +97,7 @@ public class Train implements ITrain {
       Circulation circulation = new Circulation();
       circulation.setDateDebut(jourCirculation.getDateCircul());
       circulation.setOrigine(jourCirculation.getOrigine());
+      circulation.setDestination(jourCirculation.getDestination());
       circulation.setHeureDepart(jourCirculation.getHeureDepart());
       circulation.setHeureArrivee(jourCirculation.getHeureArrivee());
       return circulation;
@@ -139,8 +148,7 @@ public class Train implements ITrain {
    }
 
    /**
-    * Remplit la map des jours de circulation avec tous les jours circulant ou
-    * non de toutes les listeCirculations
+    * Remplit la map des jours de circulation avec tous les jours circulant ou non de toutes les listeCirculations
     */
    public void remplirJoursCirculations() {
 
@@ -190,9 +198,13 @@ public class Train implements ITrain {
       for (String num : this.listeNumeros)
          sb.append(num + "/");
       sb.append("\n");
+      sb.append("------------- JOURS DE CIRCULATION -----------------------------");
       for (Map.Entry<Date, JourCirculation> entry : this.listeJoursCirculation.entrySet()) {
          sb.append(entry.getValue() + "\n");
       }
+      sb.append("----------------- CIRCULATIONS ------------------------------");
+      for (Circulation circulation : this.listeCirculations)
+         sb.append(circulation + "\n");
 
       return sb.toString();
    }
@@ -203,10 +215,42 @@ public class Train implements ITrain {
       return null;
    }
 
-   @Override
-   public Train getTrainAPartirDuCatalogue(ITrainCatalogue trainCatalogue) {
+   /**
+    * @author ismael.yahiani récupére le train référencé dans le catalogue à partir de la SSIM
+    */
+   public Train getTrainSSIMRestreint(TrainCatalogue trainCatalogue) {
+      Train train = new Train();
+      for (String num : trainCatalogue.getNumero_Train_Cat())
+         train.setNumTrain(num);
+      Circulation circulation = null;
+      JourCirculation joursCirculation = null;
 
-      return null;
+      for (Circulation circulSSIM : this.getCirculations()) {
+         for (String num : trainCatalogue.getNumero_Train_Cat()) {
+            if (num.equalsIgnoreCase(circulSSIM.getNumeroTrain())) {
+               if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
+
+                  circulation = new Circulation();
+                  circulation.setDateDebut(circulSSIM.getDateDebut());
+                  circulation.setDateFin(circulSSIM.getDateFin());
+
+                  // circulation.setJourCirculation(circulSSIM.getJourCirculation());
+                  // circulation.getJourCirculation().setHeureDepart(circulSSIM.getJourCirculation().getHeureDepart())
+                  // ;
+
+                  circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
+                  circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
+               } else if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
+                  circulation.setDestination(circulSSIM.getDestination());
+                  circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
+                  train.addCirculation(circulation);
+                  circulation = null;
+               }
+            }
+         }
+      }
+
+      return train;
    }
 
 }

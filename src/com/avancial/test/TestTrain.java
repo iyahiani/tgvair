@@ -15,12 +15,13 @@ import com.avancial.app.business.parser.FilterSSIMTypeEnr;
 import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
-import com.avancial.app.business.train.ITrainCatalogue;
 import com.avancial.app.business.train.ITrainFactory;
 import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.TrainFactory;
+import com.avancial.parser.IParser;
+import com.avancial.parser.ParserFixedLength;
 
 public class TestTrain {
 
@@ -145,35 +146,25 @@ public class TestTrain {
       trainCatalogue.setNom_compagnie("AF");
       // trainCatalogue.setJours_Circulation_Compagnie("12346");
 
-      IParser par =
-            new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM
-                  .getBegins());
+      IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
 
-      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
-            APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
+      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
 
-      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
-            APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
+      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
 
    }
 
    // @Test
    public void instancierTrainSSIm() {
 
-      IParser par =
-            new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM
-                  .getBegins());
+      IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
 
       ArrayList<String> listLegs = new ArrayList();
 
-      listLegs
-            .add("3 BR00000101W26APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003");
-      listLegs
-            .add("4 BR00000101W              01921CHZWECHWIL1 GL  GL                                                                                                                                                           00000004");
-      listLegs
-            .add("3 BR00000102W26APR1510MAY15      7 CHWIL07190719+0100  CHZTG07240724+0100  TICB                                                           70  FSN000224                                                      00000005");
-      listLegs
-            .add("3 BR00000101W14MAY1517MAY15   4  7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000006");
+      listLegs.add("3 BR00000101W26APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003");
+      listLegs.add("4 BR00000101W              01921CHZWECHWIL1 GL  GL                                                                                                                                                           00000004");
+      listLegs.add("3 BR00000102W26APR1510MAY15      7 CHWIL07190719+0100  CHZTG07240724+0100  TICB                                                           70  FSN000224                                                      00000005");
+      listLegs.add("3 BR00000101W14MAY1517MAY15   4  7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000006");
 
       String numTrain = "";
       String numTrainSSIM = " ";
@@ -204,26 +195,20 @@ public class TestTrain {
    // @Test
    public void comparePeriodes() {
 
-      String chaine1 =
-            "3 BR00000101W30APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
-      String chaine2 =
-            "3 BR00000101W26APR1530APR15     6  CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
+      String chaine1 = "3 BR00000101W30APR1510MAY15      7 CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
+      String chaine2 = "3 BR00000101W26APR1530APR15     6  CHZWE07130713+0100  CHWIL07180718+0100  TICB                                                           70  FSN000224                                                      00000003";
 
       Circulation circul = new Circulation();
       Circulation circul2 = new Circulation();
 
-      IParser par =
-            new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM
-                  .getBegins());
+      IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
 
       if (!par.parse(chaine1).equals("")) {
-         circul.setPeriode(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())
-               + par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN.name()));
+         circul.setPeriode(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name()) + par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN.name()));
       }
 
       if (!par.parse(chaine2).equals("")) {
-         circul2.setPeriode(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())
-               + par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN.name()));
+         circul2.setPeriode(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name()) + par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_FIN.name()));
       }
       Assert.assertTrue(circul.compareCirculation(circul2));
    }
@@ -264,7 +249,7 @@ public class TestTrain {
       String destination = periode.split("#")[4];
       Date dateCircul = sdf.parse(periode.split("#")[0]);
       JourCirculation joursCircul = new JourCirculation(dateCircul, heureDepart, heureArrivee, origine, destination, true);
-      circulation.setJourCirculation(joursCircul);
+      // circulation.setJourCirculation(joursCircul);
 
       circulation.setDateDebut(sdf.parse(periode.split("#")[0]));
       circulation.setDateFin(sdf.parse(periode.split("#")[1]));
@@ -283,14 +268,18 @@ public class TestTrain {
 
       // On part d'un train catalogue que l'on va initialiser avec ses attributs
       // minimums
-      ITrainCatalogue trainCatalogue = TrainCatalogueFactoryTest.create("01/01/2015#15/01/2015#1234567#FRAAA#FRMCCC#0700#0845");
+      TrainCatalogue trainCatalogue = TrainCatalogueFactoryTest.create("01/01/2015#15/01/2015#1234567#FRAAA#FRMCCC#0700#0845");
       // Ce train catalogue doit pouvoir restituer une liste de circulation
       Assert.assertTrue(trainCatalogue.getCirculations().size() == 1);
 
       // On récupère le train issu du catalogue avec sa circulation complète
       // C'est ce train que nous allons adapter
       // On sauvegardera ce train à l'issue de sa création dans le catalogue.
-      ITrain trainFromCatalogue = trainCatalogue.getTrain();
+      Train trainFromCatalogue = trainCatalogue.getTrain();
+      trainFromCatalogue.remplirJoursCirculations();
+      System.out.println(trainFromCatalogue);
+      trainFromCatalogue.calculeCirculationFromJoursCirculation();
+      System.out.println(trainFromCatalogue);
 
       // Train issu de la SSIM
       // C'est un train qui circule entre les gares FRAAA, FRBBB, FRCCC et FFDDD

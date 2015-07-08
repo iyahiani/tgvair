@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.avancial.app.business.train.Circulation;
-import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.Train;
 
 public class TrainFactoryTest {
@@ -44,8 +43,8 @@ public class TrainFactoryTest {
       String origine = periode.split("#")[3];
       String destination = periode.split("#")[4];
       Date dateCircul = sdf.parse(periode.split("#")[0]);
-      JourCirculation joursCircul = new JourCirculation(dateCircul, heureDepart, heureArrivee, origine, destination, true);
-      circulation.setJourCirculation(joursCircul);
+      // JourCirculation joursCircul = new JourCirculation(dateCircul, heureDepart, heureArrivee, origine, destination, true);
+      // circulation.setJourCirculation(joursCircul);
 
       circulation.setDateDebut(sdf.parse(periode.split("#")[0]));
       circulation.setDateFin(sdf.parse(periode.split("#")[1]));
