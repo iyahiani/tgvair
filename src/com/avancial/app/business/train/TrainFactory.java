@@ -4,7 +4,8 @@ import java.util.List;
 
 /**
  * 
- * @author ismael.yahiani la factory Train permet de creer des objets de type train
+ * @author ismael.yahiani la factory Train permet de creer des objets de type
+ *         train
  */
 public class TrainFactory implements ITrainFactory {
 
@@ -26,6 +27,13 @@ public class TrainFactory implements ITrainFactory {
       Train train = new Train(trainCatalogue.getListeNumeros(), trainCatalogue.getCirculations());
 
       return train;
+   }
+
+   public static TrainCatalogue createTrainCata(Train train) {
+
+      TrainCatalogue trainC = new TrainCatalogue(train.getListeNumeros(), train.getCirculations());
+
+      return trainC;
    }
 
 }

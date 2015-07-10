@@ -27,11 +27,12 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 	 
-	<!--<context-param> <param-name>primefaces.THEME</param-name> <param-value>bootstrap</param-value> 
-		</context-param> -->
+	<!--  <context-param> 
+	<param-name>primefaces.THEME</param-name> <param-value>bootstrap</param-value> 
+		</context-param>--> 
 	<listener>
-		<!-- <listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class> modifier le 26/06/2015--> 
-		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>  
+		 <!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>-->
 	</listener>
 	<resource-env-ref>
 		<resource-env-ref-name>BeanManager</resource-env-ref-name>

@@ -139,16 +139,85 @@ public class Lunch3 {
 
       }
 
-      System.out.println("-----------------------Train SSIM----------------------------------");
+     // System.out.println("-----------------------Train SSIM----------------------------------");
 
       /*
        * for (TrainCatalogue trainCat : listTrainsCat) {
        * 
        * Train train = new Train(); train = trainSSIM.getTrainSSIMRestreint(trainCat); System.out.println(train); }
        */
+//
+     // System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
 
-      System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
+      /*for (TrainCatalogue trainCat : listTrainsCat) {
 
+         //System.out.println("____________TRAIN DU CATALOGUE___________");
+         Train train = trainCat.getTrain();
+         train.remplirJoursCirculations();
+        // System.out.println(train);
+
+         train.remplirJoursCirculations();
+
+        // System.out.println("____________SSIM RESTREINT___________");
+         Train trainSSIMRestreint = trainSSIM.getTrainSSIMRestreint(trainCat);
+        // System.out.println(trainSSIMRestreint);
+         trainSSIMRestreint.remplirJoursCirculations();
+
+         System.out.println("____________TRAIN APRES ADAPT___________");
+
+         if (!train.compare(trainSSIMRestreint)) {
+            train.adapt(trainSSIMRestreint);
+            train.calculeCirculationFromJoursCirculation();
+           // System.out.println(train);
+
+         } 
+         
+      } */
+      
+      
+      ////////////////////////  Test  2 -----------------------------------------------------------------------------------------------------------------------
+      
+      c1 = new Circulation(); c2 = new Circulation(); c3 = new Circulation(); c4 = new Circulation(); Circulation c1_1 = new Circulation() ; Circulation c1_2 = new Circulation() ;
+      c1 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#13#FRAAA#FRBBB#0800#1000");
+      c1_1 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#245#FRAAA#FRBBB#0810#1010"); 
+      c1_2 = TestTrain.createWithStringPeriode("01/08/2015#31/08/2015#12345#FRAAA#FRBBB#0800#1000");
+      c2 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#67#FRAAA#FRBBB#1000#1154");
+      c3 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#123#FRAAA#FRCCC#1554#1932");
+      c4 = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#1234567#FRCCC#FRBBB#0623#0854");
+
+      // //////////// Creation Des Trains Catalogues et i,initialisation des
+      // Valeurs
+
+      trainCata1.getListeCirculations().clear(); trainCata1.getListeNumeros().clear();
+      trainCata1.addCirculation(c1);
+      trainCata1.addCirculation(c1_1); trainCata1.addCirculation(c1_2);
+      trainCata1.getListeNumeros().add("001111");
+      trainCata1.getListeNumeros().add("001112");
+
+      trainCata2.getListeCirculations().clear();trainCata2.getListeNumeros().clear();
+      trainCata2.addCirculation(c2);
+      trainCata2.getListeNumeros().add("001113");
+
+      trainCata3.getListeCirculations().clear();trainCata3.getListeNumeros().clear();
+      trainCata3.addCirculation(c3);
+      trainCata3.getListeNumeros().add("001115");
+      trainCata3.getListeNumeros().add("002222");
+      trainCata3.getListeNumeros().add("002223");
+
+      trainCata4.getListeCirculations().clear(); trainCata4.getListeNumeros().clear();
+      trainCata4.addCirculation(c4);
+      trainCata4.getListeNumeros().add("001117");
+
+      // List<StringBuilder> trains = new ArrayList<StringBuilder> () ;
+      // trains.add(numTrain1);trains.add(numTrain2);trains.add(numTrain3);trains.add(numTrain4);
+
+      listTrainsCat.clear();
+      listTrainsCat.add(trainCata1);
+      listTrainsCat.add(trainCata2);
+      listTrainsCat.add(trainCata3);
+      listTrainsCat.add(trainCata4);  
+      
+      System.out.println("-------------------------------------------------     TESTS2 -------------------------------------------- ");
       for (TrainCatalogue trainCat : listTrainsCat) {
 
          System.out.println("____________TRAIN DU CATALOGUE___________");
@@ -159,7 +228,7 @@ public class Lunch3 {
          train.remplirJoursCirculations();
 
          System.out.println("____________SSIM RESTREINT___________");
-         Train trainSSIMRestreint = trainSSIM.getTrainSSIMRestreint(trainCat);
+         Train trainSSIMRestreint = trainSSIM6.getTrainSSIMRestreint(trainCat);
          System.out.println(trainSSIMRestreint);
          trainSSIMRestreint.remplirJoursCirculations();
 
@@ -169,9 +238,9 @@ public class Lunch3 {
             train.adapt(trainSSIMRestreint);
             train.calculeCirculationFromJoursCirculation();
             System.out.println(train);
-
-         }
-      }
-
+            
+         } 
+         
+      } 
    }
 }
