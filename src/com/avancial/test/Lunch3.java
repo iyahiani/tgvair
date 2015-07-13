@@ -79,9 +79,9 @@ public class Lunch3 {
 
       Circulation c1 = new Circulation(), c2 = new Circulation(), c3 = new Circulation(), c4 = new Circulation();
       c1 = TestTrain.createWithStringPeriode("01/07/2015#31/08/2015#12345#FRAAA#FRBBB#0800#1000");
-      c2 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#67#FRAAA#FRBBB#1000#1154");
+      c2 = TestTrain.createWithStringPeriode("01/07/2015#31/12/2015#67#FRAAA#FRBBB#1000#1154");
       c3 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#123#FRAAA#FRCCC#1554#1932");
-      c4 = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#123#FRCCC#FRBBB#0623#0854");
+      c4 = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#1234567#FRCCC#FRBBB#0623#0854");
 
       // //////////// Creation Des Trains Catalogues et i,initialisation des
       // Valeurs
@@ -114,74 +114,41 @@ public class Lunch3 {
       listTrainsCat.add(trainCata3);
       listTrainsCat.add(trainCata4);
 
-      // ////////////////////////////////////////////////// Construction Map des
-      // Train Catalogue
+      
+      System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
 
-      // ////////////////////////////////////////////////// Construction Map des
-      // Train Catalogue
+/*      for (TrainCatalogue trainCat : listTrainsCat) {
 
-      Map<Date, JourCirculation> listTrainsAdapte = new TreeMap<>();
-
-      for (TrainCatalogue t : listTrainsCat) {
-         listTrainsAdapte.putAll(t.getJoursCirculation());
-      }
-      // //////////////AFFICHAGE Map Trains catalogue
-
-      for (Map.Entry<Date, JourCirculation> entryCatalog : listTrainsAdapte.entrySet()) {
-
-         // System.out.println( entryCatalog.getValue());
-      }
-
-      System.out.println("---------------------------------TRAIN REFERENTIEL------------------------------------------");
-      for (TrainCatalogue trainCat : listTrainsCat) {
-
-         // System.out.println(trainCat.getListeNumeros() + "\t" + trainCat.getCirculations().get(0).getChaineCircu());
-
-      }
-
-     // System.out.println("-----------------------Train SSIM----------------------------------");
-
-      /*
-       * for (TrainCatalogue trainCat : listTrainsCat) {
-       * 
-       * Train train = new Train(); train = trainSSIM.getTrainSSIMRestreint(trainCat); System.out.println(train); }
-       */
-//
-     // System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
-
-      /*for (TrainCatalogue trainCat : listTrainsCat) {
-
-         //System.out.println("____________TRAIN DU CATALOGUE___________");
+         System.out.println("____________TRAIN DU CATALOGUE___________");
          Train train = trainCat.getTrain();
          train.remplirJoursCirculations();
-        // System.out.println(train);
+         System.out.println(train);
+         //train.remplirJoursCirculations();
 
-         train.remplirJoursCirculations();
-
-        // System.out.println("____________SSIM RESTREINT___________");
+         System.out.println("____________SSIM RESTREINT___________");
          Train trainSSIMRestreint = trainSSIM.getTrainSSIMRestreint(trainCat);
-        // System.out.println(trainSSIMRestreint);
+         System.out.println(trainSSIMRestreint);
          trainSSIMRestreint.remplirJoursCirculations();
 
          System.out.println("____________TRAIN APRES ADAPT___________");
 
          if (!train.compare(trainSSIMRestreint)) {
+          
+            
             train.adapt(trainSSIMRestreint);
-            train.calculeCirculationFromJoursCirculation();
+            System.out.println(train);
+            
+            //train.calculeCirculationFromJoursCirculation();
            // System.out.println(train);
 
-         } 
-         
-      } */
-      
-      
-      ////////////////////////  Test  2 -----------------------------------------------------------------------------------------------------------------------
-      
+         }  
+      }  */
+     
       c1 = new Circulation(); c2 = new Circulation(); c3 = new Circulation(); c4 = new Circulation(); Circulation c1_1 = new Circulation() ; Circulation c1_2 = new Circulation() ;
       c1 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#13#FRAAA#FRBBB#0800#1000");
       c1_1 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#245#FRAAA#FRBBB#0810#1010"); 
       c1_2 = TestTrain.createWithStringPeriode("01/08/2015#31/08/2015#12345#FRAAA#FRBBB#0800#1000");
-      c2 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#67#FRAAA#FRBBB#1000#1154");
+      c2 = TestTrain.createWithStringPeriode("01/07/2015#31/12/2015#67#FRAAA#FRBBB#1000#1154");
       c3 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#123#FRAAA#FRCCC#1554#1932");
       c4 = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#1234567#FRCCC#FRBBB#0623#0854");
 
@@ -228,19 +195,20 @@ public class Lunch3 {
          train.remplirJoursCirculations();
 
          System.out.println("____________SSIM RESTREINT___________");
-         Train trainSSIMRestreint = trainSSIM6.getTrainSSIMRestreint(trainCat);
+         Train trainSSIMRestreint = trainSSIM3.getTrainSSIMRestreint(trainCat);
          System.out.println(trainSSIMRestreint);
          trainSSIMRestreint.remplirJoursCirculations();
 
          System.out.println("____________TRAIN APRES ADAPT___________");
 
          if (!train.compare(trainSSIMRestreint)) {
-            train.adapt(trainSSIMRestreint);
-            train.calculeCirculationFromJoursCirculation();
-            System.out.println(train);
+            train.adapt(trainSSIMRestreint)  ;
+           // train.calculeCirculationFromJoursCirculation();
+            System.out.println(train)  ;
             
          } 
          
-      } 
+      }
+      
    }
 }

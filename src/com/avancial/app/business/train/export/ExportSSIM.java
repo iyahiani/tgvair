@@ -11,12 +11,10 @@ import com.avancial.app.business.train.Train;
 
 public class ExportSSIM {
 
-   protected static int cpt = 0 ; 
+   protected static  int cpt = 0 ; 
    public static void main(String[] args) {
 
       try {
-         
-         String content = "This is the content to write into file";
 
          File file = new File("D:/exportSSIM7/SSIM7_Test.txt");
  
@@ -27,9 +25,11 @@ public class ExportSSIM {
  
          FileWriter fw = new FileWriter(file.getAbsoluteFile());
          BufferedWriter bw = new BufferedWriter(fw);
-         bw.write(getEnrgType1());
+         bw.write(getEnrgType1()+"\n");
+         bw.write(getEnrgType2()+"\n");
+         bw.write(getEnrgType1()+"\n");
+         bw.write(getEnrgType1()+"\n");
          bw.close();
- 
          System.out.println("Done");
  
       } catch (IOException e) {
@@ -48,18 +48,18 @@ public class ExportSSIM {
          sb.append(" ") ;
       } 
       sb.append("00"+String.valueOf(numeroSerie)) ;
-      sb.append("00000"+String.valueOf(cpt++)) ;
+      sb.append("0000"+String.valueOf(cpt++)) ;
       
       return sb.toString() ;
    }
    
-   public String getEnrgType2() {
+   public static String getEnrgType2() {
       StringBuilder sb =new StringBuilder() ; 
-      sb.append("2U2C") ;
-      sb.append("0008") ; 
+      sb.append("2U2C")    ;
+      sb.append("0008")    ; 
       for (int i = 0 ; i < 4 ; i++)  sb.append(" ") ; 
-      
-      return sb.toString() ; 
+      sb.append("0000"+String.valueOf(cpt++)) ;
+       return sb.toString() ;
    }
    
    public String getEnrgType3() {

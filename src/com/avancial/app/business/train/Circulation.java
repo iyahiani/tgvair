@@ -34,6 +34,7 @@ public class Circulation implements ICirculation {
       dateDebut.setTime(this.getDateDebut());
       dateFin.setTime(this.getDateFin());
       boolean bCircule;
+      
       while (!dateDebut.getTime().after(dateFin.getTime())) {
          // verifie si il circule
          if (this.getJoursCirculation().contains(StringToDate.JavaDays2FrenchDays(dateDebut)))
