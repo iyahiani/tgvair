@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 
 import com.avancial.app.resources.utils.StringToDate;
@@ -198,12 +199,23 @@ public class Train implements ITrain {
 
       // this.remplirJoursCirculations();
       boolean a = true;
+
+      Set<Date> dates = train.getJoursCirculation().keySet();
+
+      Date date_deb = (Date) dates.toArray()[0];
+      Date date_fin = (Date) dates.toArray()[dates.size() - 1];
+      Calendar start = Calendar.getInstance();
+      start.setTime(date_deb);
+      Calendar end = Calendar.getInstance();
+      end.setTime(date_fin);
+
+      Map<Date, JourCirculation> temp = new TreeMap<Date, JourCirculation>();
+
       for (Entry<Date, JourCirculation> jourCirculation : this.listeJoursCirculation.entrySet()) {
 
          if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) { // verification
                                                                                   // concordance
                                                                                   // Jours
-
             // veriifer si les heure et les OD ne sont pas concordantes et que
             // le train circule
 
@@ -216,10 +228,9 @@ public class Train implements ITrain {
 
                this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
             }
+
          }
-         // else
-         // this.listeJoursCirculation.put(jourCirculation.getKey(),
-         // train.getJoursCirculation().get(jourCirculation.getKey()));
+
       }
       // this.calculeCirculationFromJoursCirculation();
    }
@@ -234,18 +245,15 @@ public class Train implements ITrain {
       Train train = new Train();
       train.listeNumeros.addAll(trainCatalogue.listeNumeros);
       Circulation circulation = null;
-      JourCirculation joursCirculation = null;
-      Date date_debut = trainCatalogue.getCirculations().get(0).getDateDebut();
 
       for (Circulation circulSSIM : this.getCirculations()) {
 
          for (String num : train.listeNumeros) {
+
             if (num.equalsIgnoreCase(circulSSIM.getNumeroTrain())) {
 
                if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
                   circulation = new Circulation();
-                  circulation.setDateDebut(circulSSIM.getDateDebut());
-                  circulation.setDateFin(circulSSIM.getDateFin());
                   circulation.setHeureDepart(circulSSIM.getHeureDepart());
                   circulation.setOrigine(circulSSIM.getOrigine());
                   circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
@@ -253,24 +261,19 @@ public class Train implements ITrain {
                }
 
                if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
+                  circulation.setDateFin(circulSSIM.getDateFin());
+                  circulation.setDateDebut(circulSSIM.getDateDebut());
                   circulation.setDestination(circulSSIM.getDestination());
                   circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
                   train.addCirculation(circulation);
                   circulation = null;
-               } 
-               
-               /*if (circulation != null && !date_debut.equals(circulSSIM.getDateDebut())){
-                  circulation=null ;
-               }*/
+               }
             }
          }
-         
-         date_debut = circulSSIM.getDateDebut();
-        
       }
       return train;
    }
-   
+
    @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();

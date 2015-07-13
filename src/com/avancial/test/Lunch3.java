@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import com.avancial.app.business.parser.APP_enumParserSSIM;
@@ -185,28 +186,32 @@ public class Lunch3 {
       listTrainsCat.add(trainCata4);  
       
       System.out.println("-------------------------------------------------     TESTS2 -------------------------------------------- ");
+      
+      
       for (TrainCatalogue trainCat : listTrainsCat) {
-
+         
          System.out.println("____________TRAIN DU CATALOGUE___________");
          Train train = trainCat.getTrain();
          train.remplirJoursCirculations();
          System.out.println(train);
-
+         
          train.remplirJoursCirculations();
 
          System.out.println("____________SSIM RESTREINT___________");
-         Train trainSSIMRestreint = trainSSIM3.getTrainSSIMRestreint(trainCat);
-         System.out.println(trainSSIMRestreint);
+        
+         Train trainSSIMRestreint = trainSSIM3.getTrainSSIMRestreint(trainCat); 
          trainSSIMRestreint.remplirJoursCirculations();
+         System.out.println(trainSSIMRestreint); 
+         
 
-         System.out.println("____________TRAIN APRES ADAPT___________");
-
-         if (!train.compare(trainSSIMRestreint)) {
+         
+     System.out.println("____________TRAIN APRES ADAPT___________");
+       if (!train.compare(trainSSIMRestreint)) {
             train.adapt(trainSSIMRestreint)  ;
            // train.calculeCirculationFromJoursCirculation();
             System.out.println(train)  ;
             
-         } 
+         }
          
       }
       
