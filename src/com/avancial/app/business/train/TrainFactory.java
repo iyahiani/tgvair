@@ -2,6 +2,8 @@ package com.avancial.app.business.train;
 
 import java.util.List;
 
+import com.avancial.app.business.train.circulation.Circulation;
+
 /**
  * 
  * @author ismael.yahiani la factory Train permet de creer des objets de type train

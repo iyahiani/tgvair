@@ -17,5 +17,13 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/parser">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="parser"/>
+		</attributes>
+		<accessrules>
+			<accessrule kind="accessible" pattern="*"/>
+		</accessrules>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
