@@ -2,6 +2,7 @@ package com.avancial.app.business.train.circulation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Implémentation de l'interface IObservableCirculationSemaineBuilder
@@ -50,11 +51,42 @@ public class ObservableCirculationBuilder implements IObservableCirculationSemai
 
       // Avant de retourner la liste des circulations, on parcourt la liste des
       // observateurs afin de récupérer les dernières circulation
-      for (ICirculationSemaineBuilder builder : listeObservateurs) {
+      for (ICirculationSemaineBuilder builder : this.listeObservateurs) {
          this.listeCirculations.add(builder.getCirculation());
       }
+
+      // Il faut compacter les circulations
+
+      this.factoriseCirculations();
 
       return this.listeCirculations;
    }
 
+   private void factoriseCirculations() {
+      List<Circulation> listeTemp = new ArrayList<>();
+      List<Circulation> listeSave = new ArrayList<>();
+      // for (int i = 0; i < this.listeCirculations.size(); i++) {
+      while (this.listeCirculations.size() > 0) {
+         Circulation circulation = this.listeCirculations.get(0);
+         this.listeCirculations.remove(circulation);
+         listeTemp.clear();
+         listeTemp.addAll(this.listeCirculations);
+         // On la compare aux circulations restantes
+         for (int j = 0; j < listeTemp.size(); j++) {
+            Circulation circulation2 = listeTemp.get(j);
+            if (circulation.getJoursCirculation().equalsIgnoreCase(circulation2.getJoursCirculation())) {
+               if (circulation.compareCirculation(circulation2)) {
+                  if (!circulation.getDateDebut().before(circulation2.getDateDebut()))
+                     circulation.setDateDebut(circulation2.getDateDebut());
+                  if (!circulation.getDateFin().after(circulation2.getDateFin()))
+                     circulation.setDateFin(circulation2.getDateFin());
+                  this.listeCirculations.remove(circulation2);
+               }
+            }
+         }
+         listeSave.add(circulation);
+      }
+      this.listeCirculations.clear();
+      this.listeCirculations.addAll(listeSave);
+   }
 }
