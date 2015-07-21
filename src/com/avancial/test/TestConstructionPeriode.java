@@ -48,6 +48,7 @@ public class TestConstructionPeriode {
       List<JourCirculation> jourCir = new ArrayList<>();
       List<JourCirculation> jourCir2 = new ArrayList<>();
       Calendar calendar = Calendar.getInstance();
+      Calendar calendar2 = Calendar.getInstance();
       Set<Integer> jours = new HashSet<Integer>();
       Map<Map.Entry<Integer, Integer>, Map<Integer, List<JourCirculation>>> heureJoursGrouper = new TreeMap<>();
       Map<Integer, List<JourCirculation>> joursGrouper = new TreeMap<>();
@@ -97,10 +98,19 @@ public class TestConstructionPeriode {
        
             if ((calendar.get(Calendar.DAY_OF_WEEK)-1) == i || (calendar.get(Calendar.DAY_OF_WEEK)==7 && i==1)) {
                jourCir2.add(j) ; 
-            };
+            }  ;
          }
       }
-      System.out.println(jourCir2);
-   }
-
+      System.out.println(jourCir2); 
+      JourCirculation current = new JourCirculation() ; 
+      current = jourCir2.get(0) ; 
+      
+      for (int i = 1 ; i < jourCir2.size(); i++ ) {
+         calendar.setTime(current.getDateCircul()); 
+         calendar2.setTime(jourCir2.get(i).getDateCircul()); 
+         if (calendar.get(Calendar.DAY_OF_WEEK) == calendar2.get(Calendar.DAY_OF_WEEK)) { 
+            
+         }
+      }
+   } 
 }

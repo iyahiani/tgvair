@@ -27,9 +27,10 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 	 
-	<!--  <context-param> 
-	<param-name>primefaces.THEME</param-name> <param-value>bootstrap</param-value> 
-		</context-param>--> 
+ <context-param> 
+	<param-name>primefaces.THEME</param-name> 
+	<param-value>glass-x</param-value> 
+</context-param>
 	<listener>
 		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>  
 		 <!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>-->
