@@ -35,8 +35,8 @@ public class TestConstructionPeriode {
       Train train2 = new Train();
       train2.addNumeroTrain("001113");
       Circulation c1 = new Circulation();
-      Circulation c2 = new Circulation(), c1_2 = new Circulation(),c1_3 = new Circulation();
-      c1 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#13#FRMLW#FRACL#0800#1000");
+      Circulation c2 = new Circulation(), c1_2 = new Circulation(), c1_3 = new Circulation();
+      c1 = TestTrain.createWithStringPeriode("01/06/2015#30/06/2015#134#FRMLW#FRACL#0800#1000");
       c1_2 = TestTrain.createWithStringPeriode("01/07/2015#31/08/2015#245#FRMLW#FRACL#0810#1010");
       c1_3 = TestTrain.createWithStringPeriode("01/04/2015#30/04/2015#245#FRMLW#FRACL#0800#1000");
       // --------------------------------------------- DEC VARIABLES
@@ -53,6 +53,8 @@ public class TestConstructionPeriode {
       Map<Map.Entry<Integer, Integer>, Map<Integer, List<JourCirculation>>> heureJoursGrouper = new TreeMap<>();
       Map<Integer, List<JourCirculation>> joursGrouper = new TreeMap<>();
 
+      // ///////////////////////////////////////////////////////////////////////////////////////
+
       train1.addCirculation(c1);
       train1.addCirculation(c1_2);
       train1.addCirculation(c1_3);
@@ -63,54 +65,57 @@ public class TestConstructionPeriode {
             jcTemp.put(jc.getKey(), jc.getValue());
          }
       }
-      
-      
+
       for (Entry<Date, JourCirculation> jc : jcTemp.entrySet()) {
          dates.put(jc.getValue().getHeureDepart(), jc.getValue().getHeureArrivee());
       }
       
-            
+      // //////////////List circulation Regrouper par heures
+
       for (Entry<Integer, Integer> dt : dates.entrySet()) {
          for (Entry<Date, JourCirculation> jc : jcTemp.entrySet()) {
-            
+
             if (dt.getKey().equals(jc.getValue().getHeureDepart())) {
-               jourCir.add(jc.getValue()); 
-               
-            } 
-         } 
-      }
-       
-     //System.out.println(jourCir); 
-      
-      
-      //for (Entry<Map.Entry<Integer, Integer>, List<JourCirculation>> entry : heureGrouper.entrySet()) {
-         for (JourCirculation j : jourCir) {
-            calendar.setTime(j.getDateCircul());
-            if (calendar.get(Calendar.DAY_OF_WEEK) == 1)
-               jours.add(7);
-            else
-               jours.add(calendar.get(Calendar.DAY_OF_WEEK) - 1);
-          }  
-         
-      for (int i : jours) {
-         for (JourCirculation j : jourCir) {
-             calendar.setTime(j.getDateCircul()) ; 
-       
-            if ((calendar.get(Calendar.DAY_OF_WEEK)-1) == i || (calendar.get(Calendar.DAY_OF_WEEK)==7 && i==1)) {
-               jourCir2.add(j) ; 
-            }  ;
+               jourCir.add(jc.getValue());
+
+            }
          }
       }
-      System.out.println(jourCir2); 
-      JourCirculation current = new JourCirculation() ; 
-      current = jourCir2.get(0) ; 
-      
-      for (int i = 1 ; i < jourCir2.size(); i++ ) {
-         calendar.setTime(current.getDateCircul()); 
-         calendar2.setTime(jourCir2.get(i).getDateCircul()); 
-         if (calendar.get(Calendar.DAY_OF_WEEK) == calendar2.get(Calendar.DAY_OF_WEEK)) { 
-            
-         }
+
+      // ////////// Set regroupant l'ensembles des jours de circulation du train
+
+      for (JourCirculation j : jourCir) {
+         calendar.setTime(j.getDateCircul());
+         if (calendar.get(Calendar.DAY_OF_WEEK) == 1)
+            jours.add(7);
+         else
+            jours.add(calendar.get(Calendar.DAY_OF_WEEK) - 1);
       }
-   } 
+      
+     // System.out.println(jourCir);
+
+      // ///// list regroupante les circulation par heure de depart/Arriver et
+      // par jour de circulation
+
+      for (Entry<Integer, Integer> dt : dates.entrySet())
+         for (int i : jours) {
+            for (JourCirculation j : jourCir) {
+               calendar.setTime(j.getDateCircul());
+               if (j.getHeureDepart() == dt.getKey())
+                  if ((calendar.get(Calendar.DAY_OF_WEEK) - 1) == i || (calendar.get(Calendar.DAY_OF_WEEK) == 7 && i == 1)) {
+                     jourCir2.add(j);
+                  }
+            }
+         }
+      System.out.println(jourCir2);
+
+      // ///////////////////////////////// calcule des periodes
+
+      Map<Date, Date> periodes = new TreeMap<>();
+      Date current = new Date(), dt_db = new Date();
+      current = jourCir2.get(0).getDateCircul();
+      dt_db = jourCir2.get(0).getDateCircul();
+      periodes.put(current, current);
+
+   }
 }
