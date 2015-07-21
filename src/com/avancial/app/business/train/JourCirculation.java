@@ -20,6 +20,9 @@ public class JourCirculation {
 
    }
 
+   public JourCirculation() {
+   }
+
    public int getHeureArrivee() {
       return this.heureArrivee;
    }

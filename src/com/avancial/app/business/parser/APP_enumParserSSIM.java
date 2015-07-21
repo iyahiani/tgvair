@@ -18,7 +18,7 @@ public enum APP_enumParserSSIM {
    /**
     * position du Rang du tronçon
     */
-   POSITION_RANG_TRANCON(10, 12),
+   POSITION_RANG_TRANCON(13, 15),
    /**
     * position de la Periode de circulation
     */
