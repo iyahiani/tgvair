@@ -330,10 +330,10 @@ public class Train implements ITrain {
          sb.append(entry.getValue() + "\n");
       }
 
-      /*sb.append("----------------- CIRCULATIONS ------------------------------");
+      sb.append("----------------- CIRCULATIONS ------------------------------");
 
       for (Circulation circulation : this.listeCirculations)
-         sb.append(circulation + "\n");*/
+         sb.append(circulation + "\n");
 
       return sb.toString();
    }

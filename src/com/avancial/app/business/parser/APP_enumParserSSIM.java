@@ -70,6 +70,10 @@ public enum APP_enumParserSSIM {
    */
    POSITION_RESTRICTION_TRAFIC(160, 170),
    /**
+    * position tranche facultatif 
+    */
+   POSITION_TRANCHE_FACULTATIF(174, 175),
+   /**
     * Valeur du type des enregistrements de type4
     */
    VALEUR_TYPE3("3"),

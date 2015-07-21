@@ -69,7 +69,7 @@ public class TestConstructionPeriode {
       for (Entry<Date, JourCirculation> jc : jcTemp.entrySet()) {
          dates.put(jc.getValue().getHeureDepart(), jc.getValue().getHeureArrivee());
       }
-      
+
       // //////////////List circulation Regrouper par heures
 
       for (Entry<Integer, Integer> dt : dates.entrySet()) {
@@ -91,8 +91,8 @@ public class TestConstructionPeriode {
          else
             jours.add(calendar.get(Calendar.DAY_OF_WEEK) - 1);
       }
-      
-     // System.out.println(jourCir);
+
+      // System.out.println(jourCir);
 
       // ///// list regroupante les circulation par heure de depart/Arriver et
       // par jour de circulation
@@ -107,15 +107,25 @@ public class TestConstructionPeriode {
                   }
             }
          }
-      System.out.println(jourCir2);
+      // System.out.println(jourCir2);
 
       // ///////////////////////////////// calcule des periodes
 
-      Map<Date, Date> periodes = new TreeMap<>();
-      Date current = new Date(), dt_db = new Date();
-      current = jourCir2.get(0).getDateCircul();
-      dt_db = jourCir2.get(0).getDateCircul();
-      periodes.put(current, current);
-
+      int jourDeb, jourFin;
+      Calendar current = Calendar.getInstance(), compt = Calendar.getInstance();
+      Map<Integer, Integer> periodes = new TreeMap<>();
+      current.setTime(jourCir2.get(0).getDateCircul());
+      compt.setTime(jourCir2.get(0).getDateCircul());
+      
+      for (int jour : jours)
+         for (int x = 0; x < jourCir2.size(); x++) {
+            while (compt.getTime().before(jourCir2.get(x).getDateCircul())) {
+               periodes.put(current.get(Calendar.DAY_OF_MONTH), compt.get(Calendar.DAY_OF_MONTH));
+               compt.add(Calendar.DATE, 1)   ;
+            }
+            current.setTime(jourCir2.get(x).getDateCircul());
+            compt.setTime(jourCir2.get(x).getDateCircul());
+         }
+      System.out.println(periodes);
    }
 }

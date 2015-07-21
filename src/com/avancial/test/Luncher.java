@@ -19,6 +19,7 @@ import com.avancial.app.business.parser.FilterEncodage;
 import com.avancial.app.business.parser.FilterSSIMTypeEnr;
 import com.avancial.app.business.parser.FiltreCatalogue;
 import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
+import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
@@ -31,7 +32,7 @@ import com.avancial.reader.IReader;
 
 public class Luncher {
 
-   public static ITrain getTrainSSIM(String path) throws IOException, ParseException {
+   public static Train getTrainSSIM(String path) throws IOException, ParseException {
       IReader reader = new ReaderSSIM(path);// "D:/Users/ismael.yahiani/Documents/ssim_6.txt"
       String chaine;
       String[] num = {"005211","005214","005215" };//"005211", "005211", "001113", "001115", "002222", "002223","001117","001111","001112","001113"
@@ -42,7 +43,7 @@ public class Luncher {
       Train trainCat = new Train()  ;
 
       SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy")   ;
-      IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num)))), APP_enumParserSSIM.getNames(),
+      IParser par = new ParserFixedLength(new FiltreTrancheOptionnel(new FilterEncodage( new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(),
             APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
 
       while ((chaine = reader.readLine()) != null) {
@@ -60,6 +61,8 @@ public class Luncher {
             circulation.setDateDebut(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
             circulation.setDateFin(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
             circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
+            circulation.setRangTranson(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(),APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
+            circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(),APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
             trainsSSIM.addNumeroTrain(circulation.getNumeroTrain());
             trainsSSIM.addCirculation(circulation);
          }
@@ -90,7 +93,7 @@ public class Luncher {
    public static void main(String[] args) throws IOException, ParseException {
 
       String path = "D:/Users/ismael.yahiani/Documents/new.txt" ;
-      ITrain trainSSIM7 = getTrainSSIM(path);//"D:/was_tmp/ssim_1.txt"
+      Train trainSSIM7 = getTrainSSIM("D:/new7.txt");//"D:/was_tmp/ssim_1.txt"
        
       Date date_deb_ssim = getSSIMPeriode(path).get("Date_Extraction") ; 
       Date date_fin_ssim = getSSIMPeriode(path).get("Date_Fin") ;
@@ -114,7 +117,8 @@ public class Luncher {
      // listTrainsCat.add(trainCata2);
      
       System.out.println(date_deb_ssim+""+date_fin_ssim);
-      System.out.println(trainSSIM7);
+      
+      for (Circulation c : trainSSIM7.getListeCirculations()) System.out.println(c.getRangTranson()+""+c.getTrancheFacultatif());
       
       System.out.println("-------------------------SSIM1----------------------------------------");
       
@@ -131,7 +135,7 @@ public class Luncher {
          
         Train trainSSIMRestreint = trainSSIM7.getTrainSSIMRestreint(train) ;
          //System.out.println(trainSSIM7);
-        System.out.println(trainSSIMRestreint);
+      //  System.out.println(trainSSIMRestreint);
         trainSSIMRestreint.remplirJoursCirculations();
 
         // System.out.println("____________TRAIN APRES ADAPT___________");

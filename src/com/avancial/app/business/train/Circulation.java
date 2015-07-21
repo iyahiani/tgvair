@@ -21,6 +21,7 @@ public class Circulation implements ICirculation {
    private String numeroTrain;
    private String periode;
    private int rangTranson ; 
+   private String trancheFacultatif ;
 
    /**
     * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
@@ -227,5 +228,13 @@ public class Circulation implements ICirculation {
 
    public void setRangTranson(int rangTranson) {
       this.rangTranson = rangTranson;
+   }
+
+   public String getTrancheFacultatif() {
+      return trancheFacultatif;
+   }
+
+   public void setTrancheFacultatif(String trancheFacultatif) {
+      this.trancheFacultatif = trancheFacultatif;
    }
 };
