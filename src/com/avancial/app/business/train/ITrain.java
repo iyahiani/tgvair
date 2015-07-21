@@ -12,7 +12,7 @@ public interface ITrain {
 
    public String getGareDestination();
 
-   public void adapt(ITrain train);
+   public void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM);
 
    public void addCirculation(Circulation circultation);
 

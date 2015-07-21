@@ -22,6 +22,10 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
 
       return TrainFactory.createTrainComplet(this);
    }
+   public Train getTrain2() {
+
+      return TrainFactory.createTrainComplet2(this);
+   }
 
    @Override
    public String getGareOrigine() {

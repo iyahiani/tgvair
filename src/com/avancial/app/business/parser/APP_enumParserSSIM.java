@@ -22,52 +22,53 @@ public enum APP_enumParserSSIM {
    /**
     * position de la Periode de circulation
     */
-   POSITION_PERIODE_CIRCULATION_DEBUT(13, 20),
-   POSITION_PERIODE_CIRCULATION_FIN(20, 27),
+   POSITION_PERIODE_CIRCULATION_DEBUT(16, 23), 
+   
+   POSITION_PERIODE_CIRCULATION_FIN(23, 30),
    /**
     * position des Jours de Circulation
     */
-   POSITION_JOURS_CIRCULATION(27, 34),
+   POSITION_JOURS_CIRCULATION(30, 37),
    /**
     * Position de la gare de Depart
     */
-   POSITION_GARE_DEPART(35, 40),
+   POSITION_GARE_DEPART(38, 43),
    /**
     * Position de l'heure de Depart
     */
-   POSITION_HEURE_DEPART(40, 44),
+   POSITION_HEURE_DEPART(43, 47),
    /**
     * position de la Différence horaire G.M.T. départ
     */
-   POSITION_DIFFERENCE_GMT_DEPART(48, 53),
+   POSITION_DIFFERENCE_GMT_DEPART(51, 56),
    /**
     * Position de la gare de Arriver
     */
-   POSITION_GARE_ARRIVER(55, 60),
+   POSITION_GARE_ARRIVER(58, 63),
    /**
     * Position de l'heure d'Arriver
     */
-   POSITION_HEURE_ARRIVER(60, 64),
+   POSITION_HEURE_ARRIVER(63, 67),
    /**
     * position de la Différence horaire G.M.T. arrivée
     */
-   POSITION_DIFFERENCE_GMT_ARRIVER(68, 74),
+   POSITION_DIFFERENCE_GMT_ARRIVER(71, 77),
    /**
     * position de l'indicateur FER
     */
-   POSITION_INDICATEUR_FER(142, 143),
+   POSITION_INDICATEUR_FER(145, 146),
    /**
     * position de la compagnie train
     */
-   POSITION_COMPAGNIE_TRAIN(143, 145),
+   POSITION_COMPAGNIE_TRAIN(146, 148),
    /**
     * position du Numéro du train réel à la gare de départ du tronçon
     */
-   POSITION_NUM_TRAIN(145, 151),
+   POSITION_NUM_TRAIN(148, 154),
    /** 
     * position code restriction de trafic 
    */
-   POSITION_RESTRICTION_TRAFIC(157, 167),
+   POSITION_RESTRICTION_TRAFIC(160, 170),
    /**
     * Valeur du type des enregistrements de type4
     */

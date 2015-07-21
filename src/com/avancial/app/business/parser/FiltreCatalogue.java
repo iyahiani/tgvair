@@ -1,7 +1,9 @@
 package com.avancial.app.business.parser;
 
+import java.util.List;
 import java.util.Map;
 
+import com.avancial.app.business.train.Circulation;
 import com.avancial.parser.AFilter;
 import com.avancial.parser.IParser;
 
@@ -18,14 +20,14 @@ public class FiltreCatalogue extends AFilter {
 		super(pars);
 		this.numTrains = numTrains;
 	}
-
+	 
 	@Override
 	public String parse(String line) {
 
 		if (!line.equals(""))
 			if (this.parser != null)
 				line = this.parser.parse(line);
-
+		
 		for (String i : this.numTrains) {
 			if (i.equals(line.substring(
 					APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),

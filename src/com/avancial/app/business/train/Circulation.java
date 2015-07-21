@@ -20,6 +20,7 @@ public class Circulation implements ICirculation {
    private String compagnieTrain;
    private String numeroTrain;
    private String periode;
+   private int rangTranson ; 
 
    /**
     * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
@@ -109,7 +110,9 @@ public class Circulation implements ICirculation {
       sb.append("----------------------" + "\n");
       sb.append(this.getDateDebut() + " -- " + this.getDateFin() +" -- " +this.joursCirculation+ "\n");
       sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
-      sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n");
+      sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n"); 
+      // rajouter pour test 
+      sb.append(this.getNumeroTrain());
       return sb.toString();
    }
 
@@ -216,5 +219,13 @@ public class Circulation implements ICirculation {
     */
    public void setHeureArrivee(int heureArrivee) {
       this.heureArrivee = heureArrivee;
+   }
+
+   public int getRangTranson() {
+      return rangTranson;
+   }
+
+   public void setRangTranson(int rangTranson) {
+      this.rangTranson = rangTranson;
    }
 };
