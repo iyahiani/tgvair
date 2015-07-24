@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.quartz.SchedulerException;
@@ -23,6 +24,7 @@ import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
+import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.resources.utils.StringToDate;
@@ -46,6 +48,7 @@ public class Luncher {
       IParser par = new ParserFixedLength(new FiltreTrancheOptionnel(new FilterEncodage( new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(),
             APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
 
+
       while ((chaine = reader.readLine()) != null) {
 
          par.parse(chaine);
@@ -53,6 +56,7 @@ public class Luncher {
          if (!par.getParsedResult().isEmpty()) {
 
             Circulation circulation = new Circulation();
+            
             circulation.setOrigine(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
             circulation.setDestination(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_ARRIVER.name()));
             circulation.setHeureArrivee(Integer.valueOf(par.getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_ARRIVER.name())));
@@ -92,15 +96,16 @@ public class Luncher {
 
    public static void main(String[] args) throws IOException, ParseException {
 
-      String path = "D:/Users/ismael.yahiani/Documents/new.txt" ;
+      String path = "D:/Users/ismael.yahiani/Documents/5211.txt" ;
       Train trainSSIM7 = getTrainSSIM("D:/new7.txt");//"D:/was_tmp/ssim_1.txt"
+      //trainSSIM7.remplirJoursCirculations();
        
       Date date_deb_ssim = getSSIMPeriode(path).get("Date_Extraction") ; 
       Date date_fin_ssim = getSSIMPeriode(path).get("Date_Fin") ;
       
       Circulation c1 = new Circulation(), c2 = new Circulation();
-      c1 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#1234567#FRMLW#FRACL#0949#1208");
-      //c2 = TestTrain.createWithStringPeriode("01/07/2015#31/12/2015#1234567#FRMLW#FRACL#1000#1154");
+      c1 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#1234567#FRLLE#FRMLW#0949#1208");
+      c2 = TestTrain.createWithStringPeriode("01/07/2015#31/12/2015#1234567#FRTHP#FRAET#1000#1154");
      
       TrainCatalogue trainCata1 = new TrainCatalogue();
       trainCata1.addCirculation(c1);
@@ -109,16 +114,18 @@ public class Luncher {
       trainCata1.getListeNumeros().add("005215");
       
       TrainCatalogue trainCata2 = new TrainCatalogue();
-     // trainCata2.addCirculation(c2);
-      //trainCata2.getListeNumeros().add("001113");
+       trainCata2.addCirculation(c2);
+       trainCata2.getListeNumeros().add("005211");
+       trainCata2.getListeNumeros().add("005214");
+       trainCata2.getListeNumeros().add("005215");
       
       List<TrainCatalogue> listTrainsCat = new ArrayList<TrainCatalogue>();
       listTrainsCat.add(trainCata1);
-     // listTrainsCat.add(trainCata2);
+      listTrainsCat.add(trainCata2);
      
       System.out.println(date_deb_ssim+""+date_fin_ssim);
       
-      for (Circulation c : trainSSIM7.getListeCirculations()) System.out.println(c.getRangTranson()+""+c.getTrancheFacultatif());
+     
       
       System.out.println("-------------------------SSIM1----------------------------------------");
       
@@ -130,13 +137,13 @@ public class Luncher {
          //  System.out.println(train) ;
            
           train.remplirJoursCirculations()  ;
-
+          
         System.out.println("____________SSIM RESTREINT___________")  ; 
          
         Train trainSSIMRestreint = trainSSIM7.getTrainSSIMRestreint(train) ;
          //System.out.println(trainSSIM7);
-      //  System.out.println(trainSSIMRestreint);
-        trainSSIMRestreint.remplirJoursCirculations();
+        
+        trainSSIMRestreint.remplirJoursCirculations();System.out.println(trainSSIMRestreint.getPeriodes());
 
         // System.out.println("____________TRAIN APRES ADAPT___________");
 

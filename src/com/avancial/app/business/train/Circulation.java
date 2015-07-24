@@ -113,7 +113,7 @@ public class Circulation implements ICirculation {
       sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
       sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n"); 
       // rajouter pour test 
-      sb.append(this.getNumeroTrain());
+      //sb.append(this.getNumeroTrain());
       return sb.toString();
    }
 

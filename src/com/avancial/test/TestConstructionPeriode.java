@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.poi.ss.formula.functions.Days360;
 import org.junit.Test;
 
 import com.avancial.app.business.train.Circulation;
@@ -24,6 +26,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 
 public class TestConstructionPeriode {
+
+   int diff;
 
    @Test
    public void contruirePeriode() throws ParseException {
@@ -92,8 +96,6 @@ public class TestConstructionPeriode {
             jours.add(calendar.get(Calendar.DAY_OF_WEEK) - 1);
       }
 
-      // System.out.println(jourCir);
-
       // ///// list regroupante les circulation par heure de depart/Arriver et
       // par jour de circulation
 
@@ -107,25 +109,52 @@ public class TestConstructionPeriode {
                   }
             }
          }
+
       // System.out.println(jourCir2);
 
       // ///////////////////////////////// calcule des periodes
 
       int jourDeb, jourFin;
-      Calendar current = Calendar.getInstance(), compt = Calendar.getInstance();
-      Map<Integer, Integer> periodes = new TreeMap<>();
-      current.setTime(jourCir2.get(0).getDateCircul());
-      compt.setTime(jourCir2.get(0).getDateCircul());
-      
-      for (int jour : jours)
-         for (int x = 0; x < jourCir2.size(); x++) {
-            while (compt.getTime().before(jourCir2.get(x).getDateCircul())) {
-               periodes.put(current.get(Calendar.DAY_OF_MONTH), compt.get(Calendar.DAY_OF_MONTH));
-               compt.add(Calendar.DATE, 1)   ;
+      Calendar dt_db = Calendar.getInstance(), compt = Calendar.getInstance(), dt_fin = Calendar.getInstance();
+      Map<Integer, Map<Date,Date>> periodes = new TreeMap<>();
+      Map<Date,Date> maPeriode = new LinkedHashMap<>();
+      String periodeTest;
+      int flag = 0;
+
+      for (int j : jours) {
+
+         for (Entry<Integer, Integer> dt : dates.entrySet()) {
+
+            dt_db.setTime(jourCir2.get(flag).getDateCircul());
+
+            for (int x = 1; x < jourCir2.size(); x++) {
+
+               compt.setTime(jourCir2.get(x).getDateCircul());
+               
+               if (compt.get(Calendar.DAY_OF_WEEK) - 1 == j 
+                     && dt_db.get(Calendar.DAY_OF_WEEK) - 1 == j 
+                     && jourCir2.get(x).getHeureDepart() == dt.getKey()) {
+
+                  diff = compt.get(Calendar.DAY_OF_YEAR) - dt_db.get(Calendar.DAY_OF_YEAR);
+                  
+                  if (diff == 7)
+                     dt_fin = compt;
+                  
+                  //System.out.println(j + " " + dt_db.getTime() + " " + dt_fin.getTime() + " " + diff);  
+                  maPeriode.put(dt_db.getTime(),dt_fin.getTime()) ;
+                  
+               
+                  flag++;
+               } else {
+                  dt_db.setTime(jourCir2.get(x).getDateCircul());
+               }
+               
             }
-            current.setTime(jourCir2.get(x).getDateCircul());
-            compt.setTime(jourCir2.get(x).getDateCircul());
+
          }
-      System.out.println(periodes);
+
+      } 
+      System.out.println(maPeriode);
+
    }
 }
