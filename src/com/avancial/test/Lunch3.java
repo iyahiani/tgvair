@@ -62,6 +62,9 @@ public class Lunch3 {
             circulation.setJoursCirculation(par.getParsedResult().get(APP_enumParserSSIM.POSITION_JOURS_CIRCULATION.name()));
             circulation.setDateDebut(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
             circulation.setDateFin(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
+            circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(),APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
+            circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(),APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
+            circulation.setRangTranson(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(),APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
             circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
             trainsSSIM.addNumeroTrain(circulation.getNumeroTrain());
             trainsSSIM.addCirculation(circulation);
@@ -144,17 +147,21 @@ public class Lunch3 {
          
          trainSSIMRestreint.remplirJoursCirculations();
          // System.out.println(trainSSIMRestreint);
-         System.out.println("PERIODES");
+        
          
-         System.out.println(trainSSIMRestreint.getPeriodes());
+        // System.out.println(trainSSIMRestreint.getPeriodes());
           
           System.out.println("____________TRAIN APRES ADAPT___________");
 
          if (!train.compare(trainSSIMRestreint)) {
             train.remplirJoursCirculations();
             train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim);
-            // System.out.println(train); 
-          //   System.out.println(train.getPeriodes()); 
+            //System.out.println(train);  
+            System.out.println("PERIODES");
+           //System.out.println(train.getPeriodes()); 
+           train.adaptGuichet(Luncher.getListPointsArrets()); 
+           System.out.println(train); 
+           System.out.println(train.getPeriodes());
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());
             trainCat.setListeCirculations(train.getListeCirculations());
          }
