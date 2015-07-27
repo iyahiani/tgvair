@@ -275,8 +275,9 @@ public class Train implements ITrain {
    public Train getTrainSSIMRestreint(Train trainCatalogue) {
 
       Train train = new Train();
-
+      ArrayList<Integer> restrictionTrafic = new ArrayList<Integer>();
       train.listeNumeros.addAll(trainCatalogue.listeNumeros);
+
       Circulation circulation = null;
 
       for (Circulation circulSSIM : this.getCirculations()) {
@@ -285,29 +286,39 @@ public class Train implements ITrain {
 
          if (compNumTrain(circulSSIM, trainCatalogue.listeNumeros)) {
 
-            if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) { // &&
-                                                                                                                    // !
-                                                                                                                    // circulSSIM.getOrigine().equalsIgnoreCase(gare)
+            if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) { 
                circulation = new Circulation();
                circulation.setHeureDepart(circulSSIM.getHeureDepart());
                circulation.setDateFin(circulSSIM.getDateFin());
                circulation.setDateDebut(circulSSIM.getDateDebut());
                circulation.setOrigine(circulSSIM.getOrigine());
+               circulation.setRestrictionTrafic(circulSSIM.getRestrictionTrafic()); // ce champs designera toute les gares interdites à la descente 
+                                                                                   
                circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
-
-               circulation.setRangTranson(circulSSIM.getRangTranson());
 
                circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
 
             }
 
+            if (circulation != null && circulation.getRestrictionTrafic().contains("A"))
+               for (int i = 0; i < circulation.getRestrictionTrafic().length(); i++) {
+                  if (circulation.getRestrictionTrafic().charAt(i) == 'A')
+                     restrictionTrafic.add(i + 1);
+               }
             if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
 
                circulation.setDestination(circulSSIM.getDestination());
-
                circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
-               train.addCirculation(circulation);
-               circulation = null;
+               circulation.setRangTranson(circulSSIM.getRangTranson());
+               
+               // /////////////////////////////////////////////////////////////
+               // TESTER SI LA DESCENTE est Intedite ou pas
+               // /// charger la liste des Gare interdite à la descente
+
+               if (!restrictionTrafic.contains(circulation.getRangTranson())) {
+                  train.addCirculation(circulation);
+                  circulation = null;
+               }
             }
          }
       }
@@ -315,23 +326,74 @@ public class Train implements ITrain {
       return train;
    }
 
-   public Map<String, JourCirculation> getPeriodes() {
-      Map<Date, JourCirculation> jcTemp = new LinkedHashMap<>();
-      // Multimap<Integer, Integer> dates = ArrayListMultimap.create() ;
+   public void adaptGuichet(List<PointArret> pa) {
 
+      Calendar calendarTrain = Calendar.getInstance();
+      Calendar calendarGuichet = Calendar.getInstance();
+
+      for (Entry<Date, JourCirculation> entry : this.listeJoursCirculation.entrySet()) {
+         calendarTrain.setTime(entry.getKey());
+         for (PointArret pArret : pa) {
+            if (entry.getValue().getOrigine().equalsIgnoreCase(pArret.getCodeResarail())) {
+
+               for (Guichet guichet : pArret.getGuichet()) {
+                  if (guichet.getJour().equalsIgnoreCase("Monday") && calendarTrain.get(Calendar.DAY_OF_WEEK)==2) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture()))) 
+                        entry.getValue().setFlagCirculation(false);
+                  };
+                  if (guichet.getJour().equalsIgnoreCase("Tuesday")&& calendarTrain.get(Calendar.DAY_OF_WEEK)==3) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                        entry.getValue().setFlagCirculation(false);
+                  };
+                  if (guichet.getJour().equalsIgnoreCase("Wednesday")&& calendarTrain.get(Calendar.DAY_OF_WEEK)==4) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                        entry.getValue().setFlagCirculation(false);
+                  };
+                  if (guichet.getJour().equalsIgnoreCase("Thursday")&& calendarTrain.get(Calendar.DAY_OF_WEEK)==5) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                        entry.getValue().setFlagCirculation(false);
+                  };
+                  if (guichet.getJour().equalsIgnoreCase("Friday")&& calendarTrain.get(Calendar.DAY_OF_WEEK)==6) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                        entry.getValue().setFlagCirculation(false);
+                  };
+                  if (guichet.getJour().equalsIgnoreCase("Saturday")&& calendarTrain.get(Calendar.DAY_OF_WEEK)==7) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                        entry.getValue().setFlagCirculation(false);
+                  };
+                  if (guichet.getJour().equalsIgnoreCase("Sunday")&& calendarTrain.get(Calendar.DAY_OF_WEEK)==1) {
+                     if ( entry.getValue().getHeureDepart()< Integer.valueOf(guichet.getHeureOuverture())  || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                        entry.getValue().setFlagCirculation(false);
+                  };
+               }
+            }
+         }
+      }
+   }
+
+   public Map<String, JourCirculation> getPeriodes() {
+      // /////////////////////////////////////////////////////////////
+      // Declaration Variables
+
+      Map<Date, JourCirculation> jcTemp = new LinkedHashMap<>();
       List<JourCirculation> jourCir = new ArrayList<>();
       List<JourCirculation> jourCir2 = new ArrayList<>();
       Calendar calendar = Calendar.getInstance();
       Set<Integer> jours = new HashSet<>();
-
       Map<Integer, List<JourCirculation>> joursGrouper = new TreeMap<>();
+      Set<String> tempDates = new TreeSet<>();
+
+      // /////////////////////////////////////////////////////////////////////////////////
+      // prendre que les jours de circulation ou ca circule : Flag = C
 
       for (Entry<Date, JourCirculation> jc : this.getListeJoursCirculation().entrySet()) {
          if (jc.getValue().isFlagCirculation()) {
             jcTemp.put(jc.getKey(), jc.getValue());
          }
       }
-      Set<String> tempDates = new TreeSet<>();
+
+      // ///////////////////////////////////////////////////////////////////////////////
+      // Extraction Des Heures Depart/Arriver
 
       for (Entry<Date, JourCirculation> jc : jcTemp.entrySet()) {
          String sbDep, sbArr;
@@ -346,7 +408,7 @@ public class Train implements ITrain {
          tempDates.add(sbDep.concat(sbArr));
       }
 
-                  // //////////////List circulation Regrouper par heures
+      // ////////////// Grouper les circules par heure depart et Arriver
 
       for (String dt : tempDates) {
 
@@ -368,7 +430,7 @@ public class Train implements ITrain {
          }
       }
 
-               // ////////// Set regroupant l'ensembles des jours de circulation du train
+      // ////////// Set regroupant l'ensembles des jours de circulation du train
 
       for (JourCirculation j : jourCir) {
          calendar.setTime(j.getDateCircul());
@@ -378,8 +440,8 @@ public class Train implements ITrain {
             jours.add(calendar.get(Calendar.DAY_OF_WEEK) - 1);
       }
 
-                  // ///// list regroupante les circulation par heure de depart/Arriver et
-                  // par jour de circulation
+      // ///// list regroupante les circulation par heure de depart/Arriver et
+      // par jour de circulation
 
       Map<String, Map<Integer, List<JourCirculation>>> resultat = new TreeMap<>();
 
@@ -388,13 +450,14 @@ public class Train implements ITrain {
       for (String dt : tempDates) {
          for (int i : jours) {
             for (JourCirculation j : jourCir) {
-                        // //////////////// Monter le chaine de caractere avec Heure de
-                        // depart et heure d'arriver
+               // //////////////// Construction de la chaine de caractere avec
+               // Heure de
+               // depart et heure d'arriver
                String sbDep, sbArr, heureDepArr;
                sbDep = String.valueOf(j.getHeureDepart());
                sbArr = String.valueOf(j.getHeureArrivee());
-                        // ///////////// si l'heure est sous forme xxx on la remet sous
-                        // forme 0xxx exemple : 9h00 =900 deviens 0900
+               // ///////////// si l'heure est sous forme xxx on la remet sous
+               // forme 0xxx exemple : 9h00 =900 deviens 0900
                if (j.getHeureDepart() / 1000 == 0)
                   sbDep = "0".concat(String.valueOf(j.getHeureDepart()));
                if (j.getHeureArrivee() / 1000 == 0)
@@ -410,34 +473,47 @@ public class Train implements ITrain {
                      resultat.put(dt, joursGrouper);
                   }
             }
-                        // reinitialiser la iste des jours de circulation
+            // reinitialiser la iste des jours de circulation
             jour = new ArrayList<>();
 
          }
-                        // reinitialiser la liste des jours regrouper par heures
+         // reinitialiser la liste des jours regrouper par heures
          joursGrouper = new TreeMap<>();
       }
 
-                     // ///////////////////////////////// calcule des periodes
+      // ///////////////////////////////// calcule des periodes : Periodes en
+      // Mono-Jours
+
       int diff;
 
-      Calendar dt_db = Calendar.getInstance(), 
-            compt = Calendar.getInstance(), 
-            dt_fin = Calendar.getInstance();
+      Calendar dt_db = Calendar.getInstance(), compt = Calendar.getInstance(), dt_fin = Calendar.getInstance();
 
       Map<String, JourCirculation> maPeriode = new LinkedHashMap<>();
+      List<Circulation> resultatFinal = new ArrayList<Circulation>();
       int flag = 0;
       for (Entry<String, Map<Integer, List<JourCirculation>>> res : resultat.entrySet()) {
 
          for (Entry<Integer, List<JourCirculation>> joursCircul : res.getValue().entrySet()) {
-
+            Circulation circul = new Circulation();
             dt_db.setTime(joursCircul.getValue().get(0).getDateCircul());
             dt_fin.setTime(joursCircul.getValue().get(0).getDateCircul());
 
-            if (joursCircul.getValue().size() == 1)
+            if (joursCircul.getValue().size() == 1) {
                maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(0));
+               circul.setDateDebut(dt_db.getTime());
+               circul.setDateFin(dt_fin.getTime());
+               circul.setOrigine(joursCircul.getValue().get(0).getOrigine());
+               circul.setDestination(joursCircul.getValue().get(0).getDestination());
+               circul.setHeureDepart(joursCircul.getValue().get(0).getHeureDepart());
+               circul.setHeureArrivee(joursCircul.getValue().get(0).getHeureArrivee());
+               if (dt_db.get(Calendar.DAY_OF_WEEK) == 1)
+                  {circul.setJoursCirculation("7");}
+               else {
+                  circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
+                  }
+               resultatFinal.add(circul);
 
-            else
+            } else
 
                for (int x = 1; x < joursCircul.getValue().size(); x++) {
 
@@ -445,20 +521,35 @@ public class Train implements ITrain {
                   flag = x;
                   diff = compt.get(Calendar.DAY_OF_YEAR) - dt_fin.get(Calendar.DAY_OF_YEAR);
 
-                  if (diff <= 7)
+                  if (diff <= 7) {
                      dt_fin.setTime(compt.getTime());
+                  }
+                  else if (diff>7){
 
-                  else {
+                     circul.setDateDebut(dt_db.getTime());
+                     circul.setDateFin(dt_fin.getTime());
+                     circul.setOrigine(joursCircul.getValue().get(x).getOrigine());
+                     circul.setDestination(joursCircul.getValue().get(x).getDestination());
+                     circul.setHeureDepart(joursCircul.getValue().get(x).getHeureDepart());
+                     circul.setHeureArrivee(joursCircul.getValue().get(x).getHeureArrivee());
+                     if (dt_db.get(Calendar.DAY_OF_WEEK) == 1)
+                        circul.setJoursCirculation("7");
+                     else
+                        circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
                      maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(x));
+                     resultatFinal.add(circul);
                      dt_db.setTime(compt.getTime());
                      dt_fin.setTime(compt.getTime());
                   }
                }
+            resultatFinal.add(circul);
             maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(flag));
          }
 
       }
-                  // //////////////////////// Fusion des Periodes
+      // //////////////////////// Fusion des Periodes : Periodes MultiJours
+
+      // /////////////////////////
 
       return maPeriode;
    }
