@@ -499,20 +499,7 @@ public class Train implements ITrain {
             dt_db.setTime(joursCircul.getValue().get(0).getDateCircul());
             dt_fin.setTime(joursCircul.getValue().get(0).getDateCircul());
 
-           /* if (joursCircul.getValue().size() == 1) {
-               
-               circul.setDateDebut(dt_db.getTime());
-               circul.setDateFin(dt_fin.getTime());
-               circul.setOrigine(joursCircul.getValue().get(0).getOrigine());
-               circul.setDestination(joursCircul.getValue().get(0).getDestination());
-               circul.setHeureDepart(joursCircul.getValue().get(0).getHeureDepart());
-               circul.setHeureArrivee(joursCircul.getValue().get(0).getHeureArrivee());
-               if (dt_db.get(Calendar.DAY_OF_WEEK) == 1) circul.setJoursCirculation("7");
-               if (dt_db.get(Calendar.DAY_OF_WEEK) != 1) circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
-               maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(0));   
-               resultatFinal.add(circul);
-            } */
-            
+                      
             if (joursCircul.getValue().size() > 1) 
 
                for (int x = 1; x < joursCircul.getValue().size(); x++) {
