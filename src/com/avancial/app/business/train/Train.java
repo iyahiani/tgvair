@@ -491,29 +491,29 @@ public class Train implements ITrain {
       Map<String, JourCirculation> maPeriode = new LinkedHashMap<>();
       List<Circulation> resultatFinal = new ArrayList<Circulation>();
       int flag = 0;
+      Circulation circul = new Circulation();
       for (Entry<String, Map<Integer, List<JourCirculation>>> res : resultat.entrySet()) {
 
          for (Entry<Integer, List<JourCirculation>> joursCircul : res.getValue().entrySet()) {
-            Circulation circul = new Circulation();
+            circul = new Circulation();
             dt_db.setTime(joursCircul.getValue().get(0).getDateCircul());
             dt_fin.setTime(joursCircul.getValue().get(0).getDateCircul());
 
-            if (joursCircul.getValue().size() == 1) {
-               maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(0));
+           /* if (joursCircul.getValue().size() == 1) {
+               
                circul.setDateDebut(dt_db.getTime());
                circul.setDateFin(dt_fin.getTime());
                circul.setOrigine(joursCircul.getValue().get(0).getOrigine());
                circul.setDestination(joursCircul.getValue().get(0).getDestination());
                circul.setHeureDepart(joursCircul.getValue().get(0).getHeureDepart());
                circul.setHeureArrivee(joursCircul.getValue().get(0).getHeureArrivee());
-               if (dt_db.get(Calendar.DAY_OF_WEEK) == 1)
-                  {circul.setJoursCirculation("7");}
-               else {
-                  circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
-                  }
+               if (dt_db.get(Calendar.DAY_OF_WEEK) == 1) circul.setJoursCirculation("7");
+               if (dt_db.get(Calendar.DAY_OF_WEEK) != 1) circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
+               maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(0));   
                resultatFinal.add(circul);
-
-            } else
+            } */
+            
+            if (joursCircul.getValue().size() > 1) 
 
                for (int x = 1; x < joursCircul.getValue().size(); x++) {
 
@@ -522,9 +522,9 @@ public class Train implements ITrain {
                   diff = compt.get(Calendar.DAY_OF_YEAR) - dt_fin.get(Calendar.DAY_OF_YEAR);
 
                   if (diff <= 7) {
-                     dt_fin.setTime(compt.getTime());
+                     dt_fin.setTime(compt.getTime()); 
                   }
-                  else if (diff>7){
+                  if (diff > 7){
 
                      circul.setDateDebut(dt_db.getTime());
                      circul.setDateFin(dt_fin.getTime());
@@ -532,9 +532,9 @@ public class Train implements ITrain {
                      circul.setDestination(joursCircul.getValue().get(x).getDestination());
                      circul.setHeureDepart(joursCircul.getValue().get(x).getHeureDepart());
                      circul.setHeureArrivee(joursCircul.getValue().get(x).getHeureArrivee());
-                     if (dt_db.get(Calendar.DAY_OF_WEEK) == 1)
+                     if (dt_db.get(Calendar.DAY_OF_WEEK) ==1)
                         circul.setJoursCirculation("7");
-                     else
+                     if (dt_db.get(Calendar.DAY_OF_WEEK) !=1)
                         circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
                      maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(x));
                      resultatFinal.add(circul);
@@ -542,15 +542,27 @@ public class Train implements ITrain {
                      dt_fin.setTime(compt.getTime());
                   }
                }
-            resultatFinal.add(circul);
+            circul = new Circulation();
+            circul.setDateDebut(dt_db.getTime());
+            circul.setDateFin(dt_fin.getTime());
+            circul.setOrigine(joursCircul.getValue().get(flag).getOrigine());
+            circul.setDestination(joursCircul.getValue().get(flag).getDestination());
+            circul.setHeureDepart(joursCircul.getValue().get(flag).getHeureDepart());
+            circul.setHeureArrivee(joursCircul.getValue().get(flag).getHeureArrivee());
+            if (dt_db.get(Calendar.DAY_OF_WEEK) ==1)
+               circul.setJoursCirculation("7");
+            if (dt_db.get(Calendar.DAY_OF_WEEK) !=1)
+               circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
+           if (!resultatFinal.contains(circul)) resultatFinal.add(circul);
             maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()), joursCircul.getValue().get(flag));
          }
-
+         
       }
       // //////////////////////// Fusion des Periodes : Periodes MultiJours
 
+      
       // /////////////////////////
-
+     System.out.println(resultatFinal);
       return maPeriode;
    }
 

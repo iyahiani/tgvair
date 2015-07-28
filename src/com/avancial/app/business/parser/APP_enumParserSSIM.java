@@ -68,11 +68,16 @@ public enum APP_enumParserSSIM {
    /** 
     * position code restriction de trafic 
    */
-   POSITION_RESTRICTION_TRAFIC(160, 170),
+   POSITION_RESTRICTION_TRAFIC(158, 170),
    /**
     * position tranche facultatif 
     */
    POSITION_TRANCHE_FACULTATIF(174, 175),
+    
+   /**
+    * position Restriction Trafic 
+    */ 
+   
    /**
     * Valeur du type des enregistrements de type4
     */

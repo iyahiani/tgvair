@@ -1,6 +1,6 @@
 package com.avancial.app.business.train;
 
-public class PointsArret {
+public class PointsArret_OLD {
 
 	private String libelléGare ; 
 	private int HeureDepart ;  

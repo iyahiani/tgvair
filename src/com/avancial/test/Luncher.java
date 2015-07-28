@@ -230,10 +230,11 @@ public class Luncher {
          if (!train.compare(trainSSIMRestreint)) {
             train.remplirJoursCirculations();
             train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim);
-            System.out.println(train);
-            System.out.println(train.getPeriodes()); 
+            
+           
             train.adaptGuichet(getListPointsArrets());
             System.out.println(train);
+            System.out.println(train.getPeriodes()); 
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());
             trainCat.setListeCirculations(train.getListeCirculations());
          }

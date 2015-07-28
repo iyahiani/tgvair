@@ -21,7 +21,8 @@ public class Circulation implements ICirculation {
    private String numeroTrain;
    private String periode;
    private int rangTranson ; 
-   private String trancheFacultatif ;
+   private String trancheFacultatif ; 
+   private String restrictionTrafic ; 
 
    /**
     * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
@@ -113,7 +114,8 @@ public class Circulation implements ICirculation {
       sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
       sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n"); 
       // rajouter pour test 
-      //sb.append(this.getNumeroTrain());
+      //sb.append(this.getNumeroTrain()); 
+      
       return sb.toString();
    }
 
@@ -135,6 +137,7 @@ public class Circulation implements ICirculation {
       sb.append("\t");
       sb.append(this.getDateFin());
       sb.append(this.getJoursCirculation());
+     
       return sb.toString();
    }
 
@@ -236,5 +239,13 @@ public class Circulation implements ICirculation {
 
    public void setTrancheFacultatif(String trancheFacultatif) {
       this.trancheFacultatif = trancheFacultatif;
+   }
+
+   public String getRestrictionTrafic() {
+      return restrictionTrafic;
+   }
+
+   public void setRestrictionTrafic(String restrictionTrafic) {
+      this.restrictionTrafic = restrictionTrafic;
    }
 };
