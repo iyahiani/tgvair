@@ -1,47 +1,42 @@
 package com.avancial.app.business.parser;
 
-import java.util.List;
 import java.util.Map;
 
-import com.avancial.app.business.train.Circulation;
 import com.avancial.parser.AFilter;
 import com.avancial.parser.IParser;
 
 public class FiltreCatalogue extends AFilter {
 
-	private String[] numTrains;
-	
-	
-	public FiltreCatalogue(IParser pars) {
-		super(pars);
-	}
+   private String[] numTrains;
 
-	public FiltreCatalogue(IParser pars, String[] numTrains) {
-		super(pars);
-		this.numTrains = numTrains;
-	}
-	 
-	@Override
-	public String parse(String line) {
+   public FiltreCatalogue(IParser pars) {
+      super(pars);
+   }
 
-		if (!line.equals(""))
-			if (this.parser != null)
-				line = this.parser.parse(line);
-		
-		for (String i : this.numTrains) {
-			if (i.equals(line.substring(
-					APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(),
-					APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())))
-				return line; 
-		}
-		
-		return "";
-	}
+   public FiltreCatalogue(IParser pars, String[] numTrains) {
+      super(pars);
+      this.numTrains = numTrains;
+   }
 
-	@Override
-	public Map<String, String> getParsedResult() {
+   @Override
+   public String parse(String line) {
 
-		return null;
-	}
+      if (!line.equals(""))
+         if (this.parser != null)
+            line = this.parser.parse(line);
+
+      for (String i : this.numTrains) {
+         if (i.equals(line.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())))
+            return line;
+      }
+
+      return "";
+   }
+
+   @Override
+   public Map<String, String> getParsedResult() {
+
+      return null;
+   }
 
 }

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.Train;
+import com.avancial.app.business.train.circulation.Circulation;
 
 public class TrainFactoryTest {
 

@@ -1,8 +1,8 @@
-package com.avancial.app.business.train;
+package com.avancial.app.business.train.circulation;
 
 import java.util.Date;
 
-public class JourCirculation {
+public class JourCirculation implements Comparable<JourCirculation> {
    private int     heureArrivee;
    private int     heureDepart;
    private String  origine;
@@ -21,6 +21,35 @@ public class JourCirculation {
    }
 
    public JourCirculation() {
+   }
+
+   private String getChaine(JourCirculation jour) {
+      String hDepart;
+      String hArrivee;
+      String date;
+
+      hDepart = String.format("%04d", jour.heureDepart);
+      hArrivee = String.format("%04d", jour.heureArrivee);
+      date = String.format(" %1$tY%1$tm%1$td", jour.dateCircul);
+
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(date);
+      sb.append(hDepart);
+      sb.append(hArrivee);
+
+      return sb.toString();
+   }
+
+   @Override
+   public int compareTo(JourCirculation j) {
+      String chaine1 = this.getChaine(this);
+      String chaine2 = this.getChaine(j);
+
+      System.out.println(String.format("%s -- %s -- %s", chaine1, chaine2, chaine1.compareToIgnoreCase(chaine2)));
+
+      return chaine1.compareToIgnoreCase(chaine2);
+
    }
 
    public int getHeureArrivee() {

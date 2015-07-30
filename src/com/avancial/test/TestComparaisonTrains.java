@@ -4,11 +4,11 @@ import java.text.ParseException;
 
 import org.junit.Test;
 
-import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.ITrain;
 import com.avancial.app.business.train.ITrainCatalogue;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.business.train.circulation.Circulation;
 
 public class TestComparaisonTrains {
 

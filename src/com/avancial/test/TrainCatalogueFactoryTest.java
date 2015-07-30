@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.business.train.circulation.Circulation;
 
 public class TrainCatalogueFactoryTest {
 

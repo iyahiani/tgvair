@@ -3,6 +3,8 @@ package com.avancial.app.business.train;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import com.avancial.app.business.train.circulation.Circulation;
+
 /**
  * 
  * @author ismael.yahiani cette class permet d'insatancié l'ensemble des objets métier TGVAIR
