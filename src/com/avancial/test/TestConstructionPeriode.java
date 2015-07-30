@@ -1,6 +1,5 @@
 package com.avancial.test;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,16 +13,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
-import org.apache.poi.ss.formula.functions.Days360;
 import org.junit.Test;
 
-import com.avancial.app.business.train.Circulation;
-import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.Train;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
+import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.business.train.circulation.JourCirculation;
 
 public class TestConstructionPeriode {
 
@@ -116,8 +111,8 @@ public class TestConstructionPeriode {
 
       int jourDeb, jourFin;
       Calendar dt_db = Calendar.getInstance(), compt = Calendar.getInstance(), dt_fin = Calendar.getInstance();
-      Map<Integer, Map<Date,Date>> periodes = new TreeMap<>();
-      Map<Date,Date> maPeriode = new LinkedHashMap<>();
+      Map<Integer, Map<Date, Date>> periodes = new TreeMap<>();
+      Map<Date, Date> maPeriode = new LinkedHashMap<>();
       String periodeTest;
       int flag = 0;
 
@@ -130,30 +125,27 @@ public class TestConstructionPeriode {
             for (int x = 1; x < jourCir2.size(); x++) {
 
                compt.setTime(jourCir2.get(x).getDateCircul());
-               
-               if (compt.get(Calendar.DAY_OF_WEEK) - 1 == j 
-                     && dt_db.get(Calendar.DAY_OF_WEEK) - 1 == j 
-                     && jourCir2.get(x).getHeureDepart() == dt.getKey()) {
+
+               if (compt.get(Calendar.DAY_OF_WEEK) - 1 == j && dt_db.get(Calendar.DAY_OF_WEEK) - 1 == j && jourCir2.get(x).getHeureDepart() == dt.getKey()) {
 
                   diff = compt.get(Calendar.DAY_OF_YEAR) - dt_db.get(Calendar.DAY_OF_YEAR);
-                  
+
                   if (diff == 7)
                      dt_fin = compt;
-                  
-                  //System.out.println(j + " " + dt_db.getTime() + " " + dt_fin.getTime() + " " + diff);  
-                  maPeriode.put(dt_db.getTime(),dt_fin.getTime()) ;
-                  
-               
+
+                  // System.out.println(j + " " + dt_db.getTime() + " " + dt_fin.getTime() + " " + diff);
+                  maPeriode.put(dt_db.getTime(), dt_fin.getTime());
+
                   flag++;
                } else {
                   dt_db.setTime(jourCir2.get(x).getDateCircul());
                }
-               
+
             }
 
          }
 
-      } 
+      }
       System.out.println(maPeriode);
 
    }

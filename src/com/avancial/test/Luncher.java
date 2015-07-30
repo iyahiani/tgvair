@@ -5,19 +5,14 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import org.quartz.SchedulerException;
 
 import com.avancial.app.business.parser.APP_enumParserSSIM;
 import com.avancial.app.business.parser.FilterEncodage;
@@ -26,14 +21,11 @@ import com.avancial.app.business.parser.FiltreCatalogue;
 import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
-import com.avancial.app.business.train.Circulation;
 import com.avancial.app.business.train.Guichet;
-import com.avancial.app.business.train.ITrain;
-import com.avancial.app.business.train.JourCirculation;
 import com.avancial.app.business.train.PointArret;
-import com.avancial.app.business.train.PointsArret_OLD;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
@@ -55,8 +47,7 @@ public class Luncher {
       Train trainCat = new Train();
 
       SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyy");
-      IParser par = new ParserFixedLength(new FiltreTrancheOptionnel(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))),
-            APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
+      IParser par = new ParserFixedLength(new FiltreTrancheOptionnel(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
 
       while ((chaine = reader.readLine()) != null) {
 
@@ -104,8 +95,8 @@ public class Luncher {
       datesSSIMExtraction.put("Date_Fin", StringToDate.toDate(date_fin));
       return datesSSIMExtraction;
    }
-   
-   //////////////////////////Extraction de la liste des points d'arrets et des horraire d'ouverture fermeture des guichets 
+
+   // ////////////////////////Extraction de la liste des points d'arrets et des horraire d'ouverture fermeture des guichets
 
    public static List<PointArret> getListPointsArrets() {
 
@@ -118,7 +109,7 @@ public class Luncher {
       List pointArret = new ArrayList<>();
 
       try {
-         document = (Document) builder.build(xmlFile);
+         document = builder.build(xmlFile);
          Element rootNode = document.getRootElement();
          List list = rootNode.getChildren("PointArret");
          for (int i = 0; i < list.size(); i++) {
@@ -129,8 +120,6 @@ public class Luncher {
             gare.setCodeResarail(node.getChildText("CodeResarail"));
             gare.setCodeGDS(node.getChildText("CodeGDS"));
             gare.setLibelle(node.getChildText("Libelle"));
-
-            
 
             List listHorraire = node.getChildren("Guichet");
 
@@ -169,7 +158,8 @@ public class Luncher {
 
       return pointArret;
    }
-   ////////////////////////////////////////////////////////////////////////////////////////     MAIN 
+
+   // ////////////////////////////////////////////////////////////////////////////////////// MAIN
 
    public static void main(String[] args) throws IOException, ParseException {
 
@@ -177,7 +167,7 @@ public class Luncher {
       Train trainSSIM7 = getTrainSSIM("D:/new7.txt");// "D:/was_tmp/ssim_1.txt"
 
       // trainSSIM7.remplirJoursCirculations();
-      
+
       Date date_deb_ssim = getSSIMPeriode(path).get("Date_Extraction");
       Date date_fin_ssim = getSSIMPeriode(path).get("Date_Fin");
 
@@ -230,11 +220,10 @@ public class Luncher {
          if (!train.compare(trainSSIMRestreint)) {
             train.remplirJoursCirculations();
             train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim);
-            
-           
+
             train.adaptGuichet(getListPointsArrets());
             System.out.println(train);
-            System.out.println(train.getPeriodes()); 
+            System.out.println(train.getPeriodes());
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());
             trainCat.setListeCirculations(train.getListeCirculations());
          }
@@ -247,21 +236,15 @@ public class Luncher {
 // APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN.getPositionFin()));
 // test = par.getSSIMResult(chaine);
 /*
- * System.out.println(chaine.substring(
- * APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN .getPositionDebut(),
- * APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN .getPositionFin()));
+ * System.out.println(chaine.substring( APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN .getPositionDebut(), APP_enumParserSSIM.POSITION_COMPAGNIE_TRAIN .getPositionFin()));
  */
 
 /*
  * Scheduler scheduler = new StdSchedulerFactory().getScheduler();
  * 
- * for (String groupName : scheduler.getJobGroupNames()) { for (JobKey jobKey :
- * scheduler.getJobKeys(GroupMatcher .jobGroupEquals(groupName))) {
+ * for (String groupName : scheduler.getJobGroupNames()) { for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher .jobGroupEquals(groupName))) {
  * 
- * @SuppressWarnings("unchecked") List<Trigger> triggers = (List<Trigger>)
- * scheduler.getTriggersOfJob(jobKey); Date nextFireTime =
- * triggers.get(0).getNextFireTime(); String jobName = jobKey.getName(); String
- * jobGroup = jobKey.getGroup(); System.out.println("[jobName] : " + jobName +
+ * @SuppressWarnings("unchecked") List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey); Date nextFireTime = triggers.get(0).getNextFireTime(); String jobName = jobKey.getName(); String jobGroup = jobKey.getGroup(); System.out.println("[jobName] : " + jobName +
  * " [groupName] : " + jobGroup + " - " + nextFireTime); } }
  */
 
