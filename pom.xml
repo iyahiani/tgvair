@@ -71,7 +71,11 @@
 			<artifactId>bootsfaces</artifactId>
 			<version>0.6.6</version>
 		</dependency>
-
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.primefaces.extensions</groupId>
 			<artifactId>all-themes</artifactId>
