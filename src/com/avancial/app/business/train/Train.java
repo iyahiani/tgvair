@@ -387,8 +387,7 @@ public class Train implements ITrain {
                circulation.setDateDebut(circulSSIM.getDateDebut());
                circulation.setOrigine(circulSSIM.getOrigine());
                circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
-               circulation.setRestrictionTrafic(circulSSIM.getRestrictionTrafic()); // ce// champs// designera// les// gares// interdites// à// la // descente 
-              
+               circulation.setRestrictionTrafic(circulSSIM.getRestrictionTrafic()); 
                circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
             }
             
@@ -398,13 +397,12 @@ public class Train implements ITrain {
                      restrictionTrafic.add(i + 1);
                } 
             
-            
-            if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
+            if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null ) {
 
                circulation.setDestination(circulSSIM.getDestination());
                circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
                circulation.setRangTranson(circulSSIM.getRangTranson());
-               circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
+               //circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
                // /////////////////////////////////////////////////////////////
                // TESTER SI LA DESCENTE est Intedite ou pas
                // /// charger la liste des Gare interdite à la descente
@@ -413,10 +411,10 @@ public class Train implements ITrain {
                   train.addCirculation(circulation);
                   circulation = null;
                } 
-               if (rangTroncan==1) {
-                  circulation=null ;
-               }
-            }
+             
+            } 
+            
+            if (circulation!=null && rangTroncan==1) circulation=null ;
          }
       }
 
@@ -682,7 +680,9 @@ public class Train implements ITrain {
                
                ///// CAS 1 : 
                if ((dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) < 7 && dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) >=0)
-                     && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >=0)) {
+                     && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >=0)
+                     
+                     && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
                   periodes.setDateDebut(dt_db1.getTime());
                   periodes.setDateFin(dt_fin2.getTime());
                   periodes.setDestination(c.getDestination());
@@ -699,7 +699,8 @@ public class Train implements ITrain {
                ///////////////////////////////////////// ///// CAS 2 : 
                else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >=0 ) 
                      && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 
-                           && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)) {
+                           && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)
+                           && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
                   periodes.setDateDebut(dt_db1.getTime());
                   periodes.setDateFin(dt_fin1.getTime());
                   periodes.setDestination(c.getDestination());
@@ -716,7 +717,8 @@ public class Train implements ITrain {
                
                ///// ///// CAS 3 :   
                else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >=0 ) 
-                     && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >=0)) {
+                     && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >=0)
+                     && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
                   periodes.setDateDebut(dt_db2.getTime());
                   periodes.setDateFin(dt_fin2.getTime());
                   periodes.setDestination(c.getDestination());
@@ -732,7 +734,8 @@ public class Train implements ITrain {
                }
                ///// CAS 4 : 
                else if ((dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) < 7 && dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) >=0 ) 
-                     && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)) {
+                     && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)
+                     && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
                   periodes.setDateDebut(dt_db1.getTime());
                   periodes.setDateFin(dt_fin1.getTime());
                   periodes.setDestination(c.getDestination());
