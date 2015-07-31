@@ -222,7 +222,7 @@ public class Luncher {
          // System.out.println(trainSSIM7);
 
          trainSSIMRestreint.remplirJoursCirculations();
-         // System.out.println(trainSSIMRestreint);
+          System.out.println(trainSSIMRestreint);
          // System.out.println(trainSSIMRestreint.getCirculations().get(0).getRestrictionTrafic());
 
          // System.out.println("____________TRAIN APRES ADAPT___________");

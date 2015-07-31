@@ -33,9 +33,7 @@ public class RoleDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-        @SuppressWarnings("unused")
-		SocleExceptionManager manager=new SocleExceptionManager(e);
-        throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
    }
 
@@ -47,9 +45,7 @@ public class RoleDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
- 		SocleExceptionManager manager=new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }
@@ -62,9 +58,7 @@ public class RoleDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
- 		SocleExceptionManager manager=new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }

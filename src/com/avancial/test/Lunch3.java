@@ -95,7 +95,7 @@ public class Lunch3 {
 
    public static void main(String[] args) throws IOException, ParseException {
 
-      String pathProd = "D:/was_tmp/RESARAIL_200713.txt";
+      String pathProd = "D:/was_tmp/SIDHSSIM_150724.txt";
       String pathTest = "D:/Users/ismael.yahiani/Documents/new.txt";
       String pathTest2 = "D:/was_tmp/ssim_1.txt";
       
@@ -108,6 +108,7 @@ public class Lunch3 {
       c1 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#1234567#FRMLW#FRACL#0949#1208");
       c2 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#1234567#FRMLW#FRACL#1249#1518");
       c3 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#7#FRMLW#FRMPL#2130#0132");
+      
       TrainCatalogue trainCata1 = new TrainCatalogue();
       trainCata1.addCirculation(c1);
       trainCata1.getListeNumeros().add("005211");
@@ -139,14 +140,14 @@ public class Lunch3 {
          System.out.println("____________TRAIN DU CATALOGUE___________");
          Train train = trainCat.getTrain();
          train.remplirJoursCirculations();
-       //  System.out.println(train);
+         System.out.println(train);
          train.remplirJoursCirculations();
 
           System.out.println("____________SSIM RESTREINT___________");
          Train trainSSIMRestreint = trainSSIM7.getTrainSSIMRestreint(trainCat);
          
          trainSSIMRestreint.remplirJoursCirculations();
-         // System.out.println(trainSSIMRestreint);
+          System.out.println(trainSSIMRestreint);
         
          
         // System.out.println(trainSSIMRestreint.getPeriodes());
@@ -159,7 +160,7 @@ public class Lunch3 {
             //System.out.println(train);  
             System.out.println("PERIODES");
            //System.out.println(train.getPeriodes()); 
-           train.adaptGuichet(Luncher.getListPointsArrets()); 
+         //  train.adaptGuichet(Luncher.getListPointsArrets()); 
            System.out.println(train); 
            System.out.println(train.getPeriodes());
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());

@@ -11,7 +11,7 @@ import com.avancial.socle.exceptions.ASocleException;
  * @author bruno.legloahec
  *
  */
-public abstract class AManageBean implements Serializable, IManagedBean {
+public class AManageBean implements Serializable, IManagedBean {
 
    protected Boolean         closeDialog      = false;
    /**

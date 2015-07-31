@@ -66,7 +66,12 @@ public class Circulation implements ICirculation {
          return false;
       else if (this.getHeureDepart() != circul.getHeureDepart())
          return false;
-
+      else if (!this.getJoursCirculation().equalsIgnoreCase(circul.getJoursCirculation()))
+         return false ;
+      else if (!this.getDateDebut().equals(circul.getDateDebut())) 
+         return false ; 
+      else if (!this.getDateFin().equals(circul.getDateFin())) 
+         return false ; 
       return true;
    }
 

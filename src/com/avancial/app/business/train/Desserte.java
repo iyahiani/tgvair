@@ -4,5 +4,5 @@ import java.util.List;
 
 public class Desserte {
 
-	private List<PointsArret> pointsArret ;
+	private List<PointsArret_OLD> pointsArret ;
 }

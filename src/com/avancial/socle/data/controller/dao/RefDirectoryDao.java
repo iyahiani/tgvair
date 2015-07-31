@@ -36,8 +36,7 @@ public class RefDirectoryDao extends AbstractDao {
     */
    @Override
    public List<?> getAll() {
-      if (this.getEntityManager() == null)
-         return null;
+
       String sql = "From RefDirectoryDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
