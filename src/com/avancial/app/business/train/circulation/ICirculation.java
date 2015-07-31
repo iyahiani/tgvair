@@ -1,4 +1,4 @@
-package com.avancial.app.business.train;
+package com.avancial.app.business.train.circulation;
 
 import java.text.ParseException;
 
