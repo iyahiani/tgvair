@@ -1,7 +1,12 @@
 package com.avancial.app.business.train.circulation;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.avancial.app.resources.utils.StringToDate;
 
@@ -59,34 +64,95 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
    }
 
    @Override
-   public boolean refresh(JourCirculation jourCirculation) {
+   public boolean refresh(Circulation circulation) {
       boolean processed = false;
-      // On va vérifier que le jour est bien dans la semaine concernée
-      // On calcule les dates théoriques de début et de fin
-      Calendar cal = new GregorianCalendar();
-      cal.setTime(this.circulation.getDateDebut());
-      int day = Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal));
-      int offset = 1 - day;
-      cal.add(Calendar.DAY_OF_WEEK, offset);
-      Calendar dateDebut = new GregorianCalendar();
-      dateDebut.setTime(cal.getTime());
-      Calendar dateFin = new GregorianCalendar();
-      cal.add(Calendar.DAY_OF_WEEK, 6);
-      dateFin.setTime(cal.getTime());
 
-      if (!(jourCirculation.getDateCircul().before(dateDebut.getTime()) || jourCirculation.getDateCircul().after(dateFin.getTime()))) {
-         // On va vérifier que ce jour de circulation concerne bien la
-         // circulation en cours
-         if (this.compareJourDeCirculation2Circulation(jourCirculation)) {
-            // C'est ok, on rajoute le jour
-            processed = true;
-            cal.setTime(jourCirculation.getDateCircul());
-            day = Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal));
-            this.jours[day - 1] = jourCirculation.isFlagCirculation() ? 1 : 0;
-            this.circulation.setDateFin(jourCirculation.getDateCircul());
-         }
-      }
+     
+      
+     //On regarde si les circulations sont compatibles
+      
+      if (this.circulation.getHeureDepart()!=circulation.getHeureDepart() || this.circulation.getHeureArrivee()!=circulation.getHeureArrivee() )
       return processed;
+      
+      //On va vérifier que la circulation est fusionnable cad que la fusion n'ajoute pas de jours indésirables
+      
+//      if (!this.isCirculationsFusionnable(this.circulation,circulation))
+//         return processed;
+      
+//On décompose les deux circulation en jours
+      
+      Map<Date,JourCirculation>  listeJoursDes2Circulations=new TreeMap<>();
+     Set<String> jourCircul  = new TreeSet<String>() ;
+     
+     Circulation circulation1=this.circulation;
+     Circulation circulation2=circulation;
+     
+      listeJoursDes2Circulations.putAll(circulation1.getDateJourCirculMap(false));
+      listeJoursDes2Circulations.putAll(circulation2.getDateJourCirculMap(false));
+      
+      //Array listeJoursFusion
+
+      Circulation fusionCirculation =new Circulation();
+      fusionCirculation.setOrigine(circulation1.getOrigine()); 
+      fusionCirculation.setDestination(circulation1.getDestination()); 
+      fusionCirculation.setHeureDepart(circulation1.getHeureDepart()); 
+      fusionCirculation.setHeureArrivee(circulation1.getHeureArrivee());
+      
+      fusionCirculation.setDateDebut(circulation1.getDateDebut().before(circulation2.getDateDebut())?circulation1.getDateDebut():circulation2.getDateDebut()); 
+      fusionCirculation.setDateFin(circulation1.getDateFin().after(circulation2.getDateFin())?circulation1.getDateFin():circulation2.getDateFin()); 
+      jourCircul.add(circulation1.getJoursCirculation()) ;
+      jourCircul.add(circulation2.getJoursCirculation()) ; 
+      fusionCirculation.setJoursCirculation(jourCircul.toString());
+      
+      
+      fusionCirculation.setJoursCirculation(jourCirculationUtil.fusionne(circulation1.getJoursCirculation(),circulation2.getJoursCirculation()));  
+      
+      
+      for (JourCirculation jourCirculation : fusionCirculation.getDateJourCirculMap(false).values()) {
+         if (!listeJoursDes2Circulations.containsKey(jourCirculation.getDateCircul()))
+            return false;
+      }
+      
+      this.circulation=fusionCirculation;
+      return processed;
+   }
+
+  
+
+   private boolean isCirculationsFusionnable(Circulation circulation1, Circulation circulation2) {
+      
+ //On décompose les deux circulation en jours
+      
+      Map<Date,JourCirculation>  listeJoursDes2Circulations=new TreeMap<>();
+     Set<String> jourCircul  = new TreeSet<String>() ; 
+      listeJoursDes2Circulations.putAll(circulation1.getDateJourCirculMap(false));
+      listeJoursDes2Circulations.putAll(circulation2.getDateJourCirculMap(false));
+      
+      //Array listeJoursFusion
+
+      Circulation fusionCirculation =new Circulation();
+      fusionCirculation.setOrigine(circulation1.getOrigine()); 
+      fusionCirculation.setDestination(circulation1.getDestination()); 
+      fusionCirculation.setHeureDepart(circulation1.getHeureDepart()); 
+      fusionCirculation.setHeureArrivee(circulation1.getHeureArrivee());
+      
+      fusionCirculation.setDateDebut(circulation1.getDateDebut().before(circulation2.getDateDebut())?circulation1.getDateDebut():circulation2.getDateDebut()); 
+      fusionCirculation.setDateFin(circulation1.getDateFin().after(circulation2.getDateFin())?circulation1.getDateFin():circulation2.getDateFin()); 
+      jourCircul.add(circulation1.getJoursCirculation()) ;
+      jourCircul.add(circulation2.getJoursCirculation()) ; 
+      fusionCirculation.setJoursCirculation(jourCircul.toString());
+      
+      jourCirculationUtil jour=new jourCirculationUtil();
+      
+      fusionCirculation.setJoursCirculation(jourCirculationUtil.fusionne(circulation1.getJoursCirculation(),circulation2.getJoursCirculation()));  
+      
+      
+      for (JourCirculation jourCirculation : fusionCirculation.getDateJourCirculMap(false).values()) {
+         if (!listeJoursDes2Circulations.containsKey(jourCirculation.getDateCircul()))
+            return false;
+      }
+      
+      return true;
    }
 
    @Override

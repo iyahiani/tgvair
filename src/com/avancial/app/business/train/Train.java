@@ -273,7 +273,7 @@ public class Train implements ITrain {
       this.listeJoursCirculation.clear();
       for (Circulation circul : this.listeCirculations) {
 
-         for (Entry<Date, JourCirculation> entry : circul.getDateJourCirculMap().entrySet()) {
+         for (Entry<Date, JourCirculation> entry : circul.getDateJourCirculMap(true).entrySet()) {
             // Si on ne trouve pas le jour, on ajoute
             if (!this.listeJoursCirculation.containsKey(entry.getKey()))
                this.listeJoursCirculation.put(entry.getKey(), entry.getValue());
@@ -379,7 +379,9 @@ public class Train implements ITrain {
          // for (String num : train.listeNumeros) {
 
          if (compNumTrain(circulSSIM, trainCatalogue.listeNumeros)) {
+            
             int rangTroncan = circulSSIM.getRangTranson() ;
+            
             if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
                circulation = new Circulation();
                circulation.setHeureDepart(circulSSIM.getHeureDepart());
@@ -409,9 +411,8 @@ public class Train implements ITrain {
 
                if (!restrictionTrafic.contains(circulation.getRangTranson())) {
                   train.addCirculation(circulation);
-                  circulation = null;
                } 
-             
+               circulation = null;
             } 
             
             if (circulation!=null && rangTroncan==1) circulation=null ;
@@ -592,12 +593,14 @@ public class Train implements ITrain {
       List<Circulation> resultatPeriodeMonoJour = new ArrayList<Circulation>();
       int flag = 0;
       Circulation circul = new Circulation();
+      
       for (Entry<String, Map<Integer, List<JourCirculation>>> res : resultat.entrySet()) {
 
          for (Entry<Integer, List<JourCirculation>> joursCircul : res.getValue().entrySet()) {
             circul = new Circulation();
             dt_db.setTime(joursCircul.getValue().get(0).getDateCircul());
             dt_fin.setTime(joursCircul.getValue().get(0).getDateCircul());
+           
             if (joursCircul.getValue().size() > 1)
 
                for (int x = 1; x < joursCircul.getValue().size(); x++) {
@@ -628,6 +631,7 @@ public class Train implements ITrain {
                      dt_fin.setTime(compt.getTime());
                   }
                }
+            if (flag < joursCircul.getValue().size()) {
             circul = new Circulation();
             circul.setDateDebut(dt_db.getTime());
             circul.setDateFin(dt_fin.getTime());
@@ -642,7 +646,7 @@ public class Train implements ITrain {
                circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
             if (!resultatPeriodeMonoJour.contains(circul))
                resultatPeriodeMonoJour.add(circul);
-
+            }
          }
       }
 
@@ -698,10 +702,9 @@ public class Train implements ITrain {
                }
                ///////////////////////////////////////// ///// CAS 2 : 
                else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >=0 ) 
-                     && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 
-                           && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)
+                     && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)
                            && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
-                  periodes.setDateDebut(dt_db1.getTime());
+                  periodes.setDateDebut(dt_db2.getTime());
                   periodes.setDateFin(dt_fin1.getTime());
                   periodes.setDestination(c.getDestination());
                   periodes.setOrigine(c.getOrigine());
@@ -710,7 +713,6 @@ public class Train implements ITrain {
                   periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
                   list.add(periodes);
                   resultatPeriodeMonoJour.remove(a);
-                 
                   resultatPeriodeMonoJour.set(0, periodes) ;
                   break;
                }
@@ -761,9 +763,12 @@ public class Train implements ITrain {
          i=0;
       }
    } 
+      resultatPeriodeMonoJour.remove(0);
+      list.clear() ;
+     if (resultatPeriodeMonoJour.size()>0) list.add(resultatPeriodeMonoJour.get(0)) ; 
+      
      listGlobal.add(list);
 
-    
 
       // /////////////////////////
 

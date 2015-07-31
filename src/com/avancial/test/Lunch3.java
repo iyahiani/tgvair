@@ -27,14 +27,10 @@ import com.avancial.reader.IReader;
 public class Lunch3 {
 
    public static Train getTrainSSIM(String path) throws IOException, ParseException {
-      IReader reader = new ReaderSSIM(path);// "D:/Users/ismael.yahiani/Documents/ssim_6.txt"
+      IReader reader = new ReaderSSIM(path);
 
       String chaine;
-      String[] num = { "005211", "005214", "005215", "005225", "005226", "005227" }; // , "005225", "005226",,"001111","001112","001113","001115","002222","002223","001117",, "005214", "005215","005225", "005226","005227",
-      // "005227","005211"
-      //
-      // ///////// Instantiation Des Trains SSIM
-
+      String[] num = { "005211", "005214", "005215"/*, "005225", "005226", "005227" */}; 
       Train trainsSSIM = new Train();
       Train trainCat = new Train();
 
@@ -64,7 +60,7 @@ public class Lunch3 {
             circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
             trainsSSIM.addNumeroTrain(circulation.getNumeroTrain());
             trainsSSIM.addCirculation(circulation); 
-            
+            //System.out.println(par.parse(chaine));
          }
       }
       return trainsSSIM;
@@ -103,7 +99,7 @@ public class Lunch3 {
       Date date_fin_ssim = getSSIMPeriode(pathProd).get("Date_Fin");
 
       Circulation c1 = new Circulation(), c2 = new Circulation(), c3 = new Circulation();
-      c1 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#1234567#FRMLW#FRACL#0949#1208");
+      c1 = TestTrain.createWithStringPeriode("22/07/2015#14/12/2015#1234567#FRMLW#FRACL#0949#1208");
       c2 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#1234567#FRMLW#FRACL#1249#1518");
       c3 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#7#FRMLW#FRMPL#2130#0132");
       
@@ -123,10 +119,10 @@ public class Lunch3 {
       trainCata3.addCirculation(c3);
       trainCata3.getListeNumeros().add("005137");
       List<TrainCatalogue> listTrainsCat = new ArrayList<TrainCatalogue>();
-      // <<<<<<< HEAD
+    
 
-      // listTrainsCat.add(trainCata1);
-      listTrainsCat.add(trainCata2);
+       listTrainsCat.add(trainCata1);
+     // listTrainsCat.add(trainCata2);
       // listTrainsCat.add(trainCata3);
       // System.out.println(getSSIMPeriode(pathProd));
       // System.out.println(trainSSIM7);
@@ -143,9 +139,8 @@ public class Lunch3 {
          Train trainSSIMRestreint = trainSSIM7.getTrainSSIMRestreint(trainCat);
          trainSSIMRestreint.remplirJoursCirculations();
 
-         // System.out.println(trainSSIMRestreint);
+          System.out.println(trainSSIMRestreint);
         
-         
         // System.out.println(trainSSIMRestreint.getPeriodes());
           
         
@@ -166,7 +161,7 @@ public class Lunch3 {
 
             // System.out.println(train.getPeriodes());
             train.adaptGuichet(Luncher.getListPointsArrets());
-            System.out.println(train);
+           // System.out.println(train);
            System.out.println(train.getPeriodes());
 
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());
