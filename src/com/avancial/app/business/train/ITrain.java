@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.business.train.circulation.JourCirculation;
+
 public interface ITrain {
 
    public List<String> getTrainNumeros();

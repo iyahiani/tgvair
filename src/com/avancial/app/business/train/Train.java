@@ -3,6 +3,7 @@ package com.avancial.app.business.train;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -14,18 +15,25 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+
 import org.w3c.dom.ls.LSInput;
 
 import net.bootsfaces.C;
+
+
+import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.business.train.circulation.IObservableCirculationSemaineBuilder;
+import com.avancial.app.business.train.circulation.JourCirculation;
+import com.avancial.app.business.train.circulation.ObservableCirculationBuilder;
 
 import com.avancial.app.resources.utils.StringToDate;
 
 public class Train implements ITrain {
 
-   protected List<String> listeNumeros;
+   protected List<String>               listeNumeros;
    protected Map<Date, JourCirculation> listeJoursCirculation;
 
-   protected List<Circulation> listeCirculations;
+   protected List<Circulation>          listeCirculations;
 
    /**
     * @author Yahiani Ismail
@@ -67,66 +75,134 @@ public class Train implements ITrain {
 
       List<JourCirculation> temp = new ArrayList<>();
       temp.addAll(this.listeJoursCirculation.values());
+      // <<<<<<< HEAD
+      // Circulation circulation = null;
+      // ArrayList<String> jours = new ArrayList<>();
+      // this.listeCirculations.clear();
+      //
+      // for (JourCirculation jourCirculation : temp) {
+      //
+      // if (null == circulation) {
+      // circulation = this.initCirculationFromJourDeCirculation(jourCirculation);
+      // jours.clear();
+      // for (int i = 1; i <= 7; i++)
+      // jours.add(" ");
+      // Calendar cal = new GregorianCalendar();
+      // cal.setTime(jourCirculation.getDateCircul());
+      //
+      // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
+      // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
+      // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
+      // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
+      //
+      // }
+      //
+      // if (this.compareJourDeCirculation2Circulation(jourCirculation, circulation, jours)) {
+      // // C'est la même circulation, on enrichit
+      // Calendar cal = new GregorianCalendar();
+      // cal.setTime(jourCirculation.getDateCircul());
+      //
+      // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
+      // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
+      // circulation.setDateFin(jourCirculation.getDateCircul());
+      // } else {
+      // // C'est une nouvelle circulation, on ajoute la précédente et on en
+      // // crée une nouvelle
+      // // Il faut mettre à jour les jours de circulation
+      // StringBuilder builder = new StringBuilder();
+      // for (int i = 0; i < jours.size(); i++) {
+      // if (jours.get(i).equals(" ") || jours.get(i).equals("0"))
+      // builder.append(" ");
+      // else
+      // builder.append(i + 1);
+      // }
+      // circulation.setJoursCirculation(builder.toString());
+      //
+      // this.addCirculation(circulation);
+      // circulation = this.initCirculationFromJourDeCirculation(jourCirculation);
+      // jours.clear();
+      // for (int i = 1; i <= 7; i++)
+      // jours.add(" ");
+      // Calendar cal = new GregorianCalendar();
+      // cal.setTime(jourCirculation.getDateCircul());
+      // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
+      // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, "1");
+      // }
+      //
+      // }
+      //
+      // this.listeCirculations.clear();
+      // this.listeCirculations.addAll(this.listeCirculations);
+      //
+      // this.listeCirculations.add(circulation);
+      //
+      // =======
+
+      Collections.sort(temp);
+      System.out.println(temp);
+
       Circulation circulation = null;
       ArrayList<String> jours = new ArrayList<>();
       this.listeCirculations.clear();
-
+      IObservableCirculationSemaineBuilder builder = new ObservableCirculationBuilder();
       for (JourCirculation jourCirculation : temp) {
 
-         if (null == circulation) {
-            circulation = this.initCirculationFromJourDeCirculation(jourCirculation);
-            jours.clear();
-            for (int i = 1; i <= 7; i++)
-               jours.add(" ");
-            Calendar cal = new GregorianCalendar();
-            cal.setTime(jourCirculation.getDateCircul());
-
-            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
-            jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
-            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
-            jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
-
-         }
-
-         if (this.compareJourDeCirculation2Circulation(jourCirculation, circulation, jours)) {
-            // C'est la même circulation, on enrichit
-            Calendar cal = new GregorianCalendar();
-            cal.setTime(jourCirculation.getDateCircul());
-
-            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
-            jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
-            circulation.setDateFin(jourCirculation.getDateCircul());
-         } else {
-            // C'est une nouvelle circulation, on ajoute la précédente et on en
-            // crée une nouvelle
-            // Il faut mettre à jour les jours de circulation
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < jours.size(); i++) {
-               if (jours.get(i).equals(" ") || jours.get(i).equals("0"))
-                  builder.append(" ");
-               else
-                  builder.append(i + 1);
-            }
-            circulation.setJoursCirculation(builder.toString());
-
-            this.addCirculation(circulation);
-            circulation = this.initCirculationFromJourDeCirculation(jourCirculation);
-            jours.clear();
-            for (int i = 1; i <= 7; i++)
-               jours.add(" ");
-            Calendar cal = new GregorianCalendar();
-            cal.setTime(jourCirculation.getDateCircul());
-            jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1);
-            jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) - 1, "1");
-         }
+         builder.notifierObservateurs(jourCirculation);
+         // if (null == circulation) {
+         // circulation =
+         // this.initCirculationFromJourDeCirculation(jourCirculation);
+         // jours.clear();
+         // for (int i = 1; i <= 7; i++)
+         // jours.add(" ");
+         // Calendar cal = new GregorianCalendar();
+         // cal.setTime(jourCirculation.getDateCircul());
+         // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal))
+         // - 1);
+         // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) -
+         // 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
+         // }
+         //
+         // if (this.compareJourDeCirculation2Circulation(jourCirculation,
+         // circulation, jours)) {
+         // // C'est la même circulation, on enrichit
+         // Calendar cal = new GregorianCalendar();
+         // cal.setTime(jourCirculation.getDateCircul());
+         //
+         // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal))
+         // - 1);
+         // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) -
+         // 1, String.valueOf(jourCirculation.isFlagCirculation() ? 1 : 0));
+         // circulation.setDateFin(jourCirculation.getDateCircul());
+         // } else {
+         // // C'est une nouvelle circulation, on ajoute la précédente et on en
+         // // crée une nouvelle
+         // // Il faut mettre à jour les jours de circulation
+         // StringBuilder builder = new StringBuilder();
+         // for (int i = 0; i < jours.size(); i++) {
+         // if (jours.get(i).equals(" ") || jours.get(i).equals("0"))
+         // builder.append(" ");
+         // else
+         // builder.append(i + 1);
+         // }
+         // circulation.setJoursCirculation(builder.toString());
+         //
+         // this.addCirculation(circulation);
+         // circulation =
+         // this.initCirculationFromJourDeCirculation(jourCirculation);
+         // jours.clear();
+         // for (int i = 1; i <= 7; i++)
+         // jours.add(" ");
+         // Calendar cal = new GregorianCalendar();
+         // cal.setTime(jourCirculation.getDateCircul());
+         // jours.remove(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal))
+         // - 1);
+         // jours.add(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal)) -
+         // 1, "1");
+         // }
 
       }
 
-      this.listeCirculations.clear();
-      this.listeCirculations.addAll(this.listeCirculations);
-
-      this.listeCirculations.add(circulation);
-
+      this.listeCirculations.addAll(builder.getListeCirculation());
    }
 
    private Circulation initCirculationFromJourDeCirculation(JourCirculation jourCirculation) {
@@ -181,8 +257,7 @@ public class Train implements ITrain {
             break;
          }
 
-         if (train.getJoursCirculation().containsKey(jourCirculation.getKey())
-               && train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation() != jourCirculation.getValue().isFlagCirculation()) {
+         if (train.getJoursCirculation().containsKey(jourCirculation.getKey()) && train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation() != jourCirculation.getValue().isFlagCirculation()) {
             comp = false;
             break;
          }
@@ -192,8 +267,7 @@ public class Train implements ITrain {
    }
 
    /**
-    * Remplit la map des jours de circulation avec tous les jours circulant ou
-    * non de toutes les listeCirculations
+    * Remplit la map des jours de circulation avec tous les jours circulant ou non de toutes les listeCirculations
     */
    public void remplirJoursCirculations() {
       this.listeJoursCirculation.clear();
@@ -226,8 +300,7 @@ public class Train implements ITrain {
 
       for (Entry<Date, JourCirculation> jourCirculation : this.listeJoursCirculation.entrySet()) {
 
-         if ((jourCirculation.getKey().after(date_deb_SSIM)) || (jourCirculation.getKey().equals(date_deb_SSIM)) && (jourCirculation.getKey().before(date_fin_SSIM))
-               || (jourCirculation.getKey().equals(date_fin_SSIM)))
+         if ((jourCirculation.getKey().after(date_deb_SSIM)) || (jourCirculation.getKey().equals(date_deb_SSIM)) && (jourCirculation.getKey().before(date_fin_SSIM)) || (jourCirculation.getKey().equals(date_fin_SSIM)))
 
             if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) { // verification
                // concordance
@@ -236,31 +309,44 @@ public class Train implements ITrain {
                // que
                // le train circule
 
+               // <<<<<<< HEAD
                if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation())
 
                   this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
-               else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation() != train.getJoursCirculation()
-                     .get(jourCirculation.getKey()).isFlagCirculation())) {
+               else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation() != train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation())) {
                   jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
                   this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
                }
             } else {
-               if (!train.getJoursCirculation().containsKey(jourCirculation.getKey()) && (jourCirculation.getKey().after(date_deb_SSIM) || (jourCirculation.getKey().equals(date_deb_SSIM)))
-                     && (jourCirculation.getKey().before(date_fin_SSIM) || (jourCirculation.getKey().equals(date_fin_SSIM))))
+               if (!train.getJoursCirculation().containsKey(jourCirculation.getKey()) && (jourCirculation.getKey().after(date_deb_SSIM) || (jourCirculation.getKey().equals(date_deb_SSIM))) && (jourCirculation.getKey().before(date_fin_SSIM) || (jourCirculation.getKey().equals(date_fin_SSIM))))
+               // =======
+               // if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation())
+               // this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
+               // else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation() != train.getJoursCirculation()
+               // .get(jourCirculation.getKey()).isFlagCirculation())) {
+               // jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
+               // // JourCirculation temp=jourCirculation.getValue();
+               // >>>>>>> 2c861fdc23fad30be9210661799b27e7479198d3
 
                {
                   jourCirculation.getValue().setFlagCirculation(false);
                }
             }
 
+         // <<<<<<< HEAD
+         // =======
+         // }
+         // // else
+         // // this.listeJoursCirculation.put(jourCirculation.getKey(),
+         // // train.getJoursCirculation().get(jourCirculation.getKey()));
+         // >>>>>>> 2c861fdc23fad30be9210661799b27e7479198d3
       }
 
       // this.calculeCirculationFromJoursCirculation() ;
    }
 
    /**
-    * @author ismael.yahiani récupére le train référencé dans le catalogue à
-    *         partir de la SSIM
+    * @author ismael.yahiani récupére le train référencé dans le catalogue à partir de la SSIM
     * @throws ParseException
     */
 
@@ -274,6 +360,10 @@ public class Train implements ITrain {
       }
       return comp;
    }
+
+   /**
+    * @author ismael.yahiani récupére le train référencé dans le catalogue à partir de la SSIM
+    */
 
    @Override
    public Train getTrainSSIMRestreint(Train trainCatalogue) {
@@ -557,6 +647,7 @@ public class Train implements ITrain {
 
          }
       }
+
      
       // //////////////////////// Fusion des Periodes : Periodes MultiJours 
       
@@ -669,11 +760,12 @@ public class Train implements ITrain {
    } 
      listGlobal.add(list);
 
-      
+    
 
       // /////////////////////////
 
       return listGlobal;
+     
    }
 
    @Override
