@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.avancial.socle.data.model.databean.UtilisateurDataBean;
 import com.avancial.socle.resources.ContextController;
-import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.resources.constants.ConstantSocle;
 
 /**
  * Managed Bean de gestion du header
@@ -53,7 +53,7 @@ public class IhmManagedBean implements Serializable {
       } catch (ServletException e) {
          e.printStackTrace();
       }
-      return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
+      return ConstantSocle.NAVIGATION_ACCUEIL.toString();
    }
 
    /**
@@ -68,7 +68,7 @@ public class IhmManagedBean implements Serializable {
       if (this.getOriginalURL() == null) {
          this.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
       }
-      return SOCLE_constants.NAVIGATION_LOGIN.toString();
+      return ConstantSocle.NAVIGATION_LOGIN.toString();
 
    }
 

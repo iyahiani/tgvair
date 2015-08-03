@@ -1,7 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+
+	</repositories>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>avancial.fr</groupId>
 	<artifactId>TGVAir</artifactId>
@@ -55,8 +63,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
 		</dependency>
-		
-	
+		<dependency>
+			<groupId>avancial.fr</groupId>
+			<artifactId>parser</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -133,10 +144,6 @@
 			<artifactId>primefaces</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>avancial.fr</groupId>
-			<artifactId>parser</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>avancial.fr</groupId>
 			<artifactId>reader</artifactId>

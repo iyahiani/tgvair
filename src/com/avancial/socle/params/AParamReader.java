@@ -8,13 +8,11 @@ import java.util.Collection;
 import com.avancial.socle.params.beans.IParamBean;
 
 /**
- * Classe abstraite pour lire des paramètres
- * 
  * @author bruno
  *
  */
 public abstract class AParamReader implements IParamReader {
-   protected String                 paramsName;
+   protected String paramsName;
    protected Collection<IParamBean> colIParamBeans;
 
    /**

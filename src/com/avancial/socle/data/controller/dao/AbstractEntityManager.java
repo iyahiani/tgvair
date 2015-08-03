@@ -25,10 +25,8 @@ public class AbstractEntityManager {
     * Constructor
     */
    private AbstractEntityManager() {
-
       this.emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
       this.em = this.emf.createEntityManager();
-
    }
 
    /**

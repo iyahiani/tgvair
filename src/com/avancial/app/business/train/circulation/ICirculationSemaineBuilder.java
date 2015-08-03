@@ -16,7 +16,7 @@ public interface ICirculationSemaineBuilder {
     * @return vrai si le jour de circulation a été intégré par l'observateur.
     *         Faux sinon.
     */
-   boolean refresh(JourCirculation jourCirculation);
+   boolean refresh(Circulation circulation);
 
    /**
     * @return la circulation

@@ -137,19 +137,19 @@ public class TestTrain {
       exceptions.add(new Date(120215));
       exceptions.add(new Date(120315));
       TrainCatalogue trainCatalogue = new TrainCatalogue();
-      trainCatalogue.setNumero_Train_Cat("885112");
-      trainCatalogue.setNumero_Train_Cat("885113");
+      trainCatalogue.addNumeroTrain("885112");
+      trainCatalogue.addNumeroTrain("885113");
       // trainCatalogue.setDestination("1334");
       // trainCatalogue.setException(exceptions);
-      trainCatalogue.getFlight_number();
-      trainCatalogue.setNom_compagnie("AF");
+      /*trainCatalogue.getFlight_number();
+      trainCatalogue.setNom_compagnie("AF");*/
       // trainCatalogue.setJours_Circulation_Compagnie("12346");
 
       IParser par = new ParserFixedLength(new FilterEncodage(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(null))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getEnds(), APP_enumParserSSIM.getBegins());
 
-      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
+      Assert.assertEquals(Integer.valueOf(trainCatalogue.getListeNumeros().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
 
-      Assert.assertEquals(Integer.valueOf(trainCatalogue.getNumero_Train_Cat().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
+      Assert.assertEquals(Integer.valueOf(trainCatalogue.getListeNumeros().get(0)), Integer.valueOf(s.substring(APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionDebut(), APP_enumParserSSIM.POSITION_NUM_TRAIN.getPositionFin())));
 
    }
 

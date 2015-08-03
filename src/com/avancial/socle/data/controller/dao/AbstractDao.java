@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
- * Classe abstraite servant de base à tous les objets DAO
- * 
  * @author bruno.legloahec
  *
  */

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.avancial.socle.data.controller.dao.UtilisateurDao;
 import com.avancial.socle.resources.ContextController;
-import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.resources.constants.ConstantSocle;
 
 /**
  * Managed bean de gestion du login
@@ -85,7 +85,7 @@ public class LoginManagedBean implements Serializable {
       } catch (ServletException e) {
          e.printStackTrace();
       }
-      return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
+      return ConstantSocle.NAVIGATION_ACCUEIL.toString();
    }
 
    /**
@@ -94,7 +94,7 @@ public class LoginManagedBean implements Serializable {
     * @return l'url de la page d'accueil
     */
    public static String cancel() {
-      return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
+      return ConstantSocle.NAVIGATION_ACCUEIL.toString();
    }
 
    /**
