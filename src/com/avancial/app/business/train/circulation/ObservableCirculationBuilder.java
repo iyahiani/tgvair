@@ -12,43 +12,37 @@ import java.util.List;
  */
 public class ObservableCirculationBuilder implements IObservableCirculationSemaineBuilder {
    // Contient la liste des observateurs
-   private ArrayList<ICirculationSemaineBuilder> listeObservateurs = new ArrayList<>();;
+   private ArrayList<ICirculationSemaineBuilder> listeObservateurs       = new ArrayList<>(); ;
    // Contient la liste des observateurs ayant demandé à être supprimés
    private ArrayList<ICirculationSemaineBuilder> listeObservateur2delete = new ArrayList<>();
-   private ArrayList<Circulation> listeCirculations = new ArrayList<>();
+   private ArrayList<Circulation>                listeCirculations       = new ArrayList<>();
 
    @Override
    public void notifierObservateurs(JourCirculation jourCirculation) {
       // Permet de savoir si le jour de circulation a été traité par l'un des
       // observateurs
       boolean dayProcessed = false;
-      
-      
-      
-      
-      
-      
-      
-      
-      //Il faut transformer le jour de circlation en circulation
-      Circulation circulation= new Circulation(jourCirculation);
-      
+
+      // Il faut transformer le jour de circulation en circulation
+      Circulation circulation = new Circulation(jourCirculation);
+
       // On parcours la liste des observateurs
       for (ICirculationSemaineBuilder circulationSemaineBuilder : this.listeObservateurs) {
          dayProcessed = dayProcessed || circulationSemaineBuilder.refresh(circulation);
-         if (dayProcessed) continue;
+         if (dayProcessed)
+            break;
       }
       if (!dayProcessed) {
          // Aucun observateur n'a traité le jour, on en crée un nouveau
          ICirculationSemaineBuilder semaineBuilder = new CirculationSemaineBuilder(jourCirculation);
          this.listeObservateurs.add(semaineBuilder);
       }
-//      // On parcours la liste des observateurs ayant demandé à être supprimé
-//      for (ICirculationSemaineBuilder semaineBuilder : this.listeObservateur2delete) {
-//         this.listeCirculations.add(semaineBuilder.getCirculation());
-//         this.listeObservateurs.remove(semaineBuilder);
-//      }
-//      this.listeObservateur2delete.clear();
+      // // On parcours la liste des observateurs ayant demandé à être supprimé
+      // for (ICirculationSemaineBuilder semaineBuilder : this.listeObservateur2delete) {
+      // this.listeCirculations.add(semaineBuilder.getCirculation());
+      // this.listeObservateurs.remove(semaineBuilder);
+      // }
+      // this.listeObservateur2delete.clear();
 
    }
 
@@ -68,7 +62,7 @@ public class ObservableCirculationBuilder implements IObservableCirculationSemai
 
       // Il faut compacter les circulations
 
-      this.factoriseCirculations();
+      // this.factoriseCirculations();
 
       return this.listeCirculations;
    }

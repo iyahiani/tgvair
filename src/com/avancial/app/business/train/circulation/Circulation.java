@@ -12,17 +12,17 @@ public class Circulation implements ICirculation {
 
    private String origine;
    private String destination;
-   private int heureDepart;
-   private int heureArrivee;
-   private Date dateDebut;
-   private Date dateFin;
+   private int    heureDepart;
+   private int    heureArrivee;
+   private Date   dateDebut;
+   private Date   dateFin;
    private String joursCirculation;
 
    private String indicateurFer;
    private String compagnieTrain;
    private String numeroTrain;
    private String periode;
-   private int rangTranson;
+   private int    rangTranson;
    private String trancheFacultatif;
    private String restrictionTrafic;
 
@@ -44,7 +44,14 @@ public class Circulation implements ICirculation {
       Calendar cal = new GregorianCalendar();
       cal.setTime(jourCirculation.getDateCircul());
       int index = Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal));
-      this.joursCirculation = this.joursCirculation.substring(0, index - 1) + index + this.joursCirculation.substring(index + 1, 7);
+      // this.joursCirculation = this.joursCirculation.substring(0, index - 1) + index + this.joursCirculation.substring(index + 1, 7);
+
+      StringBuilder build = new StringBuilder();
+      for (int i = 0; i < 7; i++)
+         build.append(i == index - 1 ? index : " ");
+
+      this.joursCirculation = build.toString();
+
       // if (!jours.get()
       // - 1).equals(" "))
       // comp = comp & String.valueOf(jour.isFlagCirculation() ? 1 :
@@ -54,8 +61,7 @@ public class Circulation implements ICirculation {
    }
 
    /**
-    * @author ismael.yahiani cette methode retourne une map des jours de
-    *         circulation et de leurs dates
+    * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
     */
 
    public Map<Date, JourCirculation> getDateJourCirculMap(boolean avecJoursNonCirculants) {
@@ -68,19 +74,26 @@ public class Circulation implements ICirculation {
       dateFin.setTime(this.getDateFin());
       boolean bCircule;
 
-      while (!dateDebut.getTime().after(dateFin.getTime())) {
-         // verifie si il circule
-         if (this.getJoursCirculation().contains(StringToDate.JavaDays2FrenchDays(dateDebut)))
-            bCircule = true;
-         // /////////////////////////////
-         else
-            bCircule = false;
+      try {
+         while (!dateDebut.getTime().after(dateFin.getTime())) {
+            // verifie si il circule
+            if (this.getJoursCirculation().contains(StringToDate.JavaDays2FrenchDays(dateDebut)))
+               bCircule = true;
+            // /////////////////////////////
+            else
+               bCircule = false;
 
-         if (avecJoursNonCirculants || (!avecJoursNonCirculants && bCircule))
+            if (avecJoursNonCirculants || (!avecJoursNonCirculants && bCircule))
 
-            mapCirucl.put(dateDebut.getTime(), new JourCirculation(dateDebut.getTime(), this.getHeureDepart(), this.getHeureArrivee(), this.getOrigine(), this.getDestination(), bCircule));
+               mapCirucl.put(dateDebut.getTime(), new JourCirculation(dateDebut.getTime(), this.getHeureDepart(), this.getHeureArrivee(), this.getOrigine(), this.getDestination(), bCircule));
 
-         dateDebut.add(Calendar.DATE, 1);
+            dateDebut.add(Calendar.DATE, 1);
+
+         }
+      }
+
+      catch (Exception e) {
+         e.printStackTrace();
 
       }
 
@@ -106,9 +119,6 @@ public class Circulation implements ICirculation {
          return false;
       return true;
    }
-   
-   
-   
 
    public String getNumeroTrain() {
       return this.numeroTrain;

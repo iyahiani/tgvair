@@ -15,17 +15,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-
-import org.w3c.dom.ls.LSInput;
-
-import net.bootsfaces.C;
-
-
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.IObservableCirculationSemaineBuilder;
 import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.business.train.circulation.ObservableCirculationBuilder;
-
 import com.avancial.app.resources.utils.StringToDate;
 
 public class Train implements ITrain {
@@ -147,7 +140,8 @@ public class Train implements ITrain {
       IObservableCirculationSemaineBuilder builder = new ObservableCirculationBuilder();
       for (JourCirculation jourCirculation : temp) {
 
-         builder.notifierObservateurs(jourCirculation);
+         if (jourCirculation.isFlagCirculation())
+            builder.notifierObservateurs(jourCirculation);
          // if (null == circulation) {
          // circulation =
          // this.initCirculationFromJourDeCirculation(jourCirculation);
@@ -379,9 +373,9 @@ public class Train implements ITrain {
          // for (String num : train.listeNumeros) {
 
          if (compNumTrain(circulSSIM, trainCatalogue.listeNumeros)) {
-            
-            int rangTroncan = circulSSIM.getRangTranson() ;
-            
+
+            int rangTroncan = circulSSIM.getRangTranson();
+
             if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
                circulation = new Circulation();
                circulation.setHeureDepart(circulSSIM.getHeureDepart());
@@ -389,33 +383,34 @@ public class Train implements ITrain {
                circulation.setDateDebut(circulSSIM.getDateDebut());
                circulation.setOrigine(circulSSIM.getOrigine());
                circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
-               circulation.setRestrictionTrafic(circulSSIM.getRestrictionTrafic()); 
+               circulation.setRestrictionTrafic(circulSSIM.getRestrictionTrafic());
                circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
             }
-            
+
             if (circulation != null && circulation.getRestrictionTrafic().contains("A"))
                for (int i = 0; i < circulation.getRestrictionTrafic().length(); i++) {
                   if (circulation.getRestrictionTrafic().charAt(i) == 'A')
                      restrictionTrafic.add(i + 1);
-               } 
-            
-            if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null ) {
+               }
+
+            if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
 
                circulation.setDestination(circulSSIM.getDestination());
                circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
                circulation.setRangTranson(circulSSIM.getRangTranson());
-               //circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
+               // circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
                // /////////////////////////////////////////////////////////////
                // TESTER SI LA DESCENTE est Intedite ou pas
                // /// charger la liste des Gare interdite à la descente
 
                if (!restrictionTrafic.contains(circulation.getRangTranson())) {
                   train.addCirculation(circulation);
-               } 
+               }
                circulation = null;
-            } 
-            
-            if (circulation!=null && rangTroncan==1) circulation=null ;
+            }
+
+            if (circulation != null && rangTroncan == 1)
+               circulation = null;
          }
       }
 
@@ -593,14 +588,14 @@ public class Train implements ITrain {
       List<Circulation> resultatPeriodeMonoJour = new ArrayList<Circulation>();
       int flag = 0;
       Circulation circul = new Circulation();
-      
+
       for (Entry<String, Map<Integer, List<JourCirculation>>> res : resultat.entrySet()) {
 
          for (Entry<Integer, List<JourCirculation>> joursCircul : res.getValue().entrySet()) {
             circul = new Circulation();
             dt_db.setTime(joursCircul.getValue().get(0).getDateCircul());
             dt_fin.setTime(joursCircul.getValue().get(0).getDateCircul());
-           
+
             if (joursCircul.getValue().size() > 1)
 
                for (int x = 1; x < joursCircul.getValue().size(); x++) {
@@ -632,27 +627,26 @@ public class Train implements ITrain {
                   }
                }
             if (flag < joursCircul.getValue().size()) {
-            circul = new Circulation();
-            circul.setDateDebut(dt_db.getTime());
-            circul.setDateFin(dt_fin.getTime());
-            circul.setOrigine(joursCircul.getValue().get(flag).getOrigine());
-            circul.setDestination(joursCircul.getValue().get(flag).getDestination());
-            circul.setHeureDepart(joursCircul.getValue().get(flag).getHeureDepart());
-            circul.setHeureArrivee(joursCircul.getValue().get(flag).getHeureArrivee());
+               circul = new Circulation();
+               circul.setDateDebut(dt_db.getTime());
+               circul.setDateFin(dt_fin.getTime());
+               circul.setOrigine(joursCircul.getValue().get(flag).getOrigine());
+               circul.setDestination(joursCircul.getValue().get(flag).getDestination());
+               circul.setHeureDepart(joursCircul.getValue().get(flag).getHeureDepart());
+               circul.setHeureArrivee(joursCircul.getValue().get(flag).getHeureArrivee());
 
-            if (dt_db.get(Calendar.DAY_OF_WEEK) == 1)
-               circul.setJoursCirculation("7");
-            if (dt_db.get(Calendar.DAY_OF_WEEK) != 1)
-               circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
-            if (!resultatPeriodeMonoJour.contains(circul))
-               resultatPeriodeMonoJour.add(circul);
+               if (dt_db.get(Calendar.DAY_OF_WEEK) == 1)
+                  circul.setJoursCirculation("7");
+               if (dt_db.get(Calendar.DAY_OF_WEEK) != 1)
+                  circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
+               if (!resultatPeriodeMonoJour.contains(circul))
+                  resultatPeriodeMonoJour.add(circul);
             }
          }
       }
 
-     
-      // //////////////////////// Fusion des Periodes : Periodes MultiJours 
-      
+      // //////////////////////// Fusion des Periodes : Periodes MultiJours
+
       List<List<Circulation>> listGlobal = new ArrayList<>();
       List<Circulation> list = new ArrayList<>();
 
@@ -663,117 +657,112 @@ public class Train implements ITrain {
       Calendar dt_db2 = Calendar.getInstance();
       Calendar dt_fin1 = Calendar.getInstance();
       Calendar dt_fin2 = Calendar.getInstance();
-    
+
       for (int i = 0; i < resultatPeriodeMonoJour.size(); ++i) {
          list = new ArrayList<>();
-         c = resultatPeriodeMonoJour.get(0); 
-         if (resultatPeriodeMonoJour.size()>1) {
-         for (int a = 0; a < resultatPeriodeMonoJour.size(); a++) {
-            temp = resultatPeriodeMonoJour.get(a);
-           
-            if (!temp.getJoursCirculation().equalsIgnoreCase(c.getJoursCirculation())
-                  && temp.getHeureArrivee() == c.getHeureArrivee()
-                  && temp.getHeureDepart() == c.getHeureDepart()) {
-               periodes = new Circulation();
-                  ///////////////////////////////////////// initialisation des dates de debut et de fin de la periode 
-               dt_db1.setTime(c.getDateDebut());
-               dt_db2.setTime(temp.getDateDebut());
-               dt_fin1.setTime(c.getDateFin());
-               dt_fin2.setTime(temp.getDateFin());
-               ///   calculer la difference en jours entre 2 circulation successives  : 4 cas : 
-               
-               ///// CAS 1 : 
-               if ((dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) < 7 && dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) >=0)
-                     && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >=0)
-                     
-                     && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
-                  periodes.setDateDebut(dt_db1.getTime());
-                  periodes.setDateFin(dt_fin2.getTime());
-                  periodes.setDestination(c.getDestination());
-                  periodes.setOrigine(c.getOrigine());
-                  periodes.setHeureDepart(c.getHeureDepart());
-                  periodes.setHeureArrivee(c.getHeureArrivee());
-                  periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
-                  list.add(periodes);
-                  resultatPeriodeMonoJour.remove(a);
-                 // resultatPeriodeMonoJour.remove(0); 
-                  resultatPeriodeMonoJour.set(0, periodes) ;
-                  break;
-               }
-               ///////////////////////////////////////// ///// CAS 2 : 
-               else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >=0 ) 
-                     && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)
-                           && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
-                  periodes.setDateDebut(dt_db2.getTime());
-                  periodes.setDateFin(dt_fin1.getTime());
-                  periodes.setDestination(c.getDestination());
-                  periodes.setOrigine(c.getOrigine());
-                  periodes.setHeureDepart(c.getHeureDepart());
-                  periodes.setHeureArrivee(c.getHeureArrivee());
-                  periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
-                  list.add(periodes);
-                  resultatPeriodeMonoJour.remove(a);
-                  resultatPeriodeMonoJour.set(0, periodes) ;
-                  break;
-               }
-               
-               ///// ///// CAS 3 :   
-               else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >=0 ) 
-                     && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >=0)
-                     && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
-                  periodes.setDateDebut(dt_db2.getTime());
-                  periodes.setDateFin(dt_fin2.getTime());
-                  periodes.setDestination(c.getDestination());
-                  periodes.setOrigine(c.getOrigine());
-                  periodes.setHeureDepart(c.getHeureDepart());
-                  periodes.setHeureArrivee(c.getHeureArrivee());
-                  periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
-                  list.add(periodes);
-                  resultatPeriodeMonoJour.remove(a);
-                
-                  resultatPeriodeMonoJour.set(0, periodes) ;
-                  break;
-               }
-               ///// CAS 4 : 
-               else if ((dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) < 7 && dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) >=0 ) 
-                     && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >=0)
-                     && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
-                  periodes.setDateDebut(dt_db1.getTime());
-                  periodes.setDateFin(dt_fin1.getTime());
-                  periodes.setDestination(c.getDestination());
-                  periodes.setOrigine(c.getOrigine());
-                  periodes.setHeureDepart(c.getHeureDepart());
-                  periodes.setHeureArrivee(c.getHeureArrivee());
-                  periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
-                  list.add(periodes);
-                  resultatPeriodeMonoJour.remove(a);
-                 // resultatPeriodeMonoJour.remove(0);
-                  resultatPeriodeMonoJour.set(0, periodes) ;
-                  
-                  break;
-               }
+         c = resultatPeriodeMonoJour.get(0);
+         if (resultatPeriodeMonoJour.size() > 1) {
+            for (int a = 0; a < resultatPeriodeMonoJour.size(); a++) {
+               temp = resultatPeriodeMonoJour.get(a);
 
+               if (!temp.getJoursCirculation().equalsIgnoreCase(c.getJoursCirculation()) && temp.getHeureArrivee() == c.getHeureArrivee() && temp.getHeureDepart() == c.getHeureDepart()) {
+                  periodes = new Circulation();
+                  // /////////////////////////////////////// initialisation des dates de debut et de fin de la periode
+                  dt_db1.setTime(c.getDateDebut());
+                  dt_db2.setTime(temp.getDateDebut());
+                  dt_fin1.setTime(c.getDateFin());
+                  dt_fin2.setTime(temp.getDateFin());
+                  // / calculer la difference en jours entre 2 circulation successives : 4 cas :
+
+                  // /// CAS 1 :
+                  if ((dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) < 7 && dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) >= 0)
+                        && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >= 0)
+
+                        && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
+                     periodes.setDateDebut(dt_db1.getTime());
+                     periodes.setDateFin(dt_fin2.getTime());
+                     periodes.setDestination(c.getDestination());
+                     periodes.setOrigine(c.getOrigine());
+                     periodes.setHeureDepart(c.getHeureDepart());
+                     periodes.setHeureArrivee(c.getHeureArrivee());
+                     periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
+                     list.add(periodes);
+                     resultatPeriodeMonoJour.remove(a);
+                     // resultatPeriodeMonoJour.remove(0);
+                     resultatPeriodeMonoJour.set(0, periodes);
+                     break;
+                  }
+                  // /////////////////////////////////////// ///// CAS 2 :
+                  else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >= 0)
+                        && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >= 0) && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
+                     periodes.setDateDebut(dt_db2.getTime());
+                     periodes.setDateFin(dt_fin1.getTime());
+                     periodes.setDestination(c.getDestination());
+                     periodes.setOrigine(c.getOrigine());
+                     periodes.setHeureDepart(c.getHeureDepart());
+                     periodes.setHeureArrivee(c.getHeureArrivee());
+                     periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
+                     list.add(periodes);
+                     resultatPeriodeMonoJour.remove(a);
+                     resultatPeriodeMonoJour.set(0, periodes);
+                     break;
+                  }
+
+                  // /// ///// CAS 3 :
+                  else if ((dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) < 7 && dt_db1.get(Calendar.DAY_OF_YEAR) - dt_db2.get(Calendar.DAY_OF_YEAR) >= 0)
+                        && (dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin2.get(Calendar.DAY_OF_YEAR) - dt_fin1.get(Calendar.DAY_OF_YEAR) >= 0) && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
+                     periodes.setDateDebut(dt_db2.getTime());
+                     periodes.setDateFin(dt_fin2.getTime());
+                     periodes.setDestination(c.getDestination());
+                     periodes.setOrigine(c.getOrigine());
+                     periodes.setHeureDepart(c.getHeureDepart());
+                     periodes.setHeureArrivee(c.getHeureArrivee());
+                     periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
+                     list.add(periodes);
+                     resultatPeriodeMonoJour.remove(a);
+
+                     resultatPeriodeMonoJour.set(0, periodes);
+                     break;
+                  }
+                  // /// CAS 4 :
+                  else if ((dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) < 7 && dt_db2.get(Calendar.DAY_OF_YEAR) - dt_db1.get(Calendar.DAY_OF_YEAR) >= 0)
+                        && (dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) < 7 && dt_fin1.get(Calendar.DAY_OF_YEAR) - dt_fin2.get(Calendar.DAY_OF_YEAR) >= 0) && !c.getJoursCirculation().contains(temp.getJoursCirculation())) {
+                     periodes.setDateDebut(dt_db1.getTime());
+                     periodes.setDateFin(dt_fin1.getTime());
+                     periodes.setDestination(c.getDestination());
+                     periodes.setOrigine(c.getOrigine());
+                     periodes.setHeureDepart(c.getHeureDepart());
+                     periodes.setHeureArrivee(c.getHeureArrivee());
+                     periodes.setJoursCirculation(temp.getJoursCirculation() + c.getJoursCirculation());
+                     list.add(periodes);
+                     resultatPeriodeMonoJour.remove(a);
+                     // resultatPeriodeMonoJour.remove(0);
+                     resultatPeriodeMonoJour.set(0, periodes);
+
+                     break;
+                  }
+
+               }
             }
+            if (list.size() == 0) {
+               list.add(c);
+               listGlobal.add(list);
+               resultatPeriodeMonoJour.remove(0);
+            }
+            i = 0;
          }
-         if (list.size() == 0) {
-            list.add(c);
-            listGlobal.add(list);
-            resultatPeriodeMonoJour.remove(0);
-         }
-         i=0;
       }
-   } 
       resultatPeriodeMonoJour.remove(0);
-      list.clear() ;
-     if (resultatPeriodeMonoJour.size()>0) list.add(resultatPeriodeMonoJour.get(0)) ; 
-      
-     listGlobal.add(list);
+      list.clear();
+      if (resultatPeriodeMonoJour.size() > 0)
+         list.add(resultatPeriodeMonoJour.get(0));
 
+      listGlobal.add(list);
 
       // /////////////////////////
 
       return listGlobal;
-     
+
    }
 
    @Override
