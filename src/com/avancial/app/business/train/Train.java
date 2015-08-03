@@ -75,7 +75,7 @@ public class Train implements ITrain {
 
       List<JourCirculation> temp = new ArrayList<>();
       temp.addAll(this.listeJoursCirculation.values());
-      // <<<<<<< HEAD
+ 
       // Circulation circulation = null;
       // ArrayList<String> jours = new ArrayList<>();
       // this.listeCirculations.clear();
@@ -421,7 +421,12 @@ public class Train implements ITrain {
 
       return train;
    }
-
+/**
+ * 
+ * @param List des Points d'arrets ( Gares ) 
+ * 
+ * verfie si l'heure de départ du train n'est pas antérieure ( ou Postérieur ) aux heures d'ouverture ( ou fermeture ) des guichets    
+ */
    public void adaptGuichet(List<PointArret> pa) {
 
       Calendar calendarTrain = Calendar.getInstance();
@@ -473,6 +478,17 @@ public class Train implements ITrain {
          }
       }
    }
+   
+   /**
+    * 
+    * @return List<Circulation>
+    * @param pas de param
+    *  construit les periodes de circulation des trains à partir des jours de circulation, En 4 phases 
+    * 1  - regroupe les circulations ayants des heures d'arriver/départ similaire 
+    * 2  - regouper le resultat de "1"  par type de jour de circulation  
+    * 3  - calculer les periodes de circulation par Type de jour 
+    * 4  - calculer les nouvelles periodes en fusionnant les periodes Mono-Jours vers Periodes Multio-Jours            
+    */
 
    public List<List<Circulation>> getPeriodes() {
       // /////////////////////////////////////////////////////////////
@@ -495,8 +511,8 @@ public class Train implements ITrain {
          }
       }
 
-      // ///////////////////////////////////////////////////////////////////////////////
-      // Extraction Des Heures Depart/Arriver
+      
+      // extraire les differents heures d'arrivés/Départ existant
 
       for (Entry<Date, JourCirculation> jc : jcTemp.entrySet()) {
          String sbDep, sbArr;
@@ -511,7 +527,7 @@ public class Train implements ITrain {
          tempDates.add(sbDep.concat(sbArr));
       }
 
-      // ////////////// Grouper les circules par heure depart et Arriver
+      // ////////////// regrouper les circules par heure depart et Arriver
 
       for (String dt : tempDates) {
 
@@ -532,7 +548,7 @@ public class Train implements ITrain {
          }
       }
 
-      // ////////// Set regroupant l'ensembles des jours de circulation du train
+      // ////////// extraire les differents jours existant 
 
       for (JourCirculation j : jourCir) {
          calendar.setTime(j.getDateCircul());
@@ -582,8 +598,8 @@ public class Train implements ITrain {
          // reinitialiser la liste des jours regrouper par heures
          joursGrouper = new TreeMap<>();
       }
-
-      // ///////////////////////////////// calcule des periodes : Periodes Mono-Jours
+      
+      // ///////////////////////////////// calcule des periodes : Periodes Mono-Jours ( par type de jour de circulation ) 
 
       int diff;
 
@@ -601,9 +617,9 @@ public class Train implements ITrain {
             dt_db.setTime(joursCircul.getValue().get(0).getDateCircul());
             dt_fin.setTime(joursCircul.getValue().get(0).getDateCircul());
            
-            if (joursCircul.getValue().size() > 1)
+            if (joursCircul.getValue().size() > 0)
 
-               for (int x = 1; x < joursCircul.getValue().size(); x++) {
+               for (int x = 0; x < joursCircul.getValue().size(); x++) {//
 
                   compt.setTime(joursCircul.getValue().get(x).getDateCircul());
                   flag = x;
@@ -624,8 +640,6 @@ public class Train implements ITrain {
                         circul.setJoursCirculation("7");
                      if (dt_db.get(Calendar.DAY_OF_WEEK) != 1)
                         circul.setJoursCirculation(String.valueOf(dt_db.get(Calendar.DAY_OF_WEEK) - 1));
-                     // maPeriode.put(dt_db.getTime().toString().concat(dt_fin.getTime().toString()),
-                     // joursCircul.getValue().get(x));
                      resultatPeriodeMonoJour.add(circul);
                      dt_db.setTime(compt.getTime());
                      dt_fin.setTime(compt.getTime());
@@ -649,7 +663,7 @@ public class Train implements ITrain {
             }
          }
       }
-
+      
      
       // //////////////////////// Fusion des Periodes : Periodes MultiJours 
       
@@ -763,14 +777,11 @@ public class Train implements ITrain {
          i=0;
       }
    } 
-      resultatPeriodeMonoJour.remove(0);
-      list.clear() ;
-     if (resultatPeriodeMonoJour.size()>0) list.add(resultatPeriodeMonoJour.get(0)) ; 
+    
+     list = new ArrayList<>() ;
+      list.add(resultatPeriodeMonoJour.get(0)) ; 
       
      listGlobal.add(list);
-
-
-      // /////////////////////////
 
       return listGlobal;
      

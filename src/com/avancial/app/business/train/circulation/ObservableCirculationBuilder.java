@@ -25,11 +25,6 @@ public class ObservableCirculationBuilder implements IObservableCirculationSemai
       
       
       
-      
-      
-      
-      
-      
       //Il faut transformer le jour de circlation en circulation
       Circulation circulation= new Circulation(jourCirculation);
       

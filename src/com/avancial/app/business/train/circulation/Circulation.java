@@ -72,7 +72,7 @@ public class Circulation implements ICirculation {
          // verifie si il circule
          if (this.getJoursCirculation().contains(StringToDate.JavaDays2FrenchDays(dateDebut)))
             bCircule = true;
-         // /////////////////////////////
+         ///////////////////////////////
          else
             bCircule = false;
 
@@ -81,7 +81,6 @@ public class Circulation implements ICirculation {
             mapCirucl.put(dateDebut.getTime(), new JourCirculation(dateDebut.getTime(), this.getHeureDepart(), this.getHeureArrivee(), this.getOrigine(), this.getDestination(), bCircule));
 
          dateDebut.add(Calendar.DATE, 1);
-
       }
 
       return mapCirucl;

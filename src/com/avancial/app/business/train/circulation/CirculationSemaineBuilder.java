@@ -76,8 +76,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       
       //On va vérifier que la circulation est fusionnable cad que la fusion n'ajoute pas de jours indésirables
       
-//      if (!this.isCirculationsFusionnable(this.circulation,circulation))
-//         return processed;
+
       
 //On décompose les deux circulation en jours
       

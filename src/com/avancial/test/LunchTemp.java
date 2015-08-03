@@ -13,7 +13,7 @@ import com.avancial.app.business.parser.FilterSSIMTypeEnr;
 import com.avancial.app.business.parser.FiltreCatalogue;
 import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.app.business.reader.ReaderSSIM;
-import com.avancial.app.business.train.Circulation;
+import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.parser.IParser;
