@@ -8,6 +8,7 @@
 	
 	<h:form id="formHeader">
 		<p:growl id="growl" globalOnly="true" />
+		
 		<p:layout style="max-height:100px;" >
 			<p:layoutUnit position="west" minSize="100" >
 				<h:graphicImage name="private/image/avancialLogo.gif"
@@ -34,7 +35,8 @@
 				<p:commandButton type="submit" value="#{msg.libelle_connexion}"
 					action="#{ihmManagedBean.goLogin}"
 					rendered="#{!ihmManagedBean.isLogged()}" update="formHeader" />
-			</p:layoutUnit>
+			</p:layoutUnit> 
+			
 		</p:layout>
 	</h:form>
 

@@ -29,7 +29,7 @@
 	 
  <context-param> 
 	<param-name>primefaces.THEME</param-name> 
-	<param-value>glass-x</param-value> 
+	<param-value>afternoon</param-value> 
 </context-param>
 	<listener>
 		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>  

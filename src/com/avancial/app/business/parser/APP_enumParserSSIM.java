@@ -68,7 +68,7 @@ public enum APP_enumParserSSIM {
    /** 
     * position code restriction de trafic 
    */
-   POSITION_RESTRICTION_TRAFIC(158, 170),
+   POSITION_RESTRICTION_TRAFIC(159, 170),
    /**
     * position tranche facultatif 
     */

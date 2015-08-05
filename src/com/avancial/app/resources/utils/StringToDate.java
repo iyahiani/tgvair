@@ -1,5 +1,6 @@
 package com.avancial.app.resources.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,6 +35,13 @@ public class StringToDate {
       } 
 	   
 	  return chaine; 
+	}
+	
+	public static String toString(Date date) { 
+	   DateFormat df = new SimpleDateFormat("dd/MM/yy") ; 
+	   String myDate = df.format(date);  
+	      
+	   return myDate ; 
 	}
 	
 }

@@ -12,17 +12,19 @@ public class Circulation implements ICirculation {
 
    private String origine;
    private String destination;
-   private int    heureDepart;
-   private int    heureArrivee;
-   private Date   dateDebut;
-   private Date   dateFin;
+   private int heureDepart;
+   private String GMTDepart;
+   private String GMTArrivee;
+   private int heureArrivee;
+   private Date dateDebut;
+   private Date dateFin;
    private String joursCirculation;
 
    private String indicateurFer;
    private String compagnieTrain;
    private String numeroTrain;
    private String periode;
-   private int    rangTranson;
+   private int rangTranson;
    private String trancheFacultatif;
    private String restrictionTrafic;
 
@@ -40,11 +42,14 @@ public class Circulation implements ICirculation {
       this.dateDebut = jourCirculation.getDateCircul();
       this.dateFin = jourCirculation.getDateCircul();
       this.joursCirculation = "       ";
+      this.GMTDepart = jourCirculation.getGMTDepart();
+      this.GMTArrivee = jourCirculation.getGMTArriver();
 
       Calendar cal = new GregorianCalendar();
       cal.setTime(jourCirculation.getDateCircul());
       int index = Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal));
-      // this.joursCirculation = this.joursCirculation.substring(0, index - 1) + index + this.joursCirculation.substring(index + 1, 7);
+      // this.joursCirculation = this.joursCirculation.substring(0, index - 1) +
+      // index + this.joursCirculation.substring(index + 1, 7);
 
       StringBuilder build = new StringBuilder();
       for (int i = 0; i < 7; i++)
@@ -52,16 +57,11 @@ public class Circulation implements ICirculation {
 
       this.joursCirculation = build.toString();
 
-      // if (!jours.get()
-      // - 1).equals(" "))
-      // comp = comp & String.valueOf(jour.isFlagCirculation() ? 1 :
-      // 0).equals(jours.get(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal))
-      // - 1));
-
    }
 
    /**
-    * @author ismael.yahiani cette methode retourne une map des jours de circulation et de leurs dates
+    * @author ismael.yahiani cette methode retourne une map des jours de
+    *         circulation et de leurs dates
     */
 
    public Map<Date, JourCirculation> getDateJourCirculMap(boolean avecJoursNonCirculants) {
@@ -85,7 +85,8 @@ public class Circulation implements ICirculation {
 
             if (avecJoursNonCirculants || (!avecJoursNonCirculants && bCircule))
 
-               mapCirucl.put(dateDebut.getTime(), new JourCirculation(dateDebut.getTime(), this.getHeureDepart(), this.getHeureArrivee(), this.getOrigine(), this.getDestination(), bCircule));
+               mapCirucl.put(dateDebut.getTime(), new JourCirculation(dateDebut.getTime(), this.getHeureDepart(), this.getHeureArrivee(), this.getOrigine(), this.getDestination(), bCircule,
+                     this.GMTDepart, this.GMTArrivee));
 
             dateDebut.add(Calendar.DATE, 1);
 
@@ -162,35 +163,15 @@ public class Circulation implements ICirculation {
       sb.append("----------------------" + "\n");
       sb.append(this.getDateDebut() + " -- " + this.getDateFin() + " -- " + this.joursCirculation + "\n");
       sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
-      sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() + "\n");
+      sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() +   "\n");
+      sb.append(this.getRestrictionTrafic()+  "\n");
       // rajouter pour test
       // sb.append(this.getNumeroTrain());
 
       return sb.toString();
    }
 
-   public String getChaineCircu() {
-
-      StringBuilder sb = new StringBuilder();
-
-      sb.append(this.getOrigine());
-      sb.append("\t");
-      sb.append(this.getHeureDepart());
-      sb.append("\t");
-      sb.append(this.getDestination());
-      sb.append("\t");
-      sb.append(this.getHeureArrivee());
-      sb.append("\t");
-      sb.append(this.getNumeroTrain());
-      sb.append("\t");
-      sb.append(this.getDateDebut());
-      sb.append("\t");
-      sb.append(this.getDateFin());
-      sb.append(this.getJoursCirculation());
-
-      return sb.toString();
-   }
-
+  
    public Date getDateDebut() {
       return this.dateDebut;
    }
@@ -297,5 +278,21 @@ public class Circulation implements ICirculation {
 
    public void setRestrictionTrafic(String restrictionTrafic) {
       this.restrictionTrafic = restrictionTrafic;
+   }
+
+   public String getGMTDepart() {
+      return GMTDepart;
+   }
+
+   public void setGMTDepart(String gMTDepart) {
+      GMTDepart = gMTDepart;
+   }
+
+   public String getGMTArrivee() {
+      return GMTArrivee;
+   }
+
+   public void setGMTArrivee(String gMTArrivee) {
+      GMTArrivee = gMTArrivee;
    }
 };

@@ -1,15 +1,16 @@
+
 .ui-widget, .ui-widget .ui-widget, .ui-widget-header {
 	font-size: 90% !important;
 }
 
 .ui-menu {
-	background: #EAD5E7 !important;
+	background:  !important;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default, .ui-widget-header {
-	background: -moz-linear-gradient(center top, rgba(255, 255, 255, 0.8),
-		rgba(255, 255, 255, 0)) repeat scroll 0 0 #EAD5E7 !important;
+	background: -moz-linear-gradient(center top, rgba(255, 255, 255, 1),
+		rgba(255, 255, 255, 1)) repeat scroll 0 0 !important;
 }
 
 .actionButtons {
@@ -18,14 +19,10 @@
 	margin: 1px;
 }
 
-.noBorder {
-	border: teal 1pt ridge;
-	PADDING-RIGHT: 5pt;
-	BORDER-TOP: silver 1pt ridge;
-	PADDING-LEFT: 5pt;
-	PADDING-BOTTOM: 5pt;
-	BORDER-LEFT: silver 1pt ridge;
-	PADDING-TOP: 5pt;
-	BORDER-BOTTOM: silver 1pt ridge; 
-	margin-left: 10 px 
+
+.noBorder.ui-panelgrid>*>tr,
+.noBorder.ui-panelgrid>*>tr>td {
+    border: none;
+    background: none !important;
+    margin-bottom: 2px ;
 }

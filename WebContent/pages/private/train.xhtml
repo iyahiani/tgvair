@@ -4,62 +4,100 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-   <ui:define name="contenu">
-		<h:panelGrid columns="1" style="margin-bottom:10px;margin-left:10px;"
-			cellpadding="50" rendered="true">
 
-			<h:panelGrid columns="1">
-				<h:outputLabel value="Numéro(s) Train(s) :"></h:outputLabel>
-				<h:panelGrid columns="2"
-					style="margin-bottom:10px;margin-left:10px;">
+	<ui:define name="contenu">
+		<h:panelGrid columns="2">
+			<h:panelGrid columns="1"
+				style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
+				<f:facet name="header"> Numéros Train</f:facet>
+				<p:panelGrid columns="2" styleClass="noBorder">
+					<p:outputLabel>Simple</p:outputLabel>
 					<p:inputText></p:inputText>
+					<p:outputLabel>Multi</p:outputLabel>
 					<p:inputText></p:inputText>
+					<p:outputLabel>Operting Flight</p:outputLabel>
+					<p:inputText></p:inputText>
+				</p:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid columns="2"
+				style="margin-left: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
+				<f:facet name="header"> Jours de circulation</f:facet>
+				<h:outputLabel value="Lundi"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:outputLabel value="Mardi"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:outputLabel value="Mercredi"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:outputLabel value="Jeudi"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:outputLabel value="Vendredi"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:outputLabel value="Samedi"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:outputLabel value="Dimanche"></h:outputLabel>
+				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<h:panelGrid>
+					<p:commandButton value="Exeptions" icon="ui-icon-plus"></p:commandButton>
 				</h:panelGrid>
 			</h:panelGrid>
-			 <ui:insert name="js">   </ui:insert> 
-			<h:panelGrid columns="2" style="margin-bottom:10px;margin-left:10px;">
-			<h:panelGrid columns="1" style="margin-bottom:10px;margin-left:10px;">
-				<p:outputLabel for="popup" value="Valide Du :" />
-				<p:calendar id="popup" showOn="both" locale="fr" />
-			</h:panelGrid>
-			<h:panelGrid columns="1" style="margin-bottom:10px;margin-left:10px;">
-				<p:outputLabel for="popup" value="Au:" />
-				<p:calendar id="popup2" locale="fr"
-					showOn="both" />
-			</h:panelGrid>
-			</h:panelGrid>
 		</h:panelGrid>
-		<h:panelGrid columns="2" style="margin-bottom:10px; margin-left:10px;"
-			rendered="true" cellpadding="50">
-			<h:panelGrid columns="1" style="margin-left:10px; margin-bottom:4px">
-				<p:outputLabel value="Origine"></p:outputLabel>
-				<p:selectOneMenu value="" effect="fold" editable="true">
-					<f:selectItem itemLabel="AF" itemValue="" />
-					
-				</p:selectOneMenu>
+
+		<ui:insert name="js">
+		</ui:insert>
+		<h:panelGrid columns="3" style="margin-left :10px;">
+
+			<h:panelGrid columns="1"
+				style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
+				<f:facet name="header"> Validité</f:facet>
+				<h:panelGrid columns="1"
+					style="margin-bottom:10px;margin-left:10px;">
+
+					<p:outputLabel for="popup" value="Valide Du :"
+						style="margin-right:5px" />
+					<p:calendar id="popup" showOn="both" locale="fr" />
+
+
+					<p:outputLabel for="popup" value="Au:" />
+					<p:calendar id="popup2" locale="fr" showOn="both" />
+				</h:panelGrid>
 			</h:panelGrid>
-			
-			<h:panelGrid columns="1" style="margin-left:10px;margin-bottom:10px;">
-				<p:outputLabel for="HeureDep" value="Heure Depart:" />
-				<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
-					locale="fr" showOn="both" />
+
+			<h:panelGrid columns="1" rendered="true"
+				style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
+				<f:facet name="header"> Origine</f:facet>
+				<h:panelGrid columns="1">
+					<p:outputLabel value="Origine"></p:outputLabel>
+					<p:selectOneMenu value="" effect="fold" editable="true">
+						<f:selectItem itemLabel="" itemValue="" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="1">
+					<p:outputLabel for="HeureDep" value="Heure Depart:" />
+					<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
+						locale="fr" showOn="both" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid columns="1" rendered="true"
+				style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
+				<f:facet name="header"> Destination</f:facet>
+				<h:panelGrid columns="1">
+					<p:outputLabel value="Destination"></p:outputLabel>
+					<p:selectOneMenu value="" effect="fold" editable="true">
+						<f:selectItem itemLabel="" itemValue="" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<p:outputLabel for="HeureArr" value="Heure Arrivée:" />
+					<p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
+						locale="fr" showOn="both" />
+				</h:panelGrid>
 			</h:panelGrid>
 		</h:panelGrid> 
-		<h:panelGrid columns="2" style="margin-bottom:10px; margin-left:10px;"
-            rendered="true" cellpadding="50">
-            <h:panelGrid columns="1" style="margin-left:10px; margin-bottom:4px">
-                <p:outputLabel value="Destination"></p:outputLabel>
-                <p:selectOneMenu value="" effect="fold" editable="true">
-                    <f:selectItem itemLabel="AF" itemValue="" />
-                </p:selectOneMenu>
-            </h:panelGrid>
-            
-            <h:panelGrid columns="1" style="margin-left:10px;margin-bottom:10px;">
-                <p:outputLabel for="HeureArr" value="Heure Arrivée:" />
-                <p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
-                    locale="fr" showOn="both" />
-            </h:panelGrid>
-        </h:panelGrid>
+		<p:panelGrid class="ui-grid-col-2"  >
+		<p:commandButton value="Valider"  icon="ui-icon-check"></p:commandButton>
+		<p:commandButton value="Annuler" icon="ui-icon-cancel"></p:commandButton>
+		</p:panelGrid>
 	</ui:define>
 </ui:composition>

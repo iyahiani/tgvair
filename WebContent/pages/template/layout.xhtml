@@ -14,16 +14,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	     <meta http-equiv="X-UA-Conpatible" content="IE=edge" /> 
 	     <meta charset="utf-8"  /> 
-		<h:outputStylesheet library="css" name="style.css" />   
-		<h:outputStylesheet library="css" name="bootstrap/css/bootstrap.min.css"/>
+		
+		<!-- <h:outputStylesheet library="css" name="bootstrap/css/bootstrap.min.css"/> 
+	
+		-->
 		<h:outputScript name="bootstrap/js/bootstrap.js" /> 
-		<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+		  <h:outputStylesheet library="css" name="style.css" />   
         <h:outputScript library="js" name="js/tooltip.js" /> 
         <h:outputScript name="js/fr.js" />
 		
 	</h:head>
 	<h:body> 
-			<p:layout id="layoutPrincipal" fullPage="true" >	
+			<p:layout id="layoutPrincipal" fullPage="true"  >	
 			<div class="jumbotron">
 			<p:layoutUnit position="north" resizable="true" collapsible="true" >
 				<ui:include src="/pages/template/header.xhtml" />
@@ -40,8 +42,8 @@
 				<ui:include src="/pages/template/menu.xhtml" />
 			</p:layoutUnit>
 
-			<p:layoutUnit position="center" >
-				<ui:insert name="contenu" />
+			<p:layoutUnit position="center"  >
+				<ui:insert name="contenu"  />
 			</p:layoutUnit>
 		</p:layout>
 		
