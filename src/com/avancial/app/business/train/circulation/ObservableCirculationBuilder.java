@@ -30,7 +30,7 @@ public class ObservableCirculationBuilder implements IObservableCirculationSemai
       for (ICirculationSemaineBuilder circulationSemaineBuilder : this.listeObservateurs) {
          dayProcessed = dayProcessed || circulationSemaineBuilder.refresh(circulation);
          if (dayProcessed)
-            break;
+            break ;
       }
       if (!dayProcessed) {
          // Aucun observateur n'a traité le jour, on en crée un nouveau

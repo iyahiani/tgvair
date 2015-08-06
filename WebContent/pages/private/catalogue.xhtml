@@ -50,17 +50,25 @@
 				</p:column>
 			</p:dataTable>
 
-			<h:panelGrid columns="1" style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+			<h:panelGrid columns="2"
+				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;"> 
+				<f:facet name="header"> Ajouter un Train</f:facet>
+				<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
 				<h:selectOneMenu value="" effect="fold" editable="true"
 					style="width : 100%" />
+				<p:outputLabel value="Début de Validité"></p:outputLabel>
 				<p:calendar id="popup2" showOn="both" locale="fr"
 					styleClass="dateTimeStyle" />
+				<p:outputLabel value="Fin de Validité"></p:outputLabel>
 				<p:calendar id="popup3" showOn="both" locale="fr"
 					styleClass="dateTimeStyle" />
-				<p:inputText style="width : 100%"></p:inputText>
-				<p:inputText style="width :100%"></p:inputText>
-				<p:inputText style="width : 100%"></p:inputText>
-				<p:commandButton icon="ui-icon-plus"></p:commandButton>
+				<p:outputLabel for="marketingFlight" value="marketing Flight"></p:outputLabel>
+				<p:inputText id="marketingFlight" style="width : 100% auto;"></p:inputText>
+				<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
+				<p:inputText id="Quota1" style="width :100% auto;"></p:inputText>
+				<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
+				<p:inputText id="Quota2" style="width : 100% auto;"></p:inputText>
+				<p:commandButton icon="ui-icon-cancel"></p:commandButton>
 				<p:commandButton icon="ui-icon-check"></p:commandButton>
 			</h:panelGrid>
 		</h:panelGrid>

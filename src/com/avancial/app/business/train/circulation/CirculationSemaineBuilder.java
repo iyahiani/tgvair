@@ -55,12 +55,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       // On regarde si le flag circulation est le même pour le jour concerné
       Calendar cal = new GregorianCalendar();
       cal.setTime(jour.getDateCircul());
-      // if (!jours.get(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal))
-      // - 1).equals(" "))
-      // comp = comp & String.valueOf(jour.isFlagCirculation() ? 1 :
-      // 0).equals(jours.get(Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal))
-      // - 1));
-      return comp;
+         return comp;
 
    }
 
@@ -73,9 +68,6 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
          return false;
 
       // On va vérifier que la circulation est fusionnable cad que la fusion n'ajoute pas de jours indésirables
-
-      // if (!this.isCirculationsFusionnable(this.circulation,circulation))
-      // return processed;
 
       // On décompose les deux circulation en jours
 

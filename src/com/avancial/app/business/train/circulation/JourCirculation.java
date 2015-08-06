@@ -2,9 +2,10 @@ package com.avancial.app.business.train.circulation;
 
 import java.util.Date;
 
+import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
 import com.avancial.app.resources.utils.StringToDate;
 
-public class JourCirculation implements Comparable<JourCirculation> {
+public class JourCirculation extends ObservableJoursCirculation implements Comparable<JourCirculation> {
    private int     heureArrivee;
    private int     heureDepart;
    private String  origine;

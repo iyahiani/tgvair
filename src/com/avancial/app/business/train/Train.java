@@ -118,17 +118,13 @@ public class Train implements ITrain {
       // this.remplirJoursCirculations();
 
       for (Entry<Date, JourCirculation> jourCirculation : this.getJoursCirculation().entrySet()) {
-
          if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) {
-
             comp = jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey()));
-
             if (!comp) {
                comp = false;
                break;
             }
          }
-
          if (!train.getJoursCirculation().containsKey(jourCirculation.getKey())) {
             comp = false;
             break;
@@ -189,15 +185,19 @@ public class Train implements ITrain {
                // que
                // le train circule
 
-               if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation())
-
+               if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation()) {
                   this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
-               else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation() != train.getJoursCirculation()
-                     .get(jourCirculation.getKey()).isFlagCirculation())) {
+               }
+
+               else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) 
+                     && jourCirculation.getValue().isFlagCirculation() != train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation())) {
+                  
                   jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
                   this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
+                  
                }
             } else {
+
                if (!train.getJoursCirculation().containsKey(jourCirculation.getKey()) && (jourCirculation.getKey().after(date_deb_SSIM) || (jourCirculation.getKey().equals(date_deb_SSIM)))
                      && (jourCirculation.getKey().before(date_fin_SSIM) || (jourCirculation.getKey().equals(date_fin_SSIM))))
 
