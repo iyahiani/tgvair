@@ -77,6 +77,7 @@ public class Lunch3 {
          if (chaine.startsWith("2")) {
             date_deb = chaine.substring(28, 35);
             date_fin = chaine.substring(21, 28);
+            
             break;
          }
      
@@ -84,7 +85,6 @@ public class Lunch3 {
       datesSSIMExtraction.put("Date_Extraction", StringToDate.toDate(date_deb));
       datesSSIMExtraction.put("Date_Fin", StringToDate.toDate(date_fin));
       return datesSSIMExtraction;
-
    }
 
    public static void main(String[] args) throws IOException, ParseException {
@@ -139,17 +139,19 @@ public class Lunch3 {
          System.out.println("____________SSIM RESTREINT___________");
          Train trainSSIMRestreint = trainSSIM7.getTrainSSIMRestreint(trainCat);
          trainSSIMRestreint.remplirJoursCirculations();
-        System.out.println(trainSSIMRestreint.getPeriodes());
+        System.out.println(trainSSIMRestreint);
+         System.out.println(trainSSIMRestreint.getPeriodes());
          System.out.println("____________TRAIN APRES ADAPT___________");
 
 
          if (!train.compare(trainSSIMRestreint)) {
             train.remplirJoursCirculations();
+            train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim);
             train.adaptGuichet(Luncher.getListPointsArrets());
            
             //System.out.println(train);
-           train.calculeCirculationFromJoursCirculation(); 
-           System.out.println(train.getPeriodes());
+            //train.calculeCirculationFromJoursCirculation(); 
+            System.out.println(train.getPeriodes());
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());
             trainCat.setListeCirculations(train.getListeCirculations());
            
