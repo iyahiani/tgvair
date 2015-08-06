@@ -1,11 +1,68 @@
 <ui:composition template="/pages/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="title"> </ui:define>
-    <ui:define name="contenu">
-        
-    </ui:define>
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">
+	</ui:define>
+	<ui:define name="contenu">
+		<h:panelGrid columns="1">
+			<f:facet name="header"> CATALOGUE DE TRAINS </f:facet>
+			<h:panelGrid columns="2"
+				style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
+				<h:panelGrid columns="3" style="margin-bottom : 5px auto;">
+					<p:commandButton icon="ui-icon-circle-plus" />
+					<p:selectOneMenu value="" effect="fold" editable="true"
+						style="width : 100%" />
+					<p:commandButton icon="ui-icon-seek-next" />
+				</h:panelGrid>
+				<p:outputLabel></p:outputLabel>
+				<p:outputLabel></p:outputLabel>
+			</h:panelGrid>
+			<p:dataTable var="" value="">
+				<p:column headerText="Compagnie Aérienne">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Début de Validité ">
+
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Fin de Validité">
+
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Marketing Flight">
+
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Quota 1ére">
+
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Quota 2éme">
+					<h:outputText value="" />
+				</p:column>
+			</p:dataTable>
+
+			<h:panelGrid columns="1" style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+				<h:selectOneMenu value="" effect="fold" editable="true"
+					style="width : 100%" />
+				<p:calendar id="popup2" showOn="both" locale="fr"
+					styleClass="dateTimeStyle" />
+				<p:calendar id="popup3" showOn="both" locale="fr"
+					styleClass="dateTimeStyle" />
+				<p:inputText style="width : 100%"></p:inputText>
+				<p:inputText style="width :100%"></p:inputText>
+				<p:inputText style="width : 100%"></p:inputText>
+				<p:commandButton icon="ui-icon-plus"></p:commandButton>
+				<p:commandButton icon="ui-icon-check"></p:commandButton>
+			</h:panelGrid>
+		</h:panelGrid>
+	</ui:define>
 </ui:composition>

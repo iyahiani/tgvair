@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ObservableCirculationBuilder implements IObservableCirculationSemaineBuilder {
    // Contient la liste des observateurs
-   private ArrayList<ICirculationSemaineBuilder> listeObservateurs       = new ArrayList<>(); ;
+   private ArrayList<ICirculationSemaineBuilder> listeObservateurs       = new ArrayList<>();
    // Contient la liste des observateurs ayant demandé à être supprimés
    private ArrayList<ICirculationSemaineBuilder> listeObservateur2delete = new ArrayList<>();
    private ArrayList<Circulation>                listeCirculations       = new ArrayList<>();

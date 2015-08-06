@@ -5,40 +5,21 @@ import java.util.List;
 
 import com.avancial.app.business.train.Train;
 
-public class TrainToCompagnie {
+public class TrainToCompagnie extends Train{
 
-   private Train trainsToCompagnie ; 
+   
    private String codeCompagnie ; 
-   private Date debutValidite ;
-   private Date finValidite ; 
    private String marketingFlight ; 
    private int quota_1er ;
    private int quota_2em ; 
    
    
-   public Train getTrainsToCompagnie() {
-      return trainsToCompagnie;
-   }
-   public void setTrainsToCompagnie(Train trainsToCompagnie) {
-      this.trainsToCompagnie = trainsToCompagnie;
-   }
+    
    public String getCodeCompagnie() {
       return codeCompagnie;
    }
    public void setCodeCompagnie(String codeCompagnie) {
       this.codeCompagnie = codeCompagnie;
-   }
-   public Date getDebutValidite() {
-      return debutValidite;
-   }
-   public void setDebutValidite(Date debutValidite) {
-      this.debutValidite = debutValidite;
-   }
-   public Date getFinValidite() {
-      return finValidite;
-   }
-   public void setFinValidite(Date finValidite) {
-      this.finValidite = finValidite;
    }
    public String getMarketingFlight() {
       return marketingFlight;

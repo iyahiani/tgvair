@@ -74,11 +74,9 @@ public class Train implements ITrain {
       this.listeCirculations.clear();
       IObservableCirculationSemaineBuilder builder = new ObservableCirculationBuilder();
       for (JourCirculation jourCirculation : temp) {
-
          if (jourCirculation.isFlagCirculation())
             builder.notifierObservateurs(jourCirculation);
       }
-
       this.listeCirculations.addAll(builder.getListeCirculation());
    }
 
@@ -291,7 +289,7 @@ public class Train implements ITrain {
             }
 
             if (circulation != null && rangTroncan == 1) {
-               circulation = null; 
+               circulation = null;
                restrictionTrafic.clear();
             }
          }
@@ -681,7 +679,7 @@ public class Train implements ITrain {
 
       for (Map.Entry<Date, JourCirculation> entry : this.listeJoursCirculation.entrySet()) {
          if (entry.getValue().isFlagCirculation())
-         sb.append(entry.getValue() + "\n");
+            sb.append(entry.getValue() + "\n");
       }
 
       sb.append("----------------- CIRCULATIONS ------------------------------");

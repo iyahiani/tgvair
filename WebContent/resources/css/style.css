@@ -1,10 +1,11 @@
 
 .ui-widget, .ui-widget .ui-widget, .ui-widget-header {
 	font-size: 90% !important;
+	
 }
 
 .ui-menu {
-	background:  !important;
+	background: rgba(255, 255, 255, 1) !important;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default,
@@ -25,4 +26,12 @@
     border: none;
     background: none !important;
     margin-bottom: 2px ;
+} 
+.dateTimeStyle input{
+	width : 150px;
 }
+
+.myPanelGride {
+	border-style:solid; 
+	border-color :#FFFFFF #E0E0E0;
+	}

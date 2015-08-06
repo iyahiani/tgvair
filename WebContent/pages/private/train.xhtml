@@ -20,7 +20,7 @@
 				</p:panelGrid>
 			</h:panelGrid>
 			<h:panelGrid columns="2"
-				style="margin-left: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
+				style="margin-left: 20px; margin-right: 20px ;border-style:solid; border-color :#FFFFFF #E0E0E0;">
 				<f:facet name="header"> Jours de circulation</f:facet>
 				<h:outputLabel value="Lundi"></h:outputLabel>
 				<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
@@ -44,7 +44,7 @@
 
 		<ui:insert name="js">
 		</ui:insert>
-		<h:panelGrid columns="3" style="margin-left :10px;">
+		<h:panelGrid columns="3" style="margin-left :10px;margin-bottom :10px;">
 
 			<h:panelGrid columns="1"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
@@ -65,28 +65,35 @@
 			<h:panelGrid columns="1" rendered="true"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 				<f:facet name="header"> Origine</f:facet>
+				
+               
 				<h:panelGrid columns="1">
 					<p:outputLabel value="Origine"></p:outputLabel>
-					<p:selectOneMenu value="" effect="fold" editable="true">
+					<h:panelGrid columns="2">
+					<p:selectOneMenu value="" effect="fold" editable="true" style="width : 100%">
 						<f:selectItem itemLabel="" itemValue="" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-
+					</p:selectOneMenu> 
+					    <p:commandButton icon="ui-icon-circle-plus" />
+					</h:panelGrid>
+				</h:panelGrid> 
+				   
 				<h:panelGrid columns="1">
 					<p:outputLabel for="HeureDep" value="Heure Depart:" />
 					<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
 						locale="fr" showOn="both" />
 				</h:panelGrid>
 			</h:panelGrid>
-
 			<h:panelGrid columns="1" rendered="true"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 				<f:facet name="header"> Destination</f:facet>
 				<h:panelGrid columns="1">
 					<p:outputLabel value="Destination"></p:outputLabel>
-					<p:selectOneMenu value="" effect="fold" editable="true">
+					<h:panelGrid columns="2" style="margin-right :10px">
+					<p:selectOneMenu value="" effect="fold" editable="true" style="width : 100%">
 						<f:selectItem itemLabel="" itemValue="" />
-					</p:selectOneMenu>
+					</p:selectOneMenu> 
+					<p:commandButton icon="ui-icon-circle-plus" />
+					</h:panelGrid>
 				</h:panelGrid>
 				<h:panelGrid columns="1">
 					<p:outputLabel for="HeureArr" value="Heure Arrivée:" />
