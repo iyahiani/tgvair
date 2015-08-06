@@ -52,10 +52,7 @@ public class JourCirculation extends ObservableJoursCirculation implements Compa
    public int compareTo(JourCirculation j) {
       String chaine1 = this.getChaine(this);
       String chaine2 = this.getChaine(j);
-
-     // System.out.println(String.format("%s -- %s -- %s", chaine1, chaine2, chaine1.compareToIgnoreCase(chaine2)));
-
-      return chaine1.compareToIgnoreCase(chaine2);
+     return chaine1.compareToIgnoreCase(chaine2);
 
    }
 
@@ -117,14 +114,7 @@ public class JourCirculation extends ObservableJoursCirculation implements Compa
    public String toString() {
 
       StringBuilder sb = new StringBuilder();
-      /*
-      sb.append(this.flagCirculation ? "-C-" : "-N-");
-      sb.append("Date de circulation : " + StringToDate.toString(this.dateCircul));
-      sb.append("Heure de départ : " + this.heureDepart);
-      sb.append("Gare Depart : " + this.origine);
-      sb.append("Heure d'arrivée : " + this.heureArrivee);
-      sb.append("Gare Arriver : " + this.destination);
-       */ 
+      
       sb.append(this.flagCirculation ? "-C-" : "-N-");
       sb.append("\t") ;
       sb.append(StringToDate.toString(this.dateCircul));  
