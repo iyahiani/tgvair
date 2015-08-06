@@ -25,7 +25,7 @@ public class CirculationTest {
       while ((ligneSSIM = reader.readLine()) != null) {
          String ligneParser = par.parse(ligneSSIM);
          if (ligneParser.length() > 0)
-            System.out.println(circul.getCirculation(ligneParser).getChaineCircu());
+            System.out.println(circul.getCirculation(ligneParser));
       }
    }
 }

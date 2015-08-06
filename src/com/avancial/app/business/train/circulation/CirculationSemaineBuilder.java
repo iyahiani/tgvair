@@ -31,12 +31,9 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       cal.setTime(jourCirculation.getDateCircul());
       // on calcule le delta par rapport à Lundi
       int day = Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal));
-      // int offset = 1 - day;
-      // cal.add(Calendar.DAY_OF_WEEK, offset);
       this.circulation.setDateDebut(cal.getTime());
       // On calcule la date de la fin de la semaine
-      // cal.add(Calendar.DAY_OF_WEEK, 6);
-      // this.circulation.setDateFin(cal.getTime());
+     
       this.jours[day - 1] = 1;
       this.circulation.setDateFin(cal.getTime());
       this.setJoursCirculation();
