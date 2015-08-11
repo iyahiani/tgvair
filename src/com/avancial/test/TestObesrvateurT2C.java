@@ -34,9 +34,9 @@ public class TestObesrvateurT2C {
       Date date_deb_SSIM = StringToDate.toDate("15MAR15");
       Date date_Fin_SSIM = StringToDate.toDate("14SEP15");
       
-      c1 = TestTrain.createWithStringPeriode("01/02/2015#30/06/2015#123#FRMLW#FRAET#0949#1127"); // T1
-      c2 = TestTrain.createWithStringPeriode("15/03/2015#14/09/2015#123456#FRMLW#FRAET#0950#1127"); // T2
-      c3 = TestTrain.createWithStringPeriode("01/01/2015#14/12/2015#1234567#FRMLW#FRAET#0949#1127"); // T3
+      c1 = TestTrain.createWithStringPeriode("01/02/2015#30/06/2015#123#FRMLW#FRAET#0949#1127"); // TC2C
+      c2 = TestTrain.createWithStringPeriode("15/03/2015#14/05/2015#123456#FRMLW#FRAET#0950#1127"); // TSSIM
+      c3 = TestTrain.createWithStringPeriode("01/01/2015#14/12/2015#1234567#FRMLW#FRAET#0949#1127"); // Train
       c4 = TestTrain.createWithStringPeriode("01/04/2015#14/09/2015#1234567#FRMLW#FRAET#0949#1127");
       c1.setGMTArrivee("+0100");
       c1.setGMTDepart("+0100");
@@ -74,11 +74,11 @@ public class TestObesrvateurT2C {
       listDates.add(dateDebutService);
       listDates.add(dateExtraction);
       listDates.add(tc2c.getDateDebutValidite());
-      listDates.add(tc2c_2.getDateDebutValidite());
+      //listDates.add(tc2c_2.getDateDebutValidite());
       IObservableJoursCirculation iObs    =     new ObservableJoursCirculation();
       IObserverJoursCirculation iObserver =     new ObserverJoursCirculation(tc2c, train, dateDebutService, dateFinService, dateExtraction);
       IObserverJoursCirculation iObserver2 =     new ObserverJoursCirculation(tc2c_2, train, dateDebutService, dateFinService, dateExtraction);
-      iObs.addObservateur(iObserver) ;iObs.addObservateur(iObserver2) ;
+      iObs.addObservateur(iObserver) ;
 
       // Il faut enrichir la liste des observateurs
       // Il faut donc récupérer la liste des TC2C

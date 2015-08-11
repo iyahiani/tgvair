@@ -14,6 +14,7 @@ import java.util.List;
 import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.resources.utils.HeureFormattage;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.exportFile.AExportFixedLength;
 import com.avancial.exportFile.AExportTxt;
@@ -167,17 +168,17 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          sb.append("0" + String.valueOf(varianceCirculation)); //
       sb.append("01");
       sb.append("J");
-      sb.append(StringToDate.toString(tc2c.getDateDebutValidite()) + StringToDate.toString(tc2c.getDateFinValidite()));
+      sb.append(StringToDate.toString(c.getDateDebut()) + StringToDate.toString(c.getDateFin()));//tc2c.getDateDebutValidite()--tc2c.getDateFinValidite()
       sb.append(c.getJoursCirculation());
       sb.append(" ");
       sb.append("CDG");
-      sb.append(c.getHeureDepart());
-      sb.append(c.getHeureDepart());
+      sb.append(HeureFormattage.heureToString(c.getHeureDepart()));
+      sb.append(HeureFormattage.heureToString(c.getHeureDepart()));
       sb.append(c.getGMTDepart());
       sb.append("TN");
       sb.append("ZLN");
-      sb.append(c.getHeureArrivee());
-      sb.append(c.getHeureArrivee());
+      sb.append(HeureFormattage.heureToString(c.getHeureArrivee()));
+      sb.append(HeureFormattage.heureToString(c.getHeureArrivee()));
       sb.append(c.getGMTArrivee());
       sb.append("TN");
       sb.append("ZLN");
