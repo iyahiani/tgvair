@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.JourCirculation;
 
@@ -14,8 +15,6 @@ public interface ITrain {
    public String getGareOrigine();
 
    public String getGareDestination();
-
-   public void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM);
 
    public void addCirculation(Circulation circultation);
 
@@ -28,5 +27,7 @@ public interface ITrain {
 
    public Train getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue); 
    public Train getTrainSSIMRestreint(Train trainCatalogue)  ;
+
+   void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM, IObservableJoursCirculation iObs);
 
 }

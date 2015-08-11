@@ -38,7 +38,9 @@ public class StringToDate {
 	}
 	
 	public static String toString(Date date) { 
-	   DateFormat df = new SimpleDateFormat("dd/MM/yy") ; 
+	   //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
+	   String format = "ddMMMyy" ; 
+      SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
 	   String myDate = df.format(date);  
 	      
 	   return myDate ; 

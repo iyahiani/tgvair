@@ -16,6 +16,11 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
+import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.IObserverJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.ObserverJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.parser.APP_enumParserSSIM;
 import com.avancial.app.business.parser.FilterEncodage;
 import com.avancial.app.business.parser.FilterSSIMTypeEnr;
@@ -232,7 +237,15 @@ public class Luncher {
      listTrainsCat.add(trainCata5);
       // ///////// TESTS CIRCULATION
       ArrayList<Integer> position = new ArrayList<Integer>();
-
+      TrainToCompagnie tc2c = new TrainToCompagnie();
+      tc2c.addCirculation(c1);
+      tc2c.addNumeroTrain("005211");
+      tc2c.setDateDebutValidite(StringToDate.toDate("01FEB15"));
+      tc2c.setDateFinValidite(StringToDate.toDate("31JUL15"))  ;
+      tc2c.setCodeCompagnie("AF")   ;
+      IObservableJoursCirculation iObs    =     new ObservableJoursCirculation();
+      Date dateDebutService = StringToDate.toDate("02FEB15"), dateFinService = StringToDate.toDate("15JUN15"), dateExtraction = StringToDate.toDate("01APR15");
+      IObserverJoursCirculation iObserver =     new ObserverJoursCirculation(tc2c, trainCata1, dateDebutService, dateFinService, dateExtraction); 
       for (TrainCatalogue trainCat : listTrainsCat) {
 
         // System.out.println("____________TRAIN DU CATALOGUE___________");
@@ -246,12 +259,11 @@ public class Luncher {
           System.out.println("____________TRAIN APRES ADAPT___________");
 
          if (!train.compare(trainSSIMRestreint)) {
-            train.remplirJoursCirculations();
-            train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim);
-
-            train.adaptGuichet(getListPointsArrets());
-            train.calculeCirculationFromJoursCirculation();
-            System.out.println(train);
+            train.remplirJoursCirculations() ;
+            train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim,iObs)   ;
+            train.adaptGuichet(getListPointsArrets()) ;
+            train.calculeCirculationFromJoursCirculation()  ;
+            System.out.println(train)  ;
 
             trainCat.setListeJoursCirculation(train.getListeJoursCirculation());
             trainCat.setListeCirculations(train.getListeCirculations());

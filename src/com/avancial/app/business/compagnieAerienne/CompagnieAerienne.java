@@ -1,10 +1,14 @@
 package com.avancial.app.business.compagnieAerienne;
 
+import java.util.List;
+
+import com.avancial.app.business.train.Train;
+
 public class CompagnieAerienne {
 
    private String libelléCompagnie ; 
    private String codeCompagnie ;
-   
+   private List<Train> trains ; 
    
    
    public String getLibelléCompagnie() {

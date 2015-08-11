@@ -49,7 +49,6 @@
 					<h:outputText value="" />
 				</p:column>
 			</p:dataTable>
-
 			<h:panelGrid columns="2"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;"> 
 				<f:facet name="header"> Ajouter un Train</f:facet>
@@ -68,8 +67,11 @@
 				<p:inputText id="Quota1" style="width :100% auto;"></p:inputText>
 				<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
 				<p:inputText id="Quota2" style="width : 100% auto;"></p:inputText>
+				<h:panelGrid></h:panelGrid>
+				<h:panelGrid columns="2" >
 				<p:commandButton icon="ui-icon-cancel"></p:commandButton>
-				<p:commandButton icon="ui-icon-check"></p:commandButton>
+				<p:commandButton icon="ui-icon-check"></p:commandButton> 
+				</h:panelGrid>	
 			</h:panelGrid>
 		</h:panelGrid>
 	</ui:define>

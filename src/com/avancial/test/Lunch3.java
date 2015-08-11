@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.IObserverJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.ObserverJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.parser.APP_enumParserSSIM;
 import com.avancial.app.business.parser.FilterEncodage;
 import com.avancial.app.business.parser.FilterSSIMTypeEnr;
@@ -127,10 +132,18 @@ public class Lunch3 {
       // System.out.println(getSSIMPeriode(pathProd));
       // System.out.println(trainSSIM7);
       // System.out.println(trainSSIM7.getPeriodes());
-
- 
-
-      for (TrainCatalogue trainCat : listTrainsCat) {
+       TrainToCompagnie tc2c = new TrainToCompagnie();
+       tc2c.addCirculation(c1);
+       tc2c.addNumeroTrain("005211");
+       tc2c.setDateDebutValidite(StringToDate.toDate("01FEB15"));
+       tc2c.setDateFinValidite(StringToDate.toDate("31JUL15"))  ;
+       tc2c.setCodeCompagnie("AF")   ;
+       IObservableJoursCirculation iObs    =     new ObservableJoursCirculation();
+       Date dateDebutService = StringToDate.toDate("02FEB15"), dateFinService = StringToDate.toDate("15JUN15"), dateExtraction = StringToDate.toDate("01APR15");
+       IObserverJoursCirculation iObserver =     new ObserverJoursCirculation(tc2c, trainCata1, dateDebutService, dateFinService, dateExtraction); 
+       
+       iObs.addObservateur(iObserver) ;
+       for (TrainCatalogue trainCat : listTrainsCat) {
 
          System.out.println("____________TRAIN DU CATALOGUE___________");
          Train train = trainCat.getTrain();
@@ -146,7 +159,7 @@ public class Lunch3 {
 
          if (!train.compare(trainSSIMRestreint)) {
             train.remplirJoursCirculations();
-            train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim);
+            train.adapt(trainSSIMRestreint, date_deb_ssim, date_fin_ssim,iObs);
             train.adaptGuichet(Luncher.getListPointsArrets());
            
             //System.out.println(train);

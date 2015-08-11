@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
+import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.IObservableCirculationSemaineBuilder;
 import com.avancial.app.business.train.circulation.JourCirculation;
@@ -25,7 +27,8 @@ public class Train implements ITrain {
 
    protected List<String> listeNumeros;
    protected Map<Date, JourCirculation> listeJoursCirculation;
-
+   private Date dateDebutValidite ;
+   private Date dateFinValidite ;
    protected List<Circulation> listeCirculations;
 
    /**
@@ -50,6 +53,13 @@ public class Train implements ITrain {
       this.listeNumeros = listeNumeros2;
       this.listeCirculations = circulations;
       this.listeJoursCirculation = listeJoursCirculation2;
+   }
+   public Train(List<String> listeNumeros2, List<Circulation> circulations, Map<Date, JourCirculation> listeJoursCirculation2, Date dateDebutValidite, Date dateFinValidite) {
+      this.listeNumeros = listeNumeros2;
+      this.listeCirculations = circulations;
+      this.listeJoursCirculation = listeJoursCirculation2; 
+      this.dateDebutValidite =dateDebutValidite ;
+      this.dateFinValidite = dateFinValidite ;
    }
 
    @Override
@@ -169,15 +179,17 @@ public class Train implements ITrain {
    }
 
    @Override
-   public void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM) {
+   public void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM, IObservableJoursCirculation iObs) {
 
       // this.remplirJoursCirculations();
 
       for (Entry<Date, JourCirculation> jourCirculation : this.listeJoursCirculation.entrySet()) {
 
          if ((jourCirculation.getKey().after(date_deb_SSIM)) || (jourCirculation.getKey().equals(date_deb_SSIM)) && (jourCirculation.getKey().before(date_fin_SSIM))
-               || (jourCirculation.getKey().equals(date_fin_SSIM)))
-
+               || (jourCirculation.getKey().equals(date_fin_SSIM))) {
+            IObservableJoursCirculation joursCirculObserv = new ObservableJoursCirculation();
+           
+            
             if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) { // verification
                // concordance
                // Jours
@@ -186,7 +198,9 @@ public class Train implements ITrain {
                // le train circule
 
                if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation()) {
-                  this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
+                  this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey())); 
+                  iObs.notifierTrainToCompagnie(jourCirculation.getValue());
+                  
                }
 
                else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) 
@@ -194,7 +208,7 @@ public class Train implements ITrain {
                   
                   jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
                   this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
-                  
+                  iObs.notifierTrainToCompagnie(jourCirculation.getValue());
                }
             } else {
 
@@ -203,8 +217,10 @@ public class Train implements ITrain {
 
                {
                   jourCirculation.getValue().setFlagCirculation(false);
+                  iObs.notifierTrainToCompagnie(jourCirculation.getValue());
                }
             }
+      }
 
       }
 
@@ -746,6 +762,22 @@ public class Train implements ITrain {
 
    public void addNumeroTrain(String num_train) {
       this.listeNumeros.add(num_train);
+   }
+
+   public Date getDateDebutValidite() {
+      return dateDebutValidite;
+   }
+
+   public void setDateDebutValidite(Date dateDebutValidite) {
+      this.dateDebutValidite = dateDebutValidite;
+   }
+
+   public Date getDateFinValidite() {
+      return dateFinValidite;
+   }
+
+   public void setDateFinValidite(Date dateFinValidite) {
+      this.dateFinValidite = dateFinValidite;
    }
 
 }
