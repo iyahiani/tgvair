@@ -11,18 +11,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
-import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.resources.utils.HeureFormattage;
 import com.avancial.app.resources.utils.StringToDate;
-import com.avancial.exportFile.AExportFixedLength;
-import com.avancial.exportFile.AExportTxt;
-import com.avancial.exportFile.IExportFile;
-import com.avancial.test.CirculationTest;
-import com.avancial.test.Lunch3;
-import com.avancial.test.Luncher;
-import com.avancial.test.TestTrain;
+import com.avancial.writer.FormaterLeftSpaces;
+import com.avancial.writer.FormaterLeftZero;
+import com.avancial.writer.FormaterRightSpace;
+import com.avancial.writer.FormaterStrategyFixedLength;
+import com.avancial.writer.IFormaterFixedLength;
+import com.avancial.writer.IFormaterStrategy;
+import com.avancial.writer.IWriter;
+import com.avancial.writer.WriteSSIM;
+import com.avancial.writer.WriterTxt;
+import com.avancial.writer.WriterTxtFixedLength;
 
 public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
 
@@ -30,255 +34,257 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    private int varianceCirculation;
    private Date dateCourante;
    private DateFormat df;
+   private IWriter writer;
 
    // public ExportPDTByCompagnyToSSIM7(String fileName ,int[] begins, int[]
    // ends, String[] colNames, boolean bWriteHeaders) {
    // super(fileName, begins, ends, colNames, bWriteHeaders);
+   /**
+    * 
+    @author Yahiani Ismail
+    * @param Export
+    *           des trains Compagnie Impactés par les modifications
+    *           implementation de la class WriterSSIM pour ecrire dans un
+    *           fichier
+    */
    public ExportPDTByCompagnyToSSIM7() {
       this.cpt = 0;
       this.varianceCirculation = 0;
       this.dateCourante = new Date();
       this.df = new SimpleDateFormat("ddMMMyy");
-      df.format(dateCourante);
+      this.df.format(this.dateCourante);
 
    }
 
-   public void export(TrainToCompagnie tc2c) {
-     /* TrainToCompagnie tc2c = new TrainToCompagnie()  ;
-      Circulation c1 = new Circulation()  ;
+   /**
+    * @author ismael.yahiani
+    * @param tc2c
+    * @throws ParseException 
+    * 
+    */
+   public void export(List<TrainToCompagnie> listTrainsToCompagnie) throws ParseException {
+      Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
+      // WriteSSIM writer = new WriteSSIM("D:/exportSSIM7/SSIM7_Test.txt") ;
 
+      this.writer = new WriterTxt("D:/exportSSIM7/testFormater.txt");
       try {
-         c1 = TestTrain.createWithStringPeriode("01/02/2015#30/06/2015#1234567#FRMLW#FRAET#0949#1127");
-         c1.setGMTArrivee("+0100");
-         c1.setGMTDepart("+0100");
-         c1.setRangTranson(01);
-      } catch (ParseException e1) {
-         e1.printStackTrace();
-      }
-      tc2c.addCirculation(c1);
-      tc2c.addNumeroTrain("5211");
-      tc2c.setCodeCompagnie("AF");
-      tc2c.setOperatingFlight("1217");
-      tc2c.setMarketingFlight("AF4215");
-      try {
-         tc2c.setDateDebutValidite(StringToDate.toDate("01FEB15"));
-         tc2c.setDateFinValidite(StringToDate.toDate("31JUL15"));
-      } catch (ParseException e1) {
-         e1.printStackTrace();
-      }*/
-
-      try {
-
-         File file = new File("D:/exportSSIM7/SSIM7_Test.txt");
-
-         // if file doesnt exists, then create it
-         if (!file.exists()) {
-            file.createNewFile();
-         }
-
-         FileWriter fw = new FileWriter(file.getAbsoluteFile());
-         BufferedWriter bw = new BufferedWriter(fw);
-         bw.write(this.getEnrgType1() + "\n");
-         bw.write(this.getEnrgType2() + "\n");
-         for (Circulation c : tc2c.getCirculations()) {
-            bw.write(this.getEnrgType3(tc2c, c) + "\n");
-            bw.write(this.getEnrgType4(tc2c, c) + "\n");
+         int[] beginsType1 = { 0, 1, 35, 191, 194,200 };
+         int[] lengthsType1 = { 1, 34, 156, 3, 6,1 };
+         int[] beginsCompteurType1 = {194};
+         int[] lengthsCompteurType1 = {6};
+         
+         int[] beginsType2 = { 0,1,2,5,10,14,28,35,71,72, 190,194,200 };
+         int[] lengthsType2 ={ 1, 1,3,5,4, 14,7, 37,1, 117,  4, 6,  1 };
+         
+         int[] beginsType3 =  {0,1,2,5,9,11,13,14,28,35,36,39,43,47,52,54,57,61,65,70,72,75,95,172,192,194,200};
+         int[] lengthsType3 = {1,1,3,4,2, 2,1, 14,7, 1, 3, 4, 4, 5, 2, 3, 4, 4, 5, 2, 3, 20,77,20, 2,  6,  1};
+         
+         int[] beginsType4 = {0,1,2,5,9,11,13,14,28,29,30,33,36,39,194,200};
+         int[] lengthsType4 = {1,1,3,4,2,2,1,14,1,1,3,3,3,155,6,1};
+         
+         int[] beginsType5 = {0,1,2,5,194,200};
+         int[] lengthsType5 = {1,1,3,189,6,1};
+        
+         IFormaterFixedLength[] formatersType1 = new IFormaterFixedLength[6] ;
+         IFormaterStrategy formater = new FormaterStrategyFixedLength(beginsType1, lengthsType1, formatersType1, null, false, new FormaterLeftSpaces())  ;          
+         this.writer.setFormaterStrategy(formater);
+         this.writer.write(this.getEnrgType1());
+         
+         IFormaterFixedLength[] formatersType2 = new IFormaterFixedLength[13];         
+         IFormaterStrategy formater2=new FormaterStrategyFixedLength(beginsType2, lengthsType2, formatersType2, null, false,new FormaterLeftSpaces())   ; 
+         this.writer.setFormaterStrategy(formater2);
+         this.writer.write(this.getEnrgType2()); 
+         
+         IFormaterFixedLength[] formatersType3 = new IFormaterFixedLength[27];         
+         IFormaterStrategy formater3=new FormaterStrategyFixedLength(beginsType3, lengthsType3, formatersType3, null, false,new FormaterLeftSpaces())   ;
+         
+         IFormaterFixedLength[] formatersType4 = new IFormaterFixedLength[16];         
+         IFormaterStrategy formater4=new FormaterStrategyFixedLength(beginsType4, lengthsType4, formatersType4, null, false,new FormaterLeftSpaces())   ;
+         
+         IFormaterFixedLength[] formatersType5 = new IFormaterFixedLength[6];         
+         IFormaterStrategy formater5=new FormaterStrategyFixedLength(beginsType5, lengthsType5, formatersType5, null, false,new FormaterLeftSpaces())   ;
+          for (TrainToCompagnie tc2c : listTrainsToCompagnie)        
+          for (Circulation c : tc2c.getCirculations()) {
+          if (c.getDateFin().after(StringToDate.toDate("01APR15"))) {// a remplacer par la date courante
+             this.writer.setFormaterStrategy(formater3);
+             this.writer.write(this.getEnrgType3(tc2c, c));
+             this.writer.setFormaterStrategy(formater4);
+             this.writer.write(this.getEnrgType4(tc2c, c));
+           }
          } 
-         bw.write(this.getEnrgType5());
-         bw.close();
-         System.out.println("Done");
+          
+          this.writer.setFormaterStrategy(formater5);
+          this.writer.write(this.getEnrgType5());
+         this.writer.close();
 
       } catch (IOException e) {
+         log.error(e.getMessage());
       }
    }
 
-   public String getEnrgType1() {
+   public ArrayList<String> getEnrgType1() {
 
-      StringBuilder sb = new StringBuilder();
-      sb.append("1");
-      sb.append("AIRLINE STANDARD SCHEDULE DATA SET");
-      for (int i = 0; i < 155; i++) {
-         sb.append(" ");
-      }
-      sb.append("0001");
-      cpt++;
-      if (String.valueOf(cpt).length() == 1)
-         sb.append("00000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 2)
-         sb.append("0000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 3)
-         sb.append("000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 4)
-         sb.append("00" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 5)
-         sb.append("0" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 6)
-         sb.append(String.valueOf(cpt));
+      ArrayList<String> liste = new ArrayList<>();
+      this.cpt++;
 
-      return sb.toString();
+      liste.add("1");
+      liste.add("AIRLINE STANDARD SCHEDULE DATA SET");
+      liste.add("");
+      liste.add("001");
+      if (String.valueOf(this.cpt).length() == 1)
+         liste.add("00000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 2)
+         liste.add("0000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 3)
+         liste.add("000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 4)
+         liste.add("00" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 5)
+         liste.add("0" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 6)
+         liste.add(String.valueOf(this.cpt));
+      liste.add("\n");
+      return liste;
    }
 
-   public String getEnrgType2() {
-      StringBuilder sb = new StringBuilder();
-      sb.append("2L2C ");
-      sb.append("0008 ");
-      for (int i = 0; i < 4; i++)
-         sb.append(" ");
-
-      sb.append("05MAY15" + "31DEC15"); // date courante + date fin service
-      sb.append("05MAY15"); // date creation
-
-      for (int i = 0; i < 36; i++) {
-         sb.append(" ");
-      }
-      sb.append("C");
-      for (int i = 0; i < 118; i++) {
-         sb.append(" ");
-      }
-      sb.append("1010");
-      // sb.append(String.valueOf(cpt++)) ;
-      cpt++;
-      if (String.valueOf(cpt).length() == 1)
-         sb.append("00000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 2)
-         sb.append("0000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 3)
-         sb.append("000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 4)
-         sb.append("00" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 5)
-         sb.append("0" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 6)
-         sb.append(String.valueOf(cpt));
-
-      return sb.toString();
+   public ArrayList<String> getEnrgType2() {
+      ArrayList<String> liste = new ArrayList<>();
+      liste.add("2");
+      liste.add("L");
+      liste.add("2C");
+      liste.add("0008");
+      liste.add("");
+      liste.add("02FEB1531DEC15"); // à mettre la date debut du service +                                    // la date fin service
+      liste.add("01APR15"); // à mettre la date de l'extraction
+      liste.add("");
+      liste.add("C") ;
+      liste.add("");
+      liste.add("1010");
+      this.cpt++;
+      if (String.valueOf(this.cpt).length() == 1)
+         liste.add("00000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 2)
+         liste.add("0000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 3)
+         liste.add("000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 4)
+         liste.add("00" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 5)
+         liste.add("0" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 6)
+         liste.add(String.valueOf(this.cpt));
+      liste.add("\n");
+      return liste;
    }
 
-   public String getEnrgType3(TrainToCompagnie tc2c, Circulation c) {
+   public  ArrayList<String> getEnrgType3(TrainToCompagnie tc2c, Circulation c) {
 
-      StringBuilder sb = new StringBuilder();
-      sb.append("3");
-      sb.append("  ");
-      sb.append("2C ");
-      sb.append(tc2c.getOperatingFlight());
-      varianceCirculation++;
-      if (varianceCirculation++ < 10)
-         sb.append("0" + String.valueOf(varianceCirculation));
-      else
-         sb.append("0" + String.valueOf(varianceCirculation)); //
-      sb.append("01");
-      sb.append("J");
-      sb.append(StringToDate.toString(c.getDateDebut()) + StringToDate.toString(c.getDateFin()));//tc2c.getDateDebutValidite()--tc2c.getDateFinValidite()
-      sb.append(c.getJoursCirculation());
-      sb.append(" ");
-      sb.append("CDG");
-      sb.append(HeureFormattage.heureToString(c.getHeureDepart()));
-      sb.append(HeureFormattage.heureToString(c.getHeureDepart()));
-      sb.append(c.getGMTDepart());
-      sb.append("TN");
-      sb.append("ZLN");
-      sb.append(HeureFormattage.heureToString(c.getHeureArrivee()));
-      sb.append(HeureFormattage.heureToString(c.getHeureArrivee()));
-      sb.append(c.getGMTArrivee());
-      sb.append("TN");
-      sb.append("ZLN");
-
-      for (int i = 0; i < 19; i++) {// à ajouter quota 1 et 2 classe
-         sb.append(" ");
-      }
-      for (int i = 0; i < 76; i++) {
-         sb.append(" ");
-      }
-      for (int i = 0; i < 23; i++) {// à ajouter quota 1 et 2 classe
-         sb.append(" ");
-      }
-      sb.append("  ");
-      cpt++;
-      if (String.valueOf(cpt).length() == 1)
-         sb.append("00000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 2)
-         sb.append("0000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 3)
-         sb.append("000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 4)
-         sb.append("00" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 5)
-         sb.append("0" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 6)
-         sb.append(String.valueOf(cpt));
-      
-      return sb.toString();
-   }
-
-   public String getEnrgType4(TrainToCompagnie tc2c, Circulation c) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("4");
-      sb.append(" ");
-      sb.append("2C ");
-      sb.append(tc2c.getOperatingFlight());
-      if (varianceCirculation < 10)
-         sb.append("0" + String.valueOf(varianceCirculation));
-      else
-         sb.append("0" + String.valueOf(varianceCirculation));
-      sb.append("01");
-      sb.append("J");
-      for (int i = 0; i < 13; i++) {
-         sb.append(" ");
-      }
-      sb.append("A") ;
-      sb.append("B") ;
-      sb.append("010")  ;
-      sb.append("CDG")  ;
-      sb.append("XDB")  ;
-      if (tc2c.getMarketingFlight().length() <= 7) {
-         sb.append(tc2c.getMarketingFlight());
-         for (int i = 0; i < 150; i++) {
-            sb.append("0");
-         }
-      } else {
-         for (int i = 0; i < 158; i++) {// à ajouter quota 1 et 2 classe
-            sb.append(" ");
-         }
-      }
-         cpt++;
-         if (String.valueOf(cpt).length() == 1)
-            sb.append("00000" + String.valueOf(cpt));
-         if (String.valueOf(cpt).length() == 2)
-            sb.append("0000" + String.valueOf(cpt));
-         if (String.valueOf(cpt).length() == 3)
-            sb.append("000" + String.valueOf(cpt));
-         if (String.valueOf(cpt).length() == 4)
-            sb.append("00" + String.valueOf(cpt));
-         if (String.valueOf(cpt).length() == 5)
-            sb.append("0" + String.valueOf(cpt));
-         if (String.valueOf(cpt).length() == 6)
-            sb.append(String.valueOf(cpt));
+      ArrayList<String> liste = new ArrayList<>();
      
-
-      return sb.toString();
+      liste.add("3");
+      liste.add("");
+      liste.add("2C");
+      liste.add(tc2c.getOperatingFlight());
+      this.varianceCirculation++;
+      if (this.varianceCirculation < 10)
+         liste.add("0" + String.valueOf(this.varianceCirculation));
+      else
+         liste.add(String.valueOf(this.varianceCirculation)); //
+      liste.add("01");
+      liste.add("J");
+      liste.add(StringToDate.toString(c.getDateDebut()) + StringToDate.toString(c.getDateFin()));// tc2c.getDateDebutValidite()--tc2c.getDateFinValidite()
+      liste.add(c.getJoursCirculation());
+      liste.add("");
+      liste.add("CDG");
+      liste.add(HeureFormattage.heureToString(c.getHeureDepart()));
+      liste.add(HeureFormattage.heureToString(c.getHeureDepart()));
+      liste.add(c.getGMTDepart());
+      liste.add("TN");
+      liste.add("ZLN");
+      liste.add(HeureFormattage.heureToString(c.getHeureArrivee()));
+      liste.add(HeureFormattage.heureToString(c.getHeureArrivee()));
+      liste.add(c.getGMTArrivee());
+      liste.add("");
+      liste.add("TRN");
+      liste.add("C"+String.valueOf(tc2c.getQuota_1er())+"Y"+String.valueOf(tc2c.getQuota_2em()));
+      liste.add("");
+      liste.add("C"+String.valueOf(tc2c.getQuota_1er())+"Y"+String.valueOf(tc2c.getQuota_2em()));
+      liste.add("");
+      this.cpt++;
+      if (String.valueOf(this.cpt).length() == 1)
+         liste.add("00000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 2)
+         liste.add("0000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 3)
+         liste.add("000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 4)
+         liste.add("00" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 5)
+         liste.add("0" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 6)
+         liste.add(String.valueOf(this.cpt));
+      liste.add("\n");
+      return liste;
    }
 
-   public String getEnrgType5() {
-      StringBuilder sb = new StringBuilder() ; 
-      sb.append("5");
-      sb.append("  ");
-      sb.append("2C ");
-      for (int i = 0; i < 188; i++) {
-         sb.append(" ");
-      }
-      cpt++;
-      if (String.valueOf(cpt).length() == 1)
-         sb.append("00000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 2)
-         sb.append("0000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 3)
-         sb.append("000" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 4)
-         sb.append("00" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 5)
-         sb.append("0" + String.valueOf(cpt));
-      if (String.valueOf(cpt).length() == 6)
-         sb.append(String.valueOf(cpt));
-      return sb.toString();
+   public ArrayList<String> getEnrgType4(TrainToCompagnie tc2c, Circulation c) {
+      ArrayList<String> liste = new ArrayList<>();
+      liste.add("4");
+      liste.add("");
+      liste.add("2C");
+      liste.add(tc2c.getOperatingFlight());
+      if (this.varianceCirculation < 10)
+         liste.add("0" + String.valueOf(this.varianceCirculation));
+      else
+         liste.add(String.valueOf(this.varianceCirculation));
+      liste.add("01");
+      liste.add("J");
+         liste.add("");
+      
+      liste.add("A");
+      liste.add("B");
+      liste.add("010");
+      liste.add("CDG");
+      liste.add("XDB");
+      liste.add(tc2c.getMarketingFlight());
+      this.cpt++;
+      if (String.valueOf(this.cpt).length() == 1)
+         liste.add("00000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 2)
+         liste.add("0000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 3)
+         liste.add("000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 4)
+         liste.add("00" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 5)
+         liste.add("0" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 6)
+         liste.add(String.valueOf(this.cpt));
+      liste.add("\n");
+      return liste;
+   }
+
+   public ArrayList<String> getEnrgType5() {
+      ArrayList<String> liste = new ArrayList<>();
+      liste.add("5");
+      liste.add("");
+      liste.add("2C");
+      liste.add("");
+      
+      this.cpt++;
+      if (String.valueOf(this.cpt).length() == 1)
+         liste.add("00000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 2)
+         liste.add("0000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 3)
+         liste.add("000" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 4)
+         liste.add("00" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 5)
+         liste.add("0" + String.valueOf(this.cpt));
+      if (String.valueOf(this.cpt).length() == 6)
+         liste.add(String.valueOf(this.cpt));
+      liste.add("\n");
+      return liste;
    }
 }

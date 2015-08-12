@@ -25,7 +25,8 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       this.circulation.setDestination(jourCirculation.getDestination());
       this.circulation.setHeureDepart(jourCirculation.getHeureDepart());
       this.circulation.setHeureArrivee(jourCirculation.getHeureArrivee());
-
+      this.circulation.setGMTDepart(jourCirculation.getGMTDepart());
+      this.circulation.setGMTArrivee(jourCirculation.getGMTArriver());
       // Il faut déterminer la date de début qui commence toujours le lundi
       Calendar cal = new GregorianCalendar();
       cal.setTime(jourCirculation.getDateCircul());
@@ -83,8 +84,9 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       fusionCirculation.setOrigine(circulation1.getOrigine());
       fusionCirculation.setDestination(circulation1.getDestination());
       fusionCirculation.setHeureDepart(circulation1.getHeureDepart());
+      fusionCirculation.setGMTDepart(circulation1.getGMTDepart());
       fusionCirculation.setHeureArrivee(circulation1.getHeureArrivee());
-
+      fusionCirculation.setGMTArrivee(circulation1.getGMTArrivee());
       fusionCirculation.setDateDebut(circulation1.getDateDebut().before(circulation2.getDateDebut()) ? circulation1.getDateDebut() : circulation2.getDateDebut());
       fusionCirculation.setDateFin(circulation1.getDateFin().after(circulation2.getDateFin()) ? circulation1.getDateFin() : circulation2.getDateFin());
 

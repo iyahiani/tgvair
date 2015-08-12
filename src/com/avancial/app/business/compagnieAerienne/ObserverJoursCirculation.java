@@ -42,18 +42,18 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
       this.listDatesFin.add(train.getDateFinValidite());
       this.listDatesFin.add(dateFinService);
    }
-
+   
    public void refresh(JourCirculation jourCirculation) {
 
-      if (!jourCirculation.getDateCircul().before(MaxMinDates.getMaxDate(listDatesdebut)) && !jourCirculation.getDateCircul().after(MaxMinDates.getMinDate(listDatesFin)))
+      if (!jourCirculation.getDateCircul().before(MaxMinDates.getMaxDate(listDatesdebut)) 
+            && !jourCirculation.getDateCircul().after(MaxMinDates.getMinDate(listDatesFin)))
          if (tc2c.getListeJoursCirculation().containsKey(jourCirculation.getDateCircul())) {
             tc2c.getListeJoursCirculation().put(jourCirculation.getDateCircul(),jourCirculation); 
-            listCompagnieImpactees.add(tc2c.getCodeCompagnie()); 
-            
+            //this.listCompagnieImpactees.add(tc2c.getCodeCompagnie()) ; 
          }
        }
 
-   // /////// Getters And Setters
+   ///////// Getters And Setters
 
    public TrainToCompagnie getTc2c() {
       return tc2c;
@@ -62,13 +62,17 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
    public void setTc2c(TrainToCompagnie tc2c) {
       this.tc2c = tc2c;
    }
-
+  
    public List<TrainToCompagnie> getListTrainCompagnie() {
       return listTrainCompagnie;
    }
 
    public void setListTrainCompagnie(List<TrainToCompagnie> listTrainCompagnie) {
       this.listTrainCompagnie = listTrainCompagnie;
+   }
+
+   public Set<String> getListCompagnieImpactees() {
+      return listCompagnieImpactees;
    }
 
 }

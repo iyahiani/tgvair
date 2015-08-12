@@ -114,6 +114,7 @@ public class IhmManagedBean implements Serializable {
     * @return locale to string
     */
    // Ne pas passer en static, ça plante dans les pages
+   
    @SuppressWarnings("static-method")
    public String getLanguage() {
       return FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage();
@@ -125,6 +126,7 @@ public class IhmManagedBean implements Serializable {
     * @param language
     * 
     */
+   
    public void setLanguage(String language) {
       this.locale = new Locale(language);
       FacesContext.getCurrentInstance().getViewRoot().setLocale(this.locale);

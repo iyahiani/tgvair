@@ -163,7 +163,7 @@ public class Circulation implements ICirculation {
       sb.append("----------------------" + "\n");
       sb.append(this.getDateDebut() + " -- " + this.getDateFin() + " -- " + this.joursCirculation + "\n");
       sb.append(this.getOrigine() + " -- " + this.getDestination() + "\n");
-      sb.append(this.getHeureDepart() + " -- " + this.getHeureArrivee() +   "\n");
+      sb.append(this.getHeureDepart() + " -- "+this.getGMTDepart()+"--" + this.getHeureArrivee() +"--" + this.getGMTArrivee()+  "\n");
       
       // rajouter pour test
       // sb.append(this.getNumeroTrain());

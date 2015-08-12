@@ -121,7 +121,11 @@ public class JourCirculation extends ObservableJoursCirculation implements Compa
       sb.append("\t") ;
       sb.append( this.heureDepart);
       sb.append("\t") ;
+      sb.append( this.GMTDepart);
+      sb.append("\t") ;
       sb.append( this.heureArrivee);
+      sb.append("\t") ;
+      sb.append( this.GMTArriver);
       return sb.toString();
 
    }

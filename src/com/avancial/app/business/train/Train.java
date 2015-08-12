@@ -76,11 +76,11 @@ public class Train implements ITrain {
    public void calculeCirculationFromJoursCirculation() {
       // On parcourt tous les jours de circulation
 
-      List<JourCirculation> temp = new ArrayList<>();
-      temp.addAll(this.listeJoursCirculation.values());
-      Collections.sort(temp);
+      List<JourCirculation> temp = new ArrayList<>()  ;
+      temp.addAll(this.listeJoursCirculation.values())   ;
+      Collections.sort(temp)  ;
       Circulation circulation = null;
-      ArrayList<String> jours = new ArrayList<>();
+      ArrayList<String> jours = new ArrayList<>()  ;
       this.listeCirculations.clear();
       IObservableCirculationSemaineBuilder builder = new ObservableCirculationBuilder();
       for (JourCirculation jourCirculation : temp) {
