@@ -4,16 +4,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<ui:define name="title">
-	</ui:define>
+	
 	<ui:define name="contenu">
-		<h:panelGrid columns="1">
-			<f:facet name="header"> CATALOGUE DE TRAINS </f:facet>
+	<h1 class="ui-widget-header ui-corner-all" align="center"> CATALOGUE DE TRAINS  </h1>
+		<h:panelGrid columns="1" headerClass="gridHeader" >
+			
 			<h:panelGrid columns="2"
 				style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
 				<h:panelGrid columns="3" style="margin-bottom : 5px auto;">
 					<p:commandButton icon="ui-icon-circle-plus" />
-					<p:selectOneMenu value="" effect="fold" editable="true"
+					<p:selectOneMenu value="A" effect="fold" editable="true"
 						style="width : 100%" />
 					<p:commandButton icon="ui-icon-seek-next" />
 				</h:panelGrid>
@@ -53,7 +53,7 @@
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;"> 
 				<f:facet name="header"> Ajouter un Train</f:facet>
 				<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
-				<h:selectOneMenu value="" effect="fold" editable="true"
+				<h:selectOneMenu value="A" effect="fold" editable="true"
 					style="width : 100%" />
 				<p:outputLabel value="Début de Validité"></p:outputLabel>
 				<p:calendar id="popup2" showOn="both" locale="fr"

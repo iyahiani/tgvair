@@ -36,4 +36,7 @@
 	border-color :#FFFFFF #E0E0E0;
 	}
 	
-	.centered { text-align: center; margin-left: 50%; }
+.centered { text-align: center; margin-left: 50%; } 
+.gridHeader{
+	background-color: white ;
+}

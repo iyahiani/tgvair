@@ -1,11 +1,32 @@
 <ui:composition template="/pages/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="title"> </ui:define>
-    <ui:define name="contenu">
-        
-    </ui:define>
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">
+	</ui:define>
+	<ui:define name="contenu">
+		<h1 class="ui-widget-header ui-corner-all" align="center">
+			Ajustement</h1>
+		  
+		
+			<p:fieldset legend="#{effect}">
+				<h:form>
+					<h:panelGrid columns="2">
+						<p:calendar  effect="drop" mode="inline" >
+						 <p:ajax event="dateSelect" listener="#{calendar.onDateSelect}"/>
+						</p:calendar> 
+						<h:panelGrid columns="2"> 
+						<p:commandButton value="Valider" icon="ui-icon-check"></p:commandButton>
+                         <p:commandButton value="Annuler" icon="ui-icon-cancel"></p:commandButton>
+						</h:panelGrid>
+             
+					</h:panelGrid>
+				</h:form>
+			</p:fieldset>
+			<br />
+		
+
+	</ui:define>
 </ui:composition>

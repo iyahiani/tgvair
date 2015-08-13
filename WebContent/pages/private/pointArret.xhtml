@@ -1,11 +1,56 @@
 <ui:composition template="/pages/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="title"> </ui:define>
-    <ui:define name="contenu">
-        
-    </ui:define>
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">
+	</ui:define>
+	<ui:define name="contenu">
+	<h1 class="ui-widget-header ui-corner-all" align="center">  Ajouter Un Point d'arret </h1>
+		<h:panelGroup layout="block" >
+		<h:panelGrid columns="2"
+			style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;margin-left:30px;  margin: 20px auto ; margin-top : 100px; ">
+			        
+			<p:outputLabel for="codeComp" value="Code Compagnie"
+				title="Code Compagnie en MAJUSCULE"></p:outputLabel>
+			<p:inputText id="codeComp" style="width :100% auto;"></p:inputText>
+			<p:outputLabel for="labelCompgn" value="Libellé Compagnie"></p:outputLabel>
+			<p:inputText id="labelCompgn" style="width : 100% auto;"></p:inputText>
+			<p:outputLabel for="codeResarail" value="Code Résarail"></p:outputLabel>
+			<p:inputText id="codeResarail" style="width : 100% auto;"></p:inputText>
+			
+		</h:panelGrid>
+
+		<h:panelGrid columns="3" style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;margin: 0px auto ;  " >
+			<f:facet name="header"> Ouverture du Guichet </f:facet>
+			<p:outputLabel value="Lundi"></p:outputLabel>
+			<p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+			<p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+			<p:outputLabel value="Mardi"></p:outputLabel>
+			<p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+			<p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+			<p:outputLabel value="Mercredi"></p:outputLabel>
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:outputLabel value="Jeudi"></p:outputLabel>
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:outputLabel value="Vendredi"></p:outputLabel>
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:outputLabel value="Samedi"></p:outputLabel>
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:outputLabel value="Dimanche"></p:outputLabel>
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+            <p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
+			<h:panelGrid></h:panelGrid>
+            <h:panelGrid columns="2">
+                <p:commandButton icon="ui-icon-cancel"></p:commandButton>
+                <p:commandButton icon="ui-icon-check"></p:commandButton>
+            </h:panelGrid>
+		</h:panelGrid> 
+		</h:panelGroup>
+	</ui:define>
 </ui:composition>
