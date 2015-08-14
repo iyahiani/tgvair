@@ -44,6 +44,8 @@ public class StringToDate {
 	   String myDate = df.format(date);  
 	      
 	   return myDate ; 
-	}
+	} 
+	
+	
 	
 }

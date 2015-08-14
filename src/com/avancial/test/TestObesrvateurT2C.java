@@ -38,7 +38,7 @@ public class TestObesrvateurT2C {
       Date date_deb_SSIM = StringToDate.toDate("15MAR15");
       Date date_Fin_SSIM = StringToDate.toDate("14SEP15");
       
-      c1 = TestTrain.createWithStringPeriode("01/02/2015#30/09/2015#1234567#FRMLW#FRAET#0949#1127"); // TC2C
+      c1 = TestTrain.createWithStringPeriode("01/02/2015#31/12/2015#1234567#FRMLW#FRAET#0949#1127"); // TC2C
       c2 = TestTrain.createWithStringPeriode("15/03/2015#14/12/2015#123456#FRMLW#FRAET#0950#1127"); // TSSIM
       c3 = TestTrain.createWithStringPeriode("01/01/2015#14/12/2015#1234567#FRMLW#FRAET#0949#1127"); // Train
       c4 = TestTrain.createWithStringPeriode("01/04/2015#14/09/2015#1234567#FRMLW#FRAET#0949#1127");
@@ -62,7 +62,7 @@ public class TestObesrvateurT2C {
       tc2c.addNumeroTrain("005211");
       
       tc2c.setDateDebutValidite(StringToDate.toDate("01FEB15"));
-      tc2c.setDateFinValidite(StringToDate.toDate("30JUN15"))  ;
+      tc2c.setDateFinValidite(StringToDate.toDate("31DEC15"))  ;
       tc2c.setCodeCompagnie("AF")   ;
       tc2c.addCirculation(c1)       ;
       tc2c.setOperatingFlight("1217");
@@ -77,16 +77,22 @@ public class TestObesrvateurT2C {
       tc2c_2.setOperatingFlight("9655");
       tc2c_2.setMarketingFlight("AF9655");
       train.setDateDebutValidite(StringToDate.toDate("01JAN15"));
-      train.setDateFinValidite(StringToDate.toDate("31DEC15"));
-      train.addCirculation(c3);
-      trainSSIM.addCirculation(c2);
+      train.setDateFinValidite(StringToDate.toDate("14DEC15"));
+      train.addCirculation(c3)   ;
+      trainSSIM.addCirculation(c2)  ;
      
-      Date dateDebutService = StringToDate.toDate("02FEB15"), dateFinService = StringToDate.toDate("15JUN15"), dateExtraction =StringToDate.toDate("01APR15"); //Calendar.getInstance().getTime(); 
-      List<Date> listDates = new ArrayList<Date>();
+      Date dateDebutService = StringToDate.toDate("02FEB15"), dateFinService = StringToDate.toDate("31DEC15"), dateExtraction =StringToDate.toDate("01APR15"); //Calendar.getInstance().getTime(); 
+      List<Date> listDatesDebut = new ArrayList<Date>();
+      List<Date> listDatesFin = new ArrayList<Date>();
       List<TrainToCompagnie>listTrainToCompagnie = new ArrayList<>();
-      listDates.add(dateDebutService);
-      listDates.add(dateExtraction);
-      listDates.add(tc2c.getDateDebutValidite());
+      listDatesDebut.add(tc2c.getDateDebutValidite());
+      listDatesDebut.add(train.getDateDebutValidite());
+      listDatesDebut.add(dateExtraction);
+      listDatesDebut.add(dateDebutService);
+      listDatesFin.add(tc2c.getDateFinValidite());
+      listDatesFin.add(train.getDateFinValidite());
+      listDatesFin.add(dateFinService);
+      
       //listDates.add(tc2c_2.getDateDebutValidite());
       IObservableJoursCirculation iObs    =     new ObservableJoursCirculation();
       IObserverJoursCirculation iObserver =     new ObserverJoursCirculation(tc2c, train, dateDebutService, dateFinService, dateExtraction);
@@ -96,10 +102,14 @@ public class TestObesrvateurT2C {
       // Il faut enrichir la liste des observateurs
       // Il faut donc récupérer la liste des TC2C
       
-      train.adapt(trainSSIM, date_deb_SSIM, date_Fin_SSIM, iObs);
+      train.adapt(trainSSIM, date_deb_SSIM, date_Fin_SSIM, iObs); 
+      /* 
+       * faut extraire les circulations des trains des compagnies dans la periode du service  
+       * */ 
+      tc2c.adaptService(MaxMinDates.getMaxDate(listDatesDebut), MaxMinDates.getMinDate(listDatesFin));
       tc2c.calculeCirculationFromJoursCirculation();
       // Set<TrainToCompagnie> set = is.
-      listTrainToCompagnie.add(tc2c);listTrainToCompagnie.add(tc2c_2);
+      listTrainToCompagnie.add(tc2c);//listTrainToCompagnie.add(tc2c_2);
       ExportPDTByCompagnyToSSIM7  compagnyToSSIM7 = new ExportPDTByCompagnyToSSIM7(); 
       compagnyToSSIM7.export(listTrainToCompagnie);
    }

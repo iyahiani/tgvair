@@ -1,7 +1,5 @@
-
 .ui-widget, .ui-widget .ui-widget, .ui-widget-header {
 	font-size: 90% !important;
-	
 }
 
 .ui-menu {
@@ -20,23 +18,49 @@
 	margin: 1px;
 }
 
+.noBorder.ui-panelgrid>*>tr, .noBorder.ui-panelgrid>*>tr>td {
+	border: none;
+	background: none !important;
+	margin-bottom: 2px;
+}
 
-.noBorder.ui-panelgrid>*>tr,
-.noBorder.ui-panelgrid>*>tr>td {
-    border: none;
-    background: none !important;
-    margin-bottom: 2px ;
-} 
-.dateTimeStyle input{
-	width : 150px;
+.dateTimeStyle input {
+	width: 150px;
 }
 
 .myPanelGride {
-	border-style:solid; 
-	border-color :#FFFFFF #E0E0E0;
-	}
-	
-.centered { text-align: center; margin-left: 50%; } 
-.gridHeader{
-	background-color: white ;
+	border-style: solid;
+	border-color: #FFFFFF #E0E0E0;
+}
+
+.centered {
+	text-align: center;
+	margin-left: 50%;
+}
+
+.gridHeader {
+	background-color: white;
+}
+
+.calendarColor a {
+	background-color: Green !important;
+	background-image: none !important;
+	color: White !important;
+	font-weight: bold !important;
+	font-size: 12pt;
+}
+
+.ui-datepicker .ui-state-default {
+	color: blue;
+	background-color: red !important;
+}
+
+.ui-datepicker .ui-state-active {
+	color: gray;
+	background-color: Green !important;
+}
+
+.ui-datepicker  .ui-state-highlight {
+	color: balck;
+	background-color: Green !important;
 }

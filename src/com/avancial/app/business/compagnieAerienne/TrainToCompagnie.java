@@ -1,9 +1,14 @@
 package com.avancial.app.business.compagnieAerienne;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import com.avancial.app.business.train.Train;
+import com.avancial.app.business.train.circulation.JourCirculation;
 
 public class TrainToCompagnie extends Train{
 
@@ -56,5 +61,24 @@ public class TrainToCompagnie extends Train{
    }
    public void setOperatingFlight(String operatingFlight) {
       this.operatingFlight = operatingFlight;
+   }
+   /**
+    * 
+    * @param debutService
+    * @param finService 
+    * permet d'extraire les periodes de circulation des trains de compagnies relative à la periode de service
+    */
+   public void adaptService(Date debutService, Date finService) {
+      Map<Date, JourCirculation> temp = new TreeMap<>();
+      TrainToCompagnie tc2cTemp = new TrainToCompagnie();  
+      
+      for (Entry<Date, JourCirculation> entry : this.listeJoursCirculation.entrySet() ) {
+         if((entry.getKey().after(debutService)||entry.getKey().equals(debutService)) && (entry.getKey().before(finService)||entry.getKey().equals(finService)))
+            temp.put(entry.getKey(), entry.getValue());
+      } 
+      
+      this.listeJoursCirculation.clear();
+      this.listeJoursCirculation.putAll(temp);
+      
    }
 }

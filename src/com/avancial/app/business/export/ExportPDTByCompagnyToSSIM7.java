@@ -36,9 +36,6 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    private DateFormat df;
    private IWriter writer;
 
-   // public ExportPDTByCompagnyToSSIM7(String fileName ,int[] begins, int[]
-   // ends, String[] colNames, boolean bWriteHeaders) {
-   // super(fileName, begins, ends, colNames, bWriteHeaders);
    /**
     * 
     @author Yahiani Ismail
@@ -64,9 +61,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
     */
    public void export(List<TrainToCompagnie> listTrainsToCompagnie) throws ParseException {
       Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
-      // WriteSSIM writer = new WriteSSIM("D:/exportSSIM7/SSIM7_Test.txt") ;
-
       this.writer = new WriterTxt("D:/exportSSIM7/testFormater.txt");
+      
       try {
          int[] beginsType1 = { 0, 1, 35, 191, 194,200 };
          int[] lengthsType1 = { 1, 34, 156, 3, 6,1 };
@@ -199,13 +195,13 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(HeureFormattage.heureToString(c.getHeureDepart()));
       liste.add(HeureFormattage.heureToString(c.getHeureDepart()));
       liste.add(c.getGMTDepart());
-      liste.add("TN");
+      liste.add("TN"); // ajouter un test si CDG alors TN sinon "  "
       liste.add("ZLN");
       liste.add(HeureFormattage.heureToString(c.getHeureArrivee()));
       liste.add(HeureFormattage.heureToString(c.getHeureArrivee()));
       liste.add(c.getGMTArrivee());
       liste.add("");
-      liste.add("TRN");
+      liste.add("TRN"); 
       liste.add("C"+String.valueOf(tc2c.getQuota_1er())+"Y"+String.valueOf(tc2c.getQuota_2em()));
       liste.add("");
       liste.add("C"+String.valueOf(tc2c.getQuota_1er())+"Y"+String.valueOf(tc2c.getQuota_2em()));

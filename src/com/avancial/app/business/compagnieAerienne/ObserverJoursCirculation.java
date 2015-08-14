@@ -49,7 +49,9 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
             && !jourCirculation.getDateCircul().after(MaxMinDates.getMinDate(listDatesFin)))
          if (tc2c.getListeJoursCirculation().containsKey(jourCirculation.getDateCircul())) {
             tc2c.getListeJoursCirculation().put(jourCirculation.getDateCircul(),jourCirculation); 
-            //this.listCompagnieImpactees.add(tc2c.getCodeCompagnie()) ; 
+            //this.listCompagnieImpactees.add(tc2c.getCodeCompagnie()) ;  
+            System.out.println(MaxMinDates.getMinDate(listDatesFin));
+            
          }
        }
 

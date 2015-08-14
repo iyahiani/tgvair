@@ -29,6 +29,7 @@ public class Train implements ITrain {
    protected Map<Date, JourCirculation> listeJoursCirculation;
    private Date dateDebutValidite ;
    private Date dateFinValidite ;
+   
    protected List<Circulation> listeCirculations;
 
    /**
@@ -191,11 +192,9 @@ public class Train implements ITrain {
            
             
             if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) { // verification
-               // concordance
-               // Jours
-               // veriifer si les heure et les OD ne sont pas concordantes et
-               // que
-               // le train circule
+               // concordance Jours
+               // verifer si les heure et les OD ne sont pas concordantes et que le train circule
+               
 
                if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation()) {
                   this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey())); 
@@ -210,6 +209,7 @@ public class Train implements ITrain {
                   this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
                   iObs.notifierTrainToCompagnie(jourCirculation.getValue());
                }
+               
             } else {
 
                if (!train.getJoursCirculation().containsKey(jourCirculation.getKey()) && (jourCirculation.getKey().after(date_deb_SSIM) || (jourCirculation.getKey().equals(date_deb_SSIM)))
