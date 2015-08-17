@@ -30,17 +30,13 @@ public class CirculationDataBean implements Serializable {
 
    @OneToOne
    @JoinColumn(name = "idTrainCatalogue")
-   @Column(name = "idTrainCatalogue")
+
    private TrainCatalogueDataBean trainCatalogueDataBean;
 
    @OneToOne
    @JoinColumn(name = "idPointArret")
-   @Column(name = "originePointArret")
+  
    private PointArretDataBean originePointArret;
-
-   @OneToOne
-   @JoinColumn(name = "idPointArret")
-   @Column(name = "destinationPointArret")
    private PointArretDataBean destinationPointArret;
 
    private Date heureDepartCirculation;
