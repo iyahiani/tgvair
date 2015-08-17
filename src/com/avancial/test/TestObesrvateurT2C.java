@@ -39,7 +39,7 @@ public class TestObesrvateurT2C {
       Date date_Fin_SSIM = StringToDate.toDate("14SEP15");
       
       c1 = TestTrain.createWithStringPeriode("01/02/2015#31/12/2015#1234567#FRMLW#FRAET#0949#1127"); // TC2C
-      c2 = TestTrain.createWithStringPeriode("15/03/2015#14/12/2015#123456#FRMLW#FRAET#0950#1127"); // TSSIM
+      c2 = TestTrain.createWithStringPeriode("15/03/2015#14/06/2015#123456#FRMLW#FRAET#0950#1127"); // TSSIM
       c3 = TestTrain.createWithStringPeriode("01/01/2015#14/12/2015#1234567#FRMLW#FRAET#0949#1127"); // Train
       c4 = TestTrain.createWithStringPeriode("01/04/2015#14/09/2015#1234567#FRMLW#FRAET#0949#1127");
       c1.setGMTArrivee("+0100");
@@ -66,7 +66,7 @@ public class TestObesrvateurT2C {
       tc2c.setCodeCompagnie("AF")   ;
       tc2c.addCirculation(c1)       ;
       tc2c.setOperatingFlight("1217");
-      tc2c.setMarketingFlight("AF4215");
+      tc2c.setMarketingFlight("AF 4215");
       tc2c.setQuota_1er(120);
       tc2c.setQuota_2em(148);
       tc2c_2.addNumeroTrain("005214");
@@ -75,7 +75,7 @@ public class TestObesrvateurT2C {
       tc2c_2.setCodeCompagnie("EM")   ;
       tc2c_2.addCirculation(c4)       ;
       tc2c_2.setOperatingFlight("9655");
-      tc2c_2.setMarketingFlight("AF9655");
+      tc2c_2.setMarketingFlight("AF 9655");
       train.setDateDebutValidite(StringToDate.toDate("01JAN15"));
       train.setDateFinValidite(StringToDate.toDate("14DEC15"));
       train.addCirculation(c3)   ;
@@ -106,9 +106,12 @@ public class TestObesrvateurT2C {
       /* 
        * faut extraire les circulations des trains des compagnies dans la periode du service  
        * */ 
+      System.out.println(tc2c);
       tc2c.adaptService(MaxMinDates.getMaxDate(listDatesDebut), MaxMinDates.getMinDate(listDatesFin));
+       
       tc2c.calculeCirculationFromJoursCirculation();
       // Set<TrainToCompagnie> set = is.
+     
       listTrainToCompagnie.add(tc2c);//listTrainToCompagnie.add(tc2c_2);
       ExportPDTByCompagnyToSSIM7  compagnyToSSIM7 = new ExportPDTByCompagnyToSSIM7(); 
       compagnyToSSIM7.export(listTrainToCompagnie);

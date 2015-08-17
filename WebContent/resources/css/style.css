@@ -56,11 +56,21 @@
 }
 
 .ui-datepicker .ui-state-active {
-	color: gray;
+	color: red;
 	background-color: Green !important;
 }
 
 .ui-datepicker  .ui-state-highlight {
 	color: balck;
 	background-color: Green !important;
+}
+.fieldSet{
+margin-bottom: 20px;
+border-style: outset; 
+border-color :#0080ff #E0E0E0;
+  max-width:auto;
+  padding:16px; 
+  font: 200;
+  font-size: x-small;   
+  font-family: inherit;
 }

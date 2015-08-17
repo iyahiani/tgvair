@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javassist.bytecode.Mnemonic;
+//import javassist.bytecode.Mnemonic;
 
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.circulation.JourCirculation;
@@ -50,7 +50,7 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
          if (tc2c.getListeJoursCirculation().containsKey(jourCirculation.getDateCircul())) {
             tc2c.getListeJoursCirculation().put(jourCirculation.getDateCircul(),jourCirculation); 
             //this.listCompagnieImpactees.add(tc2c.getCodeCompagnie()) ;  
-            System.out.println(MaxMinDates.getMinDate(listDatesFin));
+            
             
          }
        }

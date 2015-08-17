@@ -4,75 +4,132 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
+
 	<ui:define name="contenu">
-	<h1 class="ui-widget-header ui-corner-all" align="center"> CATALOGUE DE TRAINS  </h1>
-		<h:panelGrid columns="1" headerClass="gridHeader" >
-			
-			<h:panelGrid columns="2"
-				style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
-				<h:panelGrid columns="3" style="margin-bottom : 5px auto;">
-					<p:commandButton icon="ui-icon-circle-plus" />
-					<p:selectOneMenu value="A" effect="fold" editable="true"
-						style="width : 100%" />
-					<p:commandButton icon="ui-icon-seek-next" />
+
+		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet">
+			<!-- style="font-size: 45px; font-color : red ;" -->
+
+			<p:tabView>
+				<p:tab title="Train">
+					<h:panelGrid columns="2"
+						style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
+						<h:panelGrid columns="3" style="margin-bottom : 5px auto;">
+							<p:commandButton icon="ui-icon-circle-plus" />
+							<p:selectOneMenu value="A" effect="fold" editable="true"
+								style="width : 100%" />
+							<p:commandButton icon="ui-icon-seek-next" />
+						</h:panelGrid>
+						<p:outputLabel></p:outputLabel>
+						<p:outputLabel></p:outputLabel>
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="OD">
+					<h:panelGrid columns="2"
+						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Depart:" for="depart" />
+							<p:autoComplete id="depart" value="d" />
+							<!-- completeMethod="" -->
+						</h:panelGrid>
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Arriver:" for="arriver" />
+							<p:autoComplete id="arriver" value="d" />
+							<!-- completeMethod="" -->
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+
+			<h:panelGrid columns="1" style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+
+				<p:dataTable var="" value="">
+					<p:column headerText="Compagnie Aérienne">
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Début de Validité ">
+
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Fin de Validité">
+
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Marketing Flight">
+
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Quota 1ére">
+
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Quota 2éme">
+						<h:outputText value="" />
+					</p:column>
+				</p:dataTable>
+				<h:panelGrid columns="1"
+					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+					<p:dataTable var="" value="">
+						<p:column headerText="Numéro Train">
+							<h:outputText value="" />
+						</p:column>
+
+						<p:column headerText="Début de Validité ">
+
+							<h:outputText value="" />
+						</p:column>
+
+						<p:column headerText="Fin de Validité">
+
+							<h:outputText value="" />
+						</p:column>
+
+						<p:column headerText="Départ">
+							<h:outputText value="" />
+						</p:column>
+
+						<p:column headerText="Arrivée">
+							<h:outputText value="" />
+						</p:column>
+					</p:dataTable>
 				</h:panelGrid>
-				<p:outputLabel></p:outputLabel>
-				<p:outputLabel></p:outputLabel>
+				<h:panelGrid columns="2"
+					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+					<f:facet name="header"> Ajouter un Train</f:facet>
+					<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
+					<h:selectOneMenu value="A" effect="fold" editable="true"
+						style="width : 100%" />
+					<p:outputLabel value="Début de Validité"></p:outputLabel>
+					<p:calendar id="popup2" showOn="both" locale="fr"
+						styleClass="dateTimeStyle" />
+					<p:outputLabel value="Fin de Validité"></p:outputLabel>
+					<p:calendar id="popup3" showOn="both" locale="fr"
+						styleClass="dateTimeStyle" />
+					<p:outputLabel for="marketingFlight" value="marketing Flight"></p:outputLabel>
+					<p:inputText id="marketingFlight" style="width : 100% auto;"></p:inputText>
+					<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
+					<p:inputText id="Quota1" style="width :100% auto;"></p:inputText>
+					<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
+					<p:inputText id="Quota2" style="width : 100% auto;"></p:inputText>
+					<h:panelGrid></h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton icon="ui-icon-cancel"></p:commandButton>
+						<p:commandButton icon="ui-icon-check"></p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
 			</h:panelGrid>
-			<p:dataTable var="" value="">
-				<p:column headerText="Compagnie Aérienne">
-					<h:outputText value="" />
-				</p:column>
 
-				<p:column headerText="Début de Validité ">
 
-					<h:outputText value="" />
-				</p:column>
 
-				<p:column headerText="Fin de Validité">
 
-					<h:outputText value="" />
-				</p:column>
 
-				<p:column headerText="Marketing Flight">
+		</p:fieldset>
 
-					<h:outputText value="" />
-				</p:column>
 
-				<p:column headerText="Quota 1ére">
-
-					<h:outputText value="" />
-				</p:column>
-
-				<p:column headerText="Quota 2éme">
-					<h:outputText value="" />
-				</p:column>
-			</p:dataTable>
-			<h:panelGrid columns="2"
-				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;"> 
-				<f:facet name="header"> Ajouter un Train</f:facet>
-				<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
-				<h:selectOneMenu value="A" effect="fold" editable="true"
-					style="width : 100%" />
-				<p:outputLabel value="Début de Validité"></p:outputLabel>
-				<p:calendar id="popup2" showOn="both" locale="fr"
-					styleClass="dateTimeStyle" />
-				<p:outputLabel value="Fin de Validité"></p:outputLabel>
-				<p:calendar id="popup3" showOn="both" locale="fr"
-					styleClass="dateTimeStyle" />
-				<p:outputLabel for="marketingFlight" value="marketing Flight"></p:outputLabel>
-				<p:inputText id="marketingFlight" style="width : 100% auto;"></p:inputText>
-				<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
-				<p:inputText id="Quota1" style="width :100% auto;"></p:inputText>
-				<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
-				<p:inputText id="Quota2" style="width : 100% auto;"></p:inputText>
-				<h:panelGrid></h:panelGrid>
-				<h:panelGrid columns="2" >
-				<p:commandButton icon="ui-icon-cancel"></p:commandButton>
-				<p:commandButton icon="ui-icon-check"></p:commandButton> 
-				</h:panelGrid>	
-			</h:panelGrid>
-		</h:panelGrid>
 	</ui:define>
 </ui:composition>

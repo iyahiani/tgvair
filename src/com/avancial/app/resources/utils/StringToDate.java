@@ -43,7 +43,7 @@ public class StringToDate {
       SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
 	   String myDate = df.format(date);  
 	      
-	   return myDate ; 
+	   return myDate.toUpperCase() ; 
 	} 
 	
 	

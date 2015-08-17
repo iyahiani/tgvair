@@ -62,7 +62,6 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    public void export(List<TrainToCompagnie> listTrainsToCompagnie) throws ParseException {
       Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
       this.writer = new WriterTxt("D:/exportSSIM7/testFormater.txt");
-      
       try {
          int[] beginsType1 = { 0, 1, 35, 191, 194,200 };
          int[] lengthsType1 = { 1, 34, 156, 3, 6,1 };
@@ -241,7 +240,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("B");
       liste.add("010");
       liste.add("CDG");
-      liste.add("XDB");
+      liste.add("ZLN"); // inserer le code IATA
       liste.add(tc2c.getMarketingFlight());
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)

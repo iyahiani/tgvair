@@ -1,11 +1,9 @@
-
-
 <ui:composition template="/pages/template/layout.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="title">
@@ -18,24 +16,24 @@
 		<script type="text/javascript">
 			function colorerJours(date) {
 
-				var day = date.getDay();
-				switch (day) {
+				
+				switch (date.getDay()) {
 				case 0:
-					return [ true, 'ui-datepicker' ];
+					return [ true, 'ui-datepicker ui-state-default' ];
 				case 4:
-					return [ true, 'ui-datepicker ' ];
+					return [ true, 'ui-datepicker ui-state-highlight' ];
 				default:
 					return [ true, '' ];
 				}
 			}
 		</script>
-		<p:fieldset legend="#{effect}">
+		<p:fieldset legend="#{effect}" styleClass="fieldSet">
 			<h:panelGrid columns="2">
-				<ui:repeat var="val" value="#{calendar.listeDates}">
-					<p:calendar  id="mycalendar" effect="drop" mode="inline" beforeShowDay="colorerJours" value="val"
-						pattern="dd/MM/yy">
+				<c:forEach var="val" items="#{calendar.stringDates}">
+					<p:calendar  id="mycalendar" effect="drop" mode="inline"  >
+						
 					</p:calendar>
-				</ui:repeat>
+				</c:forEach>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Valider" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton value="Annuler" icon="ui-icon-cancel"></p:commandButton>

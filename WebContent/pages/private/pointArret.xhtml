@@ -7,10 +7,10 @@
 	<ui:define name="title">
 	</ui:define>
 	<ui:define name="contenu">
-	<h1 class="ui-widget-header ui-corner-all" align="center">  Ajouter Un Point d'arret </h1>
+	   <p:fieldset styleClass="fieldSet" legend="POINTS D'ARRET">
 		<h:panelGroup layout="block" >
 		<h:panelGrid columns="2"
-			style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;margin-left:30px;  margin: 20px auto ; margin-top : 100px; ">
+			style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; " >
 			        
 			<p:outputLabel for="codeComp" value="Code Compagnie"
 				title="Code Compagnie en MAJUSCULE"></p:outputLabel>
@@ -22,7 +22,7 @@
 			
 		</h:panelGrid>
 
-		<h:panelGrid columns="3" style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;margin: 0px auto ;  " >
+		<h:panelGrid columns="3" style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; " >
 			<f:facet name="header"> Ouverture du Guichet </f:facet>
 			<p:outputLabel value="Lundi"></p:outputLabel>
 			<p:calendar pattern="HH:mm" timeOnly="true" locale="fr" showOn="both" />
@@ -52,5 +52,6 @@
             </h:panelGrid>
 		</h:panelGrid> 
 		</h:panelGroup>
+		</p:fieldset> 
 	</ui:define>
 </ui:composition>

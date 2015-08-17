@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 /**
@@ -19,11 +21,12 @@ public class PointArretDataBean implements Serializable {
 	private static final Long serialVersionID =1L; 
 	
 	public PointArretDataBean() {
-		
 	} 
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false) 
-	private int idPointArret ; 
+	private Long idPointArret ; 
 	
 	@Column(nullable=false, length=100) 
 	private String codeResarailPointArret ;
@@ -34,11 +37,11 @@ public class PointArretDataBean implements Serializable {
 	@Column(nullable=false, length=100) 
 	private String libellePointArret ;
 
-	public int getIdPointArret() {
+	public Long getIdPointArret() {
 		return idPointArret;
 	}
 
-	public void setIdPointArret(int idPointArret) {
+	public void setIdPointArret(Long idPointArret) {
 		this.idPointArret = idPointArret;
 	}
 

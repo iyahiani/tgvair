@@ -210,7 +210,7 @@ public class Train implements ITrain {
                   iObs.notifierTrainToCompagnie(jourCirculation.getValue());
                }
                
-            } else {
+            }/* else {
 
                if (!train.getJoursCirculation().containsKey(jourCirculation.getKey()) && (jourCirculation.getKey().after(date_deb_SSIM) || (jourCirculation.getKey().equals(date_deb_SSIM)))
                      && (jourCirculation.getKey().before(date_fin_SSIM) || (jourCirculation.getKey().equals(date_fin_SSIM))))
@@ -219,7 +219,7 @@ public class Train implements ITrain {
                   jourCirculation.getValue().setFlagCirculation(false);
                   iObs.notifierTrainToCompagnie(jourCirculation.getValue());
                }
-            }
+            }*/
       }
 
       }

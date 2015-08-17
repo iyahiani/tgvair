@@ -11,6 +11,7 @@ public class Guichet {
    private Date heureFermetureFerie  ;
   
    public Guichet() {
+   
    }
    
    

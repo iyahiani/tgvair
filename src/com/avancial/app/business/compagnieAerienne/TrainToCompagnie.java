@@ -78,7 +78,9 @@ public class TrainToCompagnie extends Train{
       } 
       
       this.listeJoursCirculation.clear();
-      this.listeJoursCirculation.putAll(temp);
-      
+      //this.listeCirculations.clear();
+      this.listeJoursCirculation.putAll(temp); 
+      //this.calculeCirculationFromJoursCirculation();
+   
    }
 }
