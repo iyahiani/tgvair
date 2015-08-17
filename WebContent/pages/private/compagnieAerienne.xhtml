@@ -8,21 +8,27 @@
     <ui:define name="contenu">
         <h1 class="ui-widget-header ui-corner-all" align="center"> Ajout Compagnie Aerienne </h1>
         <p:fieldset legend="Compagnie Aerienne" styleClass="fieldSet">
-       <h:panelGrid columns="2" bgcolor="#C0C0C0"
-                style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; margin:  auto; font-size:20px;"> 
-               
-                
-                <p:outputLabel for="codeCompagnie" value="Code Compagnie" title="Code Compagnie en MAJUSCULE" ></p:outputLabel>
-                <p:inputText id="codeCompagnie" style="width :100% auto;" maxlength="2" ></p:inputText>
-                <p:outputLabel for="labelCompagnie" value="Libellé Compagnie"></p:outputLabel>
-                <p:inputText id="labelCompagnie" style="width : 100% auto;"></p:inputText>
-               <h:panelGrid></h:panelGrid>
-                <h:panelGrid columns="2" >
-                <p:commandButton icon="ui-icon-cancel"></p:commandButton>
-                <p:commandButton icon="ui-icon-check"></p:commandButton> 
-                </h:panelGrid>  
-            </h:panelGrid> 
-        </p:fieldset>
+			<h:form>
+				<h:panelGrid columns="2" bgcolor="#C0C0C0"
+					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; margin:  auto; font-size:20px;">
+					<h:outputText value="Code Compagnie"></h:outputText>
+					<p:inputText
+						value="#{compagnieAerienneMangedBean.codeCompagnieAerienne}"
+						required="true" style="width :100% auto;"></p:inputText>
+
+					<h:outputText value="Libellé Compagnie"></h:outputText>
+					<p:inputText
+						value="#{compagnieAerienneMangedBean.libelleCompagnieAerienne}"
+						required="true" style="width : 100% auto;"></p:inputText>
+					<h:panelGrid></h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton icon="ui-icon-cancel"></p:commandButton>
+						<p:commandButton icon="ui-icon-check" type="submit"
+							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne()}"></p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:fieldset>
         
     </ui:define>
 </ui:composition>

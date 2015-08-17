@@ -1,5 +1,6 @@
 package com.avancial.app.data.model.databean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tgvair_train_Catalogue_To_Compagnie")
-public class TrainCatalogueToCompagnieDataBean {
+public class TrainCatalogueToCompagnieDataBean implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "idTrainCatalogueToCompagnie", unique = true, nullable = false)

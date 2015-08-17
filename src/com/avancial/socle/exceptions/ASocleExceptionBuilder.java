@@ -22,6 +22,8 @@ public abstract class ASocleExceptionBuilder implements ISocleExceptionBuilder {
       this.next = next;
       // On tente de récupérer l'exception parente
       Throwable t = e.getCause();
+      if (null!=t)
+         if (null!=t.getCause())
       this.buffer.append(t.getCause().getMessage());
    }
 

@@ -6,42 +6,58 @@ import javax.persistence.Query;
 
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
+import com.avancial.socle.data.model.databean.RoleDataBean;
+import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.SocleExceptionManager;
 
-public class CompagnieAerienneDao extends AbstractDao implements CrudDAO{
+public class CompagnieAerienneDao extends AbstractDao {
 
-	@Override
-	public List<CompagnieAerienneDataBean> getAll() {
-		
-		String sql = "From tgvair_compagnie_aerienne";
-	      Query requete = this.getEntityManager().createQuery(sql);
-	      return requete.getResultList();
-	}
+   @Override
+   public List<CompagnieAerienneDataBean> getAll() {
 
-	@Override
-	public Object create(Object o) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+      String sql = "From tgvair_compagnie_aerienne";
+      Query requete = this.getEntityManager().createQuery(sql);
+      return requete.getResultList();
+   }
 
-	@Override
-	public void add(Object o) {
-		// TODO Auto-generated method stub
-		
-	}
+   public void save(CompagnieAerienneDataBean bean) throws ASocleException {
+      try {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().persist(bean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+      } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         @SuppressWarnings("unused")
+         SocleExceptionManager manager=new SocleExceptionManager();
+           throw SocleExceptionManager.getException(e);
+        
+      }
+   }
 
-	@Override
-	public void upDate(Object o) {
-		// TODO Auto-generated method stub
-		
-	}
+   public void delete(CompagnieAerienneDataBean bean) throws ASocleException {
+      try {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().remove(bean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+      } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         throw SocleExceptionManager.getException(e);
+      }
 
-	@Override
-	public void delete(Object o) {
-		// TODO Auto-generated method stub
-		
-	}
+   }
 
-	
+   public void update(CompagnieAerienneDataBean bean) throws ASocleException {
+      try {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(bean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+      } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         throw SocleExceptionManager.getException(e);
+      }
 
-	
+   }
 }
