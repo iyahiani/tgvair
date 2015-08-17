@@ -35,11 +35,11 @@ private static final Long serialVersionID = 1L ;
 	@Column(name="idTrainCatalogue",unique=true, nullable=false) 
 	private Long idTrainCatalogue ; 
 	private int numeroTrainCatalogue ; 
-	@OneToOne
+	//@OneToOne
 	@JoinColumn(name = "idPointArret")
 	@Column(name = "originePointArret")
 	private int originePointArret ;
-	@OneToOne
+//@OneToOne
 	@JoinColumn(name = "idPointArret")
 	@Column(name = "destinationPointArret")
 	private int destinationPointArret ;
@@ -49,10 +49,8 @@ private static final Long serialVersionID = 1L ;
 	private Date dateDebutValidite ; 
 	private Date dateFinValidite ; 
 	
-	
+	//@OneToMany (fetch = FetchType.LAZY) 
 	private List<TrainCatalogueToCompagnieDataBean>  listTrainCatTCompagnie = new ArrayList<>(); 
-	
-	@OneToMany (fetch = FetchType.LAZY)
 	public List<TrainCatalogueToCompagnieDataBean> getListTrainCatalogueToCompanie(){
 	   return this.listTrainCatTCompagnie ;
 	}

@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -65,6 +66,20 @@ public class WriteSSIM implements IWriter{
    public FileWriter getFileWriter() {
       
       return this.fw;
+   }
+
+   public void write(ArrayList<String> liste) throws IOException {
+   }
+
+   public void close() throws IOException {
+   }
+
+   public IFormaterStrategy getFormaterStrategy() {
+      
+      return null;
+   }
+
+   public void setFormaterStrategy(IFormaterStrategy formaterStrategy) {
    }
 
 }

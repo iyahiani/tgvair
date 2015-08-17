@@ -25,7 +25,7 @@ public class CirculationDataBean implements Serializable {
    private static final long serialVersionUID = 1L;
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "idCirculation")
+   @Column(name = "idCirculation",unique = true, nullable = false)
    private Long idCirculation;
 
    @OneToOne
