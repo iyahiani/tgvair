@@ -41,37 +41,40 @@
 				</p:tab>
 			</p:tabView>
 
-			<h:panelGrid columns="1" style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-
-				<p:dataTable var="" value="" id="tableCompAerienne">
+			<h:panelGrid columns="1"
+				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+                <h:form id="tableCompAerienne">
+				<p:dataTable var="trains" value="#{traintocompagnie.trainsCataloguesToCompagnies}"  paginator="true" id="tableCompAerienne">
 					<p:column headerText="Compagnie Aérienne">
-						<h:outputText value="" />
+						<h:outputText value="#{trains.compagnieAerienneDataBean.cod}" />
 					</p:column>
 
 					<p:column headerText="Début de Validité ">
 
-						<h:outputText value="" />
+						<h:outputText value="#{trains.dateDebutValiditeTrainCatalogueToCompagnie}" />
 					</p:column>
 
 					<p:column headerText="Fin de Validité">
 
-						<h:outputText value="" />
+						<h:outputText value="#{trains.dateFinValiditeTrainCatalogueToCompagnie}" />
+						
 					</p:column>
 
 					<p:column headerText="Marketing Flight">
 
-						<h:outputText value="" />
+						<h:outputText value="#{trains.marketingFlightTrainCatalogueToCompagnie}" />
 					</p:column>
 
 					<p:column headerText="Quota 1ére">
 
-						<h:outputText value="" />
+						<h:outputText value="#{trains.quotaPremiereTrainCatalogueToCompagnie}" />
 					</p:column>
 
 					<p:column headerText="Quota 2éme">
-						<h:outputText value="" />
+						<h:outputText value="#{trains.quotaDeuxiemeTrainCatalogueToCompagnie}" />
 					</p:column>
 				</p:dataTable>
+				</h:form>
 				<h:panelGrid columns="1"
 					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
 					<p:dataTable var="" value="" id="tableTrains">
@@ -99,40 +102,45 @@
 					</p:dataTable>
 				</h:panelGrid>
 				<h:form>
-				<h:panelGrid columns="2"
-					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-					<f:facet name="header"> Ajouter un Train</f:facet>
-					<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
-					<h:selectOneMenu   effect="fold" editable="true"    value="#{traintocompagnie.allCompagnie}" 
-						style="width : 100%" > 	<!-- value="#{traintocompagnie.allCompagnie}" <f:selectItems value=""> </f:selectItems>  traintocompagnie.allCompagnie-->		
-						<f:selectItems value="#{traintocompagnie.allCompagnie}" > </f:selectItems>
+					<h:panelGrid columns="2"
+						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+						<f:facet name="header"> Ajouter un Train</f:facet>
+						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
+						<h:selectOneMenu effect="fold" editable="true"
+							value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
+							<!-- value="#{traintocompagnie.allCompagnie}" <f:selectItems value=""> </f:selectItems>  traintocompagnie.allCompagnie-->
+							<f:selectItems value="#{traintocompagnie.allCompagnie}">
+							</f:selectItems>
 						</h:selectOneMenu>
-					<p:outputLabel value="Début de Validité"></p:outputLabel>
-					<p:calendar id="popup2" showOn="both" locale="fr" 
-						styleClass="dateTimeStyle" value="#{traintocompagnie.dateDebutValidite}" />
-					<p:outputLabel value="Fin de Validité"></p:outputLabel>
-					<p:calendar id="popup3" showOn="both" locale="fr"
-						styleClass="dateTimeStyle" value="#{traintocompagnie.dateFinValidite}"/>
-					<p:outputLabel for="marketingFlight" value="marketing Flight" ></p:outputLabel>
-					<p:inputText id="marketingFlight" style="width : 100% auto;" value="#{traintocompagnie.marketingFlight}"></p:inputText>
-					<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
-					<p:inputText id="Quota1" style="width :100% auto;" value="#{traintocompagnie.quota1er}"></p:inputText>
-					<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
-					<p:inputText id="Quota2" style="width : 100% auto;" value="#{traintocompagnie.quota2em}"></p:inputText>
-					<h:panelGrid></h:panelGrid>
-					<h:panelGrid columns="2">
-						<p:commandButton icon="ui-icon-cancel"></p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit" actionListener="#{traintocompagnie.add()}" 
-						update=":tableCompAerienne" action="traintocompagnie.reload()"></p:commandButton>
+						<p:outputLabel value="Début de Validité"></p:outputLabel>
+						<p:calendar id="popup2" showOn="both" locale="fr"
+							styleClass="dateTimeStyle"
+							value="#{traintocompagnie.dateDebutValidite}" />
+						<p:outputLabel value="Fin de Validité"></p:outputLabel>
+						<p:calendar id="popup3" showOn="both" locale="fr"
+							styleClass="dateTimeStyle"
+							value="#{traintocompagnie.dateFinValidite}" />
+						<p:outputLabel for="marketingFlight" value="marketing Flight"></p:outputLabel>
+						<p:inputText id="marketingFlight" style="width : 100% auto;"
+							value="#{traintocompagnie.marketingFlight}"></p:inputText>
+						<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
+						<p:inputText id="Quota1" style="width :100% auto;"
+							value="#{traintocompagnie.quota1er}"></p:inputText>
+						<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
+						<p:inputText id="Quota2" style="width : 100% auto;"
+							value="#{traintocompagnie.quota2em}"></p:inputText>
+						<h:panelGrid></h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton icon="ui-icon-cancel"></p:commandButton>
+							<p:commandButton icon="ui-icon-check" type="submit"
+								actionListener="#{traintocompagnie.add()}" 
+								 ajax="true" ><!-- update=":tableCompAerienne" -->  
+								 <p:ajax update=":tableCompAerienne" listener="#{traintocompagnie.reload()}"></p:ajax>
+								</p:commandButton>
+						</h:panelGrid>
 					</h:panelGrid>
-				</h:panelGrid> 
 				</h:form>
 			</h:panelGrid>
-
-
-
-
-
 		</p:fieldset>
 
 

@@ -30,7 +30,7 @@ public class TrainCatalToCompManagedBean extends AManageBean{
    private List<TrainCatalogueDataBean> trainsCatalogues ;
    private List<TrainCatalogueToCompagnieDataBean> trainsCataloguesToCompagnies ; 
    private List<CompagnieAerienneDataBean> allCompagnie;
-   
+   private String codeCompagnie;
    private Date dateDebutValidite ;
    private Date dateFinValidite ;
    private String marketingFlight ; 
@@ -77,7 +77,6 @@ public class TrainCatalToCompManagedBean extends AManageBean{
    public void reload() {
       this.trainsCataloguesToCompagnies.clear();
       this.trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getAll());
-      System.out.println(new TrainCatalogueToCompagnieDAO().getAll());
    }
   
   
@@ -122,6 +121,14 @@ public class TrainCatalToCompManagedBean extends AManageBean{
    }
    public void setQuota2em(int quota2em) {
       this.quota2em = quota2em;
+   }
+
+   public String getCodeCompagnie() {
+      return codeCompagnie;
+   }
+
+   public void setCodeCompagnie(String codeCompagnie) {
+      this.codeCompagnie = codeCompagnie;
    } 
    
    
