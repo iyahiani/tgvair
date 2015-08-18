@@ -22,8 +22,10 @@
 					<h:panelGrid></h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:commandButton icon="ui-icon-cancel"></p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit" onsuccess="#{compagnieAerienneMangedBean.initProperties()}"
-							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne}"></p:commandButton>
+						<p:commandButton icon="ui-icon-check" type="submit" 
+							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne}"> 
+							<p:ajax onsuccess="#{compagnieAerienneMangedBean.initProperties()}"></p:ajax>
+							</p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
 			</h:form>

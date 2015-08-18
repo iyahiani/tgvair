@@ -55,6 +55,10 @@ public class CompagnieAerienneDataBean implements Serializable {
    public void setLibelleCompagnieAerienne(String libelleCompagnieAerienne) {
       this.libelleCompagnieAerienne = libelleCompagnieAerienne;
    } 
-   
+   @Override
+   public String toString() {
+      
+      return this.CodeCompagnieAerienne+""+this.libelleCompagnieAerienne ;
+   }
    
 }

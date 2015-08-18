@@ -42,11 +42,7 @@ public class TrainCatalogueDataBean implements Serializable {
    private Date dateDebutValidite ; 
    private Date dateFinValidite ; 
    
-   @OneToMany (fetch = FetchType.LAZY) 
-   private List<TrainCatalogueToCompagnieDataBean>  listTrainCatTCompagnie = new ArrayList<>(); 
-   public List<TrainCatalogueToCompagnieDataBean> getListTrainCatalogueToCompanie(){
-      return this.listTrainCatTCompagnie ;
-   }
+   
    
    public Long getIdTrainCatalogue() {
       return idTrainCatalogue;

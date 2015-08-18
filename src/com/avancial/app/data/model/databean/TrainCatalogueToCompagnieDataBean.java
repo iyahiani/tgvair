@@ -2,6 +2,7 @@ package com.avancial.app.data.model.databean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,15 +11,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tgvair_train_Catalogue_To_Compagnie")
+@Table(name = "tgvair_train_catalogue_to_compagnie")
 public class TrainCatalogueToCompagnieDataBean implements Serializable {
+  
+   private static final Long serialVersionID = 1L ; 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "idTrainCatalogueToCompagnie", unique = true, nullable = false)
+  
    private Long idTrainCatalogueToCompagnie;
 
    @OneToOne
@@ -28,7 +32,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    @OneToOne
    @JoinColumn(name = "idCompagnieAerienne")
    private CompagnieAerienneDataBean compagnieAerienneDataBean;
-
+   
    private String joursCirculationTrainCatalogueToCompagnie;
    private int quotaPremiereTrainCatalogueToCompagnie;
    private int quotaDeuxiemeTrainCatalogueToCompagnie;
@@ -38,7 +42,9 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    private Date dateFinValiditeTrainCatalogueToCompagnie;
    @OneToOne
    @JoinColumn(name = "idPointArret")
+   
    private PointArretDataBean originePointArret;
+   
    private PointArretDataBean destinationPointArret;
 
    public Long getIdTrainCatalogueToCompagnie() {
@@ -136,4 +142,6 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    public void setDestinationPointArret(PointArretDataBean destinationPointArret) {
       this.destinationPointArret = destinationPointArret;
    }
+
+  
 }
