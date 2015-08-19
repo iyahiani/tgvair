@@ -153,6 +153,10 @@
 			<groupId>avancial.fr</groupId>
 			<artifactId>reader</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -226,6 +230,11 @@
 				<groupId>avancial.fr</groupId>
 				<artifactId>reader</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.4</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

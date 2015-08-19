@@ -4,23 +4,22 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
 
-public class TrainCatalogueToCompagnieDAO extends AbstractDao  {
+public class TrainCatalogueToCompagnieDAO extends AbstractDao {
 
    @SuppressWarnings("unchecked")
    @Override
    public List<TrainCatalogueToCompagnieDataBean> getAll() {
       String sql = "From TrainCatalogueToCompagnieDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
-      return requete.getResultList(); 
-        
-   }  
-   
+      return requete.getResultList();
+
+   }
+
    public void save(TrainCatalogueToCompagnieDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
@@ -30,9 +29,9 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao  {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          @SuppressWarnings("unused")
-         SocleExceptionManager manager=new SocleExceptionManager();
-           throw SocleExceptionManager.getException(e);
-        
+         SocleExceptionManager manager = new SocleExceptionManager(e);
+         throw SocleExceptionManager.getException();
+
       }
    }
 
@@ -44,7 +43,7 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao  {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         throw SocleExceptionManager.getException(e);
+         throw SocleExceptionManager.getException();
       }
 
    }
@@ -57,11 +56,9 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao  {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         throw SocleExceptionManager.getException(e);
+         throw SocleExceptionManager.getException();
       }
 
    }
 
-
-   
 }

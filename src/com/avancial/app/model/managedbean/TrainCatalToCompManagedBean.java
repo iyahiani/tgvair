@@ -1,16 +1,11 @@
 package com.avancial.app.model.managedbean;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -21,26 +16,25 @@ import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
-import com.avancial.socle.data.controller.dao.RoleDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
-import com.avancial.socle.resources.constants.ConstantSocle;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("traintocompagnie")
 @ViewScoped
 public class TrainCatalToCompManagedBean extends AManageBean {
-   private static final long serialVersionUID = 1L;
-   private List<TrainCatalogueDataBean> trainsCatalogues;
+   private static final long                       serialVersionUID = 1L;
+   private List<TrainCatalogueDataBean>            trainsCatalogues;
    private List<TrainCatalogueToCompagnieDataBean> trainsCataloguesToCompagnies;
-   private List<CompagnieAerienneDataBean> allCompagnie;
-   private String codeCompagnie;
-   private Date dateDebutValidite;
-   private Date dateFinValidite;
-   private String marketingFlight;
-   private int quota1er;
-   private int quota2em; 
+   private List<CompagnieAerienneDataBean>         allCompagnie;
+   private String                                  codeCompagnie;
+   private Date                                    dateDebutValidite;
+   private Date                                    dateFinValidite;
+   private String                                  marketingFlight;
+   private int                                     quota1er;
+   private int                                     quota2em;
 
-   private TrainCatalogueToCompagnieDataBean selectedTrain ;
+   private TrainCatalogueToCompagnieDataBean       selectedTrain;
 
    public TrainCatalToCompManagedBean() {
       this.trainsCatalogues = new ArrayList<>();
@@ -59,24 +53,25 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       return this.allCompagnie;
    }
 
+   @Override
    public String add() {
 
-      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean() ;
-      bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite())       ;
-      bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite())           ;
-      bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight())           ;
-      bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er())                    ;
-      bean.setQuotaDeuxiemeTrainCatalogueToCompagnie(getQuota2em())  ;
+      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
+      bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite());
+      bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
+      bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
+      bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er());
+      bean.setQuotaDeuxiemeTrainCatalogueToCompagnie(getQuota2em());
       bean.setCodeCompagnieAerienne(getCodeCompagnie());
       TrainCatalogueToCompagnieDAO dao = new TrainCatalogueToCompagnieDAO();
       try {
          dao.save(bean);
-         FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "La compagnie a été créé."));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "La compagnie a été créé."));
          this.closeDialog = true;
          RequestContext.getCurrentInstance().update(":tableCompAerienne");
 
       } catch (ASocleException e) {// ASocleException
-         FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
          e.printStackTrace();
       }
       return null;
@@ -85,9 +80,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    public void reload() {
       this.trainsCataloguesToCompagnies.clear();
       this.trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getAll());
-   } 
-   
-  
+   }
 
    public List<TrainCatalogueDataBean> getTrainsCatalogues() {
       return trainsCatalogues;
@@ -159,20 +152,18 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public void setSelectedTrain(TrainCatalogueToCompagnieDataBean selectedTrain) {
-      if(selectedTrain!=null) {
-         this.selectedTrain = selectedTrain ;
+      if (selectedTrain != null) {
+         this.selectedTrain = selectedTrain;
          this.dateDebutValidite = selectedTrain.getDateDebutValiditeTrainCatalogueToCompagnie();
          this.dateFinValidite = selectedTrain.getDateFinValiditeTrainCatalogueToCompagnie();
-         //this.codeCompagnie=selectedTrain.getCompagnieAerienneDataBean(); 
-         this.marketingFlight=selectedTrain.getMarketingFlightTrainCatalogueToCompagnie();
-         this.quota1er=selectedTrain.getQuotaPremiereTrainCatalogueToCompagnie();
-         this.quota2em = selectedTrain.getQuotaDeuxiemeTrainCatalogueToCompagnie(); 
-         
+         // this.codeCompagnie=selectedTrain.getCompagnieAerienneDataBean();
+         this.marketingFlight = selectedTrain.getMarketingFlightTrainCatalogueToCompagnie();
+         this.quota1er = selectedTrain.getQuotaPremiereTrainCatalogueToCompagnie();
+         this.quota2em = selectedTrain.getQuotaDeuxiemeTrainCatalogueToCompagnie();
+
       }
-      
+
       this.selectedTrain = selectedTrain;
    }
-
-   
 
 }

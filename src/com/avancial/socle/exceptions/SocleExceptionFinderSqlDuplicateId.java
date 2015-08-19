@@ -7,7 +7,7 @@ package com.avancial.socle.exceptions;
  * @author bruno.legloahec
  *
  */
-public class SocleExceptionBuilderSqlDuplicateId extends ASocleExceptionBuilder {
+public class SocleExceptionFinderSqlDuplicateId extends ASocleExceptionFinder {
 
    /**
     * Constructeur
@@ -15,7 +15,7 @@ public class SocleExceptionBuilderSqlDuplicateId extends ASocleExceptionBuilder 
     * @param next
     * @param e
     */
-   public SocleExceptionBuilderSqlDuplicateId(ASocleExceptionBuilder next, Exception e) {
+   public SocleExceptionFinderSqlDuplicateId(ASocleExceptionFinder next, Exception e) {
       super(next, e);
       this.socleException = new SocleDuplicateIdException(e);
       this.messageToBeFound = "Duplicate entry";

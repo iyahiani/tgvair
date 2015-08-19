@@ -40,7 +40,7 @@ public abstract class AParamGetter implements IParamGetter {
       socle.loadParams("socle");
       this.add(socle);
 
-      ParamReaderDB paramDb = new ParamReaderDBDirectory(new RefDirectoryDao());
+      AParamReaderDB paramDb = new ParamReaderDBDirectory(new RefDirectoryDao());
       paramDb.loadParams("directories");
       this.add(paramDb);
    }

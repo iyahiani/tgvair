@@ -34,8 +34,8 @@ public abstract class ASocleException extends Throwable implements ISocleExcepti
       return this.originalException;
    }
 
-   /*
-    * (non-Javadoc)
+   /**
+    *	
     * 
     * @see com.avancial.socle.exceptions.ISocleException#getClientMessage()
     */

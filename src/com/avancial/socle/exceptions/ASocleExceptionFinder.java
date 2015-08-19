@@ -7,9 +7,9 @@ package com.avancial.socle.exceptions;
  * @author bruno.legloahec
  *
  */
-public abstract class ASocleExceptionBuilder implements ISocleExceptionBuilder {
+public abstract class ASocleExceptionFinder {
    protected ASocleException      socleException;
-   private ASocleExceptionBuilder next;
+   private ASocleExceptionFinder next;
    private Exception              e;
    protected StringBuilder        buffer = new StringBuilder();
    protected String               messageToBeFound;
@@ -17,13 +17,11 @@ public abstract class ASocleExceptionBuilder implements ISocleExceptionBuilder {
    /**
     * Constructeur
     */
-   public ASocleExceptionBuilder(ASocleExceptionBuilder next, Exception e) {
+   public ASocleExceptionFinder(ASocleExceptionFinder next, Exception e) {
       this.setE(e);
       this.next = next;
       // On tente de récupérer l'exception parente
       Throwable t = e.getCause();
-      if (null!=t)
-         if (null!=t.getCause())
       this.buffer.append(t.getCause().getMessage());
    }
 
@@ -31,11 +29,10 @@ public abstract class ASocleExceptionBuilder implements ISocleExceptionBuilder {
     * (non-Javadoc)
     * 
     * @see
-    * com.avancial.socle.exceptions.ISocleExceptionBuilder#getSocleException
-    * (com.avancial.socle.exceptions.ISocleExceptionBuilder,
+    * com.avancial.socle.exceptions.ISocleExceptionFinder#getSocleException
+    * (com.avancial.socle.exceptions.ISocleExceptionFinder,
     * java.lang.Exception)
     */
-   @Override
    public ASocleException getSocleException() {
       if (this.buffer.lastIndexOf(this.messageToBeFound) > -1)
          return this.socleException;
@@ -45,13 +42,8 @@ public abstract class ASocleExceptionBuilder implements ISocleExceptionBuilder {
          return new SocleGenericException(e);
    }
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.avancial.socle.exceptions.ISocleExceptionBuilder#getNext()
-    */
-   @Override
-   public ASocleExceptionBuilder getNext() {
+  
+   public ASocleExceptionFinder getNext() {
       return this.next;
    };
 
@@ -59,7 +51,7 @@ public abstract class ASocleExceptionBuilder implements ISocleExceptionBuilder {
     * @param next
     *           the next to set
     */
-   public void setNext(ASocleExceptionBuilder next) {
+   public void setNext(ASocleExceptionFinder next) {
       this.next = next;
    }
 

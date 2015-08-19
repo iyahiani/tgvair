@@ -10,8 +10,8 @@ package com.avancial.socle.exceptions;
  * @author bruno.legloahec
  *
  */
-public interface ISocleExceptionBuilder {
-   public ASocleException getSocleException();
+public interface ISocleExceptionFinder   {
+	public ISocleException getSocleException();
 
-   public ASocleExceptionBuilder getNext();
+	public ISocleExceptionFinder getNext();
 }

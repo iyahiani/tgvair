@@ -6,7 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.avancial.app.resources.constants.APP_TgvAir;
-import com.avancial.socle.resources.constants.ConstantSocle;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * Managed Bean de gestion de la page liste utilisateurs public
@@ -20,19 +20,19 @@ public class MenuManagedBean implements Serializable {
    private static final long serialVersionUID = 1L;
 
    public static String goAccueil() {
-      return ConstantSocle.NAVIGATION_ACCUEIL.toString();
+      return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
 
    public static String goMdpOublie() {
-      return ConstantSocle.NAVIGATION_MDPOUBLIE.toString();
+      return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString();
    }
 
    public static String goRole() {
-      return ConstantSocle.NAVIGATION_ROLE.toString();
+      return SOCLE_constants.NAVIGATION_ROLE.toString();
    }
 
    public static String goUser() {
-      return ConstantSocle.NAVIGATION_USER.toString();
+      return SOCLE_constants.NAVIGATION_USER.toString();
    }
 
    public static String goAjustement() {

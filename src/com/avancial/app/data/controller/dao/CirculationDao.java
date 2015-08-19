@@ -25,7 +25,7 @@ public class CirculationDao extends AbstractDao {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          this.getEntityManager().close();
-         throw SocleExceptionManager.getException(e);
+         throw SocleExceptionManager.getException();
 
       }
    }

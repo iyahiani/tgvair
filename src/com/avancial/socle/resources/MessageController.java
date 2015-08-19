@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
 
-import com.avancial.socle.resources.constants.ConstantSocle;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * Gestion de la traduction de l'application
@@ -33,11 +33,11 @@ public final class MessageController {
     */
    public static String getTraduction(String parameter) {
       String traduction = "";
-      ResourceBundle messages = ResourceBundle.getBundle(ConstantSocle.BUNDLE_PATH.toString(), FacesContext.getCurrentInstance().getViewRoot().getLocale());
+      ResourceBundle messages = ResourceBundle.getBundle(SOCLE_constants.BUNDLE_PATH.toString(), FacesContext.getCurrentInstance().getViewRoot().getLocale());
       try {
          traduction = messages.getString(parameter);
       } catch (MissingResourceException e) {
-         return MessageFormat.format(messages.getString(ConstantSocle.MESSAGE_ERR_TRANSLATION_NOT_FOUND.toString()), parameter);
+         return MessageFormat.format(messages.getString(SOCLE_constants.MESSAGE_ERR_TRANSLATION_NOT_FOUND.toString()), parameter);
       }
       return traduction;
    }
