@@ -54,7 +54,6 @@ public class TrainCatalToCompManagedBean extends AManageBean {
 
    public List<CompagnieAerienneDataBean> getAllCompagnie() {
       List<CompagnieAerienneDataBean> temp = new CompagnieAerienneDao().getAll();
-
       this.allCompagnie.clear();
       this.allCompagnie.addAll(temp);
       return this.allCompagnie;

@@ -1,3 +1,3 @@
-function colorerJours(Date){
+/*function colorerJours(Date){
 	var dates = #{calendar.datesList} ;
-}
+}*/

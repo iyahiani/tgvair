@@ -29,8 +29,9 @@ public class TrainCatalogueDataBean implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long idTrainCatalogue;
-
-   private int numeroTrainCatalogue ; 
+   private String numeroTrainCatalogue1 ;
+   private String numeroTrainCatalogue2 ;
+   
    @OneToOne
    @JoinColumn(name = "idPointArret")
    
@@ -41,24 +42,15 @@ public class TrainCatalogueDataBean implements Serializable {
    private Date regimeJoursTrainCatalogue ;
    private Date dateDebutValidite ; 
    private Date dateFinValidite ; 
-   
-   
-   
+   private String operatingFlight;
    public Long getIdTrainCatalogue() {
       return idTrainCatalogue;
    }
-
    public void setIdTrainCatalogue(Long idTrainCatalogue) {
       this.idTrainCatalogue = idTrainCatalogue;
    }
 
-   public int getNumeroTrainCatalogue() {
-      return numeroTrainCatalogue;
-   }
 
-   public void setNumeroTrainCatalogue(int numeroTrainCatalogue) {
-      this.numeroTrainCatalogue = numeroTrainCatalogue;
-   }
 
    public PointArretDataBean getOriginePointArret() {
       return originePointArret;
@@ -116,6 +108,28 @@ public class TrainCatalogueDataBean implements Serializable {
       this.dateFinValidite = dateFinValidite;
    }
    public TrainCatalogueDataBean() {
+   }
+
+   public String getNumeroTrainCatalogue1() {
+      return numeroTrainCatalogue1;
+   }
+
+   public void setNumeroTrainCatalogue1(String numeroTrainCatalogue1) {
+      this.numeroTrainCatalogue1 = numeroTrainCatalogue1;
+   }
+
+   public String getNumeroTrainCatalogue2() {
+      return numeroTrainCatalogue2;
+   }
+
+   public void setNumeroTrainCatalogue2(String numeroTrainCatalogue2) {
+      this.numeroTrainCatalogue2 = numeroTrainCatalogue2;
+   }
+   public String getOperatingFlight() {
+      return operatingFlight;
+   }
+   public void setOperatingFlight(String operatingFlight) {
+      this.operatingFlight = operatingFlight;
    }
 
    
