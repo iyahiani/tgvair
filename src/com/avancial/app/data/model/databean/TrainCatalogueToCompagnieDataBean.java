@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    @OneToOne
    @JoinColumn(name = "idCompagnieAerienne")
    private CompagnieAerienneDataBean compagnieAerienneDataBean;
-   
+   private String codeCompagnieAerienne ;
    private String joursCirculationTrainCatalogueToCompagnie;
    private int quotaPremiereTrainCatalogueToCompagnie;
    private int quotaDeuxiemeTrainCatalogueToCompagnie;
@@ -141,6 +142,14 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
 
    public void setDestinationPointArret(PointArretDataBean destinationPointArret) {
       this.destinationPointArret = destinationPointArret;
+   }
+
+   public String getCodeCompagnieAerienne() {
+      return codeCompagnieAerienne;
+   }
+
+   public void setCodeCompagnieAerienne(String codeCompagnieAerienne) {
+      this.codeCompagnieAerienne = codeCompagnieAerienne;
    }
 
   
