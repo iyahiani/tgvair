@@ -7,48 +7,37 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	lang="#{ihmManagedBean.language}">
 <f:view locale="#{ihmManagedBean.locale}">
-   <h:head>
-		<title>
-			<ui:insert name="title">#{msg.nom_application}</ui:insert>
+	<h:head>
+		<title><ui:insert name="title">#{msg.nom_application}</ui:insert>
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-	     <meta http-equiv="X-UA-Conpatible" content="IE=edge" /> 
-	     <meta charset="utf-8"  /> 
-		
+		<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+		<meta charset="utf-8" />
+
 		<!-- <h:outputStylesheet library="css" name="bootstrap/css/bootstrap.min.css"/> 
 	
 		-->
-		<h:outputScript name="bootstrap/js/bootstrap.js" /> 
-		  <h:outputStylesheet library="css" name="style.css" />   
-        <h:outputScript library="js" name="js/tooltip.js" />
-        <h:outputScript library="js" name="js/utils.js" /> 
-        <h:outputScript name="js/fr.js" />
-		
+		<h:outputScript name="bootstrap/js/bootstrap.js" />
+		<h:outputStylesheet library="css" name="style.css" />
+		<h:outputScript library="js" name="js/tooltip.js" />
+		<h:outputScript library="js" name="js/utils.js" />
+		<h:outputScript name="js/fr.js" />
+
 	</h:head>
-	  <h:body  styleClass="ui-theme ui-theme-" > 
-			<p:layout id="layoutPrincipal" fullPage="true" >	
-			<div styleClass="ui-theme ui-theme-"  >
-			<p:layoutUnit position="north" resizable="true" collapsible="true" >
-				<ui:include src="/pages/template/header.xhtml" />
-			</p:layoutUnit>
-			</div>
-			<p:layoutUnit position="south" resizable="true" collapsible="true"
-				style="text-align:center;" >
-				<ui:include src="/pages/template/footer.xhtml" />
-			</p:layoutUnit>
+	<h:body style="height=100%">
+		<ui:include src="/pages/template/header.xhtml" />
+		<table id="table_contenu">
+			<tr>
+				<td id="col_menu"><ui:include src="/pages/template/menu.xhtml" /></td>
+				<td id="col_contenu"><ui:insert name="contenu" /></td>
+			</tr>
 
-			<p:layoutUnit position="west" size="200"
-				header="#{msg.p_menuDroite_titre}" resizable="true"
-				collapsible="true" >
-				<ui:include src="/pages/template/menu.xhtml" />
-			</p:layoutUnit>
+		</table>
+		<ui:include style="position: absolute; bottom: 0; left: 0; right: 0"
+			src="/pages/template/footer.xhtml" />
 
-			<p:layoutUnit position="center"  >
-				<ui:insert name="contenu"  />
-			</p:layoutUnit>
-		</p:layout>
-		
-	</h:body> 
-	
+
+	</h:body>
+
 </f:view>
 </html>

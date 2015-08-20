@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- xmlns:h="http://java.sun.com/jsf/html" -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<cc:interface>
+	<cc:attribute name="refreshRole" type="java.lang.Boolean"></cc:attribute>
+</cc:interface>
+<cc:implementation>
+	<div>
+		<p:commandButton id="refreshItem2Role" action="#{security.reload()}"
+			icon="private/image/refresh.png" value="Refresh"
+			rendered="#{ihmManagedBean.isLogged() and security.isRendered('refreshItem2Role') and cc.attrs.refreshRole.booleanValue()==true}"
+			update="">
+
+		</p:commandButton>
+
+		<h:panelGrid id="blockUser" columns="2">
+			<h:graphicImage name="private/image/User.png" height="26px"
+				width="26px" id="userIcon" rendered="#{ihmManagedBean.isLogged()}" />
+			<h:outputText
+				value="#{msg.libelle_bienvenue} #{ihmManagedBean.currentUser.nomUser}."
+				rendered="#{ihmManagedBean.isLogged()}" />
+		</h:panelGrid>
+		<br />
+		<p:tooltip for="blockUser" styleClass="tooltipUser">
+
+			<h:outputText
+				value="#{msg.libelle_email} #{ihmManagedBean.currentUser.mailUser}."
+				rendered="#{ihmManagedBean.isLogged()}" />
+			<dl>
+				<h:outputText value="Rôles" rendered="#{ihmManagedBean.isLogged()}">
+				</h:outputText>
+				<ui:repeat var="table" value="#{ihmManagedBean.getRoles()}">
+					<dt>
+						<h:outputText
+							value="
+					#{table.getRoleDataBean().getLabelRole()}"
+							rendered="#{ihmManagedBean.isLogged()}"></h:outputText>
+					</dt>
+				</ui:repeat>
+			</dl>
+		</p:tooltip>
+
+	</div>
+</cc:implementation>
+
+</html>
