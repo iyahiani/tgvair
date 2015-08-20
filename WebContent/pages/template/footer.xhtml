@@ -5,10 +5,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<span style="font-size: 12px; color: grey;" > Version du TGVAIR : 
-	<h:outputText>
-			<!-- value="#{paramGetterBean.getParam('socle','version').value}"></h:outputText>-->
-	</h:outputText>		
-			</span>
+	<hr id="piedhr" />
+	<div id="Pied">
+	
+		<h:outputText value="#{msg.libelle_version_socle}"></h:outputText>
+		<h:outputText value="#{paramGetterBean.getParam('socle','version').value}"></h:outputText>
+	</div>
 
 </ui:composition>
