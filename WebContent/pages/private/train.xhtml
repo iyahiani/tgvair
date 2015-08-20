@@ -9,12 +9,12 @@
 		<h:form id="ajoutTain">
 			<p:fieldset legend="Gestion Des Trains" styleClass="fieldSet">
 
-				<h:panelGrid columns="1" headerClass="gridHeader">
+				<h:panelGrid columns="1" headerClass="gridHeader" >
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="1"
 							style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
 							<f:facet name="header"> Numéros Train</f:facet>
-							<p:panelGrid columns="2" styleClass="noBorder">
+							<p:panelGrid columns="2" styleClass="noBorder" id="tout">
 								<p:outputLabel>Simple</p:outputLabel>
 								<p:inputMask mask="9999/9"
 									value="#{traincatalogue.numeroTrainCatalogue1}"></p:inputMask>
@@ -112,15 +112,15 @@
 						</h:panelGrid>
 					</h:panelGrid>
 					<p:panelGrid class="ui-grid-col-2">
-						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
-                            <p:commandButton icon="ui-icon-check" type="submit" title="ajouter"
-                                actionListener="#{traincatalogue.add()}" ajax="true"> 
-                                
-                                
+						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset" value="Annuler" > </p:commandButton>
+                            <p:commandButton icon="ui-icon-check" type="submit" title="ajouter" value="Ajouter" 
+                                actionListener="#{traincatalogue.add()}" ajax="true">  
+                                <f:ajax render="ajoutTain tout" resetValues="true"></f:ajax>
                             </p:commandButton>
 					</p:panelGrid>
 				</h:panelGrid>
-			</p:fieldset>
+			</p:fieldset> 
+			
 		</h:form>
 	</ui:define>
 </ui:composition>

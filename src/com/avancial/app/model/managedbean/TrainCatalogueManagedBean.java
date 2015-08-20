@@ -21,7 +21,6 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("traincatalogue")
 @ViewScoped
-
 public class TrainCatalogueManagedBean extends AManageBean{ 
    
    private static final long serialVersionUID = 1L; 
@@ -51,7 +50,7 @@ public class TrainCatalogueManagedBean extends AManageBean{
    }
 
    public List<PointArretDataBean> getListGDS() {
-
+      
       return new PointArretDAO().getAllGDS();
    }
 
@@ -60,12 +59,15 @@ public class TrainCatalogueManagedBean extends AManageBean{
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
 
-
+   public void clear() {
+      
+   }
    public String add(){
       TrainCatalogueDataBean bean = new TrainCatalogueDataBean() ; 
       
       bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1()); 
       bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
+      bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1()+(!getNumeroTrainCatalogue2().isEmpty()? "-"+getNumeroTrainCatalogue2() : ""));
       bean.setOperatingFlight(getOperatingFlight());
       bean.setOriginePointArret(getOriginePointArret());
       bean.setDestinationPointArret(getDestinationPointArret());

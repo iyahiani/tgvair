@@ -42,43 +42,43 @@
 
 			<h:panelGrid columns="1"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-				
+
 				<h:form id="tableTrains">
-                <h:panelGrid columns="1"
-                    style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;" >
-                    <p:dataTable  value="#{traincatalogue.trainsCatalogue}" id="tableTrains" var="trains" selectionMode="single" rowKey="num_train"> 
-                        <p:column headerText="Numéro1 Train" id="num_train" >
-                            <h:outputText value="#{trains.numeroTrainCatalogue1}" />
-                        </p:column>
-                        <p:column headerText="Numéro2 Train">
-                            <h:outputText value="#{trains.numeroTrainCatalogue2}" />
-                        </p:column>
-                        <p:column headerText="Début de Validité ">
+					<h:panelGrid columns="1"
+						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+						<p:dataTable value="#{traincatalogue.trainsCatalogue}" rows="10" paginatorPosition="top"
+							id="tableTrains" var="trains" selectionMode="single"
+							rowKey="num_train" paginator="true" rowsPerPageTemplate="5,10,15">
+							<p:column headerText="Numéro Train" id="num_train">
+								<h:outputText value="#{trains.numeroTrainCatalogue}" />
+							</p:column>
+							
+							<p:column headerText="Début de Validité ">
 
-                            <h:outputText value="#{trains.dateDebutValidite}" />
-                        </p:column>
+								<h:outputText value="#{trains.dateDebutValidite}" />
+							</p:column>
 
-                        <p:column headerText="Fin de Validité">
+							<p:column headerText="Fin de Validité">
 
-                            <h:outputText value="#{trains.dateFinValidite}" />
-                        </p:column>
+								<h:outputText value="#{trains.dateFinValidite}" />
+							</p:column>
 
-                        <p:column headerText="Départ">
-                            <h:outputText value="#{trains.originePointArret}" />
-                        </p:column>
+							<p:column headerText="Départ">
+								<h:outputText value="#{trains.originePointArret}" />
+							</p:column>
 
-                        <p:column headerText="Arrivée">
-                            <h:outputText value="#{trains.destinationPointArret}" />
-                        </p:column>
-                    </p:dataTable>
-                </h:panelGrid>
-                </h:form>
-				
+							<p:column headerText="Arrivée">
+								<h:outputText value="#{trains.destinationPointArret}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</h:form>
+
 				<h:form id="tableCompAerienne">
 					<p:dataTable
-						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
-						var="compagnie" paginator="true"  id="tableCompAerienne" selectionMode="single"
-                        rowKey="compagnie.comp" >
+						value="#{traintocompagnie.trainsCataloguesToCompagnies}" paginatorPosition="top"
+						var="compagnie" paginator="true" id="tableCompAerienne" rows="10"
+						selectionMode="single" rowKey="compagnie.comp" rowsPerPageTemplate="5,10,15">
 
 						<p:column headerText="Compagnie Aérienne" id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
@@ -114,49 +114,50 @@
 								value="#{compagnie.quotaDeuxiemeTrainCatalogueToCompagnie}" />
 						</p:column>
 					</p:dataTable>
-				</h:form> 
-				
-				
+				</h:form>
+
+
 				<h:form>
-				      
+
 					<h:panelGrid columns="2"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
 						<f:facet name="header"> Ajouter un Train</f:facet>
 						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
-						<h:selectOneMenu effect="fold" editable="true" id="codeComp" 
+						<h:selectOneMenu effect="fold" editable="true" id="codeComp"
 							value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
 
 							<f:selectItems value="#{traintocompagnie.allCompagnie}">
 							</f:selectItems>
-							
+
 						</h:selectOneMenu>
-						
+
 						<p:outputLabel value="Début de Validité"></p:outputLabel>
 						<p:calendar id="popup2" showOn="both" locale="fr"
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateDebutValidite}" />
-						
+
 						<p:outputLabel value="Fin de Validité"></p:outputLabel>
 						<p:calendar id="popup3" showOn="both" locale="fr"
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateFinValidite}" />
-						
+
 						<p:outputLabel for="marketing_Flight" value="marketing Flight"></p:outputLabel>
-						<p:inputText  style="width : 100% auto;" id="marketing_Flight"
-							value="#{traintocompagnie.marketingFlight}" ></p:inputText>  
-						
+						<p:inputText style="width : 100% auto;" id="marketing_Flight"
+							value="#{traintocompagnie.marketingFlight}"></p:inputText>
+
 						<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
 						<p:inputText id="Quota1" style="width :100% auto;"
 							value="#{traintocompagnie.quota1er}"></p:inputText>
-						
+
 						<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
 						<p:inputText id="Quota2" style="width : 100% auto;"
 							value="#{traintocompagnie.quota2em}"></p:inputText>
 						<h:panelGrid></h:panelGrid>
 						<h:panelGrid columns="2">
 							<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
-							<p:commandButton icon="ui-icon-check" type="submit" title="ajouter"
-								actionListener="#{traintocompagnie.add()}" ajax="true">
+							<p:commandButton icon="ui-icon-check" type="submit"
+								title="ajouter" actionListener="#{traintocompagnie.add()}"
+								ajax="true">
 								<p:ajax update=":tableCompAerienne" delay="1"
 									listener="#{traintocompagnie.reload()}"></p:ajax>
 							</p:commandButton>

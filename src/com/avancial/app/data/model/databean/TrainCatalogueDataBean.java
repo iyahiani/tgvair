@@ -29,6 +29,7 @@ public class TrainCatalogueDataBean implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long idTrainCatalogue;
+   private String numeroTrainCatalogue ;
    private String numeroTrainCatalogue1 ;
    private String numeroTrainCatalogue2 ;
    
@@ -145,6 +146,12 @@ public class TrainCatalogueDataBean implements Serializable {
    }
    public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
       this.idPointArretDestination = idPointArretDestination;
+   }
+   public String getNumeroTrainCatalogue() {
+      return numeroTrainCatalogue;
+   }
+   public void setNumeroTrainCatalogue(String numeroTrainCatalogue) {
+      this.numeroTrainCatalogue = numeroTrainCatalogue;
    }
   
    
