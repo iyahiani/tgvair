@@ -32,17 +32,20 @@ public class TrainCatalogueDataBean implements Serializable {
    private String numeroTrainCatalogue1 ;
    private String numeroTrainCatalogue2 ;
    
-   @OneToOne
-   @JoinColumn(name = "idPointArret")
-   
-   private PointArretDataBean originePointArret ;
-   private PointArretDataBean destinationPointArret ;
+  @OneToOne
+  @JoinColumn(name = "idPointArret")
+   private PointArretDataBean idPointArretOrigine ;
+   private PointArretDataBean idPointArretDestination ;
+   private String originePointArret ;
+   private String destinationPointArret ;
    private Date heureDepartTrainCatalogue ;
    private Date heureArriveeTrainCatalogue ;
    private Date regimeJoursTrainCatalogue ;
    private Date dateDebutValidite ; 
    private Date dateFinValidite ; 
-   private String operatingFlight;
+   private String operatingFlight; 
+   
+   
    public Long getIdTrainCatalogue() {
       return idTrainCatalogue;
    }
@@ -52,19 +55,19 @@ public class TrainCatalogueDataBean implements Serializable {
 
 
 
-   public PointArretDataBean getOriginePointArret() {
+   public String getOriginePointArret() {
       return originePointArret;
    }
 
-   public void setOriginePointArret(PointArretDataBean originePointArret) {
+   public void setOriginePointArret(String originePointArret) {
       this.originePointArret = originePointArret;
    }
 
-   public PointArretDataBean getDestinationPointArret() {
+   public String getDestinationPointArret() {
       return destinationPointArret;
    }
 
-   public void setDestinationPointArret(PointArretDataBean destinationPointArret) {
+   public void setDestinationPointArret(String destinationPointArret) {
       this.destinationPointArret = destinationPointArret;
    }
 
@@ -131,6 +134,20 @@ public class TrainCatalogueDataBean implements Serializable {
    public void setOperatingFlight(String operatingFlight) {
       this.operatingFlight = operatingFlight;
    }
+   public PointArretDataBean getIdPointArretOrigine() {
+      return idPointArretOrigine;
+   }
+   public void setIdPointArretOrigine(PointArretDataBean idPointArretOrigine) {
+      this.idPointArretOrigine = idPointArretOrigine;
+   }
+   public PointArretDataBean getIdPointArretDestination() {
+      return idPointArretDestination;
+   }
+   public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
+      this.idPointArretDestination = idPointArretDestination;
+   }
+  
+   
 
    
 }

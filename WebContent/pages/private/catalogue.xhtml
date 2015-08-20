@@ -42,6 +42,38 @@
 
 			<h:panelGrid columns="1"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+				
+				<h:form id="tableTrains">
+                <h:panelGrid columns="1"
+                    style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;" >
+                    <p:dataTable  value="#{traincatalogue.trainsCatalogue}" id="tableTrains" var="trains" selectionMode="single" rowKey="num_train"> 
+                        <p:column headerText="Numéro1 Train" id="num_train" >
+                            <h:outputText value="#{trains.numeroTrainCatalogue1}" />
+                        </p:column>
+                        <p:column headerText="Numéro2 Train">
+                            <h:outputText value="#{trains.numeroTrainCatalogue2}" />
+                        </p:column>
+                        <p:column headerText="Début de Validité ">
+
+                            <h:outputText value="#{trains.dateDebutValidite}" />
+                        </p:column>
+
+                        <p:column headerText="Fin de Validité">
+
+                            <h:outputText value="#{trains.dateFinValidite}" />
+                        </p:column>
+
+                        <p:column headerText="Départ">
+                            <h:outputText value="#{trains.originePointArret}" />
+                        </p:column>
+
+                        <p:column headerText="Arrivée">
+                            <h:outputText value="#{trains.destinationPointArret}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+                </h:form>
+				
 				<h:form id="tableCompAerienne">
 					<p:dataTable
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
@@ -84,36 +116,7 @@
 					</p:dataTable>
 				</h:form> 
 				
-				<h:form id="tableTrains">
-				<h:panelGrid columns="1"
-					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;" >
-					<p:dataTable  value="#{traincatalogue.trainsCatalogue}" id="tableTrains" var="trains" selectionMode="single" rowKey="num_train"> 
-						<p:column headerText="Numéro1 Train" id="num_train">
-							<h:outputText value="#{trains.numeroTrainCatalogue1}" />
-						</p:column>
-						<p:column headerText="Numéro2 Train">
-                            <h:outputText value="#{trains.numeroTrainCatalogue2}" />
-                        </p:column>
-						<p:column headerText="Début de Validité ">
-
-							<h:outputText value="#{trains.dateDebutValidite}" />
-						</p:column>
-
-						<p:column headerText="Fin de Validité">
-
-							<h:outputText value="#{trains.dateFinValidite}" />
-						</p:column>
-
-						<p:column headerText="Départ">
-							<h:outputText value="#{trains.originePointArret}" />
-						</p:column>
-
-						<p:column headerText="Arrivée">
-							<h:outputText value="#{trains.destinationPointArret}" />
-						</p:column>
-					</p:dataTable>
-				</h:panelGrid>
-				</h:form>
+				
 				<h:form>
 				      
 					<h:panelGrid columns="2"
