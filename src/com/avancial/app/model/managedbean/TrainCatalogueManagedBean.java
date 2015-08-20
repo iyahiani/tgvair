@@ -21,27 +21,31 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("traincatalogue")
 @ViewScoped
-public class TrainCatalogueManagedBean extends AManageBean {
 
-   private static final long            serialVersionUID = 1L;
-   private String                       numeroTrainCatalogue1;
-   private String                       numeroTrainCatalogue2;
-   private PointArretDataBean           originePointArret;
-   private PointArretDataBean           destinationPointArret;
-   private Date                         heureDepartTrainCatalogue;
-   private Date                         heureArriveeTrainCatalogue;
-   private Date                         regimeJoursTrainCatalogue;
-   private Date                         dateDebutValidite;
-   private Date                         dateFinValidite;
-   private String                       operatingFlight;
-   private List<PointArretDataBean>     listGDS;
-   private List<TrainCatalogueDataBean> trainsCatalogue;
+public class TrainCatalogueManagedBean extends AManageBean{ 
+   
+   private static final long serialVersionUID = 1L; 
+   private String numeroTrainCatalogue1 ;
+   private String numeroTrainCatalogue2 ;
+   private PointArretDataBean idPointArretOrigine ; 
+   private PointArretDataBean idPointArretDestination ;
+   private String originePointArret ;
+   private String destinationPointArret ;
+   private Date heureDepartTrainCatalogue ;
+   private Date heureArriveeTrainCatalogue ;
+   private Date regimeJoursTrainCatalogue ;
+   private Date dateDebutValidite ; 
+   private Date dateFinValidite ;  
+   private String operatingFlight;
+   private List<PointArretDataBean> listGDS ;
+   private List<TrainCatalogueDataBean> trainsCatalogue ; 
+  
+   
 
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
-      this.originePointArret = new PointArretDataBean();
-      this.destinationPointArret = new PointArretDataBean();
-
+      this.idPointArretOrigine = new PointArretDataBean() ;
+      this.idPointArretDestination = new PointArretDataBean() ;
       this.reload();
 
    }
@@ -56,11 +60,11 @@ public class TrainCatalogueManagedBean extends AManageBean {
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
 
-   @Override
-   public String add() {
-      TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
-      this.destinationPointArret.setCodeGDSPointArret(destinationPointArret.getCodeGDSPointArret());
-      bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
+
+   public String add(){
+      TrainCatalogueDataBean bean = new TrainCatalogueDataBean() ; 
+      
+      bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1()); 
       bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
       bean.setOperatingFlight(getOperatingFlight());
       bean.setOriginePointArret(getOriginePointArret());
@@ -70,6 +74,7 @@ public class TrainCatalogueManagedBean extends AManageBean {
       bean.setDateDebutValidite(getDateDebutValidite());
       bean.setDateFinValidite(getDateFinValidite());
       bean.setRegimeJoursTrainCatalogue(getRegimeJoursTrainCatalogue());
+     
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
       try {
          dao.save(bean);
@@ -100,19 +105,19 @@ public class TrainCatalogueManagedBean extends AManageBean {
       this.numeroTrainCatalogue2 = numeroTrainCatalogue2;
    }
 
-   public PointArretDataBean getOriginePointArret() {
+   public String getOriginePointArret() {
       return originePointArret;
    }
 
-   public void setOriginePointArret(PointArretDataBean originePointArret) {
+   public void setOriginePointArret(String originePointArret) {
       this.originePointArret = originePointArret;
    }
 
-   public PointArretDataBean getDestinationPointArret() {
+   public String getDestinationPointArret() {
       return destinationPointArret;
    }
 
-   public void setDestinationPointArret(PointArretDataBean destinationPointArret) {
+   public void setDestinationPointArret(String destinationPointArret) {
       this.destinationPointArret = destinationPointArret;
    }
 
@@ -172,4 +177,22 @@ public class TrainCatalogueManagedBean extends AManageBean {
       this.trainsCatalogue = trainsCatalogue;
    }
 
+   public PointArretDataBean getIdPointArretOrigine() {
+      return idPointArretOrigine;
+   }
+
+   public void setIdPointArretOrigine(PointArretDataBean idPointArretOrigine) {
+      this.idPointArretOrigine = idPointArretOrigine;
+   }
+
+   public PointArretDataBean getIdPointArretDestination() {
+      return idPointArretDestination;
+   }
+
+   public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
+      this.idPointArretDestination = idPointArretDestination;
+   }
+
+
+   
 }

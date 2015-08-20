@@ -23,6 +23,15 @@ public class PointArretDAO extends AbstractDao{
       return requete.getResultList(); 
    }
    
+   public List<PointArretDataBean> getIdFromCodeGDS(String codeGDS) {
+      
+      String sql = "select idPointArret From PointArretDataBean where codeGDSPointArret =:"+codeGDS;
+      Query requete = this.getEntityManager().createQuery(sql);
+      return requete.getResultList(); 
+      
+      
+   }
+   
    }
 
 
