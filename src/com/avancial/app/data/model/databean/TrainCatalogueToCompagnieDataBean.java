@@ -1,6 +1,9 @@
 package com.avancial.app.data.model.databean;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -117,15 +120,31 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    }
 
    public void setDateDebutValiditeTrainCatalogueToCompagnie(Date dateDebutValiditeTrainCatalogueToCompagnie) {
-      this.dateDebutValiditeTrainCatalogueToCompagnie = dateDebutValiditeTrainCatalogueToCompagnie;
+      DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy") ;
+      
+      
+      try {
+         this.dateDebutValiditeTrainCatalogueToCompagnie = sdf.parse(sdf.format( dateDebutValiditeTrainCatalogueToCompagnie));
+      } catch (ParseException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
    }
 
    public Date getDateFinValiditeTrainCatalogueToCompagnie() {
+      DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy") ;
+      
       return dateFinValiditeTrainCatalogueToCompagnie;
    }
 
    public void setDateFinValiditeTrainCatalogueToCompagnie(Date dateFinValiditeTrainCatalogueToCompagnie) {
-      this.dateFinValiditeTrainCatalogueToCompagnie = dateFinValiditeTrainCatalogueToCompagnie;
+      DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy") ;
+      try {
+         this.dateFinValiditeTrainCatalogueToCompagnie = sdf.parse(sdf.format(dateFinValiditeTrainCatalogueToCompagnie));
+      } catch (ParseException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
    }
 
    public PointArretDataBean getOriginePointArret() {

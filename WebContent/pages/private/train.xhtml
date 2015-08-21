@@ -6,15 +6,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="contenu">
-		<h:form id="ajoutTain">
+		<h:form id="ajoutTain" >
 			<p:fieldset legend="Gestion Des Trains" styleClass="fieldSet">
 
-				<h:panelGrid columns="1" headerClass="gridHeader" >
+				<h:panelGrid columns="1" headerClass="gridHeader" id="tout">
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="1"
 							style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
 							<f:facet name="header"> Numéros Train</f:facet>
-							<p:panelGrid columns="2" styleClass="noBorder" id="tout">
+							<p:panelGrid columns="2" styleClass="noBorder" >
 								<p:outputLabel>Simple</p:outputLabel>
 								<p:inputMask mask="9999/9"
 									value="#{traincatalogue.numeroTrainCatalogue1}"></p:inputMask>

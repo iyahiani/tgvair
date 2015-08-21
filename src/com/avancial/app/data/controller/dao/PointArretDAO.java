@@ -18,12 +18,10 @@ public class PointArretDAO extends AbstractDao{
    
    public List<PointArretDataBean> getAllGDS() {
       
-      String sql = "select codeGDSPointArret From PointArretDataBean";
+      String sql = "select libellePointArret From PointArretDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList(); 
    }
- 
-   
    }
 
 

@@ -1,6 +1,10 @@
 package com.avancial.app.data.model.databean;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,8 +88,8 @@ public class TrainCatalogueDataBean implements Serializable {
       return heureArriveeTrainCatalogue;
    }
 
-   public void setHeureArriveeTrainCatalogue(Date heureArriveeTrainCatalogue) {
-      this.heureArriveeTrainCatalogue = heureArriveeTrainCatalogue;
+   public void setHeureArriveeTrainCatalogue(Date date) {
+      this.heureArriveeTrainCatalogue = date;
    }
 
    public Date getRegimeJoursTrainCatalogue() {
@@ -101,7 +105,13 @@ public class TrainCatalogueDataBean implements Serializable {
    }
 
    public void setDateDebutValidite(Date dateDebutValidite) {
-      this.dateDebutValidite = dateDebutValidite;
+      DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy") ;
+      try {
+         this.dateDebutValidite = formatter.parse(formatter.format(dateDebutValidite));
+      } catch (ParseException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
    }
 
    public Date getDateFinValidite() {
@@ -154,7 +164,11 @@ public class TrainCatalogueDataBean implements Serializable {
       this.numeroTrainCatalogue = numeroTrainCatalogue;
    }
   
-   
+   @Override
+   public String toString() {
+      
+      return "";
+   }
 
    
 }

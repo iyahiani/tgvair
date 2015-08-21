@@ -17,7 +17,12 @@ public class TrainCatalogueDAO extends AbstractDao {
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }
-
+   
+      public List<TrainCatalogueDataBean> getAllTrainAndValid() {
+      String sql = " From TrainCatalogueDataBean"; //select concat(numeroTrainCatalogue,'-',dateDebutValidite)
+      Query requete = this.getEntityManager().createQuery(sql);
+      return requete.getResultList();
+   }
    public void save(TrainCatalogueDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();

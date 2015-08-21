@@ -17,6 +17,7 @@ public enum SOCLE_constants {
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"),
    NAVIGATION_ROLE("/pages/private/role?faces-redirect=true"),
    NAVIGATION_USER("/pages/private/user?faces-redirect=true"),
+   NAVIGATION_TRAIN("/pages/private/train?faces-redirect=true"),
    /**
     * ID du statut des messages généraux à l'IHM
     */

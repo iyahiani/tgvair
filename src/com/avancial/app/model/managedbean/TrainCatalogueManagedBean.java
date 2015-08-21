@@ -1,5 +1,8 @@
 package com.avancial.app.model.managedbean;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +13,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
@@ -21,36 +26,47 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("traincatalogue")
 @ViewScoped
-public class TrainCatalogueManagedBean extends AManageBean{ 
-   
-   private static final long serialVersionUID = 1L; 
-   private String numeroTrainCatalogue1 ;
-   private String numeroTrainCatalogue2 ;
-   private PointArretDataBean idPointArretOrigine ; 
-   private PointArretDataBean idPointArretDestination ;
-   private String originePointArret ;
-   private String destinationPointArret ;
-   private Date heureDepartTrainCatalogue ;
-   private Date heureArriveeTrainCatalogue ;
-   private Date regimeJoursTrainCatalogue ;
-   private Date dateDebutValidite ; 
-   private Date dateFinValidite ;  
+public class TrainCatalogueManagedBean extends AManageBean implements SelectableDataModel<TrainCatalogueDataBean> {
+
+   private static final long serialVersionUID = 1L;
+   private String numeroTrainCatalogue1;
+   private String numeroTrainCatalogue2;
+   private PointArretDataBean idPointArretOrigine;
+   private PointArretDataBean idPointArretDestination;
+   private String originePointArret;
+   private String destinationPointArret;
+   private Date heureDepartTrainCatalogue;
+   private Date heureArriveeTrainCatalogue;
+   private Date regimeJoursTrainCatalogue;
+   private Date dateDebutValidite;
+   private Date dateFinValidite;
    private String operatingFlight;
-   private List<PointArretDataBean> listGDS ;
-   private List<TrainCatalogueDataBean> trainsCatalogue ; 
-  
-   
+   private List<PointArretDataBean> listGDS;
+   private List<TrainCatalogueDataBean> trainsCatalogue;
+   private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
+   private TrainCatalogueDataBean selectedTrainsCatalogue;
+   private List<TrainCatalogueDataBean> listTrainsCatAndValid;
 
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
-      this.idPointArretOrigine = new PointArretDataBean() ;
-      this.idPointArretDestination = new PointArretDataBean() ;
+      this.idPointArretOrigine = new PointArretDataBean();
+      this.idPointArretDestination = new PointArretDataBean();
+      this.listTrainsCatAndValid = new ArrayList<>();
       this.reload();
 
    }
 
-   public List<PointArretDataBean> getListGDS() {
+   public void rowSelect(SelectEvent event) {
+      // FacesMessage msg = new FacesMessage("Car Selected", ((Car)
+      // event.getObject()).getId());
+      TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject(); 
+     // System.out.println(tcb.getNumeroTrainCatalogue());
+      this.goTrain() ;
       
+   }
+
+   public List<PointArretDataBean> getListGDS() {
+
       return new PointArretDAO().getAllGDS();
    }
 
@@ -60,23 +76,30 @@ public class TrainCatalogueManagedBean extends AManageBean{
    }
 
    public void clear() {
-      
+
    }
-   public String add(){
-      TrainCatalogueDataBean bean = new TrainCatalogueDataBean() ; 
-      
-      bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1()); 
+
+   public String add() {
+      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+      TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
+      bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
       bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
-      bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1()+(!getNumeroTrainCatalogue2().isEmpty()? "-"+getNumeroTrainCatalogue2() : ""));
+      bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1() + (!getNumeroTrainCatalogue2().isEmpty() ? "-" + getNumeroTrainCatalogue2() : ""));
       bean.setOperatingFlight(getOperatingFlight());
       bean.setOriginePointArret(getOriginePointArret());
       bean.setDestinationPointArret(getDestinationPointArret());
       bean.setHeureDepartTrainCatalogue(getHeureDepartTrainCatalogue());
       bean.setHeureArriveeTrainCatalogue(getHeureArriveeTrainCatalogue());
-      bean.setDateDebutValidite(getDateDebutValidite());
+
+      try {
+         bean.setDateDebutValidite(format.parse(format.format(getDateDebutValidite())));
+      } catch (ParseException e1) {
+         
+         e1.printStackTrace();
+      }
       bean.setDateFinValidite(getDateFinValidite());
       bean.setRegimeJoursTrainCatalogue(getRegimeJoursTrainCatalogue());
-     
+
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
       try {
          dao.save(bean);
@@ -89,6 +112,28 @@ public class TrainCatalogueManagedBean extends AManageBean{
          e.printStackTrace();
       }
       return null;
+   }
+
+   public TrainCatalogueDataBean getRowData(String arg0) {
+      //System.out.println(arg0);
+      return null;
+   }
+
+   public Object getRowKey(TrainCatalogueDataBean arg0) {
+    System.out.println(arg0.getNumeroTrainCatalogue());
+      return null;
+   }
+
+   public static String goTrain() { 
+      //TrainCatalogueManagedBean tcmb = new TrainCatalogueManagedBean() ;
+      //TrainCatalogueDataBean tcdb = new TrainCatalogueDataBean() ; 
+    //  tcdb.setNumeroTrainCatalogue(tcmb.getRowData(null).getNumeroTrainCatalogue());
+      
+      return SOCLE_constants.NAVIGATION_TRAIN.toString();
+   }
+
+   public List<TrainCatalogueDataBean> getListTrainsCatAndValid() {
+      return new TrainCatalogueDAO().getAllTrainAndValid();
    }
 
    public String getNumeroTrainCatalogue1() {
@@ -135,7 +180,7 @@ public class TrainCatalogueManagedBean extends AManageBean{
       return heureArriveeTrainCatalogue;
    }
 
-   public void setHeureArriveeTrainCatalogue(Date heureArriveeTrainCatalogue) {
+   public void setHeureArriveeTrainCatalogue(Time heureArriveeTrainCatalogue) {
       this.heureArriveeTrainCatalogue = heureArriveeTrainCatalogue;
    }
 
@@ -195,6 +240,20 @@ public class TrainCatalogueManagedBean extends AManageBean{
       this.idPointArretDestination = idPointArretDestination;
    }
 
+   public List<TrainCatalogueDataBean> getFiltredTrainsCatalogue() {
+      return filtredTrainsCatalogue;
+   }
 
-   
+   public void setFiltredTrainsCatalogue(List<TrainCatalogueDataBean> filtredTrainsCatalogue) {
+      this.filtredTrainsCatalogue = filtredTrainsCatalogue;
+   }
+
+   public TrainCatalogueDataBean getSelectedTrainsCatalogue() {
+      return selectedTrainsCatalogue;
+   }
+
+   public void setSelectedTrainsCatalogue(TrainCatalogueDataBean selectedTrainsCatalogue) {
+      this.selectedTrainsCatalogue = selectedTrainsCatalogue;
+   }
+
 }
