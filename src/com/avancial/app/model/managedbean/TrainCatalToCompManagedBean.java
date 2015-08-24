@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -33,17 +34,16 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    private String                                  marketingFlight;
    private int                                     quota1er;
    private int                                     quota2em;
-
    private TrainCatalogueToCompagnieDataBean       selectedTrain;
 
+   @ManagedProperty(value="#{traincatalogue}")
+   private TrainCatalogueManagedBean  trainCatalogue ;
+   
    public TrainCatalToCompManagedBean() {
       this.trainsCatalogues = new ArrayList<>();
       this.trainsCataloguesToCompagnies = new ArrayList<>();
       this.allCompagnie = new ArrayList<>();
       this.reload();
-
-      // this.trainsCataloguesToCompagnies.addAll(new
-      // TrainCatalogueToCompagnieDAO().getAll()) ;
    }
 
    public List<CompagnieAerienneDataBean> getAllCompagnie() {
@@ -52,11 +52,13 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       this.allCompagnie.addAll(temp);
       return this.allCompagnie;
    }
-
+   
    @Override
    public String add() {
-
-      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
+      
+      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();    
+      System.out.println(this.trainCatalogue.getSelectedTrainsCatalogue());
+    
       bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite());
       bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
       bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
@@ -76,14 +78,13 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       }
       return null;
    }
-
    public void reload() {
       this.trainsCataloguesToCompagnies.clear();
       this.trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getAll());
    }
 
    public List<TrainCatalogueDataBean> getTrainsCatalogues() {
-      return trainsCatalogues;
+      return this.trainsCatalogues;
    }
 
    public void setTrainsCatalogues(List<TrainCatalogueDataBean> trainsCatalogues) {
@@ -91,7 +92,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public List<TrainCatalogueToCompagnieDataBean> getTrainsCataloguesToCompagnies() {
-      return trainsCataloguesToCompagnies;
+      return this.trainsCataloguesToCompagnies;
    }
 
    public void setTrainsCataloguesToCompagnies(List<TrainCatalogueToCompagnieDataBean> trainsCataloguesToCompagnies) {
@@ -100,7 +101,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
 
    public Date getDateDebutValidite() {
 
-      return dateDebutValidite;
+      return this.dateDebutValidite;
    }
 
    public void setDateDebutValidite(Date dateDebutValidite) {
@@ -108,7 +109,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public Date getDateFinValidite() {
-      return dateFinValidite;
+      return this.dateFinValidite;
    }
 
    public void setDateFinValidite(Date dateFinValidite) {
@@ -116,7 +117,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public String getMarketingFlight() {
-      return marketingFlight;
+      return this.marketingFlight;
    }
 
    public void setMarketingFlight(String marketingFlight) {
@@ -124,7 +125,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public int getQuota1er() {
-      return quota1er;
+      return this.quota1er;
    }
 
    public void setQuota1er(int quota1er) {
@@ -132,7 +133,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public int getQuota2em() {
-      return quota2em;
+      return this.quota2em;
    }
 
    public void setQuota2em(int quota2em) {
@@ -140,7 +141,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public String getCodeCompagnie() {
-      return codeCompagnie;
+      return this.codeCompagnie;
    }
 
    public void setCodeCompagnie(String codeCompagnie) {
@@ -148,7 +149,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    }
 
    public TrainCatalogueToCompagnieDataBean getSelectedTrain() {
-      return selectedTrain;
+      return this.selectedTrain;
    }
 
    public void setSelectedTrain(TrainCatalogueToCompagnieDataBean selectedTrain) {
@@ -166,4 +167,11 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       this.selectedTrain = selectedTrain;
    }
 
+ public TrainCatalogueManagedBean getTrainCatalogue() {
+      return this.trainCatalogue;
+   }
+
+   public void setTrainCatalogue(TrainCatalogueManagedBean trainCatalogue) {
+      this.trainCatalogue = trainCatalogue;
+   }
 }

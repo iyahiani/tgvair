@@ -25,6 +25,7 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
    public void save(TrainCatalogueDataBean bean) throws ASocleException {
       try {
+         
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(bean);
          this.getEntityManager().flush();

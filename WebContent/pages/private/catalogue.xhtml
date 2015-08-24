@@ -15,21 +15,25 @@
 				<h:form id="tableTrains">
 					<h:panelGrid columns="1"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-						<p:dataTable value="#{traincatalogue.trainsCatalogue}" rows="10" scrollable="true"
-							widgetVar="trainsWdg" paginatorPosition="top" id="tableTrains"
-							var="trains" selection="#{traincatalogue.selectedTrainsCatalogue}"
+						<p:dataTable value="#{traincatalogue.trainsCatalogue}" 
+						    rows="10" scrollable="true"
+							widgetVar="trainsWdg" 
+							paginatorPosition="top" id="tableTrains"
+							var="trains" 
+							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
-							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}" paginator="true" 
+							selectionMode="single" 
+							rowKey="#{trains.numeroTrainCatalogue}" 
+							paginator="true" 
 							rowsPerPageTemplate="5,10,15">
+							
 						   <p:ajax  event="rowDblselect" listener="#{traincatalogue.rowSelect}" ></p:ajax> 
 
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
-								<h:outputText value="#{trains.numeroTrainCatalogue}" /> 
-								
+								<h:outputText value="#{trains.numeroTrainCatalogue}" /> 					
 							</p:column>
-
 							<p:column headerText="Début de Validité">
 
 								<h:outputText value="#{trains.dateDebutValidite}"  />

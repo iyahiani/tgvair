@@ -1,13 +1,12 @@
 package com.avancial.app.model.managedbean;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -26,9 +25,10 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("traincatalogue")
 @ViewScoped
-public class TrainCatalogueManagedBean extends AManageBean implements SelectableDataModel<TrainCatalogueDataBean> {
+public class TrainCatalogueManagedBean extends AManageBean implements Serializable, SelectableDataModel<TrainCatalogueDataBean> {
 
    private static final long serialVersionUID = 1L;
+   private String numeroTrainCatalogue;
    private String numeroTrainCatalogue1;
    private String numeroTrainCatalogue2;
    private PointArretDataBean idPointArretOrigine;
@@ -55,13 +55,13 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.reload();
 
    }
-
-   public void rowSelect(SelectEvent event) {
-      // FacesMessage msg = new FacesMessage("Car Selected", ((Car)
-      // event.getObject()).getId());
+  
+   public  void rowSelect(SelectEvent event) {
+           
       TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject(); 
-     // System.out.println(tcb.getNumeroTrainCatalogue());
-      this.goTrain() ;
+    
+      System.out.println(tcb.getNumeroTrainCatalogue());
+    //  goTrain() ;
       
    }
 
@@ -80,7 +80,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public String add() {
-      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    
       TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
       bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
       bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
@@ -90,13 +90,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       bean.setDestinationPointArret(getDestinationPointArret());
       bean.setHeureDepartTrainCatalogue(getHeureDepartTrainCatalogue());
       bean.setHeureArriveeTrainCatalogue(getHeureArriveeTrainCatalogue());
-
-      try {
-         bean.setDateDebutValidite(format.parse(format.format(getDateDebutValidite())));
-      } catch (ParseException e1) {
-         
-         e1.printStackTrace();
-      }
+      bean.setDateDebutValidite(getDateDebutValidite());
       bean.setDateFinValidite(getDateFinValidite());
       bean.setRegimeJoursTrainCatalogue(getRegimeJoursTrainCatalogue());
 
@@ -107,7 +101,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
          this.closeDialog = true;
          RequestContext.getCurrentInstance().update(":tableTrains");
 
-      } catch (ASocleException e) {// ASocleException
+      } catch (ASocleException e) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
          e.printStackTrace();
       }
@@ -115,19 +109,17 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public TrainCatalogueDataBean getRowData(String arg0) {
-      //System.out.println(arg0);
+    //System.out.println(arg0);
       return null;
    }
 
    public Object getRowKey(TrainCatalogueDataBean arg0) {
-    System.out.println(arg0.getNumeroTrainCatalogue());
+   // System.out.println(arg0.getNumeroTrainCatalogue())   ;
       return null;
    }
 
    public static String goTrain() { 
-      //TrainCatalogueManagedBean tcmb = new TrainCatalogueManagedBean() ;
-      //TrainCatalogueDataBean tcdb = new TrainCatalogueDataBean() ; 
-    //  tcdb.setNumeroTrainCatalogue(tcmb.getRowData(null).getNumeroTrainCatalogue());
+     
       
       return SOCLE_constants.NAVIGATION_TRAIN.toString();
    }
@@ -180,8 +172,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       return heureArriveeTrainCatalogue;
    }
 
-   public void setHeureArriveeTrainCatalogue(Time heureArriveeTrainCatalogue) {
-      this.heureArriveeTrainCatalogue = heureArriveeTrainCatalogue;
+   public void setHeureArriveeTrainCatalogue(Date date) {
+      this.heureArriveeTrainCatalogue = date;
    }
 
    public Date getRegimeJoursTrainCatalogue() {
@@ -254,6 +246,20 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
 
    public void setSelectedTrainsCatalogue(TrainCatalogueDataBean selectedTrainsCatalogue) {
       this.selectedTrainsCatalogue = selectedTrainsCatalogue;
+   }
+   public void setListGDS(List<PointArretDataBean> listGDS) {
+      this.listGDS = listGDS;
+   }
+   public void setListTrainsCatAndValid(List<TrainCatalogueDataBean> listTrainsCatAndValid) {
+      this.listTrainsCatAndValid = listTrainsCatAndValid;
+   }
+
+   public String getNumeroTrainCatalogue() {
+      return numeroTrainCatalogue;
+   }
+
+   public void setNumeroTrainCatalogue(String numeroTrainCatalogue) {
+      this.numeroTrainCatalogue = numeroTrainCatalogue;
    }
 
 }
