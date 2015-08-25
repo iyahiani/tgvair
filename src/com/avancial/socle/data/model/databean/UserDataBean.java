@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "socle_user")
 public class UserDataBean implements Serializable { 
-   private static Long serialVersion= 1L;
+   private static final Long serialVersionID =1L; 
 	@Id
 	protected Long idUser;
 	protected String nomUser;

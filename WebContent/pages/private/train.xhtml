@@ -16,7 +16,7 @@
 							<f:facet name="header"> Numéros Train</f:facet>
 							<p:panelGrid columns="2" styleClass="noBorder" >
 								<p:outputLabel>Simple</p:outputLabel>
-								<p:inputMask mask="9999/9"
+								<p:inputMask mask="9999/9" id="num"
 									value="#{traincatalogue.numeroTrainCatalogue1}"></p:inputMask>
 								<p:outputLabel>Multi</p:outputLabel>
 								<p:inputMask mask="9999/9"
@@ -77,7 +77,7 @@
 								<h:panelGrid columns="2">
 									<p:selectOneMenu value="#{traincatalogue.originePointArret}" filter="true"
 										effect="fold" editable="true" style="width : 100%"  >
-										<f:selectItems value="#{traincatalogue.listGDS}" />
+										<f:selectItems  value="#{traincatalogue.listGDS}" />
 									</p:selectOneMenu>
 									<p:commandButton icon="ui-icon-circle-plus" />
 								</h:panelGrid>

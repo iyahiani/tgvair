@@ -15,10 +15,12 @@
 				<h:form id="tableTrains">
 					<h:panelGrid columns="1"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+						
 						<p:dataTable value="#{traincatalogue.trainsCatalogue}" 
 						    rows="10" scrollable="true"
 							widgetVar="trainsWdg" 
-							paginatorPosition="top" id="tableTrains"
+							paginatorPosition="top" 
+							id="tableTrains"
 							var="trains" 
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
@@ -27,15 +29,14 @@
 							paginator="true" 
 							rowsPerPageTemplate="5,10,15">
 							
-						   <p:ajax  event="rowDblselect" listener="#{traincatalogue.rowSelect}" ></p:ajax> 
-
+						   <p:ajax  event="rowDblselect" listener="#{traincatalogue.rowSelect}" update=":formCompAerienne:tableCompAerienne"  ></p:ajax>
+						    <p:ajax  event="rowSelect" listener="#{traintocompagnie.rowSelect}" update=""  ></p:ajax>
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
 								<h:outputText value="#{trains.numeroTrainCatalogue}" /> 					
 							</p:column>
 							<p:column headerText="Début de Validité">
-
 								<h:outputText value="#{trains.dateDebutValidite}"  />
 							</p:column>
 
@@ -49,7 +50,7 @@
 								<h:outputText value="#{trains.heureDepartTrainCatalogue}" />
 							</p:column>
 
-							<p:column headerText="Heure Arriver">
+							<p:column headerText="Heure Arrivée">
 
 								<h:outputText value="#{trains.heureArriveeTrainCatalogue}" />
 							</p:column>
@@ -61,18 +62,25 @@
 								<h:outputText value="#{trains.destinationPointArret}" />
 							</p:column>  
 							<p:column> 
-							<h:commandLink value="Modifier Ce Train" action="#{traincatalogue.goTrain}"></h:commandLink>
+							<h:commandLink value="Modifier Ce Train" action="#{traincatalogue.goTrain}"> 
+							
+							</h:commandLink>
 							 </p:column>
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
 
-				<h:form id="tableCompAerienne">
+				<h:form id="formCompAerienne">
 					<p:dataTable
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
-						paginatorPosition="top" var="compagnie" paginator="true"
-						id="tableCompAerienne" rows="10" selectionMode="single"
-						rowKey="compagnie.comp" rowsPerPageTemplate="5,10,15">
+						paginatorPosition="top" 
+						var="compagnie" 
+						paginator="true"
+						id="tableCompAerienne" 
+						rows="10" selectionMode="single"
+						rowKey="compagnie.comp" 
+						rowsPerPageTemplate="5,10,15">
+						
 						<p:column headerText="Compagnie Aérienne" id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
 						</p:column>
@@ -114,7 +122,7 @@
 
 					<h:panelGrid columns="2" id="ajoutTC"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-						<f:facet name="header"> Ajouter un Train</f:facet>
+						<f:facet name="header"> Associer un Train</f:facet>
 						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
 						<h:selectOneMenu effect="fold" editable="true" 
 							value="#{traintocompagnie.codeCompagnie}" style="width : 100%" >
@@ -149,9 +157,9 @@
 						<h:panelGrid columns="2">
 							<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
 							<p:commandButton icon="ui-icon-check" type="submit"
-								title="ajouter" actionListener="#{traintocompagnie.add()}"
+								title="ajouter" actionListener="#{traintocompagnie.add}" 
 								ajax="true">
-								<p:ajax update=":tableCompAerienne" delay="1"
+								<p:ajax update=":formCompAerienne" delay="1"
 									listener="#{traintocompagnie.reload()}" render="ajoutTC"
 									resetValues="true"></p:ajax>
 							</p:commandButton>

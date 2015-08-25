@@ -7,12 +7,16 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
+import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
@@ -24,25 +28,28 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @Named("traintocompagnie")
 @ViewScoped
 public class TrainCatalToCompManagedBean extends AManageBean {
-   private static final long                       serialVersionUID = 1L;
-   private List<TrainCatalogueDataBean>            trainsCatalogues;
+   private static final long serialVersionUID = 1L;
+   private List<TrainCatalogueDataBean> trainsCatalogues;
    private List<TrainCatalogueToCompagnieDataBean> trainsCataloguesToCompagnies;
-   private List<CompagnieAerienneDataBean>         allCompagnie;
-   private String                                  codeCompagnie;
-   private Date                                    dateDebutValidite;
-   private Date                                    dateFinValidite;
-   private String                                  marketingFlight;
-   private int                                     quota1er;
-   private int                                     quota2em;
-   private TrainCatalogueToCompagnieDataBean       selectedTrain;
+   private List<CompagnieAerienneDataBean> allCompagnie;
+   private TrainCatalogueDataBean trainCatalogueBean ;
+   private CompagnieAerienneDataBean compagnieDataBean ;
+   private String codeCompagnie;
+   private Date dateDebutValidite;
+   private Date dateFinValidite;
+   private String marketingFlight;
+   private int quota1er;
+   private int quota2em;
+   private TrainCatalogueToCompagnieDataBean selectedTrain;
 
-   @ManagedProperty(value="#{traincatalogue}")
-   private TrainCatalogueManagedBean  trainCatalogue ;
-   
+  
+
    public TrainCatalToCompManagedBean() {
       this.trainsCatalogues = new ArrayList<>();
       this.trainsCataloguesToCompagnies = new ArrayList<>();
       this.allCompagnie = new ArrayList<>();
+      this.trainCatalogueBean = new TrainCatalogueDataBean(); 
+      this.compagnieDataBean = new CompagnieAerienneDataBean() ;
       this.reload();
    }
 
@@ -52,14 +59,12 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       this.allCompagnie.addAll(temp);
       return this.allCompagnie;
    }
-   
+
    @Override
    public String add() {
-      
-      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();    
-      System.out.println(this.trainCatalogue.getSelectedTrainsCatalogue());
-    
-      bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite());
+
+      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
+      bean.setTrainCatalogueDataBean(this.trainCatalogueBean);
       bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
       bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
       bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er());
@@ -78,6 +83,22 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       }
       return null;
    }
+
+   public  void rowSelect(SelectEvent event) {
+      
+      this.trainCatalogueBean = (TrainCatalogueDataBean) event.getObject(); 
+      
+      TrainCatalogueDAO dao = new TrainCatalogueDAO()  ;
+    
+      
+      
+      //System.out.println(dao.getTrainCatByID(tcb.getIdTrainCatalogue()).get(0).getNumeroTrainCatalogue());
+    
+      
+      //  goTrain() ;
+      
+   }
+
    public void reload() {
       this.trainsCataloguesToCompagnies.clear();
       this.trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getAll());
@@ -167,11 +188,13 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       this.selectedTrain = selectedTrain;
    }
 
- public TrainCatalogueManagedBean getTrainCatalogue() {
-      return this.trainCatalogue;
+  
+
+   public TrainCatalogueDataBean getTrainCatalogueBean() {
+      return trainCatalogueBean;
    }
 
-   public void setTrainCatalogue(TrainCatalogueManagedBean trainCatalogue) {
-      this.trainCatalogue = trainCatalogue;
+   public void setTrainCatalogueBean(TrainCatalogueDataBean trainCatalogueBean) {
+      this.trainCatalogueBean = trainCatalogueBean;
    }
 }

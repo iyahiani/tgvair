@@ -1,5 +1,6 @@
 package com.avancial.app.model.managedbean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -58,10 +60,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
   
    public  void rowSelect(SelectEvent event) {
            
-      TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject(); 
-    
-      System.out.println(tcb.getNumeroTrainCatalogue());
-    //  goTrain() ;
+      TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject();     
       
    }
 
@@ -70,7 +69,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return new PointArretDAO().getAllGDS();
    }
 
-   private void reload() {
+    private void reload() {
       this.trainsCatalogue.clear();
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
@@ -79,9 +78,15 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    }
 
+   @Override
    public String add() {
     
-      TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
+      
+      PointArretDAO pointArretDAO = new PointArretDAO()  ;
+      TrainCatalogueDataBean bean = new TrainCatalogueDataBean(); 
+
+      bean.setIdPointArretDestination(pointArretDAO.getPointArretbyName(this.destinationPointArret).get(0));
+      bean.setIdPointArretOrigine(pointArretDAO.getPointArretbyName(this.originePointArret).get(0));
       bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
       bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
       bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1() + (!getNumeroTrainCatalogue2().isEmpty() ? "-" + getNumeroTrainCatalogue2() : ""));
@@ -93,7 +98,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       bean.setDateDebutValidite(getDateDebutValidite());
       bean.setDateFinValidite(getDateFinValidite());
       bean.setRegimeJoursTrainCatalogue(getRegimeJoursTrainCatalogue());
-
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
       try {
          dao.save(bean);
@@ -109,7 +113,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public TrainCatalogueDataBean getRowData(String arg0) {
-    //System.out.println(arg0);
+    System.out.println(arg0);
       return null;
    }
 
@@ -118,10 +122,17 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
-   public static String goTrain() { 
-     
+   public static void  goTrain() { 
+      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
+      try {
+         context.redirect("train.xhtml");
+      } catch (IOException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
       
-      return SOCLE_constants.NAVIGATION_TRAIN.toString();
+      //return SOCLE_constants.NAVIGATION_TRAIN.toString(); 
+     
    }
 
    public List<TrainCatalogueDataBean> getListTrainsCatAndValid() {

@@ -23,9 +23,9 @@ public class PointArretDataBean implements Serializable {
    } 
    
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue//(strategy = GenerationType.AUTO)
    @Column(unique=true, nullable=false) 
-   private Long idPointArret ; 
+   private Integer idPointArret ; 
    
    @Column(nullable=false, length=100) 
    private String codeResarailPointArret ;
@@ -36,11 +36,11 @@ public class PointArretDataBean implements Serializable {
    @Column(nullable=false, length=100) 
    private String libellePointArret ;
 
-   public Long getIdPointArret() {
+   public int getIdPointArret() {
       return idPointArret;
    }
 
-   public void setIdPointArret(Long idPointArret) {
+   public void setIdPointArret(int idPointArret) {
       this.idPointArret = idPointArret;
    }
 

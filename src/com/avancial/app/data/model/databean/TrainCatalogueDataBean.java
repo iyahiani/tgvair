@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 /**
  * 
@@ -31,16 +34,19 @@ public class TrainCatalogueDataBean implements Serializable {
    private static final Long serialVersionID = 1L;
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long idTrainCatalogue;
+   @GeneratedValue//(strategy = GenerationType.AUTO)
+   private int idTrainCatalogue; 
+   
    private String numeroTrainCatalogue ;
    private String numeroTrainCatalogue1 ;
    private String numeroTrainCatalogue2 ;
    
-  @OneToOne
-  @JoinColumn(name = "idPointArret")
-   private PointArretDataBean idPointArretOrigine ;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "idPointArretDestination")
    private PointArretDataBean idPointArretDestination ;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "idPointArretOrigine")
+   private PointArretDataBean idPointArretOrigine ;
    private String originePointArret ;
    private String destinationPointArret ;
    private Date heureDepartTrainCatalogue ;
@@ -50,11 +56,10 @@ public class TrainCatalogueDataBean implements Serializable {
    private Date dateFinValidite ; 
    private String operatingFlight; 
    
-   
-   public Long getIdTrainCatalogue() {
+   public int getIdTrainCatalogue() {
       return idTrainCatalogue;
    }
-   public void setIdTrainCatalogue(Long idTrainCatalogue) {
+   public void setIdTrainCatalogue(int idTrainCatalogue) {
       this.idTrainCatalogue = idTrainCatalogue;
    }
 
@@ -145,18 +150,7 @@ public class TrainCatalogueDataBean implements Serializable {
    public void setOperatingFlight(String operatingFlight) {
       this.operatingFlight = operatingFlight;
    }
-   public PointArretDataBean getIdPointArretOrigine() {
-      return idPointArretOrigine;
-   }
-   public void setIdPointArretOrigine(PointArretDataBean idPointArretOrigine) {
-      this.idPointArretOrigine = idPointArretOrigine;
-   }
-   public PointArretDataBean getIdPointArretDestination() {
-      return idPointArretDestination;
-   }
-   public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
-      this.idPointArretDestination = idPointArretDestination;
-   }
+
    public String getNumeroTrainCatalogue() {
       return numeroTrainCatalogue;
    }
@@ -168,6 +162,18 @@ public class TrainCatalogueDataBean implements Serializable {
    public String toString() {
       
       return "";
+   }
+   public PointArretDataBean getIdPointArretOrigine() {
+      return idPointArretOrigine;
+   }
+   public void setIdPointArretOrigine(PointArretDataBean idPointArretOrigine) {
+      this.idPointArretOrigine = idPointArretOrigine;
+   }
+   public PointArretDataBean getIdPointArretDestination() {
+      return idPointArretDestination;
+   }
+   public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
+      this.idPointArretDestination = idPointArretDestination;
    }
 
    
