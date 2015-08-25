@@ -27,15 +27,16 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
   
-   private Long idTrainCatalogueToCompagnie;
+   private Integer idTrainCatalogueToCompagnie;
 
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "idTrainCatalogue")
    private TrainCatalogueDataBean trainCatalogueDataBean;
 
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "idCompagnieAerienne")
-   private CompagnieAerienneDataBean compagnieAerienneDataBean;
+   private CompagnieAerienneDataBean compagnieAerienneDataBean; 
+   
    private String codeCompagnieAerienne ;
    private String joursCirculationTrainCatalogueToCompagnie;
    private int quotaPremiereTrainCatalogueToCompagnie;
@@ -44,18 +45,18 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    private String operatingFlightTrainCatalogueToCompagnie;
    private Date dateDebutValiditeTrainCatalogueToCompagnie;
    private Date dateFinValiditeTrainCatalogueToCompagnie;
-   @OneToOne
-   @JoinColumn(name = "idPointArret")
-   
-   private PointArretDataBean originePointArret;
-   
-   private PointArretDataBean destinationPointArret;
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "idOriginePointArret")
+   private PointArretDataBean idOriginePointArret;
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "idDestinationPointArret")
+   private PointArretDataBean idDestinationPointArret;
 
-   public Long getIdTrainCatalogueToCompagnie() {
+   public Integer getIdTrainCatalogueToCompagnie() {
       return idTrainCatalogueToCompagnie;
    }
 
-   public void setIdTrainCatalogueToCompagnie(Long idTrainCatalogueToCompagnie) {
+   public void setIdTrainCatalogueToCompagnie(Integer idTrainCatalogueToCompagnie) {
       this.idTrainCatalogueToCompagnie = idTrainCatalogueToCompagnie;
    }
 
@@ -147,28 +148,31 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       }
    }
 
-   public PointArretDataBean getOriginePointArret() {
-      return originePointArret;
-   }
+  
 
-   public void setOriginePointArret(PointArretDataBean originePointArret) {
-      this.originePointArret = originePointArret;
-   }
-
-   public PointArretDataBean getDestinationPointArret() {
-      return destinationPointArret;
-   }
-
-   public void setDestinationPointArret(PointArretDataBean destinationPointArret) {
-      this.destinationPointArret = destinationPointArret;
-   }
-
+   
    public String getCodeCompagnieAerienne() {
       return codeCompagnieAerienne;
    }
 
    public void setCodeCompagnieAerienne(String codeCompagnieAerienne) {
       this.codeCompagnieAerienne = codeCompagnieAerienne;
+   }
+
+   public PointArretDataBean getIdOriginePointArret() {
+      return idOriginePointArret;
+   }
+
+   public void setIdOriginePointArret(PointArretDataBean idOriginePointArret) {
+      this.idOriginePointArret = idOriginePointArret;
+   }
+
+   public PointArretDataBean getIdDestinationPointArret() {
+      return idDestinationPointArret;
+   }
+
+   public void setIdDestinationPointArret(PointArretDataBean idDestinationPointArret) {
+      this.idDestinationPointArret = idDestinationPointArret;
    }
 
   

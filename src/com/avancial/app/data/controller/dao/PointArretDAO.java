@@ -21,6 +21,15 @@ public class PointArretDAO extends AbstractDao{
       String sql = "select libellePointArret From PointArretDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList(); 
+   } 
+   
+   public List<PointArretDataBean> getPointArretbyName(String name) {
+      String sql = "From PointArretDataBean as p WHERE p.libellePointArret =?"; 
+      
+      Query requete = this.getEntityManager().createQuery(sql); 
+      requete.setParameter(1, name) ;
+     System.out.println(requete.getResultList().size());
+      return requete.getResultList(); 
    }
    }
 
