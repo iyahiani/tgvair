@@ -61,4 +61,13 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
 
    }
 
+   public List<TrainCatalogueToCompagnieDataBean> getTrainToCompagnieByID(int idTrainCatalogue) {
+      
+      String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue ="+idTrainCatalogue ;
+      Query requete = this.getEntityManager().createQuery(sql);
+      
+      return requete.getResultList() ;
+      
+   }
+
 }

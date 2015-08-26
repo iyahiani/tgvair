@@ -38,19 +38,13 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    private CompagnieAerienneDataBean compagnieAerienneDataBean; 
    
    private String codeCompagnieAerienne ;
-   private String joursCirculationTrainCatalogueToCompagnie;
+   
    private int quotaPremiereTrainCatalogueToCompagnie;
    private int quotaDeuxiemeTrainCatalogueToCompagnie;
    private String marketingFlightTrainCatalogueToCompagnie;
-   private String operatingFlightTrainCatalogueToCompagnie;
+   
    private Date dateDebutValiditeTrainCatalogueToCompagnie;
    private Date dateFinValiditeTrainCatalogueToCompagnie;
-  /* @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "idOriginePointArret")
-   private PointArretDataBean idOriginePointArret;
-   @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "idDestinationPointArret")
-   private PointArretDataBean idDestinationPointArret;*/
 
    public Integer getIdTrainCatalogueToCompagnie() {
       return idTrainCatalogueToCompagnie;
@@ -76,13 +70,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       this.compagnieAerienneDataBean = compagnieAerienneDataBean;
    }
 
-   public String getJoursCirculationTrainCatalogueToCompagnie() {
-      return joursCirculationTrainCatalogueToCompagnie;
-   }
-
-   public void setJoursCirculationTrainCatalogueToCompagnie(String joursCirculationTrainCatalogueToCompagnie) {
-      this.joursCirculationTrainCatalogueToCompagnie = joursCirculationTrainCatalogueToCompagnie;
-   }
+   
 
    public int getQuotaPremiereTrainCatalogueToCompagnie() {
       return quotaPremiereTrainCatalogueToCompagnie;
@@ -108,44 +96,23 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       this.marketingFlightTrainCatalogueToCompagnie = marketingFlightTrainCatalogueToCompagnie;
    }
 
-   public String getOperatingFlightTrainCatalogueToCompagnie() {
-      return operatingFlightTrainCatalogueToCompagnie;
-   }
-
-   public void setOperatingFlightTrainCatalogueToCompagnie(String operatingFlightTrainCatalogueToCompagnie) {
-      this.operatingFlightTrainCatalogueToCompagnie = operatingFlightTrainCatalogueToCompagnie;
-   }
-
    public Date getDateDebutValiditeTrainCatalogueToCompagnie() {
       return dateDebutValiditeTrainCatalogueToCompagnie;
    }
 
    public void setDateDebutValiditeTrainCatalogueToCompagnie(Date dateDebutValiditeTrainCatalogueToCompagnie) {
-      DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy") ;
       
       
-      try {
-         this.dateDebutValiditeTrainCatalogueToCompagnie = sdf.parse(sdf.format( dateDebutValiditeTrainCatalogueToCompagnie));
-      } catch (ParseException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+      this.dateDebutValiditeTrainCatalogueToCompagnie = dateDebutValiditeTrainCatalogueToCompagnie;
+      
    }
 
    public Date getDateFinValiditeTrainCatalogueToCompagnie() {
-      DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy") ;
-      
       return dateFinValiditeTrainCatalogueToCompagnie;
    }
 
    public void setDateFinValiditeTrainCatalogueToCompagnie(Date dateFinValiditeTrainCatalogueToCompagnie) {
-      DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy") ;
-      try {
-         this.dateFinValiditeTrainCatalogueToCompagnie = sdf.parse(sdf.format(dateFinValiditeTrainCatalogueToCompagnie));
-      } catch (ParseException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+      this.dateFinValiditeTrainCatalogueToCompagnie = dateFinValiditeTrainCatalogueToCompagnie ;
    }
 
   
@@ -159,21 +126,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       this.codeCompagnieAerienne = codeCompagnieAerienne;
    }
 
-   /*public PointArretDataBean getIdOriginePointArret() {
-      return idOriginePointArret;
-   }
-
-   public void setIdOriginePointArret(PointArretDataBean idOriginePointArret) {
-      this.idOriginePointArret = idOriginePointArret;
-   }
-
-   public PointArretDataBean getIdDestinationPointArret() {
-      return idDestinationPointArret;
-   }
-
-   public void setIdDestinationPointArret(PointArretDataBean idDestinationPointArret) {
-      this.idDestinationPointArret = idDestinationPointArret;
-   }*/
+   
 
   
 }

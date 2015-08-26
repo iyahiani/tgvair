@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="contenu">
-		<h:form id="ajoutTain" >
+		<h:form id="ajoutTain">
 			<p:fieldset legend="Gestion Des Trains" styleClass="fieldSet">
 
 				<h:panelGrid columns="1" headerClass="gridHeader" id="tout">
@@ -14,35 +14,31 @@
 						<h:panelGrid columns="1"
 							style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
 							<f:facet name="header"> Numéros Train</f:facet>
-							<p:panelGrid columns="2" styleClass="noBorder" >
+							<p:panelGrid columns="2" styleClass="noBorder">
 								<p:outputLabel>Simple</p:outputLabel>
-								<p:inputMask mask="9999/9" id="num"
+								<p:inputMask mask="9999/9" id="num" required="true"
 									value="#{traincatalogue.numeroTrainCatalogue1}"></p:inputMask>
 								<p:outputLabel>Multi</p:outputLabel>
 								<p:inputMask mask="9999/9"
 									value="#{traincatalogue.numeroTrainCatalogue2}"></p:inputMask>
 								<p:outputLabel>Operting Flight</p:outputLabel>
-								<p:inputMask mask="2*9999"
+								<p:inputMask mask="2*9999" required="true"
 									value="#{traincatalogue.operatingFlight}"></p:inputMask>
 							</p:panelGrid>
 						</h:panelGrid>
-						<h:panelGrid columns="2"
+						<h:panelGrid columns="1"
 							style="margin-left: 20px; margin-right: 20px ;border-style:solid; border-color :#FFFFFF #E0E0E0;">
 							<f:facet name="header"> Jours de circulation</f:facet>
-							<h:outputLabel value="Lundi" for="lundi"></h:outputLabel>
-							<p:selectBooleanCheckbox id="lundi"></p:selectBooleanCheckbox>
-							<h:outputLabel value="Mardi"></h:outputLabel>
-							<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
-							<h:outputLabel value="Mercredi"></h:outputLabel>
-							<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
-							<h:outputLabel value="Jeudi"></h:outputLabel>
-							<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
-							<h:outputLabel value="Vendredi"></h:outputLabel>
-							<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
-							<h:outputLabel value="Samedi"></h:outputLabel>
-							<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
-							<h:outputLabel value="Dimanche"></h:outputLabel>
-							<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+
+							<h:selectManyCheckbox value="#{traincatalogue.listSelectedJoursCirculation}"  required="true">
+								<f:selectItem itemValue="1" itemLabel="Lundi" />
+								<f:selectItem itemValue="2" itemLabel="Mardi" />
+								<f:selectItem itemValue="3" itemLabel="Mercredi" />
+								<f:selectItem itemValue="4" itemLabel="Jeudi" />
+                                <f:selectItem itemValue="5" itemLabel="Vendredi " />
+                                <f:selectItem itemValue="6" itemLabel="Samedi"/>
+                                 <f:selectItem itemValue="7" itemLabel="Dimanche"/>
+							</h:selectManyCheckbox>
 							<h:panelGrid>
 								<p:commandButton value="Exeptions" icon="ui-icon-plus"></p:commandButton>
 							</h:panelGrid>
@@ -61,10 +57,10 @@
 
 								<p:outputLabel for="popup" value="Valide Du :"
 									style="margin-right:5px" />
-								<p:calendar id="popup" showOn="both" locale="fr"
+								<p:calendar id="popup" showOn="both" locale="fr" required="true"
 									value="#{traincatalogue.dateDebutValidite}" />
 								<p:outputLabel for="popup" value="Au:" />
-								<p:calendar id="popup2" locale="fr" showOn="both"
+								<p:calendar id="popup2" locale="fr" showOn="both" required="true"
 									value="#{traincatalogue.dateFinValidite}" />
 							</h:panelGrid>
 						</h:panelGrid>
@@ -75,16 +71,17 @@
 							<h:panelGrid columns="1">
 								<p:outputLabel value="Origine"></p:outputLabel>
 								<h:panelGrid columns="2">
-									<p:selectOneMenu value="#{traincatalogue.originePointArret}" filter="true"
-										effect="fold" editable="true" style="width : 100%"  >
-										<f:selectItems  value="#{traincatalogue.listGDS}" />
+									<p:selectOneMenu value="#{traincatalogue.originePointArret}" required="true"
+										filter="true" effect="fold" editable="true"
+										style="width : 100%">
+										<f:selectItems value="#{traincatalogue.listGDS}" />
 									</p:selectOneMenu>
 									<p:commandButton icon="ui-icon-circle-plus" />
 								</h:panelGrid>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<p:outputLabel for="HeureDep" value="Heure Depart:" />
-								<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
+								<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true" required="true"
 									value="#{traincatalogue.heureDepartTrainCatalogue}" locale="fr"
 									showOn="both" />
 							</h:panelGrid>
@@ -95,7 +92,7 @@
 							<h:panelGrid columns="1">
 								<p:outputLabel value="Destination"></p:outputLabel>
 								<h:panelGrid columns="2" style="margin-right :10px">
-									<p:selectOneMenu effect="fold" editable="true" filter="true"
+									<p:selectOneMenu effect="fold" editable="true" filter="true" required="true"
 										value="#{traincatalogue.destinationPointArret}"
 										style="width : 100%">
 										<f:selectItems value="#{traincatalogue.listGDS}" />
@@ -105,22 +102,25 @@
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<p:outputLabel for="HeureArr" value="Heure Arrivée:" />
-								<p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
+								<p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true" required="true"
 									value="#{traincatalogue.heureArriveeTrainCatalogue}"
 									locale="fr" showOn="both" />
 							</h:panelGrid>
 						</h:panelGrid>
 					</h:panelGrid>
 					<p:panelGrid class="ui-grid-col-2">
-						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset" value="Annuler" > </p:commandButton>
-                            <p:commandButton icon="ui-icon-check" type="submit" title="ajouter" value="Ajouter" 
-                                actionListener="#{traincatalogue.add()}" ajax="true">  
-                                <f:ajax render="ajoutTain tout" resetValues="true"></f:ajax>
-                            </p:commandButton>
+						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"
+							value="Annuler">
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-check" type="submit"
+							title="ajouter" value="Ajouter"
+							actionListener="#{traincatalogue.add()}" ajax="true">
+							<f:ajax render="ajoutTain tout" resetValues="true"></f:ajax>
+						</p:commandButton>
 					</p:panelGrid>
 				</h:panelGrid>
-			</p:fieldset> 
-			
+			</p:fieldset>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

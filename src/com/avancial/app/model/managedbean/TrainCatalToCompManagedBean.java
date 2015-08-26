@@ -24,6 +24,7 @@ import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.mysql.jdbc.Field;
 
 @Named("traintocompagnie")
 @ViewScoped
@@ -70,10 +71,12 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       bean.setTrainCatalogueDataBean(this.trainCatalogueBean); 
       bean.setCompagnieAerienneDataBean(this.compagnieDataBean);
       bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
+      bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite());
       bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
       bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er());
       bean.setQuotaDeuxiemeTrainCatalogueToCompagnie(getQuota2em());
-      bean.setCodeCompagnieAerienne(getCodeCompagnie());
+      bean.setCodeCompagnieAerienne(getCodeCompagnie()); 
+      
       TrainCatalogueToCompagnieDAO dao = new TrainCatalogueToCompagnieDAO();
       try {
          dao.save(bean);
@@ -92,14 +95,10 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       
       this.trainCatalogueBean = (TrainCatalogueDataBean) event.getObject(); 
       
-      TrainCatalogueDAO dao = new TrainCatalogueDAO()  ;
-    
+      this.trainsCataloguesToCompagnies.clear();
+      trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue())); 
+      RequestContext.getCurrentInstance().update(":tableCompAerienne");
       
-      
-      //System.out.println(dao.getTrainCatByID(tcb.getIdTrainCatalogue()).get(0).getNumeroTrainCatalogue());
-    
-      
-      //  goTrain() ;
       
    }
 

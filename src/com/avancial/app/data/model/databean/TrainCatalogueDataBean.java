@@ -51,7 +51,7 @@ public class TrainCatalogueDataBean implements Serializable {
    private String destinationPointArret ;
    private Date heureDepartTrainCatalogue ;
    private Date heureArriveeTrainCatalogue ;
-   private Date regimeJoursTrainCatalogue ;
+   private String regimeJoursTrainCatalogue ;
    private Date dateDebutValidite ; 
    private Date dateFinValidite ; 
    private String operatingFlight; 
@@ -97,11 +97,11 @@ public class TrainCatalogueDataBean implements Serializable {
       this.heureArriveeTrainCatalogue = date;
    }
 
-   public Date getRegimeJoursTrainCatalogue() {
+   public String getRegimeJoursTrainCatalogue() {
       return regimeJoursTrainCatalogue;
    }
 
-   public void setRegimeJoursTrainCatalogue(Date regimeJoursTrainCatalogue) {
+   public void setRegimeJoursTrainCatalogue(String regimeJoursTrainCatalogue) {
       this.regimeJoursTrainCatalogue = regimeJoursTrainCatalogue;
    }
 

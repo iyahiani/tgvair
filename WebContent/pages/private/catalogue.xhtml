@@ -7,7 +7,8 @@
 
 	<ui:define name="contenu">
 
-		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet">
+		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet"> 
+		<h:message for="tableTrains" />
 			<!-- style="font-size: 45px; font-color : red ;" -->
 			<h:panelGrid columns="1"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
@@ -30,7 +31,7 @@
 							rowsPerPageTemplate="5,10,15">
 							
 						   <p:ajax  event="rowDblselect" listener="#{traincatalogue.rowSelect}" update=":formCompAerienne:tableCompAerienne"  ></p:ajax>
-						    <p:ajax  event="rowSelect" listener="#{traintocompagnie.rowSelect}" update=""  ></p:ajax>
+						    <p:ajax  event="rowSelect" listener="#{traintocompagnie.rowSelect}" update=":formCompAerienne:tableCompAerienne"  ></p:ajax>
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
@@ -117,14 +118,13 @@
 					</p:dataTable>
 				</h:form>
 
-
-				<h:form>
+				<h:form id="formAssocier">
 
 					<h:panelGrid columns="2" id="ajoutTC"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
 						<f:facet name="header"> Associer un Train</f:facet>
 						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
-						<h:selectOneMenu effect="fold" editable="true" 
+						<h:selectOneMenu effect="fold" editable="true" required="true"
 							value="#{traintocompagnie.codeCompagnie}" style="width : 100%" >
 
 							<f:selectItems value="#{traintocompagnie.allCompagnie}" id="codeComp">
@@ -133,25 +133,25 @@
 						</h:selectOneMenu>
 
 						<p:outputLabel value="Début de Validité"></p:outputLabel>
-						<p:calendar id="popup2" showOn="both" locale="fr"
+						<p:calendar id="popup2" showOn="both" locale="fr" required="true"
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateDebutValidite}"  pattern="dd/MM/yyyy"/>
 
 						<p:outputLabel value="Fin de Validité"></p:outputLabel>
-						<p:calendar id="popup3" showOn="both" locale="fr"
+						<p:calendar id="popup3" showOn="both" locale="fr" required="true"
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateFinValidite}" pattern="dd/MM/yyyy" />
 
 						<p:outputLabel for="marketing_Flight" value="marketing Flight"></p:outputLabel>
-						<p:inputMask mask="**9999" style="width : 100% auto;" id="marketing_Flight" 
+						<p:inputMask mask="**9999" style="width : 100% auto;" id="marketing_Flight"  required="true"
 							value="#{traintocompagnie.marketingFlight}"></p:inputMask>
 
 						<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
-						<p:inputText id="Quota1" style="width :100% auto;"
+						<p:inputText id="Quota1" style="width :100% auto;" required="true"
 							value="#{traintocompagnie.quota1er}"></p:inputText>
 
 						<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
-						<p:inputText id="Quota2" style="width : 100% auto;"
+						<p:inputText id="Quota2" style="width : 100% auto;" required="true"
 							value="#{traintocompagnie.quota2em}"></p:inputText>
 						<h:panelGrid></h:panelGrid>
 						<h:panelGrid columns="2">
@@ -160,7 +160,7 @@
 								title="ajouter" actionListener="#{traintocompagnie.add}" 
 								ajax="true">
 								<p:ajax update=":formCompAerienne" delay="1"
-									listener="#{traintocompagnie.reload()}" render="ajoutTC"
+									listener="#{traintocompagnie.reload()}" render="formAssocier ajoutTC"
 									resetValues="true"></p:ajax>
 							</p:commandButton>
 						</h:panelGrid>
