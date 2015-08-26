@@ -45,12 +45,12 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    private String operatingFlightTrainCatalogueToCompagnie;
    private Date dateDebutValiditeTrainCatalogueToCompagnie;
    private Date dateFinValiditeTrainCatalogueToCompagnie;
-   @OneToOne(cascade = CascadeType.ALL)
+  /* @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "idOriginePointArret")
    private PointArretDataBean idOriginePointArret;
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "idDestinationPointArret")
-   private PointArretDataBean idDestinationPointArret;
+   private PointArretDataBean idDestinationPointArret;*/
 
    public Integer getIdTrainCatalogueToCompagnie() {
       return idTrainCatalogueToCompagnie;
@@ -159,7 +159,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       this.codeCompagnieAerienne = codeCompagnieAerienne;
    }
 
-   public PointArretDataBean getIdOriginePointArret() {
+   /*public PointArretDataBean getIdOriginePointArret() {
       return idOriginePointArret;
    }
 
@@ -173,7 +173,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
 
    public void setIdDestinationPointArret(PointArretDataBean idDestinationPointArret) {
       this.idDestinationPointArret = idDestinationPointArret;
-   }
+   }*/
 
   
 }

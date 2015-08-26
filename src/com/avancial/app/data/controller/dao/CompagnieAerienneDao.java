@@ -14,7 +14,8 @@ public class CompagnieAerienneDao extends AbstractDao {
    @Override
    public List<CompagnieAerienneDataBean> getAll() {
 
-      String sql = "select CodeCompagnieAerienne From CompagnieAerienneDataBean";// select codeCompagnieAerienne
+      String sql = "select CodeCompagnieAerienne From CompagnieAerienneDataBean";// select
+                                                                                 // codeCompagnieAerienne
       Query requete = this.getEntityManager().createQuery(sql);
       System.out.println(requete.getResultList());
       return requete.getResultList();
@@ -58,5 +59,21 @@ public class CompagnieAerienneDao extends AbstractDao {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }
+   }
+
+   /**
+    * 
+    * @param code
+    *           retourne le bean relative au code passer en paramétre
+    * @return
+    */
+   public List<CompagnieAerienneDataBean> getCompagnieByCode(String code) {
+
+      String sql = "From CompagnieAerienneDataBean as p WHERE p.CodeCompagnieAerienne =?";
+      Query requete = this.getEntityManager().createQuery(sql);
+      requete.setParameter(1, code);
+
+      return requete.getResultList();
+
    }
 }

@@ -77,11 +77,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    public void clear() {
 
    }
-
    @Override
    public String add() {
     
-      
       PointArretDAO pointArretDAO = new PointArretDAO()  ;
       TrainCatalogueDataBean bean = new TrainCatalogueDataBean(); 
 
@@ -113,7 +111,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public TrainCatalogueDataBean getRowData(String arg0) {
-    System.out.println(arg0);
+   
       return null;
    }
 

@@ -63,8 +63,12 @@ public class TrainCatalToCompManagedBean extends AManageBean {
    @Override
    public String add() {
 
+      CompagnieAerienneDao compagnieDao = new CompagnieAerienneDao(); 
+      
       TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
-      bean.setTrainCatalogueDataBean(this.trainCatalogueBean);
+      this.compagnieDataBean = compagnieDao.getCompagnieByCode(getCodeCompagnie()).get(0);
+      bean.setTrainCatalogueDataBean(this.trainCatalogueBean); 
+      bean.setCompagnieAerienneDataBean(this.compagnieDataBean);
       bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
       bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
       bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er());

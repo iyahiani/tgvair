@@ -28,7 +28,7 @@ public class PointArretDAO extends AbstractDao{
       
       Query requete = this.getEntityManager().createQuery(sql); 
       requete.setParameter(1, name) ;
-     System.out.println(requete.getResultList().size());
+     
       return requete.getResultList(); 
    }
    }
