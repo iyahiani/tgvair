@@ -7,8 +7,8 @@
 
 	<ui:define name="contenu">
 
-		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet"> 
-		<h:message for="tableTrains" />
+		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet">
+			<h:message for="tableTrains" />
 			<!-- style="font-size: 45px; font-color : red ;" -->
 			<h:panelGrid columns="1"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
@@ -16,32 +16,44 @@
 				<h:form id="tableTrains">
 					<h:panelGrid columns="1"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-						
-						<p:dataTable value="#{traincatalogue.trainsCatalogue}" 
-						    rows="10" scrollable="true"
-							widgetVar="trainsWdg" 
-							paginatorPosition="top" 
-							id="tableTrains"
-							var="trains" 
+
+						<p:dataTable value="#{traincatalogue.trainsCatalogue}" rows="10"
+							scrollable="true" widgetVar="trainsWdg" paginatorPosition="top"
+							id="tableTrains" var="trains"
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
 							selectionMode="single" 
-							rowKey="#{trains.numeroTrainCatalogue}" 
-							paginator="true" 
+							editable="true" 
+							editMode="cell"
+							rowKey="#{trains.numeroTrainCatalogue}" paginator="true"
 							rowsPerPageTemplate="5,10,15">
+							<p:ajax event="rowSelect"
+								listener="#{traintocompagnie.rowSelect}"
+								update=":formCompAerienne:tableCompAerienne"></p:ajax>
+
+							<p:ajax event="cellEdit" listener="#{traincatalogue.onEdit}" 
+								update=":tableTrains" delay="1">
+							</p:ajax>
 							
-						   <p:ajax  event="rowDblselect" listener="#{traincatalogue.rowSelect}" update=":formCompAerienne:tableCompAerienne"  ></p:ajax>
-						    <p:ajax  event="rowSelect" listener="#{traintocompagnie.rowSelect}" update=":formCompAerienne:tableCompAerienne"  ></p:ajax>
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
-								<h:outputText value="#{trains.numeroTrainCatalogue}" /> 					
+								
+								<p:cellEditor> 
+								<f:facet name="output">
+									<h:outputText value="#{trains.numeroTrainCatalogue}" />
+									</f:facet>
+									<f:facet name="input">
+                                    <h:inputText value="#{trains.numeroTrainCatalogue}" />
+                                    </f:facet>
+								</p:cellEditor>
 							</p:column>
+							
 							<p:column headerText="Début de Validité">
-								<h:outputText value="#{trains.dateDebutValidite}"  />
+								<h:outputText value="#{trains.dateDebutValidite}" />
 							</p:column>
 
-							<p:column headerText="Fin de Validité" >
+							<p:column headerText="Fin de Validité">
 
 								<h:outputText value="#{trains.dateFinValidite}" />
 							</p:column>
@@ -55,18 +67,23 @@
 
 								<h:outputText value="#{trains.heureArriveeTrainCatalogue}" />
 							</p:column>
-							<p:column headerText="Départ"  filterBy="#{trains.originePointArret}" filterMatchMode="contains">
+							<p:column headerText="Départ"
+								filterBy="#{trains.originePointArret}"
+								filterMatchMode="contains">
 								<h:outputText value="#{trains.originePointArret}" />
 							</p:column>
 
-							<p:column headerText="Arrivée" filterBy="#{trains.destinationPointArret}" filterMatchMode="contains">
+							<p:column headerText="Arrivée"
+								filterBy="#{trains.destinationPointArret}"
+								filterMatchMode="contains">
 								<h:outputText value="#{trains.destinationPointArret}" />
-							</p:column>  
-							<p:column> 
-							<h:commandLink value="Modifier Ce Train" action="#{traincatalogue.goTrain}"> 
-							
-							</h:commandLink>
-							 </p:column>
+							</p:column>
+							<p:column>
+								<h:commandLink value="Modifier Ce Train"
+									action="#{traincatalogue.goTrain}">
+
+								</h:commandLink>
+							</p:column>
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
@@ -74,14 +91,10 @@
 				<h:form id="formCompAerienne">
 					<p:dataTable
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
-						paginatorPosition="top" 
-						var="compagnie" 
-						paginator="true"
-						id="tableCompAerienne" 
-						rows="10" selectionMode="single"
-						rowKey="compagnie.comp" 
-						rowsPerPageTemplate="5,10,15">
-						
+						paginatorPosition="top" var="compagnie" paginator="true"
+						id="tableCompAerienne" rows="10" selectionMode="single"
+						rowKey="compagnie.comp" rowsPerPageTemplate="5,10,15">
+
 						<p:column headerText="Compagnie Aérienne" id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
 						</p:column>
@@ -125,17 +138,19 @@
 						<f:facet name="header"> Associer un Train</f:facet>
 						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
 						<h:selectOneMenu effect="fold" editable="true" required="true"
-							value="#{traintocompagnie.codeCompagnie}" style="width : 100%" >
+							value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
 
-							<f:selectItems value="#{traintocompagnie.allCompagnie}" id="codeComp">
+							<f:selectItems value="#{traintocompagnie.allCompagnie}"
+								id="codeComp">
 							</f:selectItems>
-                        <p:ajax update="marketing_Flight"></p:ajax>
+							<p:ajax update="marketing_Flight"></p:ajax>
 						</h:selectOneMenu>
 
 						<p:outputLabel value="Début de Validité"></p:outputLabel>
 						<p:calendar id="popup2" showOn="both" locale="fr" required="true"
 							styleClass="dateTimeStyle"
-							value="#{traintocompagnie.dateDebutValidite}"  pattern="dd/MM/yyyy"/>
+							value="#{traintocompagnie.dateDebutValidite}"
+							pattern="dd/MM/yyyy" />
 
 						<p:outputLabel value="Fin de Validité"></p:outputLabel>
 						<p:calendar id="popup3" showOn="both" locale="fr" required="true"
@@ -143,7 +158,8 @@
 							value="#{traintocompagnie.dateFinValidite}" pattern="dd/MM/yyyy" />
 
 						<p:outputLabel for="marketing_Flight" value="marketing Flight"></p:outputLabel>
-						<p:inputMask mask="**9999" style="width : 100% auto;" id="marketing_Flight"  required="true"
+						<p:inputMask mask="**9999" style="width : 100% auto;"
+							id="marketing_Flight" required="true"
 							value="#{traintocompagnie.marketingFlight}"></p:inputMask>
 
 						<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
@@ -151,17 +167,17 @@
 							value="#{traintocompagnie.quota1er}"></p:inputText>
 
 						<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
-						<p:inputText id="Quota2" style="width : 100% auto;" required="true"
-							value="#{traintocompagnie.quota2em}"></p:inputText>
+						<p:inputText id="Quota2" style="width : 100% auto;"
+							required="true" value="#{traintocompagnie.quota2em}"></p:inputText>
 						<h:panelGrid></h:panelGrid>
 						<h:panelGrid columns="2">
 							<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
 							<p:commandButton icon="ui-icon-check" type="submit"
-								title="ajouter" actionListener="#{traintocompagnie.add}" 
+								title="ajouter" actionListener="#{traintocompagnie.add}"
 								ajax="true">
 								<p:ajax update=":formCompAerienne" delay="1"
-									listener="#{traintocompagnie.reload()}" render="formAssocier ajoutTC"
-									resetValues="true"></p:ajax>
+									listener="#{traintocompagnie.reload()}"
+									render="formAssocier ajoutTC" resetValues="true"></p:ajax>
 							</p:commandButton>
 						</h:panelGrid>
 					</h:panelGrid>

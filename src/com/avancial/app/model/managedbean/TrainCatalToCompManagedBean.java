@@ -80,7 +80,7 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       TrainCatalogueToCompagnieDAO dao = new TrainCatalogueToCompagnieDAO();
       try {
          dao.save(bean);
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "La compagnie a été créé."));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le train est associé à la compagnie."));
          this.closeDialog = true;
          RequestContext.getCurrentInstance().update(":tableCompAerienne");
 
@@ -99,6 +99,11 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue())); 
       RequestContext.getCurrentInstance().update(":tableCompAerienne");
       
+      
+   } 
+    public  void onRowUnSelect(SelectEvent event) {
+      
+      this.trainCatalogueBean = null;
       
    }
 

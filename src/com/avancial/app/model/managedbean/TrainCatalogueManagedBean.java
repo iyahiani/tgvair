@@ -14,7 +14,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
@@ -62,10 +65,16 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    public  void rowSelect(SelectEvent event) {
            
       TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject();     
-      
-      System.out.println(tcb.getOperatingFlight());
+     
    }
-
+   
+   public  void onRowUnselect(UnselectEvent event) {
+      
+     this.selectedTrainsCatalogue =null ;
+     
+   }
+   
+  
    public List<PointArretDataBean> getListGDS() {
 
       return new PointArretDAO().getAllGDS();
@@ -104,7 +113,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
       try {
          dao.save(bean);
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "La compagnie a été créé."));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Train Catalogue a été créé."));
          this.closeDialog = true;
          RequestContext.getCurrentInstance().update(":tableTrains");
 
@@ -121,11 +130,12 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
    
    public Object getRowKey(TrainCatalogueDataBean arg0) {
-   // System.out.println(arg0.getNumeroTrainCatalogue())   ;
+   
       return null;
    }
 
-   public static void  goTrain() { 
+   public static void  goTrain() {  
+      
       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
       try {
          context.redirect("train.xhtml");
@@ -153,7 +163,16 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          if (v=='7')  temp2[6] ='7';
       }  
       return s.copyValueOf(temp2);
-   }
+   } 
+    
+    public String onEdit(CellEditEvent event) {
+       
+       
+      /* System.out.println(event.getSource().getClass());
+       RequestContext.getCurrentInstance().update(":tableTrains");*/
+       return null ;
+    }
+    
    public List<TrainCatalogueDataBean> getListTrainsCatAndValid() {
       return new TrainCatalogueDAO().getAllTrainAndValid();
    }
