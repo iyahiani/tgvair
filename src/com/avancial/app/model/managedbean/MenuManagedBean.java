@@ -54,5 +54,5 @@ public class MenuManagedBean implements Serializable {
    public static String goTrain() {
       return APP_TgvAir.NAVIGATION_TRAIN.toString();
    }
-
+   
 }

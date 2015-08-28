@@ -7,8 +7,15 @@
 
 	<ui:define name="contenu">
 
+		<script type="text/javascript">
+			function reset() {
+				$("#formAssocier")[0].reset();
+			}
+		</script>
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
 		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet">
-			<h:message for="tableTrains" />
+
 			<!-- style="font-size: 45px; font-color : red ;" -->
 			<h:panelGrid columns="1"
 				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
@@ -22,33 +29,24 @@
 							id="tableTrains" var="trains"
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
-							selectionMode="single" 
-							editable="true" 
-							editMode="cell"
+							selectionMode="single" editable="true" editMode="cell"
 							rowKey="#{trains.numeroTrainCatalogue}" paginator="true"
 							rowsPerPageTemplate="5,10,15">
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
 								update=":formCompAerienne:tableCompAerienne"></p:ajax>
 
-							<p:ajax event="cellEdit" listener="#{traincatalogue.onEdit}" 
+							<p:ajax event="cellEdit" listener="#{traincatalogue.onEdit}"
 								update=":tableTrains" delay="1">
 							</p:ajax>
-							
+
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
-								
-								<p:cellEditor> 
-								<f:facet name="output">
-									<h:outputText value="#{trains.numeroTrainCatalogue}" />
-									</f:facet>
-									<f:facet name="input">
-                                    <h:inputText value="#{trains.numeroTrainCatalogue}" />
-                                    </f:facet>
-								</p:cellEditor>
+								<h:outputText value="#{trains.numeroTrainCatalogue}" />
+
 							</p:column>
-							
+
 							<p:column headerText="Début de Validité">
 								<h:outputText value="#{trains.dateDebutValidite}" />
 							</p:column>
@@ -78,11 +76,18 @@
 								filterMatchMode="contains">
 								<h:outputText value="#{trains.destinationPointArret}" />
 							</p:column>
-							<p:column>
-								<h:commandLink value="Modifier Ce Train"
-									action="#{traincatalogue.goTrain}">
-
-								</h:commandLink>
+							<p:column width="50">
+								<f:facet name="header"> Modifier</f:facet>
+								<p:commandLink update=":modif" id="update_Train"
+									oncomplete="PF('Modif').show()">
+									<f:setPropertyActionListener value="#{trains}"
+										target="#{traincatalogue.selectedTrainsCatalogue}" />
+									<h:graphicImage name="private/image/pencil_edit1.png"
+										styleClass="actionButtons">
+										<p:tooltip for="update_Train"
+											value=" Modifier le Train #{trains.numeroTrainCatalogue}" />
+									</h:graphicImage>
+								</p:commandLink>
 							</p:column>
 						</p:dataTable>
 					</h:panelGrid>
@@ -163,16 +168,16 @@
 							value="#{traintocompagnie.marketingFlight}"></p:inputMask>
 
 						<p:outputLabel for="Quota1" value="Quota 1ére"></p:outputLabel>
-						<p:inputText id="Quota1" style="width :100% auto;" required="true"
-							value="#{traintocompagnie.quota1er}"></p:inputText>
+						<p:inputMask mask="*9999" id="Quota1" style="width :100% auto;"
+							required="true" value="#{traintocompagnie.quota1er}"></p:inputMask>
 
 						<p:outputLabel for="Quota2" value="Quota 2éme"></p:outputLabel>
-						<p:inputText id="Quota2" style="width : 100% auto;"
-							required="true" value="#{traintocompagnie.quota2em}"></p:inputText>
+						<p:inputMask mask="*9999" id="Quota2" style="width : 100% auto;"
+							required="true" value="#{traintocompagnie.quota2em}"></p:inputMask>
 						<h:panelGrid></h:panelGrid>
 						<h:panelGrid columns="2">
 							<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
-							<p:commandButton icon="ui-icon-check" type="submit"
+							<p:commandButton icon="ui-icon-check" type="submit" onclick="reset()"
 								title="ajouter" actionListener="#{traintocompagnie.add}"
 								ajax="true">
 								<p:ajax update=":formCompAerienne" delay="1"
@@ -184,7 +189,87 @@
 				</h:form>
 			</h:panelGrid>
 		</p:fieldset>
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			header="Modifier Train">
+			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="Numero 1"></h:outputText></td>
+						<td><p:inputText
+								value="#{traincatalogue.selectedTrainsCatalogue.numeroTrainCatalogue1}"
+								required="true">
+							</p:inputText></td>
 
+					</tr>
+					<tr>
+						<td><h:outputText value="Numero 2"></h:outputText></td>
+						<td><p:inputText
+								value="#{traincatalogue.selectedTrainsCatalogue.numeroTrainCatalogue2}"
+								required="true">
+							</p:inputText></td>
+
+					</tr>
+
+					<tr>
+						<td><h:outputText value="Départ"></h:outputText></td>
+						<td><p:inputText
+								value="#{traincatalogue.selectedTrainsCatalogue.originePointArret}"
+								required="true">
+							</p:inputText></td>
+
+					</tr>
+					<tr>
+						<td><h:outputText value="Arriver"></h:outputText></td>
+						<td><p:inputText
+								value="#{traincatalogue.selectedTrainsCatalogue.destinationPointArret}"
+								required="true">
+							</p:inputText></td>
+
+					</tr>
+					<tr>
+						<td><h:outputText value="Heure Départ"></h:outputText></td>
+						<td><p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
+								required="true"
+								value="#{traincatalogue.selectedTrainsCatalogue.heureDepartTrainCatalogue}"
+								locale="fr" showOn="both" /></td>
+
+					</tr>
+					<tr>
+						<td><h:outputText value="Heure Arriver"></h:outputText></td>
+						<td><p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
+								required="true"
+								value="#{traincatalogue.selectedTrainsCatalogue.heureArriveeTrainCatalogue}"
+								locale="fr" showOn="both" /></td>
+
+					</tr>
+					<tr>
+						<td><h:outputText value="Début Validité"></h:outputText></td>
+						<td><p:calendar showOn="both" locale="fr" required="true"
+								value="#{traincatalogue.selectedTrainsCatalogue.dateDebutValidite}" />
+						</td>
+
+					</tr>
+					<tr>
+						<td><h:outputText value="Début Fin"></h:outputText></td>
+						<td><p:calendar showOn="both" locale="fr" required="true"
+								value="#{traincatalogue.selectedTrainsCatalogue.dateFinValidite}" />
+						</td>
+
+					</tr>
+
+				</table>
+				<br />
+				<br />
+				<p:commandButton value="ajouter" type="submit"
+					actionListener="#{traincatalogue.update}" update=":tableTrains"
+					oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close()">
+				</p:commandButton>
+				<p:commandButton immediate="true" onclick="PF('Modif').close()"
+					value="annuler" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

@@ -25,7 +25,7 @@ public class PointArretManagedBean extends AManageBean {
    private String codeGDSPointArret;
    private String libellePointArret; 
    
-   private boolean selectedHorraire  ;
+   private boolean selectedHorraire =true ;
    private List<PointArretDataBean> listPointsArret ;
 
    public PointArretManagedBean() { 

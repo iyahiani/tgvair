@@ -27,10 +27,10 @@
 				<p:outputLabel for="codeComp" value="Code Compagnie"
 					title="Code Compagnie en MAJUSCULE"></p:outputLabel>
 				<p:inputText id="codeComp" style="width :100% auto;"
-					value="#{pointsArret.codeResarailPointArret}"></p:inputText>
+					value="#{pointsArret.codeGDSPointArret}"></p:inputText>
 				<p:outputLabel for="labelCompgn" value="Libellé Compagnie"></p:outputLabel>
 				<p:inputText id="labelCompgn" style="width : 100% auto;"
-					value="#{pointsArret.codeGDSPointArret}"></p:inputText>
+					value="#{pointsArret.libellePointArret}"></p:inputText>
 				<p:outputLabel for="
 						codeResarail" value="Code Résarail">
 				</p:outputLabel>
@@ -38,14 +38,14 @@
 					value="#{pointsArret.codeResarailPointArret}"></p:inputText>
 				<p:outputLabel for="ajoutheures" value="Ajouter Horraires">
 				</p:outputLabel>
-				<p:selectBooleanButton id="ajoutheures" style="width : 100% auto;"
+				<p:selectBooleanButton id="ajoutheures" style="width : 100% auto;" 
 					onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
 					offIcon="ui-icon-close" value="#{pointsArret.selectedHorraire}" onchange="hideOrShow(this.checked);">
-					
+				
 				</p:selectBooleanButton>
 			</h:panelGrid>
 			<h:panelGroup>
-				<h:panelGrid columns="3" id="heures"
+				<h:panelGrid columns="3" id="heures" 
 					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
 					<f:facet name="header"> Ouverture du Guichet </f:facet>
 					<p:outputLabel value="Lundi"></p:outputLabel>
@@ -84,12 +84,13 @@
 					<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
 						showOn="both" />
 					<h:panelGrid></h:panelGrid>
-					<h:panelGrid columns="2">
+					</h:panelGrid>
+					<h:panelGrid columns="2" >
 						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
 						<p:commandButton icon="ui-icon-check" type="submit"
 							title="ajouter" actionListener="#{pointsArret.add}"></p:commandButton>
 					</h:panelGrid>
-				</h:panelGrid>
+				
 			</h:panelGroup>
 			</h:form>
 		</p:fieldset>

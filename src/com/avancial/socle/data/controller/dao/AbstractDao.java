@@ -3,6 +3,7 @@
  */
 package com.avancial.socle.data.controller.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,7 @@ import javax.persistence.EntityManager;
  * @author bruno.legloahec
  *
  */
-public abstract class AbstractDao {
+public abstract class AbstractDao  implements Serializable{
    private EntityManager entityManager;
 
    /**

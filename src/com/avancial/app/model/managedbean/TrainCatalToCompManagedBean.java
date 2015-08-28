@@ -23,6 +23,7 @@ import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
+import com.avancial.socle.resources.ConstantSocle;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 import com.mysql.jdbc.Field;
 
@@ -80,12 +81,12 @@ public class TrainCatalToCompManagedBean extends AManageBean {
       TrainCatalogueToCompagnieDAO dao = new TrainCatalogueToCompagnieDAO();
       try {
          dao.save(bean);
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le train est associé à la compagnie."));
+         FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le train est associé à la compagnie."));
          this.closeDialog = true;
          RequestContext.getCurrentInstance().update(":tableCompAerienne");
 
       } catch (ASocleException e) {// ASocleException
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
+         FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
          e.printStackTrace();
       }
       return null;
