@@ -8,6 +8,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+
+
+
+
+import javax.persistence.criteria.Expression;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.socle.exceptions.ASocleException;
@@ -43,10 +53,20 @@ public class CompagnieAerienneManagedBean extends AManageBean {
    }
 
    public void addCompagnieAerienne() {
+      CompagnieAerienneDao dao = new CompagnieAerienneDao();
+      Session session = dao.getSession(); 
+      Criteria criteria =  session.createCriteria(CompagnieAerienneDataBean.class).add(Restrictions.eq("CodeCompagnieAerienne", getCodeCompagnieAerienne())) ;   
+      List<CompagnieAerienneDataBean> c = new ArrayList<CompagnieAerienneDataBean>() ; 
+      c.addAll(criteria.list()) ; 
+      c.clear();
+      if (c.size()>0) {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "cette Compagnie Existe Déja"));
+      } else 
+      {
       CompagnieAerienneDataBean compagnieAerienneDataBean = new CompagnieAerienneDataBean();
       compagnieAerienneDataBean.setCodeCompagnieAerienne(getCodeCompagnieAerienne());
       compagnieAerienneDataBean.setLibelleCompagnieAerienne(getLibelleCompagnieAerienne());
-      CompagnieAerienneDao dao = new CompagnieAerienneDao();
+      
       try {
          dao.save(compagnieAerienneDataBean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "La compagnie a été créé."));
@@ -57,6 +77,7 @@ public class CompagnieAerienneManagedBean extends AManageBean {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
          e.printStackTrace();
       }
+   }
    }
 
    public List<CompagnieAerienneDataBean> getCompagniesAerienne() {

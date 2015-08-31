@@ -1,8 +1,6 @@
 package com.avancial.app.business.compagnieAerienne;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -21,43 +19,47 @@ public class TrainToCompagnie extends Train{
    private Date dateFinValidite ;
    
    public String getCodeCompagnie() {
-      return codeCompagnie;
+      return this.codeCompagnie;
    }
    public void setCodeCompagnie(String codeCompagnie) {
       this.codeCompagnie = codeCompagnie;
    }
    public String getMarketingFlight() {
-      return marketingFlight;
+      return this.marketingFlight;
    }
    public void setMarketingFlight(String marketingFlight) {
       this.marketingFlight = marketingFlight;
    }
    public int getQuota_1er() {
-      return quota_1er;
+      return this.quota_1er;
    }
    public void setQuota_1er(int quota_1er) {
       this.quota_1er = quota_1er;
    }
    public int getQuota_2em() {
-      return quota_2em;
+      return this.quota_2em;
    }
    public void setQuota_2em(int quota_2em) {
       this.quota_2em = quota_2em;
    }
+   @Override
    public Date getDateDebutValidite() {
-      return dateDebutValidite;
+      return this.dateDebutValidite;
    }
+   @Override
    public void setDateDebutValidite(Date dateDebutValidite) {
       this.dateDebutValidite = dateDebutValidite;
    }
+   @Override
    public Date getDateFinValidite() {
-      return dateFinValidite;
+      return this.dateFinValidite;
    }
+   @Override
    public void setDateFinValidite(Date dateFinValidite) {
       this.dateFinValidite = dateFinValidite;
    }
    public String getOperatingFlight() {
-      return operatingFlight;
+      return this.operatingFlight;
    }
    public void setOperatingFlight(String operatingFlight) {
       this.operatingFlight = operatingFlight;
@@ -70,8 +72,6 @@ public class TrainToCompagnie extends Train{
     */
    public void adaptService(Date debutService, Date finService) {
       Map<Date, JourCirculation> temp = new TreeMap<>();
-      TrainToCompagnie tc2cTemp = new TrainToCompagnie();  
-      
       for (Entry<Date, JourCirculation> entry : this.listeJoursCirculation.entrySet() ) {
          if((entry.getKey().after(debutService)||entry.getKey().equals(debutService)) && (entry.getKey().before(finService)||entry.getKey().equals(finService)))
             temp.put(entry.getKey(), entry.getValue());

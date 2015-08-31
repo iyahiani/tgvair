@@ -38,10 +38,9 @@ public class Train implements ITrain {
     * @param circul
     */
    public Train(List<String> num, List<Circulation> circul) {
-      this.listeCirculations = circul;
-      this.listeJoursCirculation = new TreeMap<>();
-      this.listeNumeros = num;
-
+      this.listeCirculations = circul  ;
+      this.listeJoursCirculation = new TreeMap<>() ;
+      this.listeNumeros = num ;
    }
 
    public Train() {

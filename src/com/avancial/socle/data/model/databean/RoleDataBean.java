@@ -22,9 +22,6 @@ public class RoleDataBean implements Serializable {
    private String            labelRole;
    private String            technicalNameRole;
 
-   public RoleDataBean() {
-   }
-
    public Long getIdRole() {
       return this.idRole;
    }

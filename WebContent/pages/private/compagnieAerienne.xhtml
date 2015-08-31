@@ -6,7 +6,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="title"> </ui:define>
     <ui:define name="contenu"> 
-    
+    <p:messages id="idPageMessages" autoUpdate="true" closable="true"
+            redisplay="false" showDetail="true" globalOnly="false"  />
      <script type="text/javascript">  
      function reset(){
      $("#ajoutCompagnie")[0].reset();
@@ -29,7 +30,7 @@
 					<h:panelGrid></h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:commandButton icon="ui-icon-cancel"></p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit" onclick="reset()"
+						<p:commandButton icon="ui-icon-check" type="submit" oncomplete="reset()"
 							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne}"> 
 							<p:ajax onsuccess="#{compagnieAerienneMangedBean.initProperties()}"></p:ajax>
 							</p:commandButton>

@@ -4,7 +4,6 @@
 package com.avancial.socle.model.managedbean;
 
 import java.io.Serializable;
-import java.text.ParseException;
 
 import com.avancial.socle.exceptions.ASocleException;
 

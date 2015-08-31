@@ -18,6 +18,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       String sql = "From TrainCatalogueDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
+      
    }
 
    public List<TrainCatalogueDataBean> getAllTrainAndValid() {
@@ -44,8 +45,6 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
 
    public List<TrainCatalogueDataBean> getTrainCatByID(int id) {
-      
-      Session session = this.getEntityManager().unwrap(Session.class) ;
      String sql = " FROM TrainCatalogueDataBean as t WHERE t.idTrainCatalogue ="+id ;
      Query requete = this.getEntityManager().createQuery(sql);
      
@@ -78,5 +77,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       }
 
    }
-
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class) ;
+   }
 }

@@ -79,6 +79,10 @@ public class PointArretDAO extends AbstractDao{
          throw SocleExceptionManager.getException();
       }
 
+   } 
+   
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class) ;
    }
    }
 

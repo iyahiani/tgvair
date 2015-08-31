@@ -17,7 +17,7 @@ public enum SOCLE_constants {
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"),
    NAVIGATION_ROLE("/pages/private/role?faces-redirect=true"),
    NAVIGATION_USER("/pages/private/user?faces-redirect=true"),
-   NAVIGATION_TRAIN("/pages/private/train?faces-redirect=true"),
+   NAVIGATION_JOB("/pages/private/job?faces-redirect=true"),
    /**
     * ID du statut des messages généraux à l'IHM
     */
@@ -36,9 +36,7 @@ public enum SOCLE_constants {
    DIALOG_DEL_MESSAGES("message_del"),
 
    EXCEPTION_DUPICATE_ID("exception_duplicate_id"),
-   EXCEPTION_UNKNOWN("exception_unknown")
-
-   ;
+   EXCEPTION_UNKNOWN("exception_unknown");
 
    private String constant = "";
 
