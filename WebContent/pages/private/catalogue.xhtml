@@ -12,12 +12,12 @@
 				$("#formAssocier")[0].reset();
 			}
 		</script>
-		
+
 		<script type="text/javascript">
-            function unselect() {
-                $(selector).toggle();
-            }
-        </script>
+			function unselect() {
+				$(selector).toggle();
+			}
+		</script>
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet">
@@ -35,15 +35,11 @@
 							id="tableTrains" var="trains"
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
-							selectionMode="single" 
-							rowKey="#{trains.numeroTrainCatalogue}" paginator="true"
-							rowsPerPageTemplate="5,10,15">
+							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}"
+							paginator="true" rowsPerPageTemplate="5,10,15">
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
 								update=":formCompAerienne:tableCompAerienne"></p:ajax>
-								
-
-						
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
@@ -96,20 +92,15 @@
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
-
 				<h:form id="formCompAerienne">
 					<p:dataTable
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
-						paginatorPosition="top" 
-						var="compagnie"
-						paginator="true"
-						id="tableCompAerienne" 
-						rows="10" 
-						selectionMode="single" 
+						paginatorPosition="top" var="compagnie" paginator="true"
+						id="tableCompAerienne" rows="10" selectionMode="single"
 						selection="#{traintocompagnie.selectedTrain}"
-						rowKey="compagnie.comp" 
+						rowKey="#{compagnie.idTrainCatalogueToCompagnie}"
 						rowsPerPageTemplate="5,10,15">
-						
+
 						<p:column headerText="Compagnie Aérienne" id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
 						</p:column>
@@ -117,7 +108,7 @@
 							<h:outputText
 								value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}" />
 						</p:column>
-						
+
 						<p:column headerText="Fin de Validité">
 							<h:outputText
 								value="#{compagnie.dateFinValiditeTrainCatalogueToCompagnie}" />
@@ -140,16 +131,16 @@
 						</p:column>
 						<p:column width="50">
 							<f:facet name="header"> Modifier</f:facet>
+
 							<p:commandLink update=":modifT2C" id="update_T2C"
-								oncomplete="PF('modifT2C').show()">
-								<f:setPropertyActionListener value="#{compagnie}"
-                                        target="#{traintocompagnie.selectedTrain}" />
-                                <h:graphicImage name="private/image/pencil_edit1.png"
-                                        styleClass="actionButtons">
-                                        <p:tooltip for="update_T2C"
-                                            value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}"/>
-                                    </h:graphicImage>
-                                    </p:commandLink>
+								onclick="PF('modifT2C').show();">
+
+								<h:graphicImage name="private/image/pencil_edit1.png"
+									styleClass="actionButtons">
+									<p:tooltip for="update_T2C"
+										value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}" />
+								</h:graphicImage>
+							</p:commandLink>
 						</p:column>
 
 					</p:dataTable>
@@ -207,10 +198,10 @@
 				</h:form>
 			</h:panelGrid>
 		</p:fieldset>
-
+		<!-- Fenetre DIALOGUE  -->
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"
 			header="Modifier Train">
-			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="true"
 				showDetail="true" />
 			<h:form>
 				<table>
@@ -289,22 +280,22 @@
 					value="annuler" type="cancel"></p:commandButton>
 			</h:form>
 		</p:dialog>
-		
-		<p:dialog id="modifT2C" widgetVar="ModifT2C" resizable="false"
+
+		<p:dialog id="modifT2C" widgetVar="modifT2C" resizable="false"
 			header="Modifier Train">
-			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
-                showDetail="true" />
-        <h:form>
-                <table>
-                    <tr>
-                        <td><h:outputText value="Numero 1"></h:outputText></td>
-                        <td><p:inputText
-                                value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}"
-                                required="true">
-                            </p:inputText></td>
-                    </tr>
-                </table>
-                </h:form>
+			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="Numero 1"></h:outputText></td>
+						<td><p:inputText
+								value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}"
+								required="true">
+							</p:inputText></td>
+					</tr>
+				</table>
+			</h:form>
 		</p:dialog>
 
 

@@ -29,9 +29,10 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    private static final long serialVersionUID = 1L;
    private List<TrainCatalogueDataBean> trainsCatalogues;
    private List<TrainCatalogueToCompagnieDataBean> trainsCataloguesToCompagnies;
-   private List<CompagnieAerienneDataBean> allCompagnie;
-   private TrainCatalogueDataBean trainCatalogueBean ;
-   private CompagnieAerienneDataBean compagnieDataBean ;
+   private List<CompagnieAerienneDataBean> allCompagnie; 
+   private Integer idTrainCatalogueToCompagnie;
+   private TrainCatalogueDataBean trainCatalogueBean;
+   private CompagnieAerienneDataBean compagnieDataBean;
    private String codeCompagnie;
    private Date dateDebutValidite;
    private Date dateFinValidite;
@@ -40,14 +41,12 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    private int quota2em;
    private TrainCatalogueToCompagnieDataBean selectedTrain;
 
-  
-
    public TrainCatalToCompManagedBean() {
       this.trainsCatalogues = new ArrayList<>();
       this.trainsCataloguesToCompagnies = new ArrayList<>();
       this.allCompagnie = new ArrayList<>();
-      this.trainCatalogueBean = new TrainCatalogueDataBean(); 
-      this.compagnieDataBean = new CompagnieAerienneDataBean() ;
+      this.trainCatalogueBean = new TrainCatalogueDataBean();
+      this.compagnieDataBean = new CompagnieAerienneDataBean();
       this.reload();
    }
 
@@ -61,21 +60,20 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    @Override
    public String add() {
 
-      CompagnieAerienneDao compagnieDao = new CompagnieAerienneDao(); 
+      CompagnieAerienneDao compagnieDao = new CompagnieAerienneDao();
       TrainCatalogueToCompagnieDAO dao = new TrainCatalogueToCompagnieDAO();
-      
+
       TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
       this.compagnieDataBean = compagnieDao.getCompagnieByCode(getCodeCompagnie()).get(0);
-      bean.setTrainCatalogueDataBean(this.trainCatalogueBean); 
+      bean.setTrainCatalogueDataBean(this.trainCatalogueBean);
       bean.setCompagnieAerienneDataBean(this.compagnieDataBean);
       bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
       bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite());
       bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
       bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er());
       bean.setQuotaDeuxiemeTrainCatalogueToCompagnie(getQuota2em());
-      bean.setCodeCompagnieAerienne(getCodeCompagnie()); 
-      
-     
+      bean.setCodeCompagnieAerienne(getCodeCompagnie());
+
       try {
          dao.save(bean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le train est associé à la compagnie."));
@@ -86,24 +84,21 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
          e.printStackTrace();
       }
-      
+
       return null;
    }
 
-   public  void rowSelect(SelectEvent event) {
-      
-      this.trainCatalogueBean = (TrainCatalogueDataBean) event.getObject(); 
-      
-      this.trainsCataloguesToCompagnies.clear();
-      trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue())); 
-      RequestContext.getCurrentInstance().update(":tableCompAerienne");
-      
-      
-   } 
-    public  void onRowUnSelect(SelectEvent event) {
-      
+   public void rowSelect(SelectEvent event) {
 
-      
+      this.trainCatalogueBean = (TrainCatalogueDataBean) event.getObject();
+
+      this.trainsCataloguesToCompagnies.clear();
+      trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue()));
+      RequestContext.getCurrentInstance().update(":tableCompAerienne");
+   }
+
+   public void onRowUnSelect(SelectEvent event) {
+
    }
 
    public void reload() {
@@ -195,8 +190,6 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       this.selectedTrain = selectedTrain;
    }
 
-  
-
    public TrainCatalogueDataBean getTrainCatalogueBean() {
       return trainCatalogueBean;
    }
@@ -206,12 +199,16 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    }
 
    public TrainCatalogueToCompagnieDataBean getRowData(String arg0) {
-      
+
       return null;
    }
 
    public Object getRowKey(TrainCatalogueToCompagnieDataBean arg0) {
-      
+
       return null;
+   }
+
+   public Integer getIdTrainCatalogueToCompagnie() {
+      return idTrainCatalogueToCompagnie;
    }
 }

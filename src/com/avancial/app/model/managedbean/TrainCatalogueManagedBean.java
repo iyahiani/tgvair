@@ -134,7 +134,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public TrainCatalogueDataBean getRowData(String arg0) {
-
+      System.out.println(arg0);
       return null;
    }
 
