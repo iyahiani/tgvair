@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.socle.shutdown;
+package com.avancial.app.shutdown;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

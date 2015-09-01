@@ -25,35 +25,26 @@ public class CirculationDataBean implements Serializable {
    private static final long serialVersionUID = 1L;
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "idCirculation",unique = true, nullable = false)
+   @Column(name = "idCirculation", unique = true, nullable = false)
    private Long idCirculation;
-
-   @OneToOne
-   @JoinColumn(name = "idTrainCatalogue")
-
-   private TrainCatalogueDataBean trainCatalogueDataBean;
-
-   @OneToOne
-   @JoinColumn(name = "idPointArret")
-  
-   private PointArretDataBean originePointArret;
-   private PointArretDataBean destinationPointArret;
-
-   private Date heureDepartCirculation;
-   private Date heureArriverCirculation;
+   private String numeroTrain;
+   private String originePointArret;
+   private String destinationPointArret;
+   private int heureDepartCirculation;
+   private String GMTDepart;
+   private int heureArriverCirculation;
+   private String GMTArriver;
    private Date dateDebutCirculation;
    private Date dateFinCirculation;
    private String joursCirculation;
    private String indicateurFer;
-   private String compagnieAerienne;
-   private String rangTroncon;
+   private int rangTroncon;
    private String trancheFacultatif;
    private String restrictionTrafic;
 
    public CirculationDataBean() {
    }
 
-  
    public Long getIdCirculation() {
       return idCirculation;
    }
@@ -62,19 +53,19 @@ public class CirculationDataBean implements Serializable {
       this.idCirculation = idCirculation;
    }
 
-   public Date getHeureDepartCirculation() {
+   public int getHeureDepartCirculation() {
       return heureDepartCirculation;
    }
 
-   public void setHeureDepartCirculation(Date heureDepartCirculation) {
+   public void setHeureDepartCirculation(int heureDepartCirculation) {
       this.heureDepartCirculation = heureDepartCirculation;
    }
 
-   public Date getHeureArriverCirculation() {
+   public int getHeureArriverCirculation() {
       return heureArriverCirculation;
    }
 
-   public void setHeureArriverCirculation(Date heureArriverCirculation) {
+   public void setHeureArriverCirculation(int heureArriverCirculation) {
       this.heureArriverCirculation = heureArriverCirculation;
    }
 
@@ -110,19 +101,11 @@ public class CirculationDataBean implements Serializable {
       this.indicateurFer = indicateurFer;
    }
 
-   public String getCompagnieAerienne() {
-      return compagnieAerienne;
-   }
-
-   public void setCompagnieAerienne(String compagnieAerienne) {
-      this.compagnieAerienne = compagnieAerienne;
-   }
-
-   public String getRangTroncon() {
+   public int getRangTroncon() {
       return rangTroncon;
    }
 
-   public void setRangTroncon(String rangTroncon) {
+   public void setRangTroncon(int rangTroncon) {
       this.rangTroncon = rangTroncon;
    }
 
@@ -146,20 +129,49 @@ public class CirculationDataBean implements Serializable {
       return serialVersionUID;
    }
 
-   public TrainCatalogueDataBean getTrainCatalogueBean() {
-      return trainCatalogueDataBean;
+   public String getNumeroTrain() {
+      return numeroTrain;
    }
 
-   public void setTrainCatalogueBean(TrainCatalogueDataBean trainCatalogueDataBean) {
-      this.trainCatalogueDataBean = trainCatalogueDataBean;
+   public void setNumeroTrain(String numeroTrain) {
+      this.numeroTrain = numeroTrain;
    }
 
-   public void setOriginePointArret(PointArretDataBean originePointArret) {
+   public String getOriginePointArret() {
+      return originePointArret;
+   }
+
+   public void setOriginePointArret(String originePointArret) {
       this.originePointArret = originePointArret;
    }
 
-   public void setDestinationPointArret(PointArretDataBean destinationPointArret) {
+   public String getDestinationPointArret() {
+      return destinationPointArret;
+   }
+
+   public void setDestinationPointArret(String destinationPointArret) {
       this.destinationPointArret = destinationPointArret;
    }
 
+   public String getGMTDepart() {
+      return GMTDepart;
+   }
+
+   public void setGMTDepart(String gMTDepart) {
+      GMTDepart = gMTDepart;
+   }
+
+   public String getGMTArriver() {
+      return GMTArriver;
+   }
+
+   public void setGMTArriver(String gMTArriver) {
+      GMTArriver = gMTArriver;
+   }
+
+   @Override
+   public String toString() {
+
+      return this.destinationPointArret + "--" + this.originePointArret ;
+   }
 }

@@ -28,10 +28,7 @@ public class JobTest implements Job {
    @Override
    public void execute(JobExecutionContext arg0) throws JobExecutionException {
       
-      TrainCatalogueDAO dao = new TrainCatalogueDAO(); 
-      List<TrainCatalogueDataBean> list = new ArrayList<>() ; 
-      list.addAll(dao.getAll()) ;
-      System.out.println(list.size())  ; //"Job executed !!"
+     System.out.println("Job Execute......!!!!!!!");
 
    }
 

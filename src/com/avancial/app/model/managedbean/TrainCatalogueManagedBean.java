@@ -23,6 +23,7 @@ import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
+import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.socle.exceptions.ASocleException;
@@ -84,9 +85,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
 
-   public void clear() {
-
-   }
+  
 
    @Override
    public String add() {
@@ -98,7 +97,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       c.clear();
       c.addAll(criteria.list());
       if (c.size() > 0) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "ce Train Existe Déja"));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
+               new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "ce Train Existe Déja"));
       } else {
 
          PointArretDAO pointArretDAO = new PointArretDAO();
@@ -133,6 +133,21 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
+   @Override
+   public String delete() throws ASocleException {
+      super.delete();
+      if (null != this.selectedTrainsCatalogue) {
+         TrainCatalogueDAO dao = new TrainCatalogueDAO();
+         try {
+            dao.delete(this.selectedTrainsCatalogue);
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            this.closeDialog = true;
+         } catch (ASocleException e) {
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
+         }
+      }
+      return null;
+   }
    public TrainCatalogueDataBean getRowData(String arg0) {
       System.out.println(arg0);
       return null;

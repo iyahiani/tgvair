@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.avancial.socle.init;
+package com.avancial.app.init;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
+import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -23,7 +24,7 @@ import com.avancial.app.jobs.JobImport;
  * @author bruno.legloahec
  *
  */
-//@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
 public class SocleInit extends HttpServlet {
 
    /**
@@ -59,8 +60,10 @@ public class SocleInit extends HttpServlet {
       // define the job and tie it to our HelloJob class
       JobDetail job = JobBuilder.newJob(JobImport.class).withIdentity("dummyJobName", "group1").build();
       // Trigger the job to run on the next round minute
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("dummyTriggerName", "group1").withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(5).repeatForever()).build();
-      sched.start();
-      // sched.scheduleJob(job, trigger);
+      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("dummyTriggerName", "group1")
+            .withSchedule(CronScheduleBuilder.cronSchedule("5 * * * * ?")).build(); 
+      sched.start(); 
+      sched.scheduleJob(job, trigger) ; 
+      
    }
 }
