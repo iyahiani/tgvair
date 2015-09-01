@@ -73,7 +73,7 @@ public class JobImport implements Job {
             if (!par.getParsedResult().isEmpty()) {
 
                CirculationDataBean circulation = new CirculationDataBean();
-               circulation.setOriginePointArret(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
+               circulation.setOriginePointArret(par. getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
                circulation.setDestinationPointArret(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_ARRIVER.name()));
                circulation.setHeureArriverCirculation(Integer.valueOf(par.getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_ARRIVER.name())));
                circulation.setHeureDepartCirculation(Integer.valueOf(par.getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_DEPART.name())));

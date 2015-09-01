@@ -61,7 +61,7 @@ public class SocleInit extends HttpServlet {
       JobDetail job = JobBuilder.newJob(JobImport.class).withIdentity("dummyJobName", "group1").build();
       // Trigger the job to run on the next round minute
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("dummyTriggerName", "group1")
-            .withSchedule(CronScheduleBuilder.cronSchedule("5 * * * * ?")).build(); 
+            .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?")).build(); 
       sched.start(); 
       sched.scheduleJob(job, trigger) ; 
       
