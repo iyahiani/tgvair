@@ -10,6 +10,7 @@ import com.avancial.app.business.train.circulation.JourCirculation;
 
 public class TrainToCompagnie extends Train{
 
+   private int idTrainCatalogue ;
    private String codeCompagnie ; 
    private String marketingFlight ; 
    private String operatingFlight ; 
@@ -82,5 +83,11 @@ public class TrainToCompagnie extends Train{
       this.listeJoursCirculation.putAll(temp); 
       //this.calculeCirculationFromJoursCirculation();
    
+   }
+   public int getIdTrainCatalogue() {
+      return idTrainCatalogue;
+   }
+   public void setIdTrainCatalogue(int idTrainCatalogue) {
+      this.idTrainCatalogue = idTrainCatalogue;
    }
 }

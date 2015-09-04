@@ -30,14 +30,13 @@ public class CirculationDataBean implements Serializable {
    private String numeroTrain;
    private String originePointArret;
    private String destinationPointArret;
-   private int heureDepartCirculation;
+   private String heureDepartCirculation;
    private String GMTDepart;
-   private int heureArriverCirculation;
+   private String heureArriverCirculation;
    private String GMTArriver;
    private Date dateDebutCirculation;
    private Date dateFinCirculation;
    private String joursCirculation;
-   private String indicateurFer;
    private int rangTroncon;
    private String trancheFacultatif;
    private String restrictionTrafic;
@@ -53,19 +52,19 @@ public class CirculationDataBean implements Serializable {
       this.idCirculation = idCirculation;
    }
 
-   public int getHeureDepartCirculation() {
+   public String getHeureDepartCirculation() {
       return heureDepartCirculation;
    }
 
-   public void setHeureDepartCirculation(int heureDepartCirculation) {
+   public void setHeureDepartCirculation(String heureDepartCirculation) {
       this.heureDepartCirculation = heureDepartCirculation;
    }
 
-   public int getHeureArriverCirculation() {
+   public String getHeureArriverCirculation() {
       return heureArriverCirculation;
    }
 
-   public void setHeureArriverCirculation(int heureArriverCirculation) {
+   public void setHeureArriverCirculation(String heureArriverCirculation) {
       this.heureArriverCirculation = heureArriverCirculation;
    }
 
@@ -93,13 +92,7 @@ public class CirculationDataBean implements Serializable {
       this.joursCirculation = joursCirculation;
    }
 
-   public String getIndicateurFer() {
-      return indicateurFer;
-   }
-
-   public void setIndicateurFer(String indicateurFer) {
-      this.indicateurFer = indicateurFer;
-   }
+   
 
    public int getRangTroncon() {
       return rangTroncon;

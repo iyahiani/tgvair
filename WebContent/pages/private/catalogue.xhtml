@@ -36,10 +36,10 @@
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
 							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}"
-							paginator="true" rowsPerPageTemplate="5,10,15">
+							paginator="true" rowsPerPageTemplate="5,10,15" >
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
-								update=":formCompAerienne:tableCompAerienne"></p:ajax>
+								update=":formCompAerienne:tableCompAerienne" delay="1"></p:ajax>
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
@@ -154,18 +154,7 @@
 										value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}" />
 								</h:graphicImage>
 							</p:commandLink>
-							<p:commandLink id="delete_Compagnie"
-								update=":formCompAerienne:tableCompAerienne"
-								action="#{traintocompagnie.delete}"
-								onsuccess="#{traintocompagnie.reload()}">
-								<f:setPropertyActionListener value="#{compagnie}"
-									target="#{traintocompagnie.selectedTrain}" />
-								<h:graphicImage id="img_delete"
-									name="private/image/data-delete.png" styleClass="actionButtons">
-								</h:graphicImage>
-								<p:tooltip id="toolTip" for="delete_Compagnie"
-									value="supprimer le train pour la compagnie #{compagnie.codeCompagnieAerienne} " />
-							</p:commandLink>
+							
 						</p:column>
 
 					</p:dataTable>
@@ -186,7 +175,8 @@
 						</h:selectOneMenu>
 
 						<p:outputLabel value="Début de Validité"></p:outputLabel>
-						<p:calendar id="popup2" showOn="both" locale="fr" required="true"
+						<p:calendar id="popup2" showOn="both" locale="fr" required="true" 
+						
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateDebutValidite}"
 							pattern="dd/MM/yyyy" />

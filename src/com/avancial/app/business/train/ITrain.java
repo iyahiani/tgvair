@@ -28,6 +28,6 @@ public interface ITrain {
    public Train getTrainAPartirDuCatalogue(TrainCatalogue trainCatalogue); 
    public Train getTrainSSIMRestreint(Train trainCatalogue)  ;
 
-   void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM, IObservableJoursCirculation iObs);
+   void adapt(Train train, Date date_deb_SSIM, Date date_fin_SSIM, IObservableJoursCirculation iObs);
 
 }

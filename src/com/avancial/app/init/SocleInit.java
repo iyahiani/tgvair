@@ -13,12 +13,13 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.avancial.app.jobs.JobAdaptation;
 import com.avancial.app.jobs.JobImport;
+import com.avancial.app.traitements.TraitementImportDAO;
 
 /**
  * @author bruno.legloahec
@@ -31,7 +32,7 @@ public class SocleInit extends HttpServlet {
     * 
     */
    private static final long serialVersionUID = 1L;
-
+   
    /*
     * (non-Javadoc)
     * 
@@ -46,7 +47,6 @@ public class SocleInit extends HttpServlet {
       try {
          this.quartzInit();
       } catch (SchedulerException e) {
-
          e.printStackTrace();
       }
    }
@@ -58,12 +58,14 @@ public class SocleInit extends HttpServlet {
       SchedulerFactory sf = new StdSchedulerFactory();
       Scheduler sched = sf.getScheduler();
       // define the job and tie it to our HelloJob class
-      JobDetail job = JobBuilder.newJob(JobImport.class).withIdentity("dummyJobName", "group1").build();
+      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("dummyJobName", "group1").build();//JobImport // JobAdaptation
       // Trigger the job to run on the next round minute
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("dummyTriggerName", "group1")
-            .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?")).build(); 
+            .withSchedule(CronScheduleBuilder.cronSchedule("0/40 * * * * ?")).build(); 
       sched.start(); 
-      sched.scheduleJob(job, trigger) ; 
+      sched.scheduleJob(job, trigger) ;  
       
+      /**/
+     //sched.shutdown();
    }
 }

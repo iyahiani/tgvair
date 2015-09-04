@@ -21,30 +21,7 @@ import com.avancial.socle.data.controller.dao.AbstractDao;
 
 public class TrainFromBean  {
 
-   @Before
-   public void before() {
-      Configuration configuration = new Configuration();
-      configuration.setProperty("connection.driver_class", "com.mysql.jdbc.Driver");
-      configuration.setProperty("hibernate.connection.url", "jdbc:mysql://caliban/tgv_air");
-      configuration.setProperty("hibernate.connection.username", "dbad_tgvair");
-      configuration.setProperty("hibernate.connection.password", "!tgvair-12");
-      ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-      SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-      Session session = sessionFactory.openSession();
-      
-   }
-
-  // @Test
-   public void getTrainFromBean() {
-      getTrains();
-      List<String> nums = new ArrayList<>();
-      nums.add("1111/4-1221/2");
-      nums.add("2222/3");
-      nums.add("5555");
-      for (String s : nums) {
-         System.out.println(trainsNums(s).toString());
-      }
-   }
+   
 
    public List<String> trainsNums(String a) {
       String[] split = a.split("-");

@@ -38,5 +38,7 @@ public abstract class AbstractDao {
       this.entityManager = entityManager;
    }
    
-   
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class);
+   }
 }

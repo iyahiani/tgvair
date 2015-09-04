@@ -33,7 +33,6 @@ public class StringToDate {
          chaine=String.valueOf(date.get(Calendar.DAY_OF_WEEK)-1);
          break;
       } 
-	   
 	  return chaine; 
 	}
 	
@@ -45,7 +44,21 @@ public class StringToDate {
 	      
 	   return myDate.toUpperCase() ; 
 	} 
+	public static String toFormatedString(Date date) { 
+      //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
+      String format = "HHmm" ; 
+      SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
+      String myDate = df.format(date);  
+         
+      return myDate; 
+   } 
 	
-	
-	
+	public static String toFormatedStringddMMyyyy(Date date) { 
+      //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
+      String format = "dd/MM/yyyy" ; 
+      SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
+      String myDate = df.format(date);  
+         
+      return myDate; 
+   } 
 }

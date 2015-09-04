@@ -26,6 +26,7 @@ import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -48,7 +49,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private Date dateDebutValidite;
    private Date dateFinValidite;
    private String operatingFlight;
-   private List<PointArretDataBean> listGDS;
    private List<TrainCatalogueDataBean> trainsCatalogue;
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean selectedTrainsCatalogue;
@@ -66,7 +66,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public void rowSelect(SelectEvent event) {
-      TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject();
+     this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject();
    }
 
  
@@ -220,14 +220,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return s.copyValueOf(temp2);
    }
 
-   public String onEdit(CellEditEvent event) {
-
-      /*
-       * System.out.println(event.getSource().getClass());
-       * RequestContext.getCurrentInstance().update(":tableTrains");
-       */
-      return null;
-   }
+   
 
    public Boolean getCloseDialog() {
       return this.closeDialog;
@@ -362,7 +355,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public void setListGDS(List<PointArretDataBean> listGDS) {
-      this.listGDS = listGDS;
    }
 
    public void setListTrainsCatAndValid(List<TrainCatalogueDataBean> listTrainsCatAndValid) {

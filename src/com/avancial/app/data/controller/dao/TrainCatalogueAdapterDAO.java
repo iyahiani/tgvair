@@ -6,30 +6,22 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 
+import com.avancial.app.data.model.databean.TrainCatalogueAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
 
-public class TrainCatalogueDAO extends AbstractDao {
+public class TrainCatalogueAdapterDAO extends AbstractDao{
 
    @Override
-   public List<TrainCatalogueDataBean> getAll() {
-      String sql = "From TrainCatalogueDataBean";
-      Query requete = this.getEntityManager().createQuery(sql);
-      return requete.getResultList();
-
-   }
-
-   public List<TrainCatalogueDataBean> getAllTrainAndValid() {
-      String sql = " From TrainCatalogueDataBean"; // select
-                                                   // concat(numeroTrainCatalogue,'-',dateDebutValidite)
+   public List<TrainCatalogueAdapterDataBean> getAll() {
+      
+      String sql = "From TrainCatalogueAdapterDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }
-
-   public void save(TrainCatalogueDataBean bean) throws ASocleException {
+   public void save(TrainCatalogueAdapterDataBean bean) throws ASocleException {
       try {
 
          this.getEntityManager().getTransaction().begin();
@@ -45,15 +37,15 @@ public class TrainCatalogueDAO extends AbstractDao {
       }
    }
 
-   public List<TrainCatalogueDataBean> getTrainCatByID(int id) {
-      String sql = " FROM TrainCatalogueDataBean as t WHERE t.idTrainCatalogue =" + id;
+   public List<TrainCatalogueAdapterDataBean> getTrainCatByID(int id) {
+      String sql = " FROM TrainCatalogueAdapterDataBean as t WHERE t.idTrainCatalogueAdapter =" + id;
       Query requete = this.getEntityManager().createQuery(sql);
 
       return requete.getResultList();
 
    }
 
-   public void delete(TrainCatalogueDataBean bean) throws ASocleException {
+   public void delete(TrainCatalogueAdapterDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().remove(bean);
@@ -66,7 +58,7 @@ public class TrainCatalogueDAO extends AbstractDao {
 
    }
 
-   public void update(TrainCatalogueDataBean bean) throws ASocleException {
+   public void update(TrainCatalogueAdapterDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().merge(bean);
@@ -78,17 +70,9 @@ public class TrainCatalogueDAO extends AbstractDao {
       }
 
    }
-
-   public List<TrainCatalogueDataBean> getTrainToCompagnieByID(int idTrainCatalogue) {
-
-      String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue =" + idTrainCatalogue;
-      Query requete = this.getEntityManager().createQuery(sql);
-
-      return requete.getResultList();
-
-   }
-
+   @Override
    public Session getSession() {
-      return this.getEntityManager().unwrap(Session.class);
+      
+      return super.getSession();
    }
 }
