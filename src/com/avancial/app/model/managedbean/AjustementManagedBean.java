@@ -35,7 +35,6 @@ import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.data.model.databean.PointArretDataBean;
-import com.avancial.app.data.model.databean.TestDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.model.managedbean.AManageBean;
