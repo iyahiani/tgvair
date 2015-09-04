@@ -5,31 +5,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map.Entry;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
+import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.socle.data.controller.dao.RoleDao;
+import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
-import com.avancial.socle.resources.ConstantSocle;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("traincatalogue")
@@ -50,10 +49,10 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private Date dateDebutValidite;
    private Date dateFinValidite;
    private String operatingFlight;
-   private List<PointArretDataBean> listGDS;
    private List<TrainCatalogueDataBean> trainsCatalogue;
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean selectedTrainsCatalogue;
+   
    private List<TrainCatalogueDataBean> listTrainsCatAndValid;
    private List<String> listSelectedJoursCirculation;
 
@@ -64,22 +63,13 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       this.listTrainsCatAndValid = new ArrayList<>();
       this.reload();
 
-      /*
-       * for(Entry<String, String> s :
-       * FacesContext.getCurrentInstance().getExternalContext
-       * ().getRequestParameterMap().entrySet()){ System.out.println(s.getKey()
-       * );
-       * 
-       * }
-       */
-      // System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().entrySet().toArray());
-
    }
 
    public void rowSelect(SelectEvent event) {
-      TrainCatalogueDataBean tcb = (TrainCatalogueDataBean) event.getObject();
+     this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject();
    }
 
+ 
    public void onRowUnselect(UnselectEvent event) {
       this.selectedTrainsCatalogue = null;
    }
@@ -95,46 +85,71 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
 
-   public void clear() {
-
-   }
+  
 
    @Override
    public String add() {
 
-      PointArretDAO pointArretDAO = new PointArretDAO();
-      TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
-      bean.setIdPointArretDestination(pointArretDAO.getPointArretbyName(this.destinationPointArret).get(0));
-      bean.setIdPointArretOrigine(pointArretDAO.getPointArretbyName(this.originePointArret).get(0));
-      bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
-      bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
-      bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1() + (!getNumeroTrainCatalogue2().isEmpty() ? "-" + getNumeroTrainCatalogue2() : ""));
-      bean.setOperatingFlight(getOperatingFlight());
-      bean.setOriginePointArret(getOriginePointArret());
-      bean.setDestinationPointArret(getDestinationPointArret());
-      bean.setHeureDepartTrainCatalogue(getHeureDepartTrainCatalogue());
-      bean.setHeureArriveeTrainCatalogue(getHeureArriveeTrainCatalogue());
-      bean.setDateDebutValidite(getDateDebutValidite());
-      bean.setDateFinValidite(getDateFinValidite());
-      // /
-      bean.setRegimeJoursTrainCatalogue(formatterString(getListSelectedJoursCirculation().toString()));
-      // /
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
-      try {
-         dao.save(bean);
-         FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Train Catalogue a été créé."));
-         this.closeDialog = true;
-         RequestContext.getCurrentInstance().update(":tableTrains");
+      Session session = dao.getSession();
+      Criteria criteria = session.createCriteria(TrainCatalogueDataBean.class).add(Restrictions.eq("numeroTrainCatalogue1", getNumeroTrainCatalogue1()));
+      List<TrainCatalogueDataBean> c = new ArrayList<>();
+      c.clear();
+      c.addAll(criteria.list());
+      if (c.size() > 0) {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
+               new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "ce Train Existe Déja"));
+      } else {
 
-      } catch (ASocleException e) {
-         FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
-         e.printStackTrace();
+         PointArretDAO pointArretDAO = new PointArretDAO();
+         TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
+         bean.setIdPointArretDestination(pointArretDAO.getPointArretbyName(this.destinationPointArret).get(0));
+         bean.setIdPointArretOrigine(pointArretDAO.getPointArretbyName(this.originePointArret).get(0));
+         bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
+         bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
+         bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1() + (!getNumeroTrainCatalogue2().isEmpty() ? "-" + getNumeroTrainCatalogue2() : ""));
+         bean.setOperatingFlight(getOperatingFlight());
+         bean.setOriginePointArret(getOriginePointArret());
+         bean.setDestinationPointArret(getDestinationPointArret());
+         bean.setHeureDepartTrainCatalogue(getHeureDepartTrainCatalogue());
+         bean.setHeureArriveeTrainCatalogue(getHeureArriveeTrainCatalogue());
+         bean.setDateDebutValidite(getDateDebutValidite());
+         bean.setDateFinValidite(getDateFinValidite());
+         // /
+         bean.setRegimeJoursTrainCatalogue(formatterString(getListSelectedJoursCirculation().toString()));
+         // /
+
+         try {
+            dao.save(bean);
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Train Catalogue a été créé."));
+            this.closeDialog = true;
+            RequestContext.getCurrentInstance().update(":tableTrains");
+
+         } catch (ASocleException e) {
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
+            e.printStackTrace();
+         }
       }
       return null;
    }
 
+   @Override
+   public String delete() throws ASocleException {
+      super.delete();
+      if (null != this.selectedTrainsCatalogue) {
+         TrainCatalogueDAO dao = new TrainCatalogueDAO();
+         try {
+            dao.delete(this.selectedTrainsCatalogue);
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            this.closeDialog = true;
+         } catch (ASocleException e) {
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
+         }
+      }
+      return null;
+   }
    public TrainCatalogueDataBean getRowData(String arg0) {
-
+      System.out.println(arg0);
       return null;
    }
 
@@ -143,13 +158,11 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
-   public void goTrain(TrainCatalogueDataBean t) {
-      this.numeroTrainCatalogue1 = t.getNumeroTrainCatalogue1();
-
+   public void goTrain() {
+      
       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-      // System.out.println(context.getRequestParameterMap().get("id"));
       try {
-         context.redirect("train.xhtml?faces-redirect=true&num=" + t.getNumeroTrainCatalogue1());
+         context.redirect("pointArret.xhtml?faces-redirect=true");
       } catch (IOException e) {
 
          e.printStackTrace();
@@ -158,7 +171,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String goPointArret() {
-     return "/pages/private/pointArret.xhtml?faces-redirect=true";
+      return "/pages/private/pointArret.xhtml?faces-redirect=true";
    }
 
    @Override
@@ -170,12 +183,12 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          TrainCatalogueDAO dao = new TrainCatalogueDAO();
          try {
             dao.update(this.selectedTrainsCatalogue);
-            FacesContext.getCurrentInstance().addMessage(ConstantSocle.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
             this.closeDialog = true;
             RequestContext.getCurrentInstance().update(":tableTrains");
          } catch (ASocleException e) {
             e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(ConstantSocle.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          }
       }
       return null;
@@ -207,14 +220,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return s.copyValueOf(temp2);
    }
 
-   public String onEdit(CellEditEvent event) {
-
-      /*
-       * System.out.println(event.getSource().getClass());
-       * RequestContext.getCurrentInstance().update(":tableTrains");
-       */
-      return null;
-   }
+   
 
    public Boolean getCloseDialog() {
       return this.closeDialog;
@@ -349,7 +355,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public void setListGDS(List<PointArretDataBean> listGDS) {
-      this.listGDS = listGDS;
    }
 
    public void setListTrainsCatAndValid(List<TrainCatalogueDataBean> listTrainsCatAndValid) {

@@ -6,26 +6,28 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="contenu">
-	
-	   <script type="text/javascript">  
-     function reset(){
-     $("#ajoutTain")[0].reset();
-     }
-     </script>
+
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+		<script type="text/javascript">
+			function reset() {
+				$("#ajoutTain")[0].reset();
+			}
+		</script>
 		<h:form id="ajoutTain">
 			<p:fieldset legend="Gestion Des Trains" styleClass="fieldSet">
-				
+
 				<h:panelGrid columns="1" headerClass="gridHeader" id="tout">
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="1"
 							style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
 							<f:facet name="header"> Numéros Train</f:facet>
-							
+
 							<p:panelGrid columns="2" styleClass="noBorder">
 								<p:outputLabel>Simple</p:outputLabel>
 								<p:inputMask mask="9999/9" id="num" required="true"
-									value="#{traincatalogue.numeroTrainCatalogue1}"> 
-									<f:param value="#{traincatalogue.numeroTrainCatalogue1}" ></f:param>
+									value="#{traincatalogue.numeroTrainCatalogue1}">
+									<f:param value="#{traincatalogue.numeroTrainCatalogue1}"></f:param>
 								</p:inputMask>
 								<p:outputLabel>Multi</p:outputLabel>
 								<p:inputMask mask="9999/9"
@@ -57,9 +59,9 @@
 					</h:panelGrid>
 					<ui:insert name="js">
 					</ui:insert>
-					<h:panelGrid columns="3"
+					<h:panelGrid columns="4"
 						style="margin-left :10px;margin-bottom :10px;">
-
+                       
 						<h:panelGrid columns="1"
 							style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 							<f:facet name="header"> Validité</f:facet>
@@ -75,7 +77,7 @@
 									required="true" value="#{traincatalogue.dateFinValidite}" />
 							</h:panelGrid>
 						</h:panelGrid>
-
+                             <form>
 						<h:panelGrid columns="1" rendered="true"
 							style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 							<f:facet name="header"> Origine</f:facet>
@@ -88,7 +90,8 @@
 										<f:selectItems value="#{traincatalogue.listGDS}"
 											required="true" />
 									</p:selectOneMenu>
- 								<p:commandButton icon="ui-icon-circle-plus" actionListener ="#{menu.goPointArret}"/>
+									<p:commandButton icon="ui-icon-circle-plus"
+										actionListener="#{traincatalogue.goTrain}" />
 								</h:panelGrid>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
@@ -99,6 +102,7 @@
 									showOn="both" />
 							</h:panelGrid>
 						</h:panelGrid>
+						 
 						<h:panelGrid columns="1" rendered="true"
 							style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 							<f:facet name="header"> Destination</f:facet>
@@ -111,7 +115,8 @@
 										style="width : 100%">
 										<f:selectItems value="#{traincatalogue.listGDS}" />
 									</p:selectOneMenu>
-									<p:commandButton icon="ui-icon-circle-plus" actionListener="#{traincatalogue.goPointArret}"/>
+									<p:commandButton icon="ui-icon-circle-plus"
+										actionListener="#{traincatalogue.goPointArret}" />
 								</h:panelGrid>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
@@ -122,15 +127,16 @@
 									locale="fr" showOn="both" />
 							</h:panelGrid>
 						</h:panelGrid>
+						 </form>
 					</h:panelGrid>
 					<p:panelGrid class="ui-grid-col-2">
 						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"
 							value="Annuler">
 						</p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit" onclick="reset()" 
-							title="ajouter" value="Ajouter"
+						<p:commandButton icon="ui-icon-check" type="submit"  
+							oncomplete="reset()" title="ajouter" value="Ajouter"
 							actionListener="#{traincatalogue.add()}" ajax="true">
-							<f:ajax render="ajoutTain tout" resetValues="true"></f:ajax>
+							<f:ajax render="ajoutTain tout" ></f:ajax>
 						</p:commandButton>
 					</p:panelGrid>
 				</h:panelGrid>

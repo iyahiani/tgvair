@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Session;
+
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
@@ -75,5 +77,9 @@ public class CompagnieAerienneDao extends AbstractDao {
 
       return requete.getResultList();
 
+   } 
+   
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class) ;
    }
 }

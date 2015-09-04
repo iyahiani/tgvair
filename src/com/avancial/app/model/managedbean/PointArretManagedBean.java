@@ -8,9 +8,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.primefaces.context.RequestContext;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
+import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
@@ -30,25 +34,32 @@ public class PointArretManagedBean extends AManageBean {
 
    public PointArretManagedBean() { 
       
-      this.listPointsArret = new ArrayList<PointArretDataBean>();
+      this.listPointsArret = new ArrayList<>();
    }
    @Override
    public String add() throws ASocleException {
-
+      PointArretDAO dao = new PointArretDAO();  
+      Session session = dao.getSession(); 
+      Criteria criteria =  session.createCriteria(PointArretDataBean.class).add(Restrictions.eq("codeGDSPointArret", getCodeGDSPointArret())) ;   
+      List<PointArretDataBean> c = new ArrayList<>() ; 
+      c.clear();
+      c.addAll(criteria.list()) ;  
+      if (c.size()>0) {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "cette Gare Existe Déja"));
+      } else 
+      {
       PointArretDataBean bean = new PointArretDataBean();
       bean.setCodeGDSPointArret(getCodeGDSPointArret());
       bean.setCodeResarailPointArret(getCodeResarailPointArret());
       bean.setLibellePointArret(getLibellePointArret());
-      PointArretDAO dao = new PointArretDAO();
       try {
          dao.save(bean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le point d'arret a été créé."));
          this.closeDialog = true;
-         
-
       } catch (ASocleException e) {// ASocleException
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
          e.printStackTrace();
+      }
       }
       return null ;
    }

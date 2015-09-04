@@ -25,11 +25,12 @@ import com.avancial.app.resources.utils.StringToDate;
 
 public class Train implements ITrain {
 
+   private int idTrain;
    protected List<String> listeNumeros;
    protected Map<Date, JourCirculation> listeJoursCirculation;
-   private Date dateDebutValidite ;
-   private Date dateFinValidite ;
-   
+   private Date dateDebutValidite;
+   private Date dateFinValidite;
+   private String ooperatingFlight;
    protected List<Circulation> listeCirculations;
 
    /**
@@ -41,7 +42,6 @@ public class Train implements ITrain {
       this.listeCirculations = circul;
       this.listeJoursCirculation = new TreeMap<>();
       this.listeNumeros = num;
-
    }
 
    public Train() {
@@ -55,12 +55,13 @@ public class Train implements ITrain {
       this.listeCirculations = circulations;
       this.listeJoursCirculation = listeJoursCirculation2;
    }
+
    public Train(List<String> listeNumeros2, List<Circulation> circulations, Map<Date, JourCirculation> listeJoursCirculation2, Date dateDebutValidite, Date dateFinValidite) {
       this.listeNumeros = listeNumeros2;
       this.listeCirculations = circulations;
-      this.listeJoursCirculation = listeJoursCirculation2; 
-      this.dateDebutValidite =dateDebutValidite ;
-      this.dateFinValidite = dateFinValidite ;
+      this.listeJoursCirculation = listeJoursCirculation2;
+      this.dateDebutValidite = dateDebutValidite;
+      this.dateFinValidite = dateFinValidite;
    }
 
    @Override
@@ -77,11 +78,11 @@ public class Train implements ITrain {
    public void calculeCirculationFromJoursCirculation() {
       // On parcourt tous les jours de circulation
 
-      List<JourCirculation> temp = new ArrayList<>()  ;
-      temp.addAll(this.listeJoursCirculation.values())   ;
-      Collections.sort(temp)  ;
+      List<JourCirculation> temp = new ArrayList<>();
+      temp.addAll(this.listeJoursCirculation.values());
+      Collections.sort(temp);
       Circulation circulation = null;
-      ArrayList<String> jours = new ArrayList<>()  ;
+      ArrayList<String> jours = new ArrayList<>();
       this.listeCirculations.clear();
       IObservableCirculationSemaineBuilder builder = new ObservableCirculationBuilder();
       for (JourCirculation jourCirculation : temp) {
@@ -180,49 +181,53 @@ public class Train implements ITrain {
    }
 
    @Override
-   public void adapt(ITrain train, Date date_deb_SSIM, Date date_fin_SSIM, IObservableJoursCirculation iObs) {
+   public void adapt(Train train, Date date_deb_SSIM, Date date_fin_SSIM, IObservableJoursCirculation iObs) {
 
       // this.remplirJoursCirculations();
+      if (train.getListeCirculations().size() > 0)
+         for (Entry<Date, JourCirculation> jourCirculation : this.listeJoursCirculation.entrySet()) {
 
-      for (Entry<Date, JourCirculation> jourCirculation : this.listeJoursCirculation.entrySet()) {
+            if ((jourCirculation.getKey().after(date_deb_SSIM)) || (jourCirculation.getKey().equals(date_deb_SSIM)) && (jourCirculation.getKey().before(date_fin_SSIM))
+                  || (jourCirculation.getKey().equals(date_fin_SSIM))) {
+               IObservableJoursCirculation joursCirculObserv = new ObservableJoursCirculation();
 
-         if ((jourCirculation.getKey().after(date_deb_SSIM)) || (jourCirculation.getKey().equals(date_deb_SSIM)) && (jourCirculation.getKey().before(date_fin_SSIM))
-               || (jourCirculation.getKey().equals(date_fin_SSIM))) {
-            IObservableJoursCirculation joursCirculObserv = new ObservableJoursCirculation();
-           
-            
-            if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) { // verification
-               // concordance Jours
-               // verifer si les heure et les OD ne sont pas concordantes et que le train circule
-               
+               if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) { // verification
+                  // concordance Jours
+                  // verifer si les heure et les OD ne sont pas concordantes et
+                  // que le train circule
 
-               if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation()) {
-                  this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey())); 
-                  iObs.notifierTrainToCompagnie(jourCirculation.getValue());
-                  
+                  if (!jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation()) {
+                     this.listeJoursCirculation.put(jourCirculation.getKey(), train.getJoursCirculation().get(jourCirculation.getKey()));
+                     iObs.notifierTrainToCompagnie(jourCirculation.getValue());
+
+                  }
+
+                  else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) && jourCirculation.getValue().isFlagCirculation() != train
+                        .getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation())) {
+
+                     jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
+                     this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
+                     iObs.notifierTrainToCompagnie(jourCirculation.getValue());
+                  }
+
                }
+               /*
+                 * else {
+                 * 
+                 * if
+                 * (!train.getJoursCirculation().containsKey(jourCirculation.getKey
+                 * ()) && (jourCirculation.getKey().after(date_deb_SSIM) ||
+                 * (jourCirculation.getKey().equals(date_deb_SSIM))) &&
+                 * (jourCirculation.getKey().before(date_fin_SSIM) ||
+                 * (jourCirculation.getKey().equals(date_fin_SSIM))))
+                 * 
+                 * { jourCirculation.getValue().setFlagCirculation(false);
+                 * iObs.notifierTrainToCompagnie(jourCirculation.getValue()); }
+                 * }
+                 */
+            }
 
-               else if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) 
-                     && jourCirculation.getValue().isFlagCirculation() != train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation())) {
-                  
-                  jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
-                  this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
-                  iObs.notifierTrainToCompagnie(jourCirculation.getValue());
-               }
-               
-            }/* else {
-
-               if (!train.getJoursCirculation().containsKey(jourCirculation.getKey()) && (jourCirculation.getKey().after(date_deb_SSIM) || (jourCirculation.getKey().equals(date_deb_SSIM)))
-                     && (jourCirculation.getKey().before(date_fin_SSIM) || (jourCirculation.getKey().equals(date_fin_SSIM))))
-
-               {
-                  jourCirculation.getValue().setFlagCirculation(false);
-                  iObs.notifierTrainToCompagnie(jourCirculation.getValue());
-               }
-            }*/
-      }
-
-      }
+         }
 
       // this.calculeCirculationFromJoursCirculation() ;
    }
@@ -252,20 +257,19 @@ public class Train implements ITrain {
    @Override
    public Train getTrainSSIMRestreint(Train trainCatalogue) {
 
-      Train train = new Train();
-      ArrayList<Integer> restrictionTrafic = new ArrayList<Integer>();
-      train.listeNumeros.addAll(trainCatalogue.listeNumeros);
-
       Circulation circulation = null;
-
+      Train train = new Train();
+      ArrayList<Integer> restrictionTrafic = new ArrayList<>();
       for (Circulation circulSSIM : this.getCirculations()) {
 
-         // for (String num : train.listeNumeros) {
-
          if (compNumTrain(circulSSIM, trainCatalogue.listeNumeros)) {
-
+            train.listeNumeros.clear();
+            train.listeNumeros.addAll(trainCatalogue.listeNumeros);
             int rangTroncan = circulSSIM.getRangTranson();
-
+            if (circulation != null && rangTroncan == 1) {
+               circulation = null;
+               restrictionTrafic.clear();
+            }
             if (circulSSIM.getOrigine().equalsIgnoreCase(trainCatalogue.getGareOrigine()) && circulation == null) {
                circulation = new Circulation();
                circulation.setHeureDepart(circulSSIM.getHeureDepart());
@@ -276,15 +280,12 @@ public class Train implements ITrain {
                circulation.setRestrictionTrafic(circulSSIM.getRestrictionTrafic());
                circulation.setNumeroTrain(circulSSIM.getNumeroTrain());
                circulation.setGMTDepart(circulSSIM.getGMTDepart());
-
             }
-
             if (circulation != null && circulation.getRestrictionTrafic().contains("A"))
                for (int i = 0; i < circulation.getRestrictionTrafic().length(); i++) {
                   if (circulation.getRestrictionTrafic().charAt(i) == 'A')
                      restrictionTrafic.add(i + 1);
                }
-            ;
 
             if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
 
@@ -301,16 +302,15 @@ public class Train implements ITrain {
                   train.addCirculation(circulation);
                   restrictionTrafic.clear();
                }
+
                circulation = null;
             }
 
-            if (circulation != null && rangTroncan == 1) {
-               circulation = null;
-               restrictionTrafic.clear();
-            }
+            /*  */
          }
-      }
 
+      }
+      // if (train.getListeCirculations().size()==0) train = null ;
       return train;
    }
 
@@ -778,6 +778,22 @@ public class Train implements ITrain {
 
    public void setDateFinValidite(Date dateFinValidite) {
       this.dateFinValidite = dateFinValidite;
+   }
+
+   public String getOoperatingFlight() {
+      return ooperatingFlight;
+   }
+
+   public void setOoperatingFlight(String ooperatingFlight) {
+      this.ooperatingFlight = ooperatingFlight;
+   }
+
+   public int getIdTrain() {
+      return idTrain;
+   }
+
+   public void setIdTrain(int idTrain) {
+      this.idTrain = idTrain;
    }
 
 }

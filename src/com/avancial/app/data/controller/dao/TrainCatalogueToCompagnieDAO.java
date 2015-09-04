@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Session;
+
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
@@ -63,11 +65,14 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
 
    public List<TrainCatalogueToCompagnieDataBean> getTrainToCompagnieByID(int idTrainCatalogue) {
       
-      String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue ="+idTrainCatalogue ;
+      String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue = ?";
       Query requete = this.getEntityManager().createQuery(sql);
+      requete.setParameter(1,idTrainCatalogue) ;
       
       return requete.getResultList() ;
       
    }
-
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class) ;
+   }
 }

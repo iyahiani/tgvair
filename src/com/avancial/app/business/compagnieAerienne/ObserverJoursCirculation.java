@@ -24,7 +24,7 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
 
    private List<Date> listDatesdebut = new ArrayList<>();
    private List<Date> listDatesFin = new ArrayList<>();
-   private Set<String> listCompagnieImpactees = new TreeSet<>();
+ 
 
    public List<TrainToCompagnie> listTrainCompagnie = new ArrayList<>();
 
@@ -48,9 +48,9 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
       if (!jourCirculation.getDateCircul().before(MaxMinDates.getMaxDate(listDatesdebut)) 
             && !jourCirculation.getDateCircul().after(MaxMinDates.getMinDate(listDatesFin)))
          if (tc2c.getListeJoursCirculation().containsKey(jourCirculation.getDateCircul())) {
-            tc2c.getListeJoursCirculation().put(jourCirculation.getDateCircul(),jourCirculation); 
+            tc2c.getListeJoursCirculation().put(jourCirculation.getDateCircul(),jourCirculation);  
+            tc2c.calculeCirculationFromJoursCirculation();
             //this.listCompagnieImpactees.add(tc2c.getCodeCompagnie()) ;  
-            
             
          }
        }
@@ -71,10 +71,6 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
 
    public void setListTrainCompagnie(List<TrainToCompagnie> listTrainCompagnie) {
       this.listTrainCompagnie = listTrainCompagnie;
-   }
-
-   public Set<String> getListCompagnieImpactees() {
-      return listCompagnieImpactees;
    }
 
 }

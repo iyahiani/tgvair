@@ -3,10 +3,11 @@
  */
 package com.avancial.socle.data.controller.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
 
 /**
  * Classe abstraite servant de base à tous les objets DAO
@@ -14,7 +15,7 @@ import javax.persistence.EntityManager;
  * @author bruno.legloahec
  *
  */
-public abstract class AbstractDao  implements Serializable{
+public abstract class AbstractDao {
    private EntityManager entityManager;
 
    /**
@@ -35,5 +36,9 @@ public abstract class AbstractDao  implements Serializable{
 
    protected void setEntityManager(EntityManager entityManager) {
       this.entityManager = entityManager;
+   }
+   
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class);
    }
 }

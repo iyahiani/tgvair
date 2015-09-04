@@ -16,7 +16,7 @@
 		<servlet-name>FacesServlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
 	<context-param>
 		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -26,15 +26,16 @@
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>resources.application</param-value>
 	</context-param>
-	 
- <context-param> 
-	<param-name>primefaces.THEME</param-name> 
-	<param-value>afternoon</param-value> 
-</context-param>
+
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>afternoon</param-value>
+	</context-param>
 	<listener>
-		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>  
-		 <!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>-->
+		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>
+		<!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> -->
 	</listener>
+	
 	<resource-env-ref>
 		<resource-env-ref-name>BeanManager</resource-env-ref-name>
 		<resource-env-ref-type>javax.enterprise.inject.spi.BeanManager</resource-env-ref-type>

@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
@@ -18,6 +21,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       String sql = "From TrainCatalogueDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
+
    }
 
    public List<TrainCatalogueDataBean> getAllTrainAndValid() {
@@ -44,13 +48,11 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
 
    public List<TrainCatalogueDataBean> getTrainCatByID(int id) {
-      
-      Session session = this.getEntityManager().unwrap(Session.class) ;
-     String sql = " FROM TrainCatalogueDataBean as t WHERE t.idTrainCatalogue ="+id ;
-     Query requete = this.getEntityManager().createQuery(sql);
-     
-     return requete.getResultList() ;
-   
+      String sql = " FROM TrainCatalogueDataBean as t WHERE t.idTrainCatalogue =" + id;
+      Query requete = this.getEntityManager().createQuery(sql);
+
+      return requete.getResultList();
+
    }
 
    public void delete(TrainCatalogueDataBean bean) throws ASocleException {
@@ -79,4 +81,23 @@ public class TrainCatalogueDAO extends AbstractDao {
 
    }
 
+   public List<TrainCatalogueDataBean> getTrainToCompagnieByID(int idTrainCatalogue) {
+
+      String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue =" + idTrainCatalogue;
+      Query requete = this.getEntityManager().createQuery(sql);
+
+      return requete.getResultList();
+
+   }
+   public TrainCatalogueDataBean getTrainCatalogueByID(int id) {
+      Criteria criteria = this.getSession().createCriteria(TrainCatalogueDataBean.class) ;  
+      
+       List<TrainCatalogueDataBean> list = criteria.add(Restrictions.eqOrIsNull("idTrainCatalogue", id)).list() ;
+      return list.get(0);
+   }
+   
+
+   public Session getSession() {
+      return this.getEntityManager().unwrap(Session.class);
+   }
 }

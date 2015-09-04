@@ -12,6 +12,12 @@
 				$("#formAssocier")[0].reset();
 			}
 		</script>
+
+		<script type="text/javascript">
+			function unselect() {
+				$(selector).toggle();
+			}
+		</script>
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 		<p:fieldset legend="PORTEFEUILLE DE TRAINS" styleClass="fieldSet">
@@ -29,17 +35,11 @@
 							id="tableTrains" var="trains"
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
-							selectionMode="single" editable="true" editMode="cell"
-							rowKey="#{trains.numeroTrainCatalogue}" paginator="true"
-							rowsPerPageTemplate="5,10,15">
+							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}"
+							paginator="true" rowsPerPageTemplate="5,10,15" >
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
-								update=":formCompAerienne:tableCompAerienne"></p:ajax>
-
-							<p:ajax event="cellEdit" listener="#{traincatalogue.onEdit}"
-								update=":tableTrains" delay="1">
-							</p:ajax>
-
+								update=":formCompAerienne:tableCompAerienne" delay="1"></p:ajax>
 							<p:column headerText="Numéro Train" id="num_train"
 								filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
@@ -88,35 +88,44 @@
 											value=" Modifier le Train #{trains.numeroTrainCatalogue}" />
 									</h:graphicImage>
 								</p:commandLink>
+								<p:commandLink id="delete_Train" update=":tableTrains"
+									action="#{traincatalogue.delete}"
+									>
+									<f:setPropertyActionListener value="#{trains}"
+										target="#{traincatalogue.selectedTrainsCatalogue}" />
+									<h:graphicImage id="img_delete"
+										name="private/image/data-delete.png"
+										styleClass="actionButtons">
+									</h:graphicImage>
+									<p:tooltip id="toolTip" for="delete_Train"
+										value="supprimer le train #{trains.numeroTrainCatalogue} " />
+								</p:commandLink>
 							</p:column>
+
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
-
 				<h:form id="formCompAerienne">
 					<p:dataTable
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
 						paginatorPosition="top" var="compagnie" paginator="true"
 						id="tableCompAerienne" rows="10" selectionMode="single"
-						rowKey="compagnie.comp" rowsPerPageTemplate="5,10,15">
+						selection="#{traintocompagnie.selectedTrain}"
+						rowKey="#{compagnie.idTrainCatalogueToCompagnie}"
+						rowsPerPageTemplate="5,10,15">
 
 						<p:column headerText="Compagnie Aérienne" id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
 						</p:column>
-
 						<p:column headerText="Début de Validité ">
-
 							<h:outputText
 								value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}" />
 						</p:column>
 
 						<p:column headerText="Fin de Validité">
-
 							<h:outputText
 								value="#{compagnie.dateFinValiditeTrainCatalogueToCompagnie}" />
-
 						</p:column>
-
 						<p:column headerText="Marketing Flight">
 
 							<h:outputText
@@ -133,6 +142,21 @@
 							<h:outputText
 								value="#{compagnie.quotaDeuxiemeTrainCatalogueToCompagnie}" />
 						</p:column>
+						<p:column width="50">
+							<f:facet name="header"> Modifier</f:facet>
+
+							<p:commandLink update=":modifT2C" id="update_T2C"
+								oncomplete="PF('modifT2C').show();">
+
+								<h:graphicImage name="private/image/pencil_edit1.png"
+									styleClass="actionButtons">
+									<p:tooltip for="update_T2C"
+										value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}" />
+								</h:graphicImage>
+							</p:commandLink>
+							
+						</p:column>
+
 					</p:dataTable>
 				</h:form>
 
@@ -144,7 +168,6 @@
 						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
 						<h:selectOneMenu effect="fold" editable="true" required="true"
 							value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
-
 							<f:selectItems value="#{traintocompagnie.allCompagnie}"
 								id="codeComp">
 							</f:selectItems>
@@ -152,7 +175,8 @@
 						</h:selectOneMenu>
 
 						<p:outputLabel value="Début de Validité"></p:outputLabel>
-						<p:calendar id="popup2" showOn="both" locale="fr" required="true"
+						<p:calendar id="popup2" showOn="both" locale="fr" required="true" 
+						
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateDebutValidite}"
 							pattern="dd/MM/yyyy" />
@@ -177,9 +201,9 @@
 						<h:panelGrid></h:panelGrid>
 						<h:panelGrid columns="2">
 							<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
-							<p:commandButton icon="ui-icon-check" type="submit" onclick="reset()"
-								title="ajouter" actionListener="#{traintocompagnie.add}"
-								ajax="true">
+							<p:commandButton icon="ui-icon-check" type="submit"
+								oncomplete="reset()" title="ajouter"
+								actionListener="#{traintocompagnie.add}" ajax="true">
 								<p:ajax update=":formCompAerienne" delay="1"
 									listener="#{traintocompagnie.reload()}"
 									render="formAssocier ajoutTC" resetValues="true"></p:ajax>
@@ -189,9 +213,16 @@
 				</h:form>
 			</h:panelGrid>
 		</p:fieldset>
+
+
+
+
+		<!-- Fenetre DIALOGUE  -->
+
+
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"
-			header="Modifier Train">
-			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+			draggable="false" header="Modifier Train">
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="true"
 				showDetail="true" />
 			<h:form>
 				<table>
@@ -270,6 +301,69 @@
 					value="annuler" type="cancel"></p:commandButton>
 			</h:form>
 		</p:dialog>
+
+		<p:dialog id="modifT2C" widgetVar="modifT2C" resizable="false"
+			draggable="false" header="Modifier Train">
+			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="Code Compagnie"></h:outputText></td>
+						<td><p:inputText
+								value="#{traintocompagnie.selectedTrain.codeCompagnieAerienne}"
+								required="true">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Début Validité"></h:outputText></td>
+						<td><p:calendar
+								value="#{traintocompagnie.selectedTrain.dateDebutValiditeTrainCatalogueToCompagnie}"
+								required="true">
+							</p:calendar></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Fin Validité"></h:outputText></td>
+						<td><p:calendar
+								value="#{traintocompagnie.selectedTrain.dateFinValiditeTrainCatalogueToCompagnie}"
+								required="true">
+							</p:calendar></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Marketing Flight"></h:outputText></td>
+						<td><p:inputText
+								value="#{traintocompagnie.selectedTrain.marketingFlightTrainCatalogueToCompagnie}"
+								required="true">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Quota 1ére"></h:outputText></td>
+						<td><p:inputText
+								value="#{traintocompagnie.selectedTrain.quotaPremiereTrainCatalogueToCompagnie}"
+								required="true">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Quota 2éme"></h:outputText></td>
+						<td><p:inputText
+								value="#{traintocompagnie.selectedTrain.quotaDeuxiemeTrainCatalogueToCompagnie}"
+								required="true">
+							</p:inputText></td>
+					</tr>
+				</table>
+				<br />
+				<br />
+				<p:commandButton value="ajouter" type="submit"
+					actionListener="#{traintocompagnie.update}"
+					update=":formCompAerienne:tableCompAerienne"
+					oncomplete="if(#{traintocompagnie.closeDialog}=true) PF('modifT2C').close()">
+				</p:commandButton>
+				<p:commandButton immediate="true" onclick="PF('modifT2C').close()"
+					value="annuler" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
+
+
 
 	</ui:define>
 </ui:composition>

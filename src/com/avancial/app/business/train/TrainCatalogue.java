@@ -10,6 +10,7 @@ import com.avancial.app.business.train.circulation.Circulation;
  */
 public class TrainCatalogue extends Train implements ITrainCatalogue {
 
+   private int idTrainCatalogue ;
    private String nomCompagnie;
    private String numeroVol;
 
@@ -71,6 +72,12 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
     */
    public void setNomCompagnie(String nomCompagnie) {
       this.nomCompagnie = nomCompagnie;
+   }
+   public int getIdTrainCatalogue() {
+      return idTrainCatalogue;
+   }
+   public void setIdTrainCatalogue(int idTrainCatalogue) {
+      this.idTrainCatalogue = idTrainCatalogue;
    }
 
 }

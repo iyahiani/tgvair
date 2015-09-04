@@ -42,6 +42,11 @@ import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.test.TrainCatalogueFactoryTest;
 import com.avancial.test.TrainFactoryTest;
 
+/**
+ * 
+ * @author Hamza.laterem managed bean relative a la gestion des traincirculation
+ */
+
 @SuppressWarnings("unused")
 @Named("ajustement")
 @ViewScoped
