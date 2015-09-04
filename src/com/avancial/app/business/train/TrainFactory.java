@@ -1,9 +1,13 @@
 package com.avancial.app.business.train;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.data.controller.dao.PointArretDAO;
+import com.avancial.app.data.model.databean.TrainCatalogueAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.app.resources.utils.GetTrainsNums;
@@ -94,14 +98,15 @@ public class TrainFactory implements ITrainFactory {
    }
 
   
-   public TrainCatalogueDataBean createBeanFromTrainCatalogue(TrainCatalogue tc) {
-      TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
-      return bean;
+   public List<TrainCatalogueAdapterDataBean> createBeanFromTrainCatalogueAdapter(TrainCatalogue tc) {
+      return null;
+      
    }
    
 
    public TrainCatalogueToCompagnieDataBean createT2CBeanFromTrain2Compagnie(TrainToCompagnie t2c) {
-      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
+      TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean(); 
+      
       return bean;
    }
 

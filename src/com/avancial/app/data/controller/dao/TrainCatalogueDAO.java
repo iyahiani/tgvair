@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
@@ -87,6 +89,13 @@ public class TrainCatalogueDAO extends AbstractDao {
       return requete.getResultList();
 
    }
+   public TrainCatalogueDataBean getTrainCatalogueByID(int id) {
+      Criteria criteria = this.getSession().createCriteria(TrainCatalogueDataBean.class) ;  
+      
+       List<TrainCatalogueDataBean> list = criteria.add(Restrictions.eqOrIsNull("idTrainCatalogue", id)).list() ;
+      return list.get(0);
+   }
+   
 
    public Session getSession() {
       return this.getEntityManager().unwrap(Session.class);

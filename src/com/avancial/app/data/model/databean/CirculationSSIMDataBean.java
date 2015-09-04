@@ -20,7 +20,7 @@ import com.avancial.app.business.train.Train;
 
 @Entity
 @Table(name = "tgvair_circulation")
-public class CirculationDataBean implements Serializable {
+public class CirculationSSIMDataBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
    @Id
@@ -41,7 +41,7 @@ public class CirculationDataBean implements Serializable {
    private String trancheFacultatif;
    private String restrictionTrafic;
 
-   public CirculationDataBean() {
+   public CirculationSSIMDataBean() {
    }
 
    public Long getIdCirculation() {

@@ -28,24 +28,12 @@ public class TrainCatalogueAdapterDataBean implements Serializable {
    @GeneratedValue//(strategy = GenerationType.AUTO)
    private int idTrainCatalogueAdapter;
    private int idTrainCatalogue; 
-   private String numeroTrainCatalogue ;
-   private String numeroTrainCatalogue1 ;
-   private String numeroTrainCatalogue2 ;
+  
+   private Date dateDebutCirculation ;
+   private Date dateFinCirculation ;
+   private Date heureDepartCirculation ; 
+   private Date heureArriveeCirculation ;
    
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "idPointArretDestination")
-   private PointArretDataBean idPointArretDestination ;
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "idPointArretOrigine")
-   private PointArretDataBean idPointArretOrigine ;
-   private String originePointArret ;
-   private String destinationPointArret ;
-   private Date heureDepartTrainCatalogue ;
-   private Date heureArriveeTrainCatalogue ;
-   private String regimeJoursTrainCatalogue ;
-   private Date dateDebutValidite ; 
-   private Date dateFinValidite ; 
-   private String operatingFlight;
    public int getIdTrainCatalogueAdapter() {
       return idTrainCatalogueAdapter;
    }
@@ -58,83 +46,30 @@ public class TrainCatalogueAdapterDataBean implements Serializable {
    public void setIdTrainCatalogue(int idTrainCatalogue) {
       this.idTrainCatalogue = idTrainCatalogue;
    }
-   public String getNumeroTrainCatalogue() {
-      return numeroTrainCatalogue;
+   
+   public void setDateDebutCirculation(Date dateDebutCirculation) {
+      this.dateDebutCirculation = dateDebutCirculation;
    }
-   public void setNumeroTrainCatalogue(String numeroTrainCatalogue) {
-      this.numeroTrainCatalogue = numeroTrainCatalogue;
+   public Date getDateFinCirculation() {
+      return dateFinCirculation;
    }
-   public String getNumeroTrainCatalogue1() {
-      return numeroTrainCatalogue1;
+   public void setDateFinCirculation(Date dateFinCirculation) {
+      this.dateFinCirculation = dateFinCirculation;
    }
-   public void setNumeroTrainCatalogue1(String numeroTrainCatalogue1) {
-      this.numeroTrainCatalogue1 = numeroTrainCatalogue1;
+   public Date getHeureDepartCirculation() {
+      return heureDepartCirculation;
    }
-   public String getNumeroTrainCatalogue2() {
-      return numeroTrainCatalogue2;
+   public void setHeureDepartCirculation(Date heureDepartCirculation) {
+      this.heureDepartCirculation = heureDepartCirculation;
    }
-   public void setNumeroTrainCatalogue2(String numeroTrainCatalogue2) {
-      this.numeroTrainCatalogue2 = numeroTrainCatalogue2;
+   public Date getHeureArriveeCirculation() {
+      return heureArriveeCirculation;
    }
-   public PointArretDataBean getIdPointArretDestination() {
-      return idPointArretDestination;
+   public void setHeureArriveeCirculation(Date heureArriveeCirculation) {
+      this.heureArriveeCirculation = heureArriveeCirculation;
    }
-   public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
-      this.idPointArretDestination = idPointArretDestination;
-   }
-   public PointArretDataBean getIdPointArretOrigine() {
-      return idPointArretOrigine;
-   }
-   public void setIdPointArretOrigine(PointArretDataBean idPointArretOrigine) {
-      this.idPointArretOrigine = idPointArretOrigine;
-   }
-   public String getOriginePointArret() {
-      return originePointArret;
-   }
-   public void setOriginePointArret(String originePointArret) {
-      this.originePointArret = originePointArret;
-   }
-   public String getDestinationPointArret() {
-      return destinationPointArret;
-   }
-   public void setDestinationPointArret(String destinationPointArret) {
-      this.destinationPointArret = destinationPointArret;
-   }
-   public Date getHeureDepartTrainCatalogue() {
-      return heureDepartTrainCatalogue;
-   }
-   public void setHeureDepartTrainCatalogue(Date heureDepartTrainCatalogue) {
-      this.heureDepartTrainCatalogue = heureDepartTrainCatalogue;
-   }
-   public Date getHeureArriveeTrainCatalogue() {
-      return heureArriveeTrainCatalogue;
-   }
-   public void setHeureArriveeTrainCatalogue(Date heureArriveeTrainCatalogue) {
-      this.heureArriveeTrainCatalogue = heureArriveeTrainCatalogue;
-   }
-   public String getRegimeJoursTrainCatalogue() {
-      return regimeJoursTrainCatalogue;
-   }
-   public void setRegimeJoursTrainCatalogue(String regimeJoursTrainCatalogue) {
-      this.regimeJoursTrainCatalogue = regimeJoursTrainCatalogue;
-   }
-   public Date getDateDebutValidite() {
-      return dateDebutValidite;
-   }
-   public void setDateDebutValidite(Date dateDebutValidite) {
-      this.dateDebutValidite = dateDebutValidite;
-   }
-   public Date getDateFinValidite() {
-      return dateFinValidite;
-   }
-   public void setDateFinValidite(Date dateFinValidite) {
-      this.dateFinValidite = dateFinValidite;
-   }
-   public String getOperatingFlight() {
-      return operatingFlight;
-   }
-   public void setOperatingFlight(String operatingFlight) {
-      this.operatingFlight = operatingFlight;
+   public Date getDateDebutCirculation() {
+      return dateDebutCirculation;
    } 
    
 }

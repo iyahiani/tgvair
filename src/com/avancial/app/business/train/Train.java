@@ -210,7 +210,8 @@ public class Train implements ITrain {
                      iObs.notifierTrainToCompagnie(jourCirculation.getValue());
                   }
 
-               }/*
+               }
+               /*
                  * else {
                  * 
                  * if

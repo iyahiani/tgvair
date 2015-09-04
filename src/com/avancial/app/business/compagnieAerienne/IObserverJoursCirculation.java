@@ -4,5 +4,7 @@ import com.avancial.app.business.train.circulation.JourCirculation;
 
 public interface IObserverJoursCirculation {
 
-   public void refresh(JourCirculation jourCirculation) ;
+   public void refresh(JourCirculation jourCirculation) ; 
+   public TrainToCompagnie getTc2c() ;
+   
 }

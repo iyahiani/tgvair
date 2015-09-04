@@ -25,6 +25,9 @@ public class ObservableJoursCirculation implements IObservableJoursCirculation {
    public void deleteObservateur(IObserverJoursCirculation iObserver) {
       this.listObservers.remove(iObserver);
    }
+   public List<IObserverJoursCirculation> getListObservers() {
+      return listObservers;
+   }
   
   
 }

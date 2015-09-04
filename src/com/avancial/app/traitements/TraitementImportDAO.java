@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Session;
+
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
@@ -39,5 +41,8 @@ public class TraitementImportDAO extends AbstractDao {
       String sql = "from TraitementsImportDataBean order by idTraitementImport DESC";
       Query requete = this.getEntityManager().createQuery(sql).setMaxResults(1);
       return requete.getResultList();
-   }
+   } 
+   
+   
+  
 }

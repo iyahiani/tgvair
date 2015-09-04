@@ -9,4 +9,5 @@ public interface IObservableJoursCirculation {
    public void notifierTrainToCompagnie( JourCirculation jourCirculation)  ;
    public void addObservateur(IObserverJoursCirculation iObserver)      ;
    public void deleteObservateur(IObserverJoursCirculation iObserver)   ;
+   public List<IObserverJoursCirculation> getListObservers() ;
 }

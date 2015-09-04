@@ -18,7 +18,7 @@ import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.data.controller.dao.CirculationDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
-import com.avancial.app.data.model.databean.CirculationDataBean;
+import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
@@ -79,7 +79,7 @@ public class JobImport implements Job {
             par.parse(chaine);
             if (!par.getParsedResult().isEmpty()) {
 
-               CirculationDataBean circulation = new CirculationDataBean();
+               CirculationSSIMDataBean circulation = new CirculationSSIMDataBean();
                circulation.setOriginePointArret(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
                circulation.setDestinationPointArret(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_ARRIVER.name()));
                circulation.setHeureArriverCirculation(par.getParsedResult().get(APP_enumParserSSIM.POSITION_HEURE_ARRIVER.name()));
