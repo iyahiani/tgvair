@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 /**
  * 
@@ -40,12 +41,52 @@ public class StringToDate {
 	public static String toString(Date date) { 
 	   //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
 	   String format = "ddMMMyy" ; 
-      SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
+	   SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
 	   String myDate = df.format(date);  
 	      
 	   return myDate.toUpperCase() ; 
 	} 
 	
+	public static String toStringByFormat(Date date, String format) throws Exception {
+		SimpleDateFormat formatDate = null;
+		// dd/mm/yyyy
+		if (format.equals("dateBySlashSansHeure")) {			
+			formatDate = new SimpleDateFormat("dd/MM/yyyy");
+		} else if (format.equals("dateSlashAvecHeure")) {
+			formatDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		} else if (format.equals("dateTireSansHeure")) {
+			formatDate = new SimpleDateFormat("dd-MM-yyyy");
+		} else if (format.equals("dateTireAvecHeure")) {
+			formatDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		} else if (format.equals("dateFrenchSansHeure")) {
+			formatDate = new SimpleDateFormat("dd MMM yyyy", Locale.FRENCH);
+		}else if (format.equals("dateFrenchAvecHeure")) {
+			formatDate = new SimpleDateFormat("dd MMM yyyy : HH:mm", Locale.FRENCH);
+		} else if (format.equals("dateEnglishSansHeure")) {
+			formatDate = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+		} else if (format.equals("dateEnglishAvecHeure")) {
+			formatDate = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ENGLISH);
+		} else if (format.equals("dateFrenchAffichage")) {
+			formatDate = new SimpleDateFormat("MMM yyyy", Locale.FRENCH);
+		} else {
+			return null;
+		}
+		
+		String myDate = formatDate.format(date);  
+		
+		return myDate;		 		
+	}
 	
+	public static Date moisSuivant(final Date date, final int mois) {
+		try {
+			GregorianCalendar gc = new GregorianCalendar();
+	        gc.setTime(date);
+	        gc.add(Calendar.MONTH, mois);	        
+	        return gc.getTime();   
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}                
+	}
 	
 }

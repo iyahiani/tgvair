@@ -20,6 +20,10 @@ public class TrainCatalogueFactoryTest {
       listeCirculations.add(circul);
 
       TrainCatalogue trainCatalogue = new TrainCatalogue(listeNumeros, listeCirculations);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+      // Setter la dateDébutValidation et dateFinValidation
+      trainCatalogue.setDateDebutValidite(sdf.parse(periode.split("#")[0]));
+      trainCatalogue.setDateFinValidite(sdf.parse(periode.split("#")[1]));
 
       return trainCatalogue;
    }
