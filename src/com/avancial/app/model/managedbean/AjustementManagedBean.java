@@ -68,11 +68,12 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	private CustomerSchedule schedule_10;
 	private CustomerSchedule schedule_11;
 	
+	
 	@SuppressWarnings("deprecation")
 	@PostConstruct
 	private void initTrainCatalogue() {
 		try {
-			this.modifedTrainCatalogue = TrainCatalogueFactoryTest.create("01/01/2015#02/02/2017#135#CDG#MONTPELLIER#0928#1551");
+			this.modifedTrainCatalogue = TrainCatalogueFactoryTest.create("21/01/2016#02/02/2017#135#CDG#MONTPELLIER#0928#1551");
 			this.modifedTrainCatalogue.setNomCompagnie("Air France");
 			this.modifedTrainCatalogue.remplirJoursCirculations();
 			/*

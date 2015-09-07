@@ -130,8 +130,9 @@ public class JobAdaptation implements Job {
                      e.printStackTrace();
                   }
                }
-               System.out.println(iObs.getListObservers().get(0).getTc2c());
-               System.out.println(iObs.getListObservers().get(1).getTc2c());
+               
+               System.out.println(iObs.getListObservers().get(0).getTc2c())   ;
+               System.out.println(iObs.getListObservers().get(1).getTc2c())   ;
             }
          
       }
