@@ -30,26 +30,26 @@ public class JobManagedBean extends AManageBean {
     * 
     */
    private static final long serialVersionUID = 1L;
-   private List<JobBean>     jobs;
+   private List<JobBean>     selectItems;
    private String            nomTechnique;
    private String            libelle;
    private String            classe;
 
    @Inject
-   private JobBean           jobSelected;
+   private JobBean           selectedItem;
 
    /**
     * Constructeur
     */
    public JobManagedBean() {
-      this.jobs = new ArrayList<>();
+      this.selectItems = new ArrayList<>();
       this.reload();
 
    }
 
    public void reload() {
-      this.jobs.clear();
-      this.jobs.addAll(JobBean.getAll());
+      this.selectItems.clear();
+      this.selectItems.addAll(JobBean.getAll());
    }
 
    public void initProperties() {
@@ -85,11 +85,11 @@ public class JobManagedBean extends AManageBean {
    @Override
    public String update() throws ASocleException {
       super.update();
-      if (null != this.jobSelected) {
+      if (null != this.selectedItem) {
 
          try {
 
-            this.jobSelected.update();
+            this.selectedItem.update();
 
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifié"));
             this.closeDialog = true;
@@ -105,10 +105,10 @@ public class JobManagedBean extends AManageBean {
    @Override
    public String delete() throws ASocleException {
       super.delete();
-      if (null != this.jobSelected) {
+      if (null != this.selectedItem) {
          JobDao dao = new JobDao();
          try {
-            this.jobSelected.delete();
+            this.selectedItem.delete();
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
             this.closeDialog = true;
             this.reload();
@@ -153,15 +153,15 @@ public class JobManagedBean extends AManageBean {
    /**
     * sets value for roleSelected
     * 
-    * @param jobSelected
+    * @param selectedItem
     *           the roleSelected to set
     */
-   public void setJobSelected(JobBean jobSelected) {
-      if (null != jobSelected) {
-         this.jobSelected = jobSelected;
-         this.libelle = jobSelected.getLibelleJob();
-         this.nomTechnique = jobSelected.getNomTechniqueJob();
-         this.classe = jobSelected.getClasseJob();
+   public void setSelectedItem(JobBean selectedItem) {
+      if (null != selectedItem) {
+         this.selectedItem = selectedItem;
+         this.libelle = selectedItem.getLibelleJob();
+         this.nomTechnique = selectedItem.getNomTechniqueJob();
+         this.classe = selectedItem.getClasseJob();
       }
    }
 
@@ -173,16 +173,16 @@ public class JobManagedBean extends AManageBean {
       this.closeDialog = closeDialog;
    }
 
-   public List<JobBean> getJobs() {
-      return this.jobs;
+   public List<JobBean> getSelectedItems() {
+      return this.selectItems;
    }
 
-   public void setJobs(List<JobBean> jobs) {
-      this.jobs = jobs;
+   public void setSelectedItems(List<JobBean> jobs) {
+      this.selectItems = jobs;
    }
 
-   public JobBean getJobSelected() {
-      return this.jobSelected;
+   public JobBean getSelectedItem() {
+      return this.selectedItem;
    }
 
    public String getClasse() {

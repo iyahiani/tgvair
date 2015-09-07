@@ -11,6 +11,7 @@ import com.avancial.app.business.train.circulation.JourCirculation;
 public class TrainToCompagnie extends Train{
 
    private int idTrainCatalogue ;
+   private int idTrainToCompagnie ;
    private String codeCompagnie ; 
    private String marketingFlight ; 
    private String operatingFlight ; 
@@ -89,5 +90,11 @@ public class TrainToCompagnie extends Train{
    }
    public void setIdTrainCatalogue(int idTrainCatalogue) {
       this.idTrainCatalogue = idTrainCatalogue;
+   }
+   public int getIdTrainToCompagnie() {
+      return idTrainToCompagnie;
+   }
+   public void setIdTrainToCompagnie(int idTrainToCompagnie) {
+      this.idTrainToCompagnie = idTrainToCompagnie;
    }
 }

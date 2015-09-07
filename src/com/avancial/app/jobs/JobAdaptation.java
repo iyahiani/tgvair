@@ -21,12 +21,16 @@ import com.avancial.app.business.train.TrainFactory;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.controller.dao.CirculationAdapterDAO;
 import com.avancial.app.data.controller.dao.CirculationDao;
+import com.avancial.app.data.controller.dao.ExportSSIMDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
+import com.avancial.app.data.model.databean.ExportSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
+import com.avancial.app.traitements.TraitementExportDAO;
+import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.socle.exceptions.ASocleException;
@@ -48,7 +52,7 @@ public class JobAdaptation implements Job {
          TrainCatalogue train = factory.createTrainCatalgueFromBean(bean);
          listTrains.add(train);
       }
-      ////////////////////////////// recuperer les trains ssim
+      // //////////////////////////// recuperer les circulations de la ssim
 
       Train trainsSSIM = new Train();
       for (CirculationSSIMDataBean circulationBean : listCirculation) {
@@ -91,11 +95,11 @@ public class JobAdaptation implements Job {
          trainSSIMRestreint.remplirJoursCirculations();
          trainSSIMRestreint.calculeCirculationFromJoursCirculation();
          // System.out.println(trainSSIMRestreint);
-         
 
          if (trainSSIMRestreint.getListeCirculations().size() > 0)
             if (!traincat.compare(trainSSIMRestreint)) {
-                ////////////////////////////////////////////////   construire les observateurs du train a adapté 
+               // ////////////////////////////////////////////// construire les
+               // observateurs du train a adapté
                listCatalogueToCompagnieDataBeans.clear();
                listCatalogueToCompagnieDataBeans = new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(traincat.getIdTrain());
 
@@ -104,15 +108,15 @@ public class JobAdaptation implements Job {
                   IObserverJoursCirculation iObserver = new ObserverJoursCirculation(trainToCompagnie, traincat, dateDebutService, dateFinService, dateExtraction);
                   iObs.addObservateur(iObserver);
                }
-               //////////////////////////////////////////////// lancer l'adaptation       
-               
+               // ////////////////////////////////////////////// lancer
+               // l'adaptation
+
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
                traincat.calculeCirculationFromJoursCirculation();
-               
-               
-               /////////////////////  persister les circulation du train adapté 
-               
+
+               // /////////////////// persister les circulation du train adapté
+
                for (Circulation c : traincat.getListeCirculations()) {
                   CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
                   cirAdapterDataBean.setDateDebutCirculation(c.getDateDebut());
@@ -130,12 +134,47 @@ public class JobAdaptation implements Job {
                      e.printStackTrace();
                   }
                }
-               
-               System.out.println(iObs.getListObservers().get(0).getTc2c())   ;
-               System.out.println(iObs.getListObservers().get(1).getTc2c())   ;
+
+               // ///////////////// save export extract information
+               TraitementExportDataBean export = new TraitementExportDataBean();
+               TraitementExportDAO traitementExportDAO = new TraitementExportDAO();
+               try {
+                  traitementExportDAO.save(export);
+               } catch (ASocleException e) {
+                  log.error(e.getMessage());
+                  e.printStackTrace();
+               }
+               // ///////////////////////////////////////////////////////////
+               // save T2C
+               ExportSSIMDAO daoExportSSIM = new ExportSSIMDAO();
+               for (int i = 0; i < iObs.getListObservers().size(); i++) {
+                  TrainToCompagnie tc2c = iObs.getListObservers().get(i).getTc2c();
+                  for (Circulation c : tc2c.getListeCirculations()) {
+                     ExportSSIMDataBean exportBean = new ExportSSIMDataBean();
+                    
+                     exportBean.setIdTrainCatalogue(new TrainCatalogueDAO().getTrainCatalogueByID(tc2c.getIdTrainCatalogue()));
+                     exportBean.setIdTrainCatalogueToCompagnie(new TrainCatalogueToCompagnieDAO().getTrainCatalogue2CByID(tc2c.getIdTrain()));
+                     exportBean.setIdTraitementExport(traitementExportDAO.getLastID().get(0));
+                     exportBean.setDateDebutCirculation(c.getDateDebut());
+                     exportBean.setDateFinCirculation(c.getDateFin());
+                     exportBean.setHeureDepartCirculation(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()))); 
+                     exportBean.setHeureArriverCirculation(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()))); 
+                     exportBean.setGMTDepart(c.getGMTDepart()); 
+                     exportBean.setGMTArriver(c.getGMTArrivee()); 
+                     exportBean.setRegimeCirculation(c.getJoursCirculation()); 
+                     try {
+                        daoExportSSIM.save(exportBean);
+                     } catch (ASocleException e) {
+                        log.error(e.getMessage());
+                        e.printStackTrace();
+                     }
+                     
+                     //System.out.println(iObs.getListObservers().get(0).getTc2c());
+                     //System.out.println(iObs.getListObservers().get(1).getTc2c());
+                  }
+               }
             }
-         
       }
-         
+
    }
 }

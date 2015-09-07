@@ -33,7 +33,7 @@ public class TraitementExportDAO  extends AbstractDao{
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }
-   public List<TraitementsImportDataBean> getLastID(){
+   public List<TraitementExportDataBean> getLastID(){
       
       String sql = "from TraitementExportDataBean order by idTraitementExport DESC";
       Query requete = this.getEntityManager().createQuery(sql).setMaxResults(1);

@@ -32,6 +32,7 @@ public class JobBean {
     */
    public JobBean() {
       super();
+      this.jobDataBean = new JobDataBean();
    }
 
    /**

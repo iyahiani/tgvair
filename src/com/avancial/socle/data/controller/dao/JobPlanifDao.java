@@ -4,38 +4,27 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.socle.data.model.databean.JobDataBean;
+import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
 
 /**
- * Classe DAO pour l'objet Role
+ * Classe DAO pour l'objet JobPlanif
  * 
  * @author bruno.legloahec
  * 
  */
-public class JobDao extends AbstractDao {
-
+public class JobPlanifDao extends AbstractDao {
    @SuppressWarnings("unchecked")
    @Override
-   public List<JobDataBean> getAll() {
+   public List<JobPlanifDataBean> getAll() {
 
-      String sql = "From JobDataBean";
+      String sql = "From JobPlanifDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }
 
-   /**
-    * @param valueOf
-    * @return
-    */
-   public JobDataBean getJobById(Long id) {
-      String sql = "From JobDataBean where id=:id";
-      Query requete = this.getEntityManager().createQuery(sql).setParameter("id", id);
-      return (JobDataBean) requete.getSingleResult();
-   }
-
-   public void save(JobDataBean bean) throws ASocleException {
+   public void save(JobPlanifDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(bean);
@@ -49,7 +38,7 @@ public class JobDao extends AbstractDao {
       }
    }
 
-   public void delete(JobDataBean bean) throws ASocleException {
+   public void delete(JobPlanifDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().remove(bean);
@@ -64,7 +53,7 @@ public class JobDao extends AbstractDao {
 
    }
 
-   public void update(JobDataBean bean) throws ASocleException {
+   public void update(JobPlanifDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().merge(bean);

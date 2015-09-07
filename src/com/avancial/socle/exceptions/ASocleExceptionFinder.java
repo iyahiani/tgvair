@@ -8,11 +8,11 @@ package com.avancial.socle.exceptions;
  *
  */
 public abstract class ASocleExceptionFinder {
-   protected ASocleException      socleException;
+   protected ASocleException     socleException;
    private ASocleExceptionFinder next;
-   private Exception              e;
-   protected StringBuilder        buffer = new StringBuilder();
-   protected String               messageToBeFound;
+   private Exception             e;
+   protected StringBuilder       buffer = new StringBuilder();
+   protected String              messageToBeFound;
 
    /**
     * Constructeur
@@ -22,16 +22,16 @@ public abstract class ASocleExceptionFinder {
       this.next = next;
       // On tente de récupérer l'exception parente
       Throwable t = e.getCause();
-      this.buffer.append(t.getCause().getMessage());
+      if (null != t.getCause())
+         this.buffer.append(t.getCause().getMessage());
+      else
+         this.buffer.append(e.getMessage());
    }
 
    /*
     * (non-Javadoc)
     * 
-    * @see
-    * com.avancial.socle.exceptions.ISocleExceptionFinder#getSocleException
-    * (com.avancial.socle.exceptions.ISocleExceptionFinder,
-    * java.lang.Exception)
+    * @see com.avancial.socle.exceptions.ISocleExceptionFinder#getSocleException (com.avancial.socle.exceptions.ISocleExceptionFinder, java.lang.Exception)
     */
    public ASocleException getSocleException() {
       if (this.buffer.lastIndexOf(this.messageToBeFound) > -1)
@@ -39,10 +39,10 @@ public abstract class ASocleExceptionFinder {
       else if (null != this.next)
          return this.next.getSocleException();
       else
-         return new SocleGenericException(e);
+         e.printStackTrace();
+      return new SocleGenericException(e);
    }
 
-  
    public ASocleExceptionFinder getNext() {
       return this.next;
    };

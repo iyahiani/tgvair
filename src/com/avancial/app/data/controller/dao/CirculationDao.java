@@ -78,4 +78,7 @@ public class CirculationDao extends AbstractDao {
       
       return super.getSession();
    }
+   public void deleteAll() {
+      this.getSession().createSQLQuery("DELETE FROM tgvair_circulation").executeUpdate() ;
+   }
 }

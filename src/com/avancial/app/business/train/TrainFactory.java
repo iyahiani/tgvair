@@ -93,6 +93,7 @@ public class TrainFactory implements ITrainFactory {
       trainToCompagnie.addCirculation (circulation); 
       trainToCompagnie.setDateDebutValidite(bean.getDateDebutValiditeTrainCatalogueToCompagnie());
       trainToCompagnie.setDateFinValidite(bean.getDateFinValiditeTrainCatalogueToCompagnie()); 
+      trainToCompagnie.setIdTrainCatalogue(bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
       trainToCompagnie.setIdTrain(bean.getIdTrainCatalogueToCompagnie());
       return trainToCompagnie ;
    }

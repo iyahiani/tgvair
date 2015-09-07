@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.socle.data.model.databean.JobDataBean;
+import com.avancial.socle.data.model.databean.JobPlanifTypeDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
 
@@ -14,28 +14,24 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  * @author bruno.legloahec
  * 
  */
-public class JobDao extends AbstractDao {
+public class JobPlanifTypeDao extends AbstractDao {
 
    @SuppressWarnings("unchecked")
    @Override
-   public List<JobDataBean> getAll() {
+   public List<JobPlanifTypeDataBean> getAll() {
 
-      String sql = "From JobDataBean";
+      String sql = "From JobPlanifTypeDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }
 
-   /**
-    * @param valueOf
-    * @return
-    */
-   public JobDataBean getJobById(Long id) {
-      String sql = "From JobDataBean where id=:id";
-      Query requete = this.getEntityManager().createQuery(sql).setParameter("id", id);
-      return (JobDataBean) requete.getSingleResult();
+   public JobPlanifTypeDataBean getJobPlanifTypeById(Long id) {
+      String sql = "From JobPlanifTypeDataBean where id=:id";
+
+      return (JobPlanifTypeDataBean) this.getEntityManager().createQuery(sql).setParameter("id", id).getSingleResult();
    }
 
-   public void save(JobDataBean bean) throws ASocleException {
+   public void save(JobPlanifTypeDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(bean);
@@ -49,7 +45,7 @@ public class JobDao extends AbstractDao {
       }
    }
 
-   public void delete(JobDataBean bean) throws ASocleException {
+   public void delete(JobPlanifTypeDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().remove(bean);
@@ -64,7 +60,7 @@ public class JobDao extends AbstractDao {
 
    }
 
-   public void update(JobDataBean bean) throws ASocleException {
+   public void update(JobPlanifTypeDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().merge(bean);

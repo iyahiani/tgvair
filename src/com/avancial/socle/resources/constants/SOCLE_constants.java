@@ -18,6 +18,7 @@ public enum SOCLE_constants {
    NAVIGATION_ROLE("/pages/private/role?faces-redirect=true"),
    NAVIGATION_USER("/pages/private/user?faces-redirect=true"),
    NAVIGATION_JOB("/pages/private/job?faces-redirect=true"),
+   NAVIGATION_JOB_PLANIF("/pages/private/jobPlanif?faces-redirect=true"),
    /**
     * ID du statut des messages généraux à l'IHM
     */

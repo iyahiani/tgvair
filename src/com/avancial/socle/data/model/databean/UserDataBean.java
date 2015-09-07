@@ -17,9 +17,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "socle_user")
-public class UserDataBean { 
-   
-   private static final Long serialVersionID = 1L ; 
+public class UserDataBean {
 	@Id
 	protected Long idUser;
 	protected String nomUser;

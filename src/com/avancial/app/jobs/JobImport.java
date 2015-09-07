@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -36,6 +37,7 @@ import com.avancial.socle.exceptions.ASocleException;
  */
 public class JobImport implements Job {
 
+   Logger logger = Logger.getLogger(JobImport.class) ; 
    public void execute(JobExecutionContext context) throws JobExecutionException {
 
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
@@ -45,9 +47,9 @@ public class JobImport implements Job {
 
       IReader reader = null;
       try {
-         reader = new ReaderSSIM("D:/was_tmp/5137.txt");
+         reader = new ReaderSSIM("D:/was_tmp/5137.txt"); 
       } catch (IOException e1) {
-
+          logger.error(e1.getMessage());  
          e1.printStackTrace();
       }
 
@@ -72,7 +74,8 @@ public class JobImport implements Job {
             APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
 
       String chaine = "";
-
+      CirculationDao dao = new CirculationDao();
+      dao.deleteAll();
       try {
          while ((chaine = reader.readLine()) != null) {
 
@@ -102,8 +105,10 @@ public class JobImport implements Job {
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
 
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               CirculationDao dao = new CirculationDao();
+              
+               
                try {
+                 
                   dao.save(circulation);
                } catch (ASocleException e) {
                   e.printStackTrace();
@@ -111,8 +116,10 @@ public class JobImport implements Job {
             }
          }
       } catch (NumberFormatException e) {
+//         logger.error(e.getMessage());
          e.printStackTrace();
       } catch (IOException e) {
+         logger.error(e.getMessage());
          e.printStackTrace();
       }
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
@@ -120,16 +127,16 @@ public class JobImport implements Job {
          bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode("D:/was_tmp/5137.txt").get("Date_Extraction"));
          bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode("D:/was_tmp/5137.txt").get("Date_Fin"));
       } catch (Exception e1) {
-         
+         logger.error(e1.getMessage());
          e1.printStackTrace();
 
       }
-      TraitementImportDAO dao = new TraitementImportDAO();
+      TraitementImportDAO daoImport = new TraitementImportDAO();
+      
       try {
-
-         dao.save(bean);
+         daoImport.save(bean);
       } catch (ASocleException e) {
-
+         // TODO Auto-generated catch block
          e.printStackTrace();
       }
    }

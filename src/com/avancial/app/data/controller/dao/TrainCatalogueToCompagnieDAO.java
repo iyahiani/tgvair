@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
+import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
@@ -74,5 +77,12 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
    }
    public Session getSession() {
       return this.getEntityManager().unwrap(Session.class) ;
+   } 
+   
+   public TrainCatalogueToCompagnieDataBean getTrainCatalogue2CByID(int id) {
+      Criteria criteria = this.getSession().createCriteria(TrainCatalogueToCompagnieDataBean.class) ;  
+      
+       List<TrainCatalogueToCompagnieDataBean> list = criteria.add(Restrictions.eqOrIsNull("idTrainCatalogueToCompagnie", id)).list() ;
+      return list.get(0);
    }
 }
