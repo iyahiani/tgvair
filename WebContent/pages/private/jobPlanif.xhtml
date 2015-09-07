@@ -1,0 +1,118 @@
+<ui:composition template="/pages/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:socle="http://java.sun.com/jsf/composite/composite">
+
+	<ui:define name="title">#{msg.p_jobPlanif_titre}</ui:define>
+	<ui:define name="contenu">
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/ajax-loader.gif" />
+		</p:dialog>
+
+
+		<p:dialog widgetVar="Ajout" resizable="false"
+			header="#{msg.p_dialog_ajout_title_jobPlanif}" id="ajout">
+			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<socle:jobPlanifForm/>
+				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
+					type="submit" actionListener="#{jobPlanifManagedBean.add}"
+					onsuccess="if (#{jobPlanifManagedBean.closeDialog}=true) PF('Ajout').close()"
+					update=":dataTable" action="#{jobPlanifManagedBean.reload()}" />
+				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
+					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
+			</h:form>
+		</p:dialog>
+
+
+
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			header="#{msg.p_dialog_modif_title_jobPlanif}">
+			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				
+				<socle:jobPlanifForm/>
+				
+				<br />
+				<br />
+				<p:commandButton value="#{msg.p_dialog_bouton_modifier_libelle}"
+					type="submit" actionListener="#{jobPlanifManagedBean.update}"
+					update=":idPageMessages"
+					oncomplete="if (#{jobPlanifManagedBean.closeDialog}=true) PF('Modif').close()"></p:commandButton>
+				<p:commandButton immediate="true" onclick="PF('Modif').close()"
+					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
+
+
+
+		<p:commandLink oncomplete="PF('Ajout').show()"
+			actionListener="#{jobPlanifManagedBean.initProperties}">
+			<h:graphicImage id="add" name="private/image/plusVert.png">
+				<p:tooltip for="add" value="#{msg.p_bouton_ajouter_tip_jobPlanif}" />
+			</h:graphicImage>
+		</p:commandLink>
+		<br />
+
+		<p:dataTable var="item" value="#{jobPlanifManagedBean.selectedItems}"
+			id="dataTable" rowIndexVar="index" paginator="true"
+			selectionMode="single"
+			selection="#{jobPlanifManagedBean.selectedItem}"
+			rowKey="#{item.idJobPlanif}">
+			<p:column headerText="action" width="50"
+				id="colonne_#{item.idJobPlanif}">
+				<p:commandLink id="delete_role" update="dataTable :idPageMessages"
+					action="#{jobPlanifManagedBean.delete}"
+					onsuccess="#{jobPlanifManagedBean.reload()}"
+					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif}) ?')) return false">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{jobPlanifManagedBean.selectedItem}" />
+					<h:graphicImage id="img_delete"
+						name="private/image/data-delete.png" styleClass="actionButtons">
+					</h:graphicImage>
+					<p:tooltip id="toolTip" for="delete_role"
+						value="#{msg.p_bouton_supprimer_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
+				</p:commandLink>
+
+
+				<p:commandLink update=":modif" id="update_item"
+					oncomplete="PF('Modif').show()">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{jobPlanifManagedBean.selectedItem}" />
+					<h:graphicImage name="private/image/pencil_edit1.png"
+						styleClass="actionButtons">
+						<p:tooltip for="update_item"
+							value="#{msg.p_bouton_modifier_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
+					</h:graphicImage>
+				</p:commandLink>
+
+			</p:column>
+			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
+				<h:outputText value="#{item.idJobPlanif}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_colonne_nom_technique}">
+				<h:outputText value="#{item.nomTechniqueJobPlanif}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_colonne_libelle}">
+				<h:outputText value="#{item.libelleJobPlanif}"></h:outputText>
+			</p:column>
+		</p:dataTable>
+
+
+
+	</ui:define>
+</ui:composition>
