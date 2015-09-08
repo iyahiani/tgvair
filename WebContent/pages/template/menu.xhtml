@@ -5,19 +5,36 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-  
-	<h:form  id="formMenu">
-<p:menu styleClass="horizontalMenu" id="menu">
+
+	<h:form id="formMenu">
+		<p:menu styleClass="horizontalMenu" id="menu">
 			<p:menuitem value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" />
-			<p:menuitem value="#{msg.p_train_menu}" action="#{menu.goTrain}" styleClass="btn btn-default" title="Gestion Train" rendered="#{ihmManagedBean.isLogged()}"  />    
-			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menu.goAjustement}" styleClass="btn btn-default" title="Ajustement Plan Transport" rendered="#{ihmManagedBean.isLogged()}"  />
-			<p:menuitem value="#{msg.p_CompAerien_menu}" action="#{menu.goCompagnieAerienne}" styleClass="btn btn-default" title="Gestion Compagnies Aeriennes" rendered="#{ihmManagedBean.isLogged()}" />
-			<p:menuitem value="#{msg.p_point_arret}" action="#{menu.goPointArret}" styleClass="btn btn-default" title="Gestion Points Arret" rendered="#{ihmManagedBean.isLogged()}" />
-			<p:menuitem value="#{msg.p_catalogue_menu}" action="#{menu.goCatalogue}" styleClass="btn btn-default" title="Gestion Catalogue" rendered="#{ihmManagedBean.isLogged()}"  />
+			<p:menuitem value="#{msg.p_train_menu}" action="#{menu.goTrain}"
+				styleClass="btn btn-default" title="Gestion Train"
+				rendered="#{ihmManagedBean.isLogged()}" />
+			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menu.goAjustement}"
+				styleClass="btn btn-default" title="Ajustement Plan Transport"
+				rendered="#{ihmManagedBean.isLogged()}" />
+			<p:menuitem value="#{msg.p_CompAerien_menu}"
+				action="#{menu.goCompagnieAerienne}" styleClass="btn btn-default"
+				title="Gestion Compagnies Aeriennes"
+				rendered="#{ihmManagedBean.isLogged()}" />
+			<p:menuitem value="#{msg.p_point_arret}"
+				action="#{menu.goPointArret}" styleClass="btn btn-default"
+				title="Gestion Points Arret" rendered="#{ihmManagedBean.isLogged()}" />
+			<p:menuitem value="#{msg.p_catalogue_menu}"
+				action="#{menu.goCatalogue}" styleClass="btn btn-default"
+				title="Gestion Catalogue" rendered="#{ihmManagedBean.isLogged()}" />
 			<p:menuitem value="#{msg.p_role_menu}" action="#{menu.goRole}"
 				rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}" />
+			<p:menuitem value="#{msg.p_job_menu}" action="#{menu.goJob}"
+				rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}" />
+			<p:menuitem value="#{msg.p_jobPlanif_menu}" rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobPlanif')}"
+				action="#{menu.goJobPlanif}"
+				 />
+				
 			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}"
-				rendered="#{ihmManagedBean.isLogged()}" />
+				rendered="#{ihmManagedBean.isLogged()}"/>
 		</p:menu>
 	</h:form>
 </ui:composition>

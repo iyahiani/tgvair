@@ -84,5 +84,19 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
       
        List<TrainCatalogueToCompagnieDataBean> list = criteria.add(Restrictions.eqOrIsNull("idTrainCatalogueToCompagnie", id)).list() ;
       return list.get(0);
+   } 
+   
+   /**
+    * 
+    * @param codeCompagnie
+    * @param id
+    * @return touts les trains de la compagnie "codeCompagnie" exepter le train "id" 
+    */
+   public List<TrainCatalogueToCompagnieDataBean> getListTrains2Compagnie(String codeCompagnie  ){
+      String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.compagnieAerienneDataBean.codeCompagnieAerienne = ? ";
+      Query requete = this.getEntityManager().createQuery(sql);
+      requete.setParameter(1,codeCompagnie) ;
+      
+      return requete.getResultList() ;
    }
 }

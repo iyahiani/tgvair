@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.ExportSSIMDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
@@ -14,10 +13,10 @@ public class ExportSSIMDAO extends AbstractDao {
 
    @Override
    public List<ExportSSIMDataBean> getAll() {
-      String sql = "select CodeCompagnieAerienne From ExportSSIMDataBean";
+      String sql = "From ExportSSIMDataBean";
 
       Query requete = this.getEntityManager().createQuery(sql);
-      System.out.println(requete.getResultList());
+      
       return requete.getResultList();
    }
 
@@ -34,6 +33,8 @@ public class ExportSSIMDAO extends AbstractDao {
          throw SocleExceptionManager.getException();
 
       }
-   }
+   } 
+   
+   
 
 }

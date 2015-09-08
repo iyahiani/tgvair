@@ -46,9 +46,9 @@ public class JobPlanifDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
+
          SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw manager.getException();
       }
 
    }

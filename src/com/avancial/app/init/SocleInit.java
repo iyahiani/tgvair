@@ -18,6 +18,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.avancial.app.jobs.JobAdaptation;
+import com.avancial.app.jobs.JobExport;
 import com.avancial.app.jobs.JobImport;
 import com.avancial.app.traitements.TraitementImportDAO;
 
@@ -58,7 +59,7 @@ public class SocleInit extends HttpServlet {
       SchedulerFactory sf = new StdSchedulerFactory();
       Scheduler sched = sf.getScheduler();
       // define the job and tie it to our HelloJob class
-      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("dummyJobName", "group1").build();//JobImport // JobAdaptation
+      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("dummyJobName", "group1").build();//JobImport // JobAdaptation // JobExport
       // Trigger the job to run on the next round minute
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("dummyTriggerName", "group1")
             .withSchedule(CronScheduleBuilder.cronSchedule("0/40 * * * * ?")).build(); 

@@ -1,6 +1,7 @@
 package com.avancial.app.traitements;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,12 +24,14 @@ public class TraitementExportDataBean implements Serializable{
    @Id
    @GeneratedValue
    private int idTraitementExport ;
-   private Date dateExtraction ;  
+   private Date dateExtraction ;   
+   private String heureCreation ;  
    
    public TraitementExportDataBean() {
       
       Calendar calendar = Calendar.getInstance() ;
-      this.dateExtraction = calendar.getTime();
+      this.dateExtraction = calendar.getTime(); 
+      this.heureCreation =String.valueOf( calendar.getTime().getHours() ).concat(String.valueOf(calendar.getTime().getMinutes()));
    }
 
    public int getIdTraitementExport() {
@@ -46,5 +49,15 @@ public class TraitementExportDataBean implements Serializable{
    public void setDateExtraction(Date dateExtraction) {
       this.dateExtraction = dateExtraction;
    }
+
+   public String getHeureCreation() {
+      return heureCreation;
+   }
+
+   public void setHeureCreation(String heureCreation) {
+      this.heureCreation = heureCreation;
+   }
+
+  
 
 }

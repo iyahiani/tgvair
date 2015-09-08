@@ -17,11 +17,13 @@ import org.primefaces.context.RequestContext;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.avancial.socle.business.JobPlanifBean;
@@ -32,6 +34,7 @@ import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifTypeDataBean;
 import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.SocleExceptionManager;
 import com.avancial.socle.jobs.JobTest;
 import com.avancial.socle.resources.MessageController;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -111,6 +114,7 @@ public class JobPlanifManagedBean extends AManageBean {
    public String add() throws ASocleException {
       super.add();
 
+      this.selectedItem = new JobPlanifBean();
       JobPlanifDataBean jobPlanifDataBean = new JobPlanifDataBean();
 
       this.selectedItem.setLibelleJobPlanif(this.libelle);
@@ -134,8 +138,8 @@ public class JobPlanifManagedBean extends AManageBean {
 
          try {
             Scheduler sched = sf.getScheduler();
-            JobDetail job = JobBuilder.newJob(JobTest.class).withIdentity(jobPlanifDataBean.getLibelleJobPlanif(), "group1").build();
-            Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("5 * * * * ?")).build();
+            JobDetail job = JobBuilder.newJob(JobTest.class).withIdentity(this.selectedItem.getLibelleJobPlanif(), "group1").build();
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobPlanifDataBean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule("5 * * * * ?")).build();
             sched.scheduleJob(job, trigger);
 
          } catch (SchedulerException e) {
@@ -157,11 +161,25 @@ public class JobPlanifManagedBean extends AManageBean {
          JobPlanifDao dao = new JobPlanifDao();
          try {
             dao.update(this.selectedItem.getJobPlanif());
+            SchedulerFactory sf = new StdSchedulerFactory();
+            Scheduler sched = sf.getScheduler();
+            Trigger oldTrigger = sched.getTrigger(TriggerKey.triggerKey(this.selectedItem.getLibelleJobPlanif(), "group1"));
+            // obtain a builder that would produce the trigger
+            TriggerBuilder tb = oldTrigger.getTriggerBuilder();
+            // update the schedule associated with the builder, and build the new trigger
+            // (other builder methods could be called, to change the trigger in any
+            // desired way)
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(this.selectedItem.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule("5 * * * * ?")).build();
+            sched.rescheduleJob(oldTrigger.getKey(), trigger);
+
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "", MessageController.getTraduction("p_message_update_ok")));
             this.closeDialog = true;
          } catch (ASocleException e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
+         } catch (SchedulerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
          }
       }
       return null;
@@ -174,10 +192,18 @@ public class JobPlanifManagedBean extends AManageBean {
          JobPlanifDao dao = new JobPlanifDao();
          try {
             dao.delete(this.selectedItem.getJobPlanif());
+            SchedulerFactory sf = new StdSchedulerFactory();
+            Scheduler sched = sf.getScheduler();
+            sched.deleteJob(JobKey.jobKey(this.selectedItem.getLibelleJobPlanif(), "group1"));
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "", MessageController.getTraduction("p_message_delete_ok")));
             this.closeDialog = true;
          } catch (ASocleException e) {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", MessageController.getTraduction("p_message_delete_ko")));
+         } catch (SchedulerException e) {
+            e.printStackTrace();
+            SocleExceptionManager manager = new SocleExceptionManager(e);
+            throw manager.getException();
+
          }
       }
       return null;

@@ -166,7 +166,7 @@ public class JobPlanifBean {
    }
 
    public void setNomTechniqueJobPlanif(String NomTechniqueJobPlanif) {
-      this.jobPlanifDataBean.setLibelleJobPlanif(NomTechniqueJobPlanif);
+      this.jobPlanifDataBean.setNomTechniqueJobPlanif(NomTechniqueJobPlanif);
    }
 
    public String getMinutesJobPlanif() {

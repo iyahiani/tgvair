@@ -38,6 +38,9 @@ public class MenuManagedBean implements Serializable {
    public static String goAjustement() {
       return APP_TgvAir.NAVIGATION_AJUSTEMENT.toString();
    }
+   public static String goJob() {
+      return SOCLE_constants.NAVIGATION_JOB.toString();
+   }
 
    public static String goCatalogue() {
       return APP_TgvAir.NAVIGATION_CATALOGUE.toString();
@@ -54,5 +57,7 @@ public class MenuManagedBean implements Serializable {
    public static String goTrain() {
       return APP_TgvAir.NAVIGATION_TRAIN.toString();
    }
-   
+   public static String goJobPlanif() {
+      return SOCLE_constants.NAVIGATION_JOB_PLANIF.toString();
+   }
 }

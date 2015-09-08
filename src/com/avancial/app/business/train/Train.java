@@ -286,9 +286,8 @@ public class Train implements ITrain {
                   if (circulation.getRestrictionTrafic().charAt(i) == 'A')
                      restrictionTrafic.add(i + 1);
                }
-
-            if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null) {
-
+            if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null 
+                  || (circulSSIM.getDestination().equalsIgnoreCase("FRADJ")&& trainCatalogue.getGareDestination().equalsIgnoreCase("FRLLE") && circulation != null)) {
                circulation.setDestination(circulSSIM.getDestination());
                circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
                circulation.setRangTranson(circulSSIM.getRangTranson());
@@ -296,11 +295,11 @@ public class Train implements ITrain {
                // circulation.setJoursCirculation(circulSSIM.getJoursCirculation());
                // /////////////////////////////////////////////////////////////
                // TESTER SI LA DESCENTE est Intedite ou pas
-               // /// charger la liste des Gare interdite à la descente
+               // /// charger la liste des Gare interdite à la descente  
 
                if (!restrictionTrafic.contains(circulation.getRangTranson())) {
-                  train.addCirculation(circulation);
-                  restrictionTrafic.clear();
+                  train.addCirculation(circulation)         ;
+                  restrictionTrafic.clear()                 ;
                }
 
                circulation = null;

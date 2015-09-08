@@ -84,6 +84,7 @@ public class JobBean {
          Class.forName(classe);
          return true;
       } catch (ClassNotFoundException e) {
+         
          return false;
       }
 
