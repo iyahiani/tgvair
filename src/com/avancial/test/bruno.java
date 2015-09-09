@@ -3,11 +3,9 @@ package com.avancial.test;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,7 +19,6 @@ import com.avancial.app.business.train.ITrain;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
-import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
@@ -100,105 +97,144 @@ public class bruno {
       // //////////////////// Creation des circulations
 
       Circulation c1 = new Circulation(), c2 = new Circulation(), c3 = new Circulation(), c4 = new Circulation();
-      c1 = TestTrain.createWithStringPeriode("01/07/2015#31/08/2015#12345#FRAAA#FRBBB#0800#1000");
-      c2 = TestTrain.createWithStringPeriode("01/01/2015#31/12/2015#67#FRAAA#FRBBB#1000#1154");
-      c3 = TestTrain.createWithStringPeriode("01/07/2015#31/07/2015#123#FRAAA#FRCCC#1554#1932");
-      c4 = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#123#FRCCC#FRBBB#0623#0854");
+      c1 = TestTrain.createWithStringPeriode("01/07/2015#31/08/2015#1234567#FRAAA#FRBBB#0800#1000");
+      c2 = TestTrain.createWithStringPeriode("25/07/2015#30/07/2015#1234567#FRAAA#FRBBB#0800#1000");
+      c3 = TestTrain.createWithStringPeriode("01/07/2015#31/12/2015#1234567#FRAAA#FRBBB#0800#1000");
+      // c4 = TestTrain.createWithStringPeriode("01/09/2015#31/12/2015#123#FRCCC#FRBBB#0623#0854");
 
       // //////////// Creation Des Trains Catalogues et i,initialisation des
       // Valeurs
 
+      // Train Catalogue de référence
       TrainCatalogue trainCata1 = new TrainCatalogue();
       trainCata1.addCirculation(c1);
       trainCata1.getListeNumeros().add("001111");
       trainCata1.getListeNumeros().add("001112");
 
-      TrainCatalogue trainCata2 = new TrainCatalogue();
-      trainCata2.addCirculation(c2);
-      trainCata2.getListeNumeros().add("001113");
+      // Train AF avec des date de validité
+      TrainCatalogue trAF = new TrainCatalogue();
+      trAF.addCirculation(c2);
+      trAF.getListeNumeros().add("001111");
+      trAF.getListeNumeros().add("001112");
 
-      TrainCatalogue trainCata3 = new TrainCatalogue();
-      trainCata3.addCirculation(c3);
-      trainCata3.getListeNumeros().add("001115");
-      trainCata3.getListeNumeros().add("002222");
-      trainCata3.getListeNumeros().add("002223");
+      Calendar cal = new GregorianCalendar();
+      cal.clear();
+      cal.set(2015, Calendar.JULY, 25);
+      trAF.setDateDebutValidite(cal.getTime());
+      cal.clear();
+      cal.set(2015, Calendar.JULY, 30);
+      trAF.setDateFinValidite(cal.getTime());
 
-      TrainCatalogue trainCata4 = new TrainCatalogue();
-      trainCata4.addCirculation(c4);
-      trainCata4.getListeNumeros().add("001117");
+      // Train catalogue réduit à la période AF
+      Train trAf1 = trainCata1.getTrainFromPortefeuille(trAF.getDateDebutValidite(), trAF.getDateFinValidite());
+
+      // Maintenant on crée le train SSIM
+
+      Train ssim = new TrainCatalogue();
+      ssim.addCirculation(c3);
+      ssim.getListeNumeros().add("001111");
+      ssim.getListeNumeros().add("001112");
+
+      cal.set(2015, Calendar.JULY, 26);
+
+      ssim.getListeJoursCirculation().remove(cal.getTime());
+
+      System.out.println(ssim.toString());
+
+      Train ssimReduit = ssim.getTrainFromPortefeuille(trAF.getDateDebutValidite(), trAF.getDateFinValidite());
+
+      System.out.println(ssimReduit.toString());
+
+      System.out.println(trAf1.compare(ssimReduit));
+
+      // trainCata1.adapt(train, date_deb_SSIM, date_fin_SSIM);
+
+      // TrainCatalogue trainCata2 = new TrainCatalogue();
+      // trainCata2.addCirculation(c2);
+      // trainCata2.getListeNumeros().add("001113");
+      //
+      // TrainCatalogue trainCata3 = new TrainCatalogue();
+      // trainCata3.addCirculation(c3);
+      // trainCata3.getListeNumeros().add("001115");
+      // trainCata3.getListeNumeros().add("002222");
+      // trainCata3.getListeNumeros().add("002223");
+      //
+      // TrainCatalogue trainCata4 = new TrainCatalogue();
+      // trainCata4.addCirculation(c4);
+      // trainCata4.getListeNumeros().add("001117");
 
       // List<StringBuilder> trains = new ArrayList<StringBuilder> () ;
       // trains.add(numTrain1);trains.add(numTrain2);trains.add(numTrain3);trains.add(numTrain4);
-
-      List<TrainCatalogue> listTrainsCat = new ArrayList<TrainCatalogue>();
-      listTrainsCat.add(trainCata1);
-      // listTrainsCat.add(trainCata2);
-      // listTrainsCat.add(trainCata3);
-      // listTrainsCat.add(trainCata4);
-
-      // ////////////////////////////////////////////////// Construction Map des
-      // Train Catalogue
-
-      // ////////////////////////////////////////////////// Construction Map des
-      // Train Catalogue
-
-      Map<Date, JourCirculation> listTrainsAdapte = new TreeMap<>();
-
-      for (TrainCatalogue t : listTrainsCat) {
-         listTrainsAdapte.putAll(t.getJoursCirculation());
-      }
-      // //////////////AFFICHAGE Map Trains catalogue
-
-      for (Map.Entry<Date, JourCirculation> entryCatalog : listTrainsAdapte.entrySet()) {
-
-         // System.out.println( entryCatalog.getValue());
-      }
-
-      System.out.println("---------------------------------TRAIN REFERENTIEL------------------------------------------");
-      for (TrainCatalogue trainCat : listTrainsCat) {
-
-        
-
-      }
-
-      System.out.println("-----------------------Train SSIM----------------------------------");
-
-      for (TrainCatalogue trainCat : listTrainsCat) {
-
-         Train train = new Train();
-         train = trainSSIM.getTrainSSIMRestreint(trainCat);
-         System.out.println(train);
-      }
-
-      System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
-
-      for (TrainCatalogue trainCat : listTrainsCat) {
-
-         System.out.println("____________TRAIN DU CATALOGUE___________");
-         Train train = trainCat.getTrain();
-         train.remplirJoursCirculations();
-         System.out.println(train);
-
-         train.remplirJoursCirculations();
-
-         System.out.println("____________SSIM RESTREINT___________");
-         Train trainSSIMRestreint = trainSSIM.getTrainSSIMRestreint(trainCat);
-         System.out.println(trainSSIMRestreint);
-         trainSSIMRestreint.remplirJoursCirculations();
-
-         System.out.println("____________TRAIN APRES ADAPT___________");
-
-         if (!train.compare(trainSSIMRestreint)) {
-
-            Calendar cal = new GregorianCalendar(2015, 01, 01);
-            Calendar cal2 = new GregorianCalendar(2015, 12, 31);
-
-            // train.adapt(trainSSIMRestreint, cal.getTime(), cal2.getTime());
-            train.calculeCirculationFromJoursCirculation();
-            System.out.println(train);
-
-         }
-      }
-
+      //
+      // List<TrainCatalogue> listTrainsCat = new ArrayList<TrainCatalogue>();
+      // listTrainsCat.add(trainCata1);
+      // // listTrainsCat.add(trainCata2);
+      // // listTrainsCat.add(trainCata3);
+      // // listTrainsCat.add(trainCata4);
+      //
+      // // ////////////////////////////////////////////////// Construction Map des
+      // // Train Catalogue
+      //
+      // // ////////////////////////////////////////////////// Construction Map des
+      // // Train Catalogue
+      //
+      // Map<Date, JourCirculation> listTrainsAdapte = new TreeMap<>();
+      //
+      // for (TrainCatalogue t : listTrainsCat) {
+      // listTrainsAdapte.putAll(t.getJoursCirculation());
+      // }
+      // // //////////////AFFICHAGE Map Trains catalogue
+      //
+      // for (Map.Entry<Date, JourCirculation> entryCatalog : listTrainsAdapte.entrySet()) {
+      //
+      // // System.out.println( entryCatalog.getValue());
+      // }
+      //
+      // System.out.println("---------------------------------TRAIN REFERENTIEL------------------------------------------");
+      // for (TrainCatalogue trainCat : listTrainsCat) {
+      //
+      //
+      //
+      // }
+      //
+      // System.out.println("-----------------------Train SSIM----------------------------------");
+      //
+      // for (TrainCatalogue trainCat : listTrainsCat) {
+      //
+      // Train train = new Train();
+      // train = trainSSIM.getTrainSSIMRestreint(trainCat);
+      // System.out.println(train);
+      // }
+      //
+      // System.out.println("-------------------------TRAIN ADAPTES----------------------------------------");
+      //
+      // for (TrainCatalogue trainCat : listTrainsCat) {
+      //
+      // System.out.println("____________TRAIN DU CATALOGUE___________");
+      // Train train = trainCat.getTrain();
+      // train.remplirJoursCirculations();
+      // System.out.println(train);
+      //
+      // train.remplirJoursCirculations();
+      //
+      // System.out.println("____________SSIM RESTREINT___________");
+      // Train trainSSIMRestreint = trainSSIM.getTrainSSIMRestreint(trainCat);
+      // System.out.println(trainSSIMRestreint);
+      // trainSSIMRestreint.remplirJoursCirculations();
+      //
+      // System.out.println("____________TRAIN APRES ADAPT___________");
+      //
+      // if (!train.compare(trainSSIMRestreint)) {
+      //
+      // Calendar cal = new GregorianCalendar(2015, 01, 01);
+      // Calendar cal2 = new GregorianCalendar(2015, 12, 31);
+      //
+      // // train.adapt(trainSSIMRestreint, cal.getTime(), cal2.getTime());
+      // train.calculeCirculationFromJoursCirculation();
+      // System.out.println(train);
+      //
+      // }
+      // }
+      //
    }
 }

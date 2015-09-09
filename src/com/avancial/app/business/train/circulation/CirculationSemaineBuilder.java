@@ -34,7 +34,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       int day = Integer.parseInt(StringToDate.JavaDays2FrenchDays(cal));
       this.circulation.setDateDebut(cal.getTime());
       // On calcule la date de la fin de la semaine
-     
+
       this.jours[day - 1] = 1;
       this.circulation.setDateFin(cal.getTime());
       this.setJoursCirculation();
@@ -53,7 +53,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       // On regarde si le flag circulation est le même pour le jour concerné
       Calendar cal = new GregorianCalendar();
       cal.setTime(jour.getDateCircul());
-         return comp;
+      return comp;
 
    }
 
@@ -124,7 +124,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       jourCircul.add(circulation2.getJoursCirculation());
       fusionCirculation.setJoursCirculation(jourCircul.toString());
 
-      jourCirculationUtil jour = new jourCirculationUtil();
+      // jourCirculationUtil jour = new jourCirculationUtil();
 
       fusionCirculation.setJoursCirculation(jourCirculationUtil.fusionne(circulation1.getJoursCirculation(), circulation2.getJoursCirculation()));
 

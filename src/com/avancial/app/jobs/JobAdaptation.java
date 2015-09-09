@@ -1,11 +1,8 @@
 package com.avancial.app.jobs;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.quartz.Job;
@@ -40,6 +37,7 @@ import com.avancial.socle.exceptions.ASocleException;
 
 public class JobAdaptation implements Job {
 
+   @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
       Logger log = Logger.getLogger(JobAdaptation.class);
 
@@ -100,23 +98,16 @@ public class JobAdaptation implements Job {
       for (CirculationAdapterDataBean bean : listCirculAdapter) {
 
          TrainCatalogue train = factory.createTrainCatalgueFromBean(bean);
+         listTrains.add(train);
+         // si le train existe dans la table des adaptations avec plusiurs // circulation , on construit de nouvelle list de circulation pour ce // train
 
-         // si le train existe dans la table des adaptations avec plusiurs
-         // circulation , on construit de nouvelle list de circulation pour ce
-         // train
-        
-         if (listTrains.size() == 0)
-            listTrains.add(train);
-         else
-            for (TrainCatalogue tc : listTrains) {
-               if (train.getIdTrainCatalogue() == tc.getIdTrain()) {
-                     tc.getListeCirculations().clear(); 
-                     
-               }
+         // if (listTrains.size() == 0) listTrains.add(train);
+         // else for (TrainCatalogue tc : listTrains) { if (train.getIdTrainCatalogue() == tc.getIdTrain()) { tc.getListeCirculations().clear();
 
-               listTrains.add(train);
-            }
       }
+
+      // listTrains.add(train); } }
+
       // //////////////////////////// recuperer les circulations de la ssim
 
       Train trainsSSIM = new Train();
@@ -179,8 +170,8 @@ public class JobAdaptation implements Job {
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
                traincat.calculeCirculationFromJoursCirculation();
 
-               // ////////////////// supprimer le train adapter de ca verion
-               // precedantr dans table des circulations adapter
+               // ////////////////// supprimer le train adapté de sa version
+               // precedante dans table des circulations adaptées
                CirculationAdapterDAO daoDelete = new CirculationAdapterDAO();
                List<CirculationAdapterDataBean> listCircAdapt = new CirculationAdapterDAO().getAll();
                for (CirculationAdapterDataBean c : listCircAdapt) {
@@ -188,7 +179,6 @@ public class JobAdaptation implements Job {
                      try {
                         daoDelete.delete(c);
                      } catch (ASocleException e) {
-
                         e.printStackTrace();
                      }
                }
