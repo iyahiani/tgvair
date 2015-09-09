@@ -112,12 +112,12 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
             // for (ExportSSIMDataBean tc2c : listTrainsToCompagnie)
 
             for (ExportSSIMDataBean tc2c : list) {
-            if (tc2c.getDateFinCirculation().after(bean.getDateExtraction())) {// a remplacer par la date courante
+            //if (tc2c.getDateFinCirculation().after(bean.getDateExtraction())) {// a remplacer par la date courante
                this.writer.setFormaterStrategy(formater3);
                this.writer.write(this.getEnrgType3(tc2c));
                this.writer.setFormaterStrategy(formater4);
                this.writer.write(this.getEnrgType4(tc2c));
-            }
+            //}
             }
 
             this.writer.setFormaterStrategy(formater5);

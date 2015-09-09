@@ -7,6 +7,7 @@ import java.util.List;
 import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.controller.dao.PointArretDAO;
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
@@ -52,24 +53,25 @@ public class TrainFactory implements ITrainFactory {
       return trainC;
    }
 
-   public TrainCatalogue createTrainCatalgueFromBean(TrainCatalogueDataBean bean) {
+   public TrainCatalogue createTrainCatalgueFromBean(CirculationAdapterDataBean bean) {
       
       TrainCatalogue train = new TrainCatalogue();
       Circulation circulation = new Circulation();
-      circulation.setDateDebut(bean.getDateDebutValidite());
-      circulation.setDateFin(bean.getDateFinValidite());
-      circulation.setOrigine(bean.getIdPointArretOrigine().getCodeResarailPointArret());
-      circulation.setDestination(bean.getIdPointArretDestination().getCodeResarailPointArret());
-      circulation.setJoursCirculation(bean.getRegimeJoursTrainCatalogue());
-      circulation.setHeureDepart(Integer.valueOf(StringToDate.toFormatedString(bean.getHeureDepartTrainCatalogue())));
-      circulation.setHeureArrivee(Integer.valueOf(StringToDate.toFormatedString(bean.getHeureArriveeTrainCatalogue())));
-      train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getNumeroTrainCatalogue()));
+      circulation.setDateDebut(bean.getDateDebutCirculation());
+      circulation.setDateFin(bean.getDateFinCirculation());
+      circulation.setOrigine(bean.getTrainCatalogueDataBean().getIdPointArretOrigine().getCodeResarailPointArret());
+      circulation.setDestination(bean.getTrainCatalogueDataBean().getIdPointArretDestination().getCodeResarailPointArret());
+      circulation.setJoursCirculation(bean.getTrainCatalogueDataBean().getRegimeJoursTrainCatalogue());
+    
+      circulation.setHeureDepart(Integer.valueOf(bean.getHeureDepart()));
+      circulation.setHeureArrivee(Integer.valueOf(bean.getHeureArriver()));
+      train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getTrainCatalogueDataBean().getNumeroTrainCatalogue()));
       train.addCirculation(circulation);
-      train.setOoperatingFlight(bean.getOperatingFlight()); 
-      train.setIdTrain(bean.getIdTrainCatalogue()); 
-      train.setDateDebutValidite(bean.getDateDebutValidite());
-      train.setDateFinValidite(bean.getDateFinValidite()); 
-      train.setIdTrain(bean.getIdTrainCatalogue());
+      train.setOoperatingFlight(bean.getTrainCatalogueDataBean().getOperatingFlight()); 
+      train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
+      train.setDateDebutValidite(bean.getTrainCatalogueDataBean().getDateDebutValidite());
+      train.setDateFinValidite(bean.getTrainCatalogueDataBean().getDateFinValidite()); 
+      train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
       return train ;
    }
    public TrainToCompagnie createTrain2cFromBean(TrainCatalogueToCompagnieDataBean bean) {

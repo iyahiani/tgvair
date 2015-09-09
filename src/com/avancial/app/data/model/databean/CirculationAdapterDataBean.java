@@ -29,11 +29,11 @@ public class CirculationAdapterDataBean implements Serializable  {
    @Column(name = "idCirculation", unique = true, nullable = false)
    private int idCirculation ;
    
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(cascade = CascadeType.REFRESH)
    @JoinColumn(name = "idTrainCatalogue")
    private TrainCatalogueDataBean trainCatalogueDataBean;
    
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(cascade = CascadeType.REFRESH)
    @JoinColumn(name = "idTraitementImport") 
    
    private TraitementsImportDataBean traitementImport ; 

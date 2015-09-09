@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.quartz.Job;
@@ -40,29 +42,80 @@ public class JobAdaptation implements Job {
 
    public void execute(JobExecutionContext context) throws JobExecutionException {
       Logger log = Logger.getLogger(JobAdaptation.class);
-      
+
+      // / update table circulation adapter avec la table TrainsCatalogue
+
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
+      List<CirculationAdapterDataBean> listCirculAdapter = new CirculationAdapterDAO().getDistinctCirculation();
+
+      for (TrainCatalogueDataBean tc : listTrainsCat) {
+         boolean trouve = false;
+         for (CirculationAdapterDataBean cAdapter : listCirculAdapter) {
+            if (cAdapter.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrainCatalogue()) {
+               trouve = true;
+               break;
+            }
+         }
+
+         if (!trouve) {
+            CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
+            cirAdapterDataBean.setDateDebutCirculation(tc.getDateDebutValidite());
+            cirAdapterDataBean.setDateFinCirculation(tc.getDateFinValidite());
+            cirAdapterDataBean.setTrainCatalogueDataBean(tc);
+            cirAdapterDataBean.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+            cirAdapterDataBean.setHeureDepart(tc.getHeureDepartTrainCatalogue().toString().substring(11, 13) + tc.getHeureDepartTrainCatalogue().toString().substring(14, 16));
+            cirAdapterDataBean.setHeureArriver(tc.getHeureArriveeTrainCatalogue().toString().substring(11, 13) + tc.getHeureArriveeTrainCatalogue().toString().substring(14, 16));
+            cirAdapterDataBean.setRegimeCirculation(tc.getRegimeJoursTrainCatalogue());
+            CirculationAdapterDAO dao = new CirculationAdapterDAO();
+            try {
+               dao.save(cirAdapterDataBean);
+            } catch (ASocleException e) {
+               log.error(e.getMessage());
+               e.printStackTrace();
+            }
+         }
+      }
+
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculation = new CirculationDao().getAll();
       List<TrainToCompagnie> listTrainToCompagnie = new ArrayList<>();
       List<TrainCatalogueToCompagnieDataBean> listCatalogueToCompagnieDataBeans = new ArrayList<>();
       List<TrainCatalogueToCompagnieDataBean> listCompleteTrainToCompagnieDataBeans = new ArrayList<>();
-      // Sava Extract Traitement  
+      // Sava Extract Traitement
       TraitementExportDataBean export = new TraitementExportDataBean();
       TraitementExportDAO traitementExportDAO = new TraitementExportDAO();
+
       try {
          traitementExportDAO.save(export);
       } catch (ASocleException e) {
          log.error(e.getMessage());
          e.printStackTrace();
       }
-      
+
       // /////////////////////////////////////////////////////// recuperer les
-      // train catalogue
+      // train catalogue des circulation adaptées
+      listCirculAdapter = new CirculationAdapterDAO().getAll();
       TrainFactory factory = new TrainFactory();
-      for (TrainCatalogueDataBean bean : listTrainsCat) {
+
+      for (CirculationAdapterDataBean bean : listCirculAdapter) {
+
          TrainCatalogue train = factory.createTrainCatalgueFromBean(bean);
-         listTrains.add(train);
+
+         // si le train existe dans la table des adaptations avec plusiurs
+         // circulation , on construit de nouvelle list de circulation pour ce
+         // train
+        
+         if (listTrains.size() == 0)
+            listTrains.add(train);
+         else
+            for (TrainCatalogue tc : listTrains) {
+               if (train.getIdTrainCatalogue() == tc.getIdTrain()) {
+                     tc.getListeCirculations().clear(); 
+                     
+               }
+
+               listTrains.add(train);
+            }
       }
       // //////////////////////////// recuperer les circulations de la ssim
 
@@ -92,9 +145,9 @@ public class JobAdaptation implements Job {
       Date dateDebutSSIM = listTraitements.get(0).getDateDebutSSIM();
       Date dateFinSSIM = listTraitements.get(0).getDateFinSSIM();
       Date dateExtraction = listTraitements.get(0).getDateImport();
-      Service services = new Service() ; 
+      Service services = new Service();
       Date dateDebutService = services.getDateDebutService();
-      Date dateFinService = services.getDateFinService();  
+      Date dateFinService = services.getDateFinService();
 
       for (TrainCatalogue traincat : listTrains) {
 
@@ -110,7 +163,7 @@ public class JobAdaptation implements Job {
             if (!traincat.compare(trainSSIMRestreint)) {
                // ////////////////////////////////////////////// construire les
                // observateurs du train a adapté
-               
+
                listCatalogueToCompagnieDataBeans.clear();
                listCatalogueToCompagnieDataBeans = new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(traincat.getIdTrain());
 
@@ -126,7 +179,20 @@ public class JobAdaptation implements Job {
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
                traincat.calculeCirculationFromJoursCirculation();
 
-               // /////////////////// persister les circulation du train adapté
+               // ////////////////// supprimer le train adapter de ca verion
+               // precedantr dans table des circulations adapter
+               CirculationAdapterDAO daoDelete = new CirculationAdapterDAO();
+               List<CirculationAdapterDataBean> listCircAdapt = new CirculationAdapterDAO().getAll();
+               for (CirculationAdapterDataBean c : listCircAdapt) {
+                  if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == traincat.getIdTrain())
+                     try {
+                        daoDelete.delete(c);
+                     } catch (ASocleException e) {
+
+                        e.printStackTrace();
+                     }
+               }
+               // /////////////////// persister
 
                for (Circulation c : traincat.getListeCirculations()) {
                   CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
@@ -136,51 +202,53 @@ public class JobAdaptation implements Job {
                   cirAdapterDataBean.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
                   cirAdapterDataBean.setHeureDepart(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart())));
                   cirAdapterDataBean.setHeureArriver(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
-                  cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())  ;
-                  CirculationAdapterDAO dao1 = new CirculationAdapterDAO()          ;
+                  cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation());
+                  CirculationAdapterDAO dao1 = new CirculationAdapterDAO();
                   try {
-                     dao1.save(cirAdapterDataBean); 
-                    
+                     dao1.save(cirAdapterDataBean);
                   } catch (ASocleException e) {
                      log.error(e.getMessage());
                      e.printStackTrace();
                   }
                }
-               // ///////////////// recupere touts les trains de la compagnies 
-               
-               // /////////////////////////////////////////////////////////// archiver les compagnies a exporter dans la ssim7
+               // ///////////////// recupere touts les trains de la compagnies
+
+               // ///////////////////////////////////////////////////////////
+               // archiver les compagnies a exporter dans la ssim7
 
                ExportSSIMDAO daoExportSSIM = new ExportSSIMDAO();
                for (int i = 0; i < iObs.getListObservers().size(); i++) {
                   TrainToCompagnie tc2c = iObs.getListObservers().get(i).getTc2c();
                   for (Circulation c : tc2c.getListeCirculations()) {
                      ExportSSIMDataBean exportBean = new ExportSSIMDataBean();
-                    
                      exportBean.setIdTrainCatalogue(new TrainCatalogueDAO().getTrainCatalogueByID(tc2c.getIdTrainCatalogue()));
                      exportBean.setIdTrainCatalogueToCompagnie(new TrainCatalogueToCompagnieDAO().getTrainCatalogue2CByID(tc2c.getIdTrain()));
                      exportBean.setIdTraitementExport(traitementExportDAO.getLastID());
                      exportBean.setDateDebutCirculation(c.getDateDebut());
                      exportBean.setDateFinCirculation(c.getDateFin());
-                     exportBean.setHeureDepartCirculation(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()))); 
-                     exportBean.setHeureArriverCirculation(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()))); 
-                     exportBean.setGMTDepart(c.getGMTDepart())                ; 
-                     exportBean.setGMTArriver(c.getGMTArrivee())              ;  
-                     exportBean.setRegimeCirculation(c.getJoursCirculation()) ;  
+                     exportBean.setHeureDepartCirculation(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart())));
+                     exportBean.setHeureArriverCirculation(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
+                     exportBean.setGMTDepart(c.getGMTDepart());
+                     exportBean.setGMTArriver(c.getGMTArrivee());
+                     exportBean.setRegimeCirculation(c.getJoursCirculation());
                      try {
-                        ////   reste le cas d'un update d'un tc2c
+                        // // reste le cas d'un update d'un tc2c
                         daoExportSSIM.save(exportBean);
-                        listCompleteTrainToCompagnieDataBeans.clear(); 
-                        
-                        //listCompleteTrainToCompagnieDataBeans.addAll(new TrainCatalogueToCompagnieDAO().getListTrains2Compagnie(exportBean.getIdTrainCatalogueToCompagnie().getCodeCompagnieAerienne()));
-                        System.out.println();
+                        // listCompleteTrainToCompagnieDataBeans.clear();
+
                      } catch (ASocleException e) {
                         log.error(e.getMessage());
                         e.printStackTrace();
                      }
+
                   }
                }
+
             }
       }
-
+      // / ajouter les t2c non adapter
+      // List<ExportSSIMDataBean> listexport = new ExportSSIMDAO().getAll() ;
+      // listCompleteTrainToCompagnieDataBeans.addAll(new
+      // TrainCatalogueToCompagnieDAO().getAll()) ;
    }
 }

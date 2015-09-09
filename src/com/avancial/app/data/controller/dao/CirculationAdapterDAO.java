@@ -2,6 +2,8 @@ package com.avancial.app.data.controller.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
@@ -11,9 +13,13 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 public class CirculationAdapterDAO extends AbstractDao {
 
    @Override
-   public List<?> getAll() {
+   public List<CirculationAdapterDataBean> getAll() {
       
-      return null;
+      String sql = "From CirculationAdapterDataBean";
+
+      Query requete = this.getEntityManager().createQuery(sql);
+      
+      return requete.getResultList();
    } 
    
    
@@ -58,5 +64,13 @@ public class CirculationAdapterDAO extends AbstractDao {
       }
 
    } 
+  public List<CirculationAdapterDataBean> getDistinctCirculation() {
+     
+     String sql = "From CirculationAdapterDataBean c group by c.trainCatalogueDataBean.idTrainCatalogue ";
 
+     Query requete = this.getEntityManager().createQuery(sql);
+     
+     return requete.getResultList();
+     
+  }
 }

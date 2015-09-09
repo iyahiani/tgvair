@@ -287,7 +287,7 @@ public class Train implements ITrain {
                      restrictionTrafic.add(i + 1);
                }
             if (circulSSIM.getDestination().equalsIgnoreCase(trainCatalogue.getGareDestination()) && circulation != null 
-                  || (circulSSIM.getDestination().equalsIgnoreCase("FRADJ")&& trainCatalogue.getGareDestination().equalsIgnoreCase("FRLLE") && circulation != null)) {
+                  ) {
                circulation.setDestination(circulSSIM.getDestination());
                circulation.setHeureArrivee(circulSSIM.getHeureArrivee());
                circulation.setRangTranson(circulSSIM.getRangTranson());
