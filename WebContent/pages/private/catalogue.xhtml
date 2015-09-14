@@ -89,8 +89,10 @@
 									</h:graphicImage>
 								</p:commandLink>
 								<p:commandLink id="delete_Train" update=":tableTrains"
-									action="#{traincatalogue.delete}"
-									>
+									onclick="if (!confirm('voulez vous supprimer le Train')) return false" 
+									action="#{traincatalogue.delete}"  ajax="true"
+									> 
+									<p:ajax update=":tableTrains:tableTrains" delay="1"></p:ajax>
 									<f:setPropertyActionListener value="#{trains}"
 										target="#{traincatalogue.selectedTrainsCatalogue}" />
 									<h:graphicImage id="img_delete"
@@ -147,7 +149,7 @@
 
 							<p:commandLink update=":modifT2C" id="update_T2C"
 								oncomplete="PF('modifT2C').show();">
-
+                                
 								<h:graphicImage name="private/image/pencil_edit1.png"
 									styleClass="actionButtons">
 									<p:tooltip for="update_T2C"
@@ -168,7 +170,7 @@
 						<p:outputLabel value="Compagnie Aerienne"></p:outputLabel>
 						<h:selectOneMenu effect="fold" editable="true" required="true"
 							value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
-							<f:selectItems value="#{traintocompagnie.allCompagnie}"
+							<f:selectItems value="#{traintocompagnie.allCodeCompagnie}"
 								id="codeComp">
 							</f:selectItems>
 							<p:ajax update="marketing_Flight"></p:ajax>

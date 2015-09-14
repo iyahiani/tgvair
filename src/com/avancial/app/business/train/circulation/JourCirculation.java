@@ -100,7 +100,7 @@ public class JourCirculation extends ObservableJoursCirculation implements Compa
 
       if (!this.getOrigine().equalsIgnoreCase(jourCirculation.getOrigine()))
          return false;
-      else if (!this.getDestination().equalsIgnoreCase(jourCirculation.getDestination()))
+      else if (!this.getDestination().equalsIgnoreCase(jourCirculation.getDestination())) // ne fonctionnera pas dans le cas de lille flandre
          return false;
       else if (this.getHeureArrivee() != jourCirculation.getHeureArrivee())
          return false;

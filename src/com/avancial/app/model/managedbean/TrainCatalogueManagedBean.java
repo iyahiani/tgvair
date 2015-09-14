@@ -141,6 +141,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          try {
             dao.delete(this.selectedTrainsCatalogue);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            RequestContext.getCurrentInstance().update(":tableTrains");
             this.closeDialog = true;
          } catch (ASocleException e) {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));

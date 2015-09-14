@@ -39,7 +39,6 @@ public class CompagnieAerienneDataBean implements Serializable {
    public void setIdCompagnieAeriennne(int idCompagnieAeriennne) {
       this.idCompagnieAeriennne = idCompagnieAeriennne;
    }
-
    public String getCodeCompagnieAerienne() {
       return CodeCompagnieAerienne;
    }

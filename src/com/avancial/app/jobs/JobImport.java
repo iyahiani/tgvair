@@ -17,7 +17,7 @@ import com.avancial.app.business.parser.FiltreCatalogue;
 import com.avancial.app.business.parser.FiltreSSIMCompagnieTrain;
 import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
-import com.avancial.app.data.controller.dao.CirculationDao;
+import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
@@ -49,7 +49,7 @@ public class JobImport implements Job {
 
       IReader reader = null;
       try {
-         reader = new ReaderSSIM("D:/5137.txt");
+         reader = new ReaderSSIM("D:/was_tmp/7989.txt");
       } catch (IOException e1) {
          this.logger.error(e1.getMessage());
          e1.printStackTrace();
@@ -75,14 +75,13 @@ public class JobImport implements Job {
       IParser par = new ParserFixedLength(new FilterEncodage(new FiltreTrancheOptionnel(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
 
       String chaine = "";
-      CirculationDao dao = new CirculationDao();
-      dao.deleteAll();
+      CirculationSSIMDao dao = new CirculationSSIMDao();
+      List<CirculationSSIMDataBean> list = dao.getAll() ;
+      dao.deleteAll(0);
       try {
          while ((chaine = reader.readLine()) != null) {
-
             par.parse(chaine);
             if (!par.getParsedResult().isEmpty()) {
-
                CirculationSSIMDataBean circulation = new CirculationSSIMDataBean();
                circulation.setOriginePointArret(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_DEPART.name()));
                circulation.setDestinationPointArret(par.getParsedResult().get(APP_enumParserSSIM.POSITION_GARE_ARRIVER.name()));
@@ -104,15 +103,8 @@ public class JobImport implements Job {
                circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(), APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
-
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-
-               try {
-
-                  dao.save(circulation);
-               } catch (ASocleException e) {
-                  e.printStackTrace();
-               }
+               dao.saveSSIM(circulation);
             }
          }
       } catch (NumberFormatException e) {
@@ -132,12 +124,6 @@ public class JobImport implements Job {
 
       }
       TraitementImportDAO daoImport = new TraitementImportDAO();
-
-      try {
-         daoImport.save(bean);
-      } catch (ASocleException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+      daoImport.saveTraitementSSIM(bean);
    }
 }

@@ -120,8 +120,8 @@
 					action="#{jobManagedBean.delete}"
 					onsuccess="#{jobManagedBean.reload()}"
 					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJob} (#{item.libelleJob}) ?')) return false">
-					<f:setPropertyActionListener value="#{job}"
-						target="#{jobManagedBean.selectedJob}" />
+					<f:setPropertyActionListener value="#{job}    "
+						target="#{jobManagedBean.selectedJob}     " />
 					<h:graphicImage id="img_delete"
 						name="private/image/data-delete.png" styleClass="actionButtons">
 					</h:graphicImage>

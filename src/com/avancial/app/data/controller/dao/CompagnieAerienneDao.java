@@ -16,7 +16,7 @@ public class CompagnieAerienneDao extends AbstractDao {
    @Override
    public List<CompagnieAerienneDataBean> getAll() {
 
-      String sql = "select CodeCompagnieAerienne From CompagnieAerienneDataBean";// select
+      String sql = "From CompagnieAerienneDataBean";// select
                                                                                  // codeCompagnieAerienne
       Query requete = this.getEntityManager().createQuery(sql);
       System.out.println(requete.getResultList());
@@ -38,6 +38,14 @@ public class CompagnieAerienneDao extends AbstractDao {
       }
    }
 
+   public List<CompagnieAerienneDataBean> getAllCodeCompagnie() {
+
+      String sql = "select CodeCompagnieAerienne From CompagnieAerienneDataBean";// select
+                                                                                 // codeCompagnieAerienne
+      Query requete = this.getEntityManager().createQuery(sql);
+      System.out.println(requete.getResultList());
+      return requete.getResultList();
+   }
    public void delete(CompagnieAerienneDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();

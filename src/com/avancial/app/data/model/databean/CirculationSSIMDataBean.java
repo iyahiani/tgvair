@@ -19,13 +19,13 @@ import javax.persistence.Table;
 import com.avancial.app.business.train.Train;
 
 @Entity
-@Table(name = "tgvair_circulation")
+@Table(name = "tgvair_import_SSIM")
 public class CirculationSSIMDataBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "idCirculation", unique = true, nullable = false)
+   @Column(name = "idCirculationSSIMtgvair", unique = true, nullable = false)
    private Long idCirculation;
    private String numeroTrain;
    private String originePointArret;

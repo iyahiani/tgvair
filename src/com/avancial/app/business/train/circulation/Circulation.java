@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 
 public class Circulation implements ICirculation {
@@ -171,6 +172,17 @@ public class Circulation implements ICirculation {
       return sb.toString();
    }
 
+    public void createCirculationFromBean(CirculationAdapterDataBean bean) {
+      
+       this.setDateDebut(bean.getDateDebutCirculation());
+       this.setDateFin(bean.getDateFinCirculation());
+       this.setOrigine(bean.getTrainCatalogueDataBean().getIdPointArretOrigine().getCodeResarailPointArret());
+       this.setDestination(bean.getTrainCatalogueDataBean().getIdPointArretDestination().getCodeResarailPointArret());
+       this.setJoursCirculation(bean.getTrainCatalogueDataBean().getRegimeJoursTrainCatalogue());
+       this.setHeureDepart(Integer.valueOf(bean.getHeureDepart()));
+       this.setHeureArrivee(Integer.valueOf(bean.getHeureArriver()));
+       
+    }
   
    public Date getDateDebut() {
       return this.dateDebut;

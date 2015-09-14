@@ -14,7 +14,7 @@ public interface ITrainFactory {
 	public ITrain createTrain ();
 
 	public ITrain createTrainByListCirculation(List<Circulation> listCircu); 
-	public TrainCatalogue createTrainCatalgueFromBean(CirculationAdapterDataBean bean) ; 
+	public TrainCatalogue createTrainCatalgueFromBean(CirculationAdapterDataBean bean) ; //,List<Circulation> listCircul
 	public TrainToCompagnie createTrain2cFromBean(TrainCatalogueToCompagnieDataBean bean) ; 
 	public List<TrainCatalogueAdapterDataBean> createBeanFromTrainCatalogueAdapter(TrainCatalogue tc) ;
 	public TrainCatalogueToCompagnieDataBean createT2CBeanFromTrain2Compagnie(TrainToCompagnie t2c) ;

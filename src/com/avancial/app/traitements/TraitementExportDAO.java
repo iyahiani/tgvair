@@ -38,5 +38,14 @@ public class TraitementExportDAO  extends AbstractDao{
       String sql = "from TraitementExportDataBean order by idTraitementExport DESC";
       Query requete = this.getEntityManager().createQuery(sql).setMaxResults(1);
       return (TraitementExportDataBean)requete.getResultList().get(0);
-   } 
+   }  
+   
+   public void saveExport(TraitementExportDataBean export ) {
+      try {
+         save(export);
+      } catch (ASocleException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+   }
 }

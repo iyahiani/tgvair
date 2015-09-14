@@ -16,7 +16,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  * 
  * @author ismael.yahiani cette Classe offre des fonctionnalités pour l'objet Circulation
  */
-public class CirculationDao extends AbstractDao {
+public class CirculationSSIMDao extends AbstractDao {
 
    private CirculationSSIMDataBean circulationSSIMDataBean;
 
@@ -78,7 +78,17 @@ public class CirculationDao extends AbstractDao {
       
       return super.getSession();
    }
-   public void deleteAll() {
-      this.getSession().createSQLQuery("DELETE FROM tgvair_circulation").executeUpdate() ;
+   public void deleteAll(int id) {
+      this.getSession().createSQLQuery("DELETE FROM tgvair_import_SSIM where idCirculationSSIMtgvair <> :id").setParameter("id", id).executeUpdate() ;
+   } 
+   
+   public void saveSSIM(CirculationSSIMDataBean c) {
+      try {
+         this.save(c);
+      } catch (ASocleException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
    }
+   
 }

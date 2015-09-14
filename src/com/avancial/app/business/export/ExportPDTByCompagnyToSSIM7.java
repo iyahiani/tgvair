@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.train.Service;
+import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.model.databean.ExportSSIMDataBean;
 import com.avancial.app.resources.utils.HeureFormattage;
@@ -65,12 +66,12 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
     * @throws ParseException
     * 
     */
-   public void export(Map<String, List<ExportSSIMDataBean>> listCompagnie, TraitementExportDataBean bean, Service service) throws ParseException {
+   public void export(List<TrainCatalogue> listCatalogue, TraitementExportDataBean bean, Service service) throws ParseException {
 
-      for (Entry<String, List<ExportSSIMDataBean>> entry : listCompagnie.entrySet()) {
-         List<ExportSSIMDataBean> list = entry.getValue() ;
+      
+        
          Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
-         File file = new File(String.valueOf(this.numFichier) + entry.getKey()+".txt");
+         File file = new File(String.valueOf(this.numFichier) + bean.getHeureCreation()+".txt");
          this.writer = new WriterTxt("D:/exportSSIM7/" + file);
          this.cpt = 0 ;
          try {
@@ -109,16 +110,18 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
 
             IFormaterFixedLength[] formatersType5 = new IFormaterFixedLength[6];
             IFormaterStrategy formater5 = new FormaterStrategyFixedLength(beginsType5, lengthsType5, formatersType5, null, false, new FormaterLeftSpaces());
-            // for (ExportSSIMDataBean tc2c : listTrainsToCompagnie)
+           
 
-            for (ExportSSIMDataBean tc2c : list) {
-            //if (tc2c.getDateFinCirculation().after(bean.getDateExtraction())) {// a remplacer par la date courante
+            for (TrainCatalogue tc : listCatalogue) { 
+               for (Circulation c : tc.getListeCirculations()) {
+        
                this.writer.setFormaterStrategy(formater3);
-               this.writer.write(this.getEnrgType3(tc2c));
+               this.writer.write(this.getEnrgType3(tc,c));
                this.writer.setFormaterStrategy(formater4);
-               this.writer.write(this.getEnrgType4(tc2c));
-            //}
+               this.writer.write(this.getEnrgType4(tc,c));
+            
             }
+         }
 
             this.writer.setFormaterStrategy(formater5);
             this.writer.write(this.getEnrgType5());
@@ -129,7 +132,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          }
          this.numFichier++;
       }
-   }
+   
 
    public ArrayList<String> getEnrgType1() {
 
@@ -163,32 +166,12 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("2C");
       liste.add("0008");
       liste.add("");
-      liste.add(StringToDate.toString(service.getDateDebutService()).toUpperCase() + StringToDate.toString(service.getDateFinService()).toUpperCase()); // à
-                                                                                                                                                        // mettre
-                                                                                                                                                        // la
-                                                                                                                                                        // date
-                                                                                                                                                        // debut
-                                                                                                                                                        // du
-                                                                                                                                                        // service
-                                                                                                                                                        // +
-                                                                                                                                                        // //
-                                                                                                                                                        // la
-                                                                                                                                                        // date
-                                                                                                                                                        // fin
-                                                                                                                                                        // service
-      liste.add(StringToDate.toString(bean.getDateExtraction()).toUpperCase()); // à
-                                                                                // mettre
-                                                                                // la
-                                                                                // date
-                                                                                // de
-                                                                                // l'extraction
+      liste.add(StringToDate.toString(service.getDateDebutService()).toUpperCase() + StringToDate.toString(service.getDateFinService()).toUpperCase()); 
+      liste.add(StringToDate.toString(bean.getDateExtraction()).toUpperCase()); 
       liste.add("");
       liste.add("C");
       liste.add("");
-      liste.add(String.valueOf(Integer.valueOf(bean.getHeureCreation()) < 1000 ? "0".concat(bean.getHeureCreation()) : bean.getHeureCreation())); // heure
-                                                                                                                                                  // creation
-                                                                                                                                                  // Fichier
-                                                                                                                                                  // <
+      liste.add(String.valueOf(Integer.valueOf(bean.getHeureCreation()) < 1000 ? "0".concat(bean.getHeureCreation()) : bean.getHeureCreation())); 
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)
          liste.add("00000" + String.valueOf(this.cpt));
@@ -206,14 +189,14 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       return liste;
    }
 
-   public ArrayList<String> getEnrgType3(ExportSSIMDataBean tc2c) {
+   public ArrayList<String> getEnrgType3(TrainCatalogue tc2c, Circulation c) {
 
       ArrayList<String> liste = new ArrayList<>();
 
       liste.add("3");
       liste.add("");
       liste.add("2C");
-      liste.add(tc2c.getIdTrainCatalogue().getOperatingFlight().substring(2));
+      liste.add(tc2c.getOoperatingFlight().substring(2));
       this.varianceCirculation++;
       if (this.varianceCirculation < 10)
          liste.add("0" + String.valueOf(this.varianceCirculation));
@@ -221,28 +204,28 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          liste.add(String.valueOf(this.varianceCirculation)); //
       liste.add("01");
       liste.add("J");
-      liste.add(StringToDate.toString(tc2c.getDateDebutCirculation()) + StringToDate.toString(tc2c.getDateFinCirculation()));// tc2c.getDateDebutValidite()--tc2c.getDateFinValidite()
-      liste.add(tc2c.getRegimeCirculation());
+      liste.add(StringToDate.toString(c.getDateDebut()) + StringToDate.toString(c.getDateFin()));// tc2c.getDateDebutValidite()--tc2c.getDateFinValidite()
+      liste.add(c.getJoursCirculation());
       liste.add("");
-      liste.add(tc2c.getIdTrainCatalogue().getIdPointArretOrigine().getCodeGDSPointArret());
-      liste.add(String.valueOf(tc2c.getHeureDepartCirculation()));
-      liste.add(String.valueOf(tc2c.getHeureDepartCirculation()));
+      liste.add(tc2c.getPointArretOrigine().getCodeGDSPointArret());
+      liste.add(String.valueOf(c.getHeureDepart()));
+      liste.add(String.valueOf(c.getHeureDepart()));
       liste.add("+0100");// tc2c.getGMTDepart()
-      if (tc2c.getIdTrainCatalogue().getIdPointArretOrigine().getCodeGDSPointArret().endsWith("CDG"))
+      if (tc2c.getPointArretOrigine().getCodeGDSPointArret().endsWith("CDG"))
          liste.add("TN");
       else
          liste.add("");// ajouter un test si CDG alors TN sinon "  "
       liste.add("ZLN");
-      liste.add(String.valueOf(tc2c.getHeureArriverCirculation()));
-      liste.add(String.valueOf(tc2c.getHeureArriverCirculation()));
+      liste.add(String.valueOf(c.getHeureArrivee()));
+      liste.add(String.valueOf(c.getHeureArrivee()));
       liste.add("+0100"); //
       liste.add("");
-      liste.add(tc2c.getIdTrainCatalogue().getIdPointArretDestination().getCodeGDSPointArret());
-      liste.add("C" + String.valueOf(tc2c.getIdTrainCatalogueToCompagnie().getQuotaPremiereTrainCatalogueToCompagnie()) + "Y"
-            + String.valueOf(tc2c.getIdTrainCatalogueToCompagnie().getQuotaDeuxiemeTrainCatalogueToCompagnie()));
+      liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
+      liste.add("C" + String.valueOf(tc2c.getQuota1er()) + "Y"
+            + String.valueOf(tc2c.getQuota2eme()));
       liste.add("");
-      liste.add("C" + String.valueOf(tc2c.getIdTrainCatalogueToCompagnie().getQuotaPremiereTrainCatalogueToCompagnie()) + "Y"
-            + String.valueOf(tc2c.getIdTrainCatalogueToCompagnie().getQuotaDeuxiemeTrainCatalogueToCompagnie()));
+      liste.add("C" + String.valueOf(tc2c.getQuota1er()) + "Y"
+            + String.valueOf(tc2c.getQuota2eme()));
       liste.add("");
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)
@@ -261,12 +244,12 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       return liste;
    }
 
-   public ArrayList<String> getEnrgType4(ExportSSIMDataBean tc2c) {
+   public ArrayList<String> getEnrgType4(TrainCatalogue tc2c, Circulation c) {
       ArrayList<String> liste = new ArrayList<>();
       liste.add("4");
       liste.add("");
       liste.add("2C");
-      liste.add(tc2c.getIdTrainCatalogue().getOperatingFlight().substring(2));
+      liste.add(tc2c.getOoperatingFlight().substring(2));
       if (this.varianceCirculation < 10)
          liste.add("0" + String.valueOf(this.varianceCirculation));
       else
@@ -278,12 +261,12 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("A");
       liste.add("B");
       liste.add("010");
-      liste.add(tc2c.getIdTrainCatalogue().getIdPointArretOrigine().getCodeGDSPointArret());
-      liste.add(tc2c.getIdTrainCatalogue().getIdPointArretDestination().getCodeGDSPointArret()); // inserer
+      liste.add(tc2c.getPointArretOrigine().getCodeGDSPointArret());
+      liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret()); // inserer
                                                                                                  // le
                                                                                                  // code
                                                                                                  // IATA
-      liste.add(tc2c.getIdTrainCatalogueToCompagnie().getMarketingFlightTrainCatalogueToCompagnie());
+      liste.add(tc2c.getMarketingFlight());
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)
          liste.add("00000" + String.valueOf(this.cpt));

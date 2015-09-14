@@ -31,6 +31,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    private List<TrainCatalogueDataBean> trainsCatalogues;
    private List<TrainCatalogueToCompagnieDataBean> trainsCataloguesToCompagnies;
    private List<CompagnieAerienneDataBean> allCompagnie; 
+   private List<CompagnieAerienneDataBean> allCodeCompagnie ;
    private Integer idTrainCatalogueToCompagnie;
    private TrainCatalogueDataBean trainCatalogueBean;
    private CompagnieAerienneDataBean compagnieDataBean;
@@ -47,7 +48,8 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       this.trainsCataloguesToCompagnies = new ArrayList<>();
       this.allCompagnie = new ArrayList<>();
       this.trainCatalogueBean = new TrainCatalogueDataBean();
-      this.compagnieDataBean = new CompagnieAerienneDataBean();
+      this.compagnieDataBean = new CompagnieAerienneDataBean(); 
+      this.allCodeCompagnie = new ArrayList<>() ;
       this.reload();
    }
 
@@ -58,6 +60,12 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       return this.allCompagnie;
    }
 
+   public List<CompagnieAerienneDataBean> getAllCodeCompagnie(){
+      List<CompagnieAerienneDataBean> temp = new CompagnieAerienneDao().getAllCodeCompagnie();
+      this.allCompagnie.clear();
+      this.allCompagnie.addAll(temp);
+      return this.allCompagnie;
+   }
    @Override
    public String add() {
 

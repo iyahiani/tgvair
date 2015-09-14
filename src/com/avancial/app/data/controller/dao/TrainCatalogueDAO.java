@@ -1,5 +1,8 @@
 package com.avancial.app.data.controller.dao;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -8,8 +11,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
+import com.avancial.app.traitements.TraitementExportDAO;
+import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
@@ -32,10 +40,24 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
 
    public void save(TrainCatalogueDataBean bean) throws ASocleException {
+      CirculationAdapterDataBean circBean=new CirculationAdapterDataBean();
+      Calendar c = Calendar.getInstance() ;
+      circBean.setDateDebutCirculation(bean.getDateDebutValidite());
+      circBean.setDateFinCirculation(bean.getDateFinValidite());
+      circBean.setTrainCatalogueDataBean(bean);
+      circBean.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+      circBean.setTraitementExport(new TraitementExportDAO().getLastID());
+      circBean.setHeureDepart(bean.getHeureDepartTrainCatalogue().toString().substring(11, 13) + bean.getHeureDepartTrainCatalogue().toString().substring(14, 16));
+      circBean.setHeureArriver(bean.getHeureArriveeTrainCatalogue().toString().substring(11, 13) + bean.getHeureArriveeTrainCatalogue().toString().substring(14, 16));
+      circBean.setRegimeCirculation(bean.getRegimeJoursTrainCatalogue()); 
+      circBean.setDateCreationLigneTrain(c.getTime());
+      
       try {
-
+          
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(bean);
+         circBean.setTrainCatalogueDataBean(bean); 
+         this.getEntityManager().persist(circBean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
@@ -96,7 +118,74 @@ public class TrainCatalogueDAO extends AbstractDao {
       return list.get(0);
    }
    
-
+   public void saveCirculation(TrainCatalogueDataBean tc) { 
+      Calendar c = Calendar.getInstance() ;
+      List<CirculationAdapterDataBean> listCirculAdapter = new CirculationDAO().getDistinctCirculation();
+      boolean trouve = false ;
+      for (CirculationAdapterDataBean cAdapter : listCirculAdapter) {
+         if (cAdapter.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrainCatalogue() && cAdapter!=null) {
+            trouve = true;
+            break;
+         }
+      }
+      if (!trouve) {
+         CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
+         cirAdapterDataBean.setDateDebutCirculation(tc.getDateDebutValidite());
+         cirAdapterDataBean.setDateFinCirculation(tc.getDateFinValidite());
+         cirAdapterDataBean.setTrainCatalogueDataBean(tc);
+         cirAdapterDataBean.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+         cirAdapterDataBean.setTraitementExport(new TraitementExportDAO().getLastID());
+         cirAdapterDataBean.setHeureDepart(tc.getHeureDepartTrainCatalogue().toString().substring(11, 13) + tc.getHeureDepartTrainCatalogue().toString().substring(14, 16));
+         cirAdapterDataBean.setHeureArriver(tc.getHeureArriveeTrainCatalogue().toString().substring(11, 13) + tc.getHeureArriveeTrainCatalogue().toString().substring(14, 16));
+         cirAdapterDataBean.setRegimeCirculation(tc.getRegimeJoursTrainCatalogue()); 
+         cirAdapterDataBean.setDateCreationLigneTrain(c.getTime());
+         CirculationDAO dao = new CirculationDAO();
+         try {
+            dao.save(cirAdapterDataBean);
+         } catch (ASocleException e) {
+            
+            e.printStackTrace();
+         }
+      }
+   }
+ 
+   public void updateCirculation(TrainCatalogue tc) {
+      CirculationDAO daoDelete = new CirculationDAO();
+      List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getAll();
+      for (CirculationAdapterDataBean c : listCircAdapt) {
+         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain()) 
+            try {
+               daoDelete.delete(c);
+            } catch (ASocleException e) {
+               e.printStackTrace();
+            }
+      } 
+      
+      for (Circulation c : tc.getListeCirculations()) {
+         CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
+         cirAdapterDataBean.setDateDebutCirculation(c.getDateDebut());
+         cirAdapterDataBean.setDateFinCirculation(c.getDateFin());
+         cirAdapterDataBean.setTrainCatalogueDataBean(new TrainCatalogueDAO().getTrainCatalogueByID(tc.getIdTrain()));
+         cirAdapterDataBean.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+         cirAdapterDataBean.setTraitementExport(new TraitementExportDAO().getLastID());
+         cirAdapterDataBean.setHeureDepart(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart())));
+         cirAdapterDataBean.setHeureArriver(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
+         cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation()); 
+         cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
+         CirculationDAO dao1 = new CirculationDAO();
+         try {
+            dao1.save(cirAdapterDataBean);
+         } catch (ASocleException e) {
+            //log.error(e.getMessage());
+            e.printStackTrace();
+         }
+      }
+   }
+   
+   
+   
+   
+   
    public Session getSession() {
       return this.getEntityManager().unwrap(Session.class);
    }

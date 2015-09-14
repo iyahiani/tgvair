@@ -1,11 +1,16 @@
 package com.avancial.app.business.train;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.swing.ListCellRenderer;
 
 import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueAdapterDataBean;
@@ -56,17 +61,9 @@ public class TrainFactory implements ITrainFactory {
    public TrainCatalogue createTrainCatalgueFromBean(CirculationAdapterDataBean bean) {
       
       TrainCatalogue train = new TrainCatalogue();
-      Circulation circulation = new Circulation();
-      circulation.setDateDebut(bean.getDateDebutCirculation());
-      circulation.setDateFin(bean.getDateFinCirculation());
-      circulation.setOrigine(bean.getTrainCatalogueDataBean().getIdPointArretOrigine().getCodeResarailPointArret());
-      circulation.setDestination(bean.getTrainCatalogueDataBean().getIdPointArretDestination().getCodeResarailPointArret());
-      circulation.setJoursCirculation(bean.getTrainCatalogueDataBean().getRegimeJoursTrainCatalogue());
-    
-      circulation.setHeureDepart(Integer.valueOf(bean.getHeureDepart()));
-      circulation.setHeureArrivee(Integer.valueOf(bean.getHeureArriver()));
+      //train.getListeNumeros().clear();
       train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getTrainCatalogueDataBean().getNumeroTrainCatalogue()));
-      train.addCirculation(circulation);
+      //train.getListeCirculations().clear();train.setListeCirculations(listCircul);
       train.setOoperatingFlight(bean.getTrainCatalogueDataBean().getOperatingFlight()); 
       train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
       train.setDateDebutValidite(bean.getTrainCatalogueDataBean().getDateDebutValidite());
@@ -112,5 +109,56 @@ public class TrainFactory implements ITrainFactory {
       
       return bean;
    }
+
+   public static  List<TrainCatalogue> get2DerniersTC(int idTrainCatalogue, Date date) {
+      List<TrainCatalogue> listeTC=new ArrayList<>();
+      
+      CirculationDAO dao=new CirculationDAO();
+      
+      //On récupère les circulations correspondant à l'id et à la date
+      List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrainAndByDate(idTrainCatalogue, date);
+      
+      TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste);
+      listeTC.add(train); 
+      //On récupère la date J-1
+      Date dateJM1=dao.getMaxDateCreationCirculationJourPrecedentByIdTrain(idTrainCatalogue, date);
+      
+      //      On récupère les circulations J-1
+      liste.clear();
+      if (dateJM1!= null ) { liste= dao.getCirculationByIdTrainAndByDate(idTrainCatalogue, dateJM1);
+      train=TrainFactory.createTrainCatalogueFromBeans(liste);  listeTC.add(train);   
+      }
+       
+      return listeTC;
+   }
+
+   public static TrainCatalogue createTrainCatalogueFromBeans(List<CirculationAdapterDataBean> liste) {
+      TrainCatalogue train = new TrainCatalogue();
+      if (liste.size()==0) return null;
+      CirculationAdapterDataBean bean=liste.get(0);
+      
+      List<Circulation> listeCircul=new ArrayList<>();
+      
+      for (CirculationAdapterDataBean circulationAdapterDataBean : liste) {
+         Circulation circul=new Circulation();
+         circul.createCirculationFromBean(circulationAdapterDataBean);
+         listeCircul.add(circul);
+      }
+      
+      //train.getListeNumeros().clear();
+      train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getTrainCatalogueDataBean().getNumeroTrainCatalogue()));
+      train.getListeCirculations().clear();
+      train.setListeCirculations(listeCircul);
+      train.setOoperatingFlight(bean.getTrainCatalogueDataBean().getOperatingFlight()); 
+      train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
+      train.setDateDebutValidite(bean.getTrainCatalogueDataBean().getDateDebutValidite());
+      train.setDateFinValidite(bean.getTrainCatalogueDataBean().getDateFinValidite()); 
+      train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
+      
+      
+      return train ;
+   } 
+   
+   
 
 }

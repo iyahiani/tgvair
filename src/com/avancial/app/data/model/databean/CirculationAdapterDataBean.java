@@ -13,10 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.app.traitements.TraitementsImportDataBean;
 
 @Entity 
-@Table(name="tgvair_circulation_adpatee")
+@Table(name="tgvair_circulation")
 public class CirculationAdapterDataBean implements Serializable  {
 
    /**
@@ -38,12 +39,17 @@ public class CirculationAdapterDataBean implements Serializable  {
    
    private TraitementsImportDataBean traitementImport ; 
    
+   @OneToOne(cascade = CascadeType.REFRESH)
+   @JoinColumn(name = "idTraitementExport") 
+   
+   private TraitementExportDataBean traitementExport ; 
+   
    private Date dateDebutCirculation;
    private Date dateFinCirculation ;
    private String heureDepart ; 
    private String heureArriver ; 
    private String regimeCirculation ;
-
+   private Date  dateCreationLigneTrain ;
    public int getIdCirculation() {
       return idCirculation;
    }
@@ -106,6 +112,22 @@ public class CirculationAdapterDataBean implements Serializable  {
 
    public void setHeureArriver(String heureArriver) {
       this.heureArriver = heureArriver;
+   }
+
+   public TraitementExportDataBean getTraitementExport() {
+      return traitementExport;
+   }
+
+   public void setTraitementExport(TraitementExportDataBean traitementExport) {
+      this.traitementExport = traitementExport;
+   }
+
+   public Date getDateCreationLigneTrain() {
+      return dateCreationLigneTrain;
+   }
+
+   public void setDateCreationLigneTrain(Date dateCreationLigneTrain) {
+      this.dateCreationLigneTrain = dateCreationLigneTrain;
    }
    
 }

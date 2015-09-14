@@ -25,13 +25,13 @@
 
 							<p:panelGrid columns="2" styleClass="noBorder">
 								<p:outputLabel>Simple</p:outputLabel>
-								<p:inputMask mask="9999/9" id="num" required="true"
+								<p:inputText  id="num"   maxlength="6"
 									value="#{traincatalogue.numeroTrainCatalogue1}">
 									<f:param value="#{traincatalogue.numeroTrainCatalogue1}"></f:param>
-								</p:inputMask>
+								</p:inputText>
 								<p:outputLabel>Multi</p:outputLabel>
-								<p:inputMask mask="9999/9"
-									value="#{traincatalogue.numeroTrainCatalogue2}"></p:inputMask>
+								<p:inputText
+									value="#{traincatalogue.numeroTrainCatalogue2}"></p:inputText>
 								<p:outputLabel>Operting Flight</p:outputLabel>
 								<p:inputMask mask="2*9999" required="true"
 									value="#{traincatalogue.operatingFlight}"></p:inputMask>
@@ -61,23 +61,23 @@
 					</ui:insert>
 					<h:panelGrid columns="4"
 						style="margin-left :10px;margin-bottom :10px;">
-                       
-						<h:panelGrid columns="1"
+                        <form>
+						
+						<h:panelGrid columns="1" rendered="true"
 							style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
+							
 							<f:facet name="header"> Validité</f:facet>
-							<h:panelGrid columns="1"
-								style="margin-bottom:10px;margin-left:10px;">
-
-								<p:outputLabel for="popup" value="Valide Du :"
-									style="margin-right:5px" />
+							<h:panelGrid columns="1">
+								<p:outputLabel for="popup" value="Valide Du :"/>
+									 
 								<p:calendar id="popup" showOn="both" locale="fr" required="true"
-									value="#{traincatalogue.dateDebutValidite}" />
+									value="#{traincatalogue.dateDebutValidite}" style="width : 100%" />
 								<p:outputLabel for="popup" value="Au:" />
 								<p:calendar id="popup2" locale="fr" showOn="both"
 									required="true" value="#{traincatalogue.dateFinValidite}" />
 							</h:panelGrid>
 						</h:panelGrid>
-                             <form>
+                            
 						<h:panelGrid columns="1" rendered="true"
 							style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 							<f:facet name="header"> Origine</f:facet>
@@ -134,9 +134,9 @@
 							value="Annuler">
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-check" type="submit"  
-							oncomplete="reset()" title="ajouter" value="Ajouter"
-							actionListener="#{traincatalogue.add()}" ajax="true">
-							<f:ajax render="ajoutTain tout" ></f:ajax>
+							 title="ajouter" value="Ajouter"   oncomplete="reset()"
+							actionListener="#{traincatalogue.add()}" ><!-- <f:ajax render="ajoutTain tout" > ajax="true" </f:ajax>-->
+							
 						</p:commandButton>
 					</p:panelGrid>
 				</h:panelGrid>

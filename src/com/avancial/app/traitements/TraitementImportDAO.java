@@ -43,6 +43,13 @@ public class TraitementImportDAO extends AbstractDao {
       return requete.getResultList();
    } 
    
-   
+   public void saveTraitementSSIM(TraitementsImportDataBean bean) {
+      try {
+         save(bean);
+      } catch (ASocleException e) {
+        
+         e.printStackTrace();
+      }
+   }
   
 }
