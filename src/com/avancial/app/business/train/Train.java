@@ -330,15 +330,14 @@ public class Train implements ITrain {
          if (null != jour)
             if (jour.isFlagCirculation())
                train.getListeJoursCirculation().put(cal.getTime(), jour);
+         
          cal.add(Calendar.DAY_OF_MONTH, 1);
          debut.setTime(cal.getTimeInMillis());
       }
       train.setDateDebutValidite(this.getDateDebutValidite()); 
       train.setDateFinValidite(this.getDateFinValidite()); 
       train.setOoperatingFlight(this.getOoperatingFlight()); 
-     // train.setCodeCompagnie(); 
-     // train.setPointArretOrigine(this.);
-      //train.setCodeCompagnie();
+     
       train.calculeCirculationFromJoursCirculation();
       return train;
    }

@@ -16,41 +16,41 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "socle_job_Planif")
+@Table(name = "socle_job_planif")
 public class JobPlanifDataBean implements Serializable {
-   private static final long      serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(unique = true, nullable = false)
-   private long                   idJobPlanif;
+   private long idJobPlanif;
 
    @Column(nullable = false, length = 50)
-   private String                 libelleJobPlanif;
+   private String libelleJobPlanif;
 
    @Column(nullable = false, length = 35)
-   private String                 nomTechniqueJobPlanif;
+   private String nomTechniqueJobPlanif;
 
    @Column(length = 10)
-   private String                 anneeJobPlanif;
+   private String anneeJobPlanif;
 
    @Column(length = 10)
-   private String                 heuresJobPlanif;
+   private String heuresJobPlanif;
 
    @Column(length = 10)
-   private String                 jourMoisJobPlanif;
+   private String jourMoisJobPlanif;
 
    @Column(length = 10)
-   private String                 jourSemaineJobPlanif;
+   private String jourSemaineJobPlanif;
 
    @Column(length = 10)
-   private String                 minutesJobPlanif;
+   private String minutesJobPlanif;
 
    @Column(length = 10)
-   private String                 moisJobPlanif;
+   private String moisJobPlanif;
 
    @Column(length = 10)
-   private String                 secondesJobPlanif;
+   private String secondesJobPlanif;
 
    @OneToOne
    @JoinColumn(name = "idJobPlanifType", nullable = false)
@@ -58,7 +58,7 @@ public class JobPlanifDataBean implements Serializable {
 
    @OneToOne
    @JoinColumn(name = "idJob", nullable = false)
-   private JobDataBean            job;
+   private JobDataBean job;
 
    public JobPlanifDataBean() {
    }

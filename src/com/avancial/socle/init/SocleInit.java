@@ -12,17 +12,18 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
+import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.avancial.socle.business.JobPlanifBean;
 import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -74,13 +75,14 @@ public class SocleInit extends HttpServlet {
 
       for (JobPlanifDataBean jobPlanifDataBean : jobs) {
          Job newjob = null;
-
+         JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean);
          try {
-            newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
-            JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(jobPlanifDataBean.getLibelleJobPlanif(), "group1").build();
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobPlanifDataBean.getLibelleJobPlanif() + " trigger", "group1").withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(5).repeatForever()).build();
-            this.sched.scheduleJob(job, trigger);
 
+            newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
+            Scheduler sched = sf.getScheduler();
+            JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
+            sched.scheduleJob(job, trigger)  ;
          } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
          }

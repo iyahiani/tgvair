@@ -90,7 +90,24 @@ public class CirculationDAO extends AbstractDao {
      
   }
   
-  
+  public List<CirculationAdapterDataBean> getLastCircul(int idTrain){
+     
+     List<CirculationAdapterDataBean> lastCircul = new ArrayList<>(); 
+     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+     String sql = "select max(t.dateCreationLigneTrain) from CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = ? order by t.dateCreationLigneTrain DESC" ;
+     Query requete = this.getEntityManager().createQuery(sql);
+     requete.setParameter(1, idTrain) ; 
+     
+     Date date = (Date)requete.getSingleResult() ; 
+     
+     
+     sql = "from CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = ? and t.dateCreationLigneTrain =Date(?)";
+     requete = this.getEntityManager().createQuery(sql);
+     requete.setParameter(1, idTrain) ; 
+     requete.setParameter(2, sdf.format(date)) ;
+     lastCircul.addAll(requete.getResultList()) ;
+     return lastCircul  ;
+  }
   
   @SuppressWarnings("unchecked")
   public List<CirculationAdapterDataBean> getCirculationByIdTrainAndByDate(int idTrain, Date dateExtract) {

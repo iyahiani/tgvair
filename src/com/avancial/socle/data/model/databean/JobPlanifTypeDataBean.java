@@ -14,21 +14,22 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "socle_job_Planif_type")
-// @NamedQuery(name="JobTypePlanifDataBean.findAll", query="SELECT j FROM JobTypeDataBean j")
+@Table(name = "socle_job_planif_type")
+// @NamedQuery(name="JobTypePlanifDataBean.findAll",
+// query="SELECT j FROM JobTypeDataBean j")
 public class JobPlanifTypeDataBean implements Serializable {
    private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(unique = true, nullable = false)
-   private long              idJobPlanifType;
+   private long idJobPlanifType;
 
    @Column(nullable = false, length = 35)
-   private String            libelleJobPlanifType;
+   private String libelleJobPlanifType;
 
    @Column(nullable = false, length = 35)
-   private String            nomTechniqueJobPlanifType;
+   private String nomTechniqueJobPlanifType;
 
    public JobPlanifTypeDataBean() {
    }

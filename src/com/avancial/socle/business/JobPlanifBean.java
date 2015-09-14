@@ -26,7 +26,7 @@ public class JobPlanifBean {
    private JobDataBean       job;
 
    /**
-    * ² Constructeur
+    * Â² Constructeur
     */
    public JobPlanifBean(JobPlanifDataBean jobPlanifDataBean) {
       this.jobPlanifDataBean = jobPlanifDataBean;
@@ -205,7 +205,7 @@ public class JobPlanifBean {
     * @return the job
     */
    public JobDataBean getJob() {
-      return job;
+      return this.job;
    }
 
    /**

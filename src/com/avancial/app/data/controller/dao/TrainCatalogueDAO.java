@@ -127,7 +127,8 @@ public class TrainCatalogueDAO extends AbstractDao {
             trouve = true;
             break;
          }
-      }
+      } 
+      
       if (!trouve) {
          CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
          cirAdapterDataBean.setDateDebutCirculation(tc.getDateDebutValidite());
@@ -151,9 +152,12 @@ public class TrainCatalogueDAO extends AbstractDao {
  
    public void updateCirculation(TrainCatalogue tc) {
       CirculationDAO daoDelete = new CirculationDAO();
-      List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getAll();
+      List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
+      
       for (CirculationAdapterDataBean c : listCircAdapt) {
-         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain()) 
+         
+         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain()
+               ) 
             try {
                daoDelete.delete(c);
             } catch (ASocleException e) {

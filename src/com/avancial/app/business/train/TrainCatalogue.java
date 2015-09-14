@@ -22,7 +22,6 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
    private String marketingFlight ;
    public TrainCatalogue(List<String> listeNumeros, List<Circulation> listeCirculations) {
       super(listeNumeros, listeCirculations);
-
    }
    public TrainCatalogue() {
    }

@@ -45,7 +45,8 @@ public class JobExport implements Job {
 
       for (CompagnieAerienneDataBean compagnie : listeCompagnie) {
          listTC2C = catalogueToCompagnieDAO.getTrainCatalogueByIdCompagnie(compagnie.getIdCompagnieAeriennne()); 
-         boolean trouve = false ;
+         boolean compare = false ;
+         
          for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
             tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue());
             List<TrainCatalogue> listeTrainCatalogue = TrainFactory.get2DerniersTC(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue(), Calendar.getInstance().getTime());
@@ -54,19 +55,21 @@ public class JobExport implements Job {
                   TrainCatalogue trainPortef1=listeTrainCatalogue.get(0).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                   TrainCatalogue trainPortef2= listeTrainCatalogue.get(1).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                         
-                  if (trainPortef1.compare(trainPortef2)) {trouve = true ;break ;}
+                  if (!trainPortef1.compare(trainPortef2)) {compare = true ;break ;}
          }
+               
                if (listeTrainCatalogue.size()==1) {
-                  trouve = true ;break ;
+                  compare = true  ;break ;
                }
       } 
-         if (trouve) {
+         if (compare) {
 
             List<TrainCatalogue> listCatalogue = new ArrayList<TrainCatalogue>();
             for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
                tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
                CirculationDAO dao=new CirculationDAO();
                //On récupère les circulations correspondant à l'id du train catalogue on question 
+               
                List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
                TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste);
                 TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(),tc2c.getDateFinValiditeTrainCatalogueToCompagnie());

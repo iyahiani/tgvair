@@ -47,6 +47,7 @@ public class JobAdaptation implements Job {
       for (TrainCatalogueDataBean tc : listTrainsCat) {
         new TrainCatalogueDAO().saveCirculation(tc)                                 ;
       }
+      
       ///////////////////////////////////////////////////////////////
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();
@@ -98,6 +99,8 @@ public class JobAdaptation implements Job {
          circulation.setJoursCirculation(circulationBean.getJoursCirculation());
          circulation.setDateDebut(circulationBean.getDateDebutCirculation());
          circulation.setDateFin(circulationBean.getDateFinCirculation());
+         circulation.setGMTDepart(circulationBean.getGMTDepart());
+         circulation.setGMTArrivee(circulationBean.getGMTArriver());
          circulation.setTrancheFacultatif(circulationBean.getTrancheFacultatif());
          circulation.setRestrictionTrafic(String.valueOf(circulationBean.getRangTroncon()));
          circulation.setRangTranson(circulationBean.getRangTroncon());
@@ -108,7 +111,7 @@ public class JobAdaptation implements Job {
       // //////////////////////////////// recuperer la trains restreints et
       // lancer l'adaptation
 
-      TraitementImportDAO dao = new TraitementImportDAO();
+      TraitementImportDAO dao = new TraitementImportDAO()   ;
       List<TraitementsImportDataBean> listTraitements = dao.getLastID();
       Date dateDebutSSIM = listTraitements.get(0).getDateDebutSSIM();
       Date dateFinSSIM = listTraitements.get(0).getDateFinSSIM();
@@ -125,7 +128,6 @@ public class JobAdaptation implements Job {
 
          trainSSIMRestreint.remplirJoursCirculations();
          trainSSIMRestreint.calculeCirculationFromJoursCirculation();
-        
 
          if (trainSSIMRestreint.getListeCirculations().size() > 0)
             if (!traincat.compare(trainSSIMRestreint)) {

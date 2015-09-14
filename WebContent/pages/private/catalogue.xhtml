@@ -82,21 +82,21 @@
 									oncomplete="PF('Modif').show()">
 									<f:setPropertyActionListener value="#{trains}"
 										target="#{traincatalogue.selectedTrainsCatalogue}" />
-									<h:graphicImage name="private/image/pencil_edit1.png"
+									<h:graphicImage name="private/image/modifier.png"
 										styleClass="actionButtons">
 										<p:tooltip for="update_Train"
 											value=" Modifier le Train #{trains.numeroTrainCatalogue}" />
 									</h:graphicImage>
 								</p:commandLink>
-								<p:commandLink id="delete_Train" update=":tableTrains"
+								<p:commandLink id="delete_Train" update=":tableTrains" 
 									onclick="if (!confirm('voulez vous supprimer le Train')) return false" 
-									action="#{traincatalogue.delete}"  ajax="true"
+									action="#{traincatalogue.delete}"  ajax="true"  
 									> 
 									<p:ajax update=":tableTrains:tableTrains" delay="1"></p:ajax>
 									<f:setPropertyActionListener value="#{trains}"
 										target="#{traincatalogue.selectedTrainsCatalogue}" />
-									<h:graphicImage id="img_delete"
-										name="private/image/data-delete.png"
+									 <h:graphicImage id="img_delete"
+										name="private/image/corbeille2.png"
 										styleClass="actionButtons">
 									</h:graphicImage>
 									<p:tooltip id="toolTip" for="delete_Train"
@@ -150,7 +150,7 @@
 							<p:commandLink update=":modifT2C" id="update_T2C"
 								oncomplete="PF('modifT2C').show();">
                                 
-								<h:graphicImage name="private/image/pencil_edit1.png"
+								<h:graphicImage name="private/image/modifier.png"
 									styleClass="actionButtons">
 									<p:tooltip for="update_T2C"
 										value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}" />
@@ -219,7 +219,7 @@
 
 
 
-		<!-- Fenetre DIALOGUE  -->
+		                                  <!-- Fenetre DIALOGUE  -->
 
 
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"

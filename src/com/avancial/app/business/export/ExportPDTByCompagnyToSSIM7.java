@@ -208,16 +208,16 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(c.getJoursCirculation());
       liste.add("");
       liste.add(tc2c.getPointArretOrigine().getCodeGDSPointArret());
-      liste.add(String.valueOf(c.getHeureDepart()));
-      liste.add(String.valueOf(c.getHeureDepart()));
+      liste.add(c.getHeureDepart()<1000 ? "0".concat(String.valueOf(c.getHeureDepart())):String.valueOf(c.getHeureDepart())) ;
+      liste.add(c.getHeureDepart()<1000 ? "0".concat(String.valueOf(c.getHeureDepart())):String.valueOf(c.getHeureDepart()));
       liste.add("+0100");// tc2c.getGMTDepart()
       if (tc2c.getPointArretOrigine().getCodeGDSPointArret().endsWith("CDG"))
          liste.add("TN");
       else
          liste.add("");// ajouter un test si CDG alors TN sinon "  "
       liste.add("ZLN");
-      liste.add(String.valueOf(c.getHeureArrivee()));
-      liste.add(String.valueOf(c.getHeureArrivee()));
+      liste.add(c.getHeureArrivee()<1000 ? "0".concat(String.valueOf(c.getHeureArrivee())):String.valueOf(c.getHeureArrivee()));
+      liste.add(c.getHeureArrivee()<1000 ? "0".concat(String.valueOf(c.getHeureArrivee())):String.valueOf(c.getHeureArrivee()));
       liste.add("+0100"); //
       liste.add("");
       liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
