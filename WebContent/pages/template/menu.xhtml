@@ -32,9 +32,10 @@
 			<p:menuitem value="#{msg.p_jobPlanif_menu}" rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobPlanif')}"
 				action="#{menu.goJobPlanif}"
 				 />
-				
 			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}"
 				rendered="#{ihmManagedBean.isLogged()}"/>
+		    <p:menuitem value="#{msg.p_titre_page_admin}" action="#{menu.goAdministartion}"
+                rendered="#{ihmManagedBean.isLogged()}"/>
 		</p:menu>
 	</h:form>
 </ui:composition>

@@ -21,6 +21,7 @@ import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.IObservableCirculationSemaineBuilder;
 import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.business.train.circulation.ObservableCirculationBuilder;
+import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 
 public class Train implements ITrain {
@@ -129,11 +130,11 @@ public class Train implements ITrain {
 
       // this.remplirJoursCirculations();
 
-      if (this.getJoursCirculation().size()==0)
+      if (this.getJoursCirculation().size() == 0)
          return false;
-      
+
       for (Entry<Date, JourCirculation> jourCirculation : this.getJoursCirculation().entrySet()) {
-        
+
          if (train.getJoursCirculation().containsKey(jourCirculation.getKey())) {
             comp = jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey()));
             if (!comp) {
@@ -251,15 +252,22 @@ public class Train implements ITrain {
 
                   }
 
-                  /*else 
-                     if ((jourCirculation.getValue().compare(train.getJoursCirculation().get(jourCirculation.getKey())) 
-                           && jourCirculation.getValue().isFlagCirculation() != train
-                        .getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation())) {
-
-                     jourCirculation.getValue().setFlagCirculation(train.getJoursCirculation().get(jourCirculation.getKey()).isFlagCirculation());
-                     this.listeJoursCirculation.put(jourCirculation.getKey(), jourCirculation.getValue());
-                     iObs.notifierTrainToCompagnie(jourCirculation.getValue());
-                  }*/
+                  /*
+                   * else if
+                   * ((jourCirculation.getValue().compare(train.getJoursCirculation
+                   * ().get(jourCirculation.getKey())) &&
+                   * jourCirculation.getValue().isFlagCirculation() != train
+                   * .getJoursCirculation
+                   * ().get(jourCirculation.getKey()).isFlagCirculation())) {
+                   * 
+                   * jourCirculation.getValue().setFlagCirculation(train.
+                   * getJoursCirculation
+                   * ().get(jourCirculation.getKey()).isFlagCirculation());
+                   * this.listeJoursCirculation.put(jourCirculation.getKey(),
+                   * jourCirculation.getValue());
+                   * iObs.notifierTrainToCompagnie(jourCirculation.getValue());
+                   * }
+                   */
 
                }
                /*
@@ -330,14 +338,14 @@ public class Train implements ITrain {
          if (null != jour)
             if (jour.isFlagCirculation())
                train.getListeJoursCirculation().put(cal.getTime(), jour);
-         
+
          cal.add(Calendar.DAY_OF_MONTH, 1);
          debut.setTime(cal.getTimeInMillis());
       }
-      train.setDateDebutValidite(this.getDateDebutValidite()); 
-      train.setDateFinValidite(this.getDateFinValidite()); 
-      train.setOoperatingFlight(this.getOoperatingFlight()); 
-     
+      train.setDateDebutValidite(this.getDateDebutValidite());
+      train.setDateFinValidite(this.getDateFinValidite());
+      train.setOoperatingFlight(this.getOoperatingFlight());
+
       train.calculeCirculationFromJoursCirculation();
       return train;
    }
@@ -421,53 +429,68 @@ public class Train implements ITrain {
     *           Postérieur ) aux heures d'ouverture ( ou fermeture ) des
     *           guichets
     */
-   public void adaptGuichet(List<PointArret> pa) {
+   public void adaptGuichet(List<PointArretDataBean> pa) {
 
       Calendar calendarTrain = Calendar.getInstance();
       Calendar calendarGuichet = Calendar.getInstance();
 
       for (Entry<Date, JourCirculation> entry : this.listeJoursCirculation.entrySet()) {
          calendarTrain.setTime(entry.getKey());
-         for (PointArret pArret : pa) {
-            if (entry.getValue().getOrigine().equalsIgnoreCase(pArret.getCodeResarail())) {
+         for (PointArretDataBean pArret : pa) {
+            if (entry.getValue().getOrigine().equalsIgnoreCase(pArret.getCodeResarailPointArret())) {
 
-               for (Guichet guichet : pArret.getGuichet()) {
-                  if (guichet.getJour().equalsIgnoreCase("Monday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 2) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  if (calendarTrain.get(Calendar.DAY_OF_WEEK) == 2) {
+                    if (pArret.getLundiHeureOuverturePointsArret()!=null && pArret.getLundiHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getLundiHeureOuverturePointsArret().toString().substring(11,13)+pArret.getLundiHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getLundiHeureFermeturePointsArret().toString().substring(11,13)+pArret.getLundiHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }}
                   ;
-                  if (guichet.getJour().equalsIgnoreCase("Tuesday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 3) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  if ( calendarTrain.get(Calendar.DAY_OF_WEEK) == 3) {
+                     if (pArret.getMardiHeureOuverturePointsArret()!=null && pArret.getMardiHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getMardiHeureOuverturePointsArret().toString().substring(11,13)+pArret.getMardiHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getMardiHeureFermeturePointsArret().toString().substring(11,13)+pArret.getMardiHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }}
                   ;
-                  if (guichet.getJour().equalsIgnoreCase("Wednesday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 4) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  if (calendarTrain.get(Calendar.DAY_OF_WEEK) == 4) {
+                     if (pArret.getMercrediHeureOuverturePointsArret()!=null && pArret.getMercrediHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getMercrediHeureOuverturePointsArret().toString().substring(11,13)+pArret.getMercrediHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getMercrediHeureFermeturePointsArret().toString().substring(11,13)+pArret.getMercrediHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }} 
                   ;
-                  if (guichet.getJour().equalsIgnoreCase("Thursday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 5) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  if ( calendarTrain.get(Calendar.DAY_OF_WEEK) == 5) {
+                     if (pArret.getJeudiHeureOuverturePointsArret()!=null && pArret.getJeudiHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getJeudiHeureOuverturePointsArret().toString().substring(11,13)+pArret.getJeudiHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getJeudiHeureFermeturePointsArret().toString().substring(11,13)+pArret.getJeudiHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }}
                   ;
-                  if (guichet.getJour().equalsIgnoreCase("Friday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 6) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  if ( calendarTrain.get(Calendar.DAY_OF_WEEK) == 6) {
+                     if (pArret.getVendrediHeureOuverturePointsArret()!=null && pArret.getVendrediHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getVendrediHeureOuverturePointsArret().toString().substring(11,13)+pArret.getVendrediHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getVendrediHeureFermeturePointsArret().toString().substring(11,13)+pArret.getVendrediHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }}
                   ;
-                  if (guichet.getJour().equalsIgnoreCase("Saturday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 7) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  if ( calendarTrain.get(Calendar.DAY_OF_WEEK) == 7) {
+                     if (pArret.getSamediHeureOuverturePointsArret()!=null && pArret.getSamediHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getSamediHeureOuverturePointsArret().toString().substring(11,13)+pArret.getSamediHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getSamediHeureFermeturePointsArret().toString().substring(11,13)+pArret.getSamediHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }}
                   ;
-                  if (guichet.getJour().equalsIgnoreCase("Sunday") && calendarTrain.get(Calendar.DAY_OF_WEEK) == 1) {
-                     if (entry.getValue().getHeureDepart() < Integer.valueOf(guichet.getHeureOuverture()) || (entry.getValue().getHeureDepart() > Integer.valueOf(guichet.getHeureFermeture())))
+                  
+                  if ( calendarTrain.get(Calendar.DAY_OF_WEEK) == 1) {
+                     if (pArret.getDimancheHeureOuverturePointsArret()!=null && pArret.getDimancheHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getDimancheHeureOuverturePointsArret().toString().substring(11,13)+pArret.getDimancheHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getDimancheHeureFermeturePointsArret().toString().substring(11,13)+pArret.getDimancheHeureFermeturePointsArret().toString().substring(14,16))))
                         entry.getValue().setFlagCirculation(false);
-                  }
+                  }}
                   ;
-               }
+                  
+               
             }
          }
       }

@@ -110,6 +110,7 @@ public class TrainFactory implements ITrainFactory {
       return bean;
    }
 
+   
    public static  List<TrainCatalogue> get2DerniersTC(int idTrainCatalogue, Date date) {
       List<TrainCatalogue> listeTC=new ArrayList<>();
       
@@ -147,14 +148,43 @@ public class TrainFactory implements ITrainFactory {
       
       //train.getListeNumeros().clear();
       train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getTrainCatalogueDataBean().getNumeroTrainCatalogue()));
+      train.setNumeroUMTrain(bean.getTrainCatalogueDataBean().getNumeroTrainCatalogue());
       train.getListeCirculations().clear();
       train.setListeCirculations(listeCircul);
       train.setOoperatingFlight(bean.getTrainCatalogueDataBean().getOperatingFlight()); 
       train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
       train.setDateDebutValidite(bean.getTrainCatalogueDataBean().getDateDebutValidite());
       train.setDateFinValidite(bean.getTrainCatalogueDataBean().getDateFinValidite()); 
-      train.setIdTrain(bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
+      train.setIdTrainCatalogue(bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
       
+      
+      return train ;
+   }
+
+   public static TrainCatalogue createTrainCatalogueFromOriginal(TrainCatalogueDataBean bean) {
+      
+      Circulation circulation = new Circulation();  
+      circulation.setDateDebut(bean.getDateDebutValidite());
+      circulation.setDateFin(bean.getDateFinValidite());
+      circulation.setOrigine(bean.getIdPointArretOrigine().getCodeResarailPointArret());
+      circulation.setDestination(bean.getIdPointArretDestination().getCodeResarailPointArret());
+      circulation.setHeureDepart(Integer.valueOf(StringToDate.toFormatedString(bean.getHeureDepartTrainCatalogue())));
+      circulation.setHeureArrivee(Integer.valueOf(StringToDate.toFormatedString(bean.getHeureArriveeTrainCatalogue()))); 
+      circulation.setJoursCirculation(bean.getRegimeJoursTrainCatalogue()); 
+      circulation.setGMTDepart("à ajouter"); 
+      circulation.setGMTArrivee("à ajouter");
+      
+      TrainCatalogue train = new TrainCatalogue() ; 
+      train.addCirculation(circulation);
+      train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getNumeroTrainCatalogue()));
+      train.setNumeroUMTrain(bean.getNumeroTrainCatalogue());
+      train.getListeCirculations().clear();
+   
+      train.setOoperatingFlight(bean.getOperatingFlight()); 
+      train.setIdTrain(bean.getIdTrainCatalogue()); 
+      train.setDateDebutValidite(bean.getDateDebutValidite());
+      train.setDateFinValidite(bean.getDateFinValidite()); 
+      train.setIdTrainCatalogue(bean.getIdTrainCatalogue()); 
       
       return train ;
    } 

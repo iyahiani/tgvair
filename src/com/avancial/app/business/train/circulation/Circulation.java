@@ -178,7 +178,7 @@ public class Circulation implements ICirculation {
        this.setDateFin(bean.getDateFinCirculation());
        this.setOrigine(bean.getTrainCatalogueDataBean().getIdPointArretOrigine().getCodeResarailPointArret());
        this.setDestination(bean.getTrainCatalogueDataBean().getIdPointArretDestination().getCodeResarailPointArret());
-       this.setJoursCirculation(bean.getTrainCatalogueDataBean().getRegimeJoursTrainCatalogue());
+       this.setJoursCirculation(bean.getRegimeCirculation());
        this.setHeureDepart(Integer.valueOf(bean.getHeureDepart()));
        this.setHeureArrivee(Integer.valueOf(bean.getHeureArriver()));
        

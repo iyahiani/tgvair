@@ -1,5 +1,7 @@
 package com.avancial.app.data.controller.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -151,20 +153,24 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
  
    public void updateCirculation(TrainCatalogue tc) {
+
       CirculationDAO daoDelete = new CirculationDAO();
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
+      String today ;
+      today = sdf.format(Calendar.getInstance().getTime()) ; 
       List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
-      
+      String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain()) ;
       for (CirculationAdapterDataBean c : listCircAdapt) {
          
-         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain()
+         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain() 
+               && lastDate.equalsIgnoreCase(today)
                ) 
             try {
                daoDelete.delete(c);
             } catch (ASocleException e) {
-               e.printStackTrace();
+               e.printStackTrace()           ;
             }
       } 
-      
       for (Circulation c : tc.getListeCirculations()) {
          CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
          cirAdapterDataBean.setDateDebutCirculation(c.getDateDebut());

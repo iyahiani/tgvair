@@ -84,6 +84,8 @@ public class StringToDate {
 			formatDate = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ENGLISH);
 		} else if (format.equals("dateFrenchAffichage")) {
 			formatDate = new SimpleDateFormat("MMM yyyy", Locale.FRENCH);
+		} else if  (format.equals("jour")) {
+		   formatDate = new SimpleDateFormat("dd", Locale.FRENCH);
 		} else {
 			return null;
 		}

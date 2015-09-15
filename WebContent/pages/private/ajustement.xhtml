@@ -42,9 +42,20 @@
 }
 </style>
 		<p:fieldset legend="AJUSTEMENT" styleClass="fieldSet">
-
 			<div class="ui-grid-responsive">
 				<p:panel header="Ajustement par jour" style="margin-bottom:20px">
+					<div class="ui-grid ui-grid-responsive">
+						<h:form>
+							<p:selectOneMenu valueChangeListener="#{ajustement.valueChanged}"
+								onchange="submit()">
+								<f:selectItem itemLabel="Selectionnez un train"
+									itemValue="#{null}" />
+
+								<f:selectItems var="train" value="#{ajustement.listTrains}"
+									itemLabel="#{train.toString()}" itemValue="#{train.idTrain}" />
+							</p:selectOneMenu>
+						</h:form>
+					</div>
 					<div class="ui-grid ui-grid-responsive">
 						<h:form>
 
@@ -271,6 +282,18 @@
 								</h:panelGrid>
 							</p:dialog>
 						</h:form>
+					</div>
+					<div class="ui-grid ui-grid-responsive">
+						<p:commandButton id="saveAdapt" value="Sauvegarder"
+							actionListener="#{ajustement.saveAdaptation()}">
+						</p:commandButton>
+						<p:commandButton id="cancelAdapt" value="Annuler"
+							actionListener="#{ajustement.initSelectedTrain()}"
+							oncomplete="PF('myschedule_0').update();
+                                PF('myschedule_1').update();PF('myschedule_2').update();PF('myschedule_3').update();PF('myschedule_4').update();PF('myschedule_5').update();
+                                PF('myschedule_6').update();PF('myschedule_7').update();PF('myschedule_8').update();PF('myschedule_9').update();
+                                PF('myschedule_10').update();PF('myschedule_11').update();">
+						</p:commandButton>
 					</div>
 				</p:panel>
 			</div>

@@ -8,21 +8,25 @@
 	</ui:define>
 	<ui:define name="contenu">
 
+		<script type="text/javascript">
+			function reset() {
+				$("#pointArret")[0].reset();
+			}
+			function hideOrShow(show) {
+				var obj = document.getElementById("pointArret:heures");
+				if (show) {
+					obj.style.display = "block";
+				} else {
+					obj.style.display = "none";
+				}
+			}
+		</script>
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 
 		<p:fieldset styleClass="fieldSet" legend="POINTS D'ARRET">
 			<h:form id="pointArret">
-				<script type="text/javascript">
-					function hideOrShow(show) {
-						var obj = document.getElementById("pointArret:heures");
-						if (show) {
-							obj.style.display = "block";
-						} else {
-							obj.style.display = "none";
-						}
-					}
-				</script>
+
 				<h:panelGrid columns="2"
 					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
 
@@ -50,47 +54,61 @@
 				<h:panelGroup>
 					<h:panelGrid columns="3" id="heures"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
-						<f:facet name="header"> Ouverture du Guichet </f:facet>
+						<f:facet name="header"> Ouverture/Fermeture du Guichet </f:facet>
 						<p:outputLabel value="Lundi"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.lundiHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.lundiHeureFermeturePointsArret}" />
 						<p:outputLabel value="Mardi"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.mardiHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.mardiHeureFermeturePointsArret}" />
 						<p:outputLabel value="Mercredi"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.mercrediHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.mercrediHeureFermeturePointsArret}" />
 						<p:outputLabel value="Jeudi"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.jeudiHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.jeudiHeureFermeturePointsArret}" />
 						<p:outputLabel value="Vendredi"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.vendrediHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.vendrediHeureFermeturePointsArret}" />
 						<p:outputLabel value="Samedi"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.samediHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.samediHeureFermeturePointsArret}" />
 						<p:outputLabel value="Dimanche"></p:outputLabel>
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.dimancheHeureOuverturePointsArret}" />
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both" />
+							showOn="both"
+							value="#{pointsArret.dimancheHeureFermeturePointsArret}" />
 						<h:panelGrid></h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit"
+						<p:commandButton icon="ui-icon-check" type="submit" oncomplete="reset()"
 							title="ajouter" actionListener="#{pointsArret.add}"></p:commandButton>
 					</h:panelGrid>
 

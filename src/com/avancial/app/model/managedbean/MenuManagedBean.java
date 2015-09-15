@@ -22,6 +22,9 @@ public class MenuManagedBean implements Serializable {
    public static String goAccueil() {
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
+   public static String goAdministartion() {
+      return SOCLE_constants.NAVIGATION_ADMINISTRATION.toString();
+   }
 
    public static String goMdpOublie() {
       return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString();

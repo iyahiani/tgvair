@@ -52,6 +52,7 @@ public class SocleInit extends HttpServlet {
          e.printStackTrace();
       }
    }
+   
    /**
     * @throws SchedulerException
     * 
@@ -61,14 +62,14 @@ public class SocleInit extends HttpServlet {
       SchedulerFactory sf = new StdSchedulerFactory();
       Scheduler sched = sf.getScheduler();
       // define the job and tie it to our HelloJob class
-      JobDetail job = JobBuilder.newJob(GlobalJob.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
+      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
       // Trigger the job to run on the next round minute
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("0 */10 * * * ?")).build();
+      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("0 */30 * * * ?")).build();
             
       sched.start()                    ;
       sched.scheduleJob(job , trigger)  ;
      
-      // sched.shutdown();
+      sched.shutdown();
       
    }
 }

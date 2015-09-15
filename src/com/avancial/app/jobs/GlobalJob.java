@@ -140,8 +140,9 @@ public class GlobalJob implements Job {
       // ///////////////////////////////////////////////
       new TraitementExportDAO().saveExport(new TraitementExportDataBean());
       
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ///      Adaptation
+      ///////////////////////////////////////////////////////////////////////////////////////////
       // / update table circulation adapter avec la table des TrainsCatalogue
 
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
@@ -209,8 +210,8 @@ public class GlobalJob implements Job {
          trainsSSIM.addNumeroTrain(circulationBean.getNumeroTrain());
          trainsSSIM.addCirculation(circulation);
       }
-      // //////////////////////////////// recuperer la trains restreints et
-      // lancer l'adaptation
+      // //////////////////////////////// recuperer la trains restreints et lancer l'adaptation
+      // 
 
       TraitementImportDAO dao1 = new TraitementImportDAO();
       List<TraitementsImportDataBean> listTraitements = dao1.getLastID();
@@ -242,8 +243,8 @@ public class GlobalJob implements Job {
             }
 
       }
-      
-      
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ///         Export 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       List<TrainCatalogueToCompagnieDataBean> listTC2C = new TrainCatalogueToCompagnieDAO().getAll();
       List<CompagnieAerienneDataBean> listeCompagnie = new CompagnieAerienneDao().getAll();

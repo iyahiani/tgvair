@@ -24,19 +24,16 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 	}
 	
 	public EventJourCirculation(Long idCatalogueTrain, Date dateDebut, Date dateFin, int heureDepart,
-			int heureArrivee, boolean flagCirculation) throws Exception {
-		super(StringToDate.toStringByFormat(dateDebut, "dateFrenchSansHeure"), dateDebut, dateFin);
+			int heureArrivee, boolean flagCirculation, boolean isAdapted) throws Exception {
+	   super(StringToDate.toStringByFormat(dateDebut, "jour"), dateDebut, dateFin);
 				
 		this.setIdCatalogueTrain(idCatalogueTrain);
 		this.setDateDebut(dateDebut);
 		this.setDateFin(dateFin);				
 		this.setHeureDepart(HeureFormattage.intToDate(heureDepart));
 		this.setHeureArrivee(HeureFormattage.intToDate(heureArrivee));
-		this.setFlagCirculation(flagCirculation);
-		/*
-		 * @todo recuperation du flag à partir de jourCirculation du train
-		 */
-		this.setFlagAdapted(false);
+		this.setFlagCirculation(flagCirculation);		
+		this.setFlagAdapted(isAdapted);
 
 		this.initScheduleEvent();
 	}		
@@ -51,7 +48,10 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 	}
 	
 	public void update() {
-		this.setFlagAdapted(true);
+	   if (this.flagCirculation)
+	      this.setFlagAdapted(true);
+	   else
+	      this.setFlagAdapted(false);
 		this.initScheduleEvent();
 	}
 	

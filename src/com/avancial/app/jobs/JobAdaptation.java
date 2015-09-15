@@ -20,11 +20,13 @@ import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.ExportSSIMDAO;
+import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.ExportSSIMDataBean;
+import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementExportDataBean;
@@ -52,7 +54,7 @@ public class JobAdaptation implements Job {
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();
       List<TrainToCompagnie> listTrainToCompagnie = new ArrayList<>();
-      
+      List<PointArretDataBean> listPointsArret = new PointArretDAO().getAll() ;
       
       // /////////////////////////////////////////////////////// recuperer les
       // train catalogue des circulation adaptées
@@ -64,7 +66,6 @@ public class JobAdaptation implements Job {
       // re-construire les circulations du traions à partir de la table des circulation   
                 
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue() ; 
-      
       Circulation circulTemp = new Circulation() ;
       circulTemp.createCirculationFromBean(listCirculAdapter.get(0)) ;
       List<Circulation> listCirculation = new ArrayList<Circulation>(); 
@@ -134,8 +135,10 @@ public class JobAdaptation implements Job {
                
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
+               //traincat.adaptGuichet(pa);
+               //traincat.calculeCirculationFromJoursCirculation();
+               traincat.adaptGuichet(listPointsArret);
                traincat.calculeCirculationFromJoursCirculation();
-
                // //////////////////Updater les circulations 
                new TrainCatalogueDAO().updateCirculation(traincat);
             }

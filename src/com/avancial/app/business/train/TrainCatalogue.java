@@ -1,5 +1,6 @@
 package com.avancial.app.business.train;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.avancial.app.business.train.circulation.Circulation;
@@ -9,8 +10,12 @@ import com.avancial.app.data.model.databean.PointArretDataBean;
  * @author bruno
  *
  */
-public class TrainCatalogue extends Train implements ITrainCatalogue {
+public class TrainCatalogue extends Train implements ITrainCatalogue,Serializable {
 
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    private int idTrainCatalogue ;
    private String nomCompagnie;
    private String numeroVol; 
@@ -20,6 +25,7 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
    private PointArretDataBean pointArretOrigine ; 
    private PointArretDataBean pointArretDestination ;
    private String marketingFlight ;
+   private String numeroUMTrain ;
    public TrainCatalogue(List<String> listeNumeros, List<Circulation> listeCirculations) {
       super(listeNumeros, listeCirculations);
    }
@@ -121,4 +127,15 @@ public class TrainCatalogue extends Train implements ITrainCatalogue {
       this.marketingFlight = marketingFlight;
    }
 
+@Override
+public String toString() {
+   
+ return this.getNumeroUMTrain()+" - "+this.getDateDebutValidite()+" - " + this.getDateFinValidite()  ;   
+}
+public String getNumeroUMTrain() {
+   return numeroUMTrain;
+}
+public void setNumeroUMTrain(String numeroUMTrain) {
+   this.numeroUMTrain = numeroUMTrain;
+}
 }

@@ -15,8 +15,11 @@ import java.util.Map.Entry;
 import java.util.Timer;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.JoinColumn;
@@ -32,12 +35,17 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import com.avancial.app.business.train.TrainCatalogue;
+import com.avancial.app.business.train.TrainFactory;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.JourCirculation;
+import com.avancial.app.data.controller.dao.CirculationDAO;
+import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.model.managedbean.AManageBean;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 import com.avancial.test.TrainCatalogueFactoryTest;
 import com.avancial.test.TrainFactoryTest;
 
@@ -50,9 +58,7 @@ import com.avancial.test.TrainFactoryTest;
 @Named("ajustement")
 @ViewScoped
 public class AjustementManagedBean extends AManageBean implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private TrainCatalogue modifedTrainCatalogue;
+	private static final long serialVersionUID = 1L;	
 	private EventJourCirculation event = new EventJourCirculation();
 	private Date initialDate;		
 	private CustomerSchedule schedule_0;
@@ -67,39 +73,65 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	private CustomerSchedule schedule_9;
 	private CustomerSchedule schedule_10;
 	private CustomerSchedule schedule_11;
+	private List<TrainCatalogue> listTrains ;
+   private List<TrainCatalogue> listTrainOrigine;
+   private TrainCatalogue modifedTrainCatalogue;
+   private TrainCatalogue modifedTrainCatalogueOrigine;
 	
 	
-	@SuppressWarnings("deprecation")
-	@PostConstruct
-	private void initTrainCatalogue() {
-		try {
-			this.modifedTrainCatalogue = TrainCatalogueFactoryTest.create("21/01/2016#02/02/2017#135#CDG#MONTPELLIER#0928#1551");
-			this.modifedTrainCatalogue.setNomCompagnie("Air France");
-			this.modifedTrainCatalogue.remplirJoursCirculations();
-			/*
-			 * @todo : recupération de la date de départ d'affichage
-			 */
-			this.initialDate = new SimpleDateFormat("dd/MM/yyyy").parse("31/08/2016");
-			this.getdateInitial();
-			// Initialisation des plannings
-			int num = 0;
-			Class[] args = new Class[1];
-			args[0] = CustomerSchedule.class;
-			for (int i = this.initialDate.getMonth(); i < this.initialDate.getMonth() + 12; i++) {
-				String methode = "setSchedule_"+ num;
-				Method action = this.getClass().getMethod(methode, args);			
-				action.invoke(this, (new CustomerSchedule(StringToDate.moisSuivant(this.initialDate, num), StringToDate.toStringByFormat(StringToDate.moisSuivant(this.initialDate, num), "dateFrenchAffichage"))));						
-				num++;
-			}			
-			this.initCirculationEvent();			
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void valueChanged(ValueChangeEvent event) {
+	   for (TrainCatalogue trainCatalogue : this.listTrains) {
+	      if (event.getNewValue().equals(String.valueOf(trainCatalogue.getIdTrain()))) {
+	         this.modifedTrainCatalogue  = new TrainCatalogue() ;
+	         this.modifedTrainCatalogue = trainCatalogue;
+	         for (TrainCatalogue trainCatalogueOrigine : this.listTrainOrigine) {
+               if (this.modifedTrainCatalogue.getIdTrain() == trainCatalogueOrigine.getIdTrain()) {
+                  this.modifedTrainCatalogueOrigine = trainCatalogueOrigine;
+                  break;
+               }
+            }
+	         this.generatSchedules();
+	         break;
+	      }
+      }
 	}
+	
+	private void generatSchedules() {
+	   try {         
+         // Remplire ou a tester         
+	      this.modifedTrainCatalogue.remplirJoursCirculations();
+         /*
+          * @todo : recupération de la date de départ d'affichage
+          */
+         this.initialDate = new SimpleDateFormat("dd/MM/yyyy").parse(
+               StringToDate.toStringByFormat(this.modifedTrainCatalogue.getDateDebutValidite(), "dateBySlashSansHeure"));
+         this.getDateInitial();
+         // Initialisation des plannings
+         int num = 0;
+         Class[] args = new Class[1];
+         args[0] = CustomerSchedule.class;
+         for (int i = this.initialDate.getMonth(); i < this.initialDate.getMonth() + 12; i++) {
+            String methode = "setSchedule_"+ num;
+            Method action = this.getClass().getMethod(methode, args);         
+            action.invoke(this, (new CustomerSchedule(StringToDate.moisSuivant(this.initialDate, num), 
+                  StringToDate.toStringByFormat(StringToDate.moisSuivant(this.initialDate, num), "dateFrenchAffichage"))));                 
+            num++;
+         }        
+         this.initCirculationEvent();        
+      } catch (ParseException e) {
+         e.printStackTrace();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
 
-	private void getdateInitial() throws ParseException {
+   public AjustementManagedBean() { 
+	   this.listTrains = new ArrayList<TrainCatalogue>();
+	   this.listTrainOrigine = new ArrayList<TrainCatalogue>();
+	   getTrains(); 
+   } 
+   
+	private void getDateInitial() throws ParseException {
 		this.setInitialDate(new SimpleDateFormat("dd/MM/yyyy").parse(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime())));
 		
 		if (this.modifedTrainCatalogue.getDateDebutValidite() != null && 
@@ -115,10 +147,20 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 			// verification du mois
 			//String  date = (new SimpleDateFormat("yyyy").format(jourCirculation.getKey())).toString();
 			if (jourCirculation.getKey().compareTo(this.initialDate) >= 0 && jourCirculation.getKey().compareTo(StringToDate.moisSuivant(this.initialDate, 12)) < 0 ) {
-				EventJourCirculation eventJourCirculation = new EventJourCirculation(j,
+				Boolean isAdapted = false;
+				
+			  /* if (!compareJourCirculationWithTrainCatalaogueOrigine(this.modifedTrainCatalogueOrigine, jourCirculation)) {
+			      isAdapted = true;
+			   }*/
+				if (jourCirculation.getValue().isFlagCirculation() &&
+				      !jourCirculation.getValue().compare(this.modifedTrainCatalogueOrigine.getListeJoursCirculation().get(jourCirculation.getKey()))) {
+				   isAdapted = true;
+				}
+			   
+			   EventJourCirculation eventJourCirculation = new EventJourCirculation(j,
 						jourCirculation.getValue().getDateCircul(), jourCirculation.getValue().getDateCircul(),
 						jourCirculation.getValue().getHeureDepart(), jourCirculation.getValue().getHeureArrivee(),
-						jourCirculation.getValue().isFlagCirculation());
+						jourCirculation.getValue().isFlagCirculation(), isAdapted);
 				
 				for (int i = 0; i < 12; i++) {
 					String methode = "getSchedule_"+ i;
@@ -128,39 +170,16 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 						schedul.getSchedule().addEvent(eventJourCirculation);
 					}
 				}				
-				
-			/*	
-				
-				if (this.schedule_0.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_0.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_1.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_1.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_2.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_2.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_3.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_3.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_4.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_4.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_5.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_5.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_6.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_6.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_7.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_7.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_8.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_8.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_9.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_9.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_10.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_10.getSchedule().addEvent(eventJourCirculation);
-				} else if (this.schedule_11.getName().equals(StringToDate.toStringByFormat(jourCirculation.getKey(), "dateFrenchAffichage"))) {
-					this.schedule_11.getSchedule().addEvent(eventJourCirculation);
-				} */					
 			}		
 		}
 	}
 	
-	public void onEventSelect(SelectEvent selectEvent) {		
+	private boolean compareJourCirculationWithTrainCatalaogueOrigine(TrainCatalogue modifedTrainCatalogueOrigine2, Entry<Date, JourCirculation> jourCirculation) {
+      
+      return false;
+   }
+
+   public void onEventSelect(SelectEvent selectEvent) {		
 		this.setEvent((EventJourCirculation) selectEvent.getObject());
 	}
 	
@@ -168,30 +187,85 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 		if (this.getEvent().getIdCatalogueTrain() != null) {
 			if (!this.getEvent().compareJourCirculation(this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).getHeureArrivee(),
 					this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).getHeureDepart(), 
-					this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).isFlagCirculation())) {
-				
-				this.getEvent().update();
+					this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).isFlagCirculation())) {								
 				for (int i = 0; i < 12; i++) {
 					String methode = "getSchedule_"+ i;
 					Method action = this.getClass().getMethod(methode, null);
 					CustomerSchedule schedul = ((CustomerSchedule) (action.invoke(this, null)));
 					if (schedul.getName().equals(StringToDate.toStringByFormat(this.event.getDateDebut(), "dateFrenchAffichage"))) {
+					   this.getEvent().update();
 						schedul.getSchedule().updateEvent(this.event);
+						
 						// Modification de jourCirculation métier
+						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setHeureArrivee(Integer.valueOf( StringToDate.toFormatedString(this.getEvent().getHeureArrivee())));
+						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setHeureDepart(Integer.valueOf( StringToDate.toFormatedString(this.getEvent().getHeureDepart())));
+						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setFlagCirculation(this.getEvent().isFlagCirculation());						
 					}
 				}
+				
+				this.getModifedTrainCatalogue().calculeCirculationFromJoursCirculation();		
 			}
 		}
-
+		
 		this.setEvent(new EventJourCirculation());		
+	} 
+	
+	//Sauvegarder
+	public void saveAdaptation() {
+	   try {
+	      new TrainCatalogueDAO().updateCirculation(this.getModifedTrainCatalogue()); 
+	      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
+               new FacesMessage(FacesMessage.SEVERITY_INFO, "message", " Train enregistré"));
+	   } catch (Exception e) {
+	      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
+               new FacesMessage(FacesMessage.SEVERITY_FATAL, "message", " Erreur d'enregistrement"));
+	   }
+	}
+
+	// Annule la sauvgarde
+	public void initSelectedTrain() {
+	   int idTrain = this.getModifedTrainCatalogue().getIdTrain();
+	   this.listTrains = new ArrayList<TrainCatalogue>();
+      getTrains();
+      for (TrainCatalogue trainCatalogue : this.listTrains) {
+         if (idTrain == trainCatalogue.getIdTrain()) {
+            this.modifedTrainCatalogue  = new TrainCatalogue() ;
+            this.modifedTrainCatalogue = trainCatalogue;
+            this.generatSchedules();
+         }
+      }
+      this.setEvent(new EventJourCirculation());
+	   
+/*	   for (TrainCatalogue trainCatalogue : this.listTrains) {
+         if (this.getModifedTrainCatalogue() != null &&
+               this.getModifedTrainCatalogue().getIdTrain() == trainCatalogue.getIdTrain()) {
+            this.setModifedTrainCatalogue(null);
+            this.setModifedTrainCatalogue(trainCatalogue);
+            
+            this.generatSchedules();
+            break;
+         }
+      }
+	*/   
+	}
+	
+	public void getTrains() {
+	   
+	   List<CirculationAdapterDataBean> listCirculationAdapter = new CirculationDAO().getDistinctCirculation() ; 
+	   
+	   for (CirculationAdapterDataBean c : listCirculationAdapter) { 	      
+         List<CirculationAdapterDataBean> list = new CirculationDAO().getLastCircul(c.getTrainCatalogueDataBean().getIdTrainCatalogue()) ;
+         
+         TrainCatalogue train = TrainFactory.createTrainCatalogueFromBeans(list);
+         TrainCatalogue trainOrigine =  TrainFactory.createTrainCatalogueFromOriginal(c.getTrainCatalogueDataBean()); 
+        // train.remplirJoursCirculations();
+         this.listTrains.add(train);
+         this.listTrainOrigine.add(trainOrigine);
+      }	   
 	}
 	
 	public void dialogClose(CloseEvent closeEvent) {
 		this.setEvent(new EventJourCirculation());
-	}
-	
-	public void Modification() {
-		
 	}
 	
 	public TrainCatalogue getModifedTrainCatalogue() {
@@ -313,4 +387,10 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	public void setEvent(EventJourCirculation event) {
 		this.event = event;
 	}
+   public List<TrainCatalogue> getListTrains() {
+      return this.listTrains;
+   }
+   public void setListTrains(List<TrainCatalogue> listTrains) {
+      this.listTrains = listTrains;
+   }
 }
