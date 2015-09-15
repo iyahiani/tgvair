@@ -1,5 +1,7 @@
 package com.avancial.socle.data.model.databean;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +15,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "socle_user2role")
-public class User2RoleDataBean {
+public class User2RoleDataBean implements Serializable {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    @Id
    protected Long         idUser2Role;
    protected Long         idUser;

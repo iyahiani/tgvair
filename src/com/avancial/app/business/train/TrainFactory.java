@@ -118,8 +118,8 @@ public class TrainFactory implements ITrainFactory {
       //On récupère les circulations correspondant à l'id et à la date
       List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrainAndByDate(idTrainCatalogue, date);
       
-      TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste);
-      listeTC.add(train); 
+      TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste)  ;
+      listeTC.add(train)                                                      ; 
       //On récupère la date J-1
       Date dateJM1=dao.getMaxDateCreationCirculationJourPrecedentByIdTrain(idTrainCatalogue, date);
       
