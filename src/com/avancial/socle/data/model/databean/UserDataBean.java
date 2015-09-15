@@ -1,5 +1,6 @@
 package com.avancial.socle.data.model.databean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -17,8 +18,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "socle_user")
-public class UserDataBean {
-	@Id
+public class UserDataBean implements Serializable{
+	/**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   @Id
 	protected Long idUser;
 	protected String nomUser;
 	protected String prenomUser;
