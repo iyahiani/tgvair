@@ -6,44 +6,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="contenu">
-		<style type="text/css">
-.td_table_css_ajustement div.fc-content table td div.fc-day-number {
-	display: none;
-}
+		
+		
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+            onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+            closable="false" resizable="false" showHeader="false">
+            <p:graphicImage name="/private/image/enregistrement.gif" />
+        </p:dialog>
+            <p:messages id="idPageMessages" autoUpdate="true" closable="true" redisplay="false"
+                showDetail="true"  globalOnly="false" />
 
-.td_table_css_ajustement div.fc-content table td div.fc-day-content {
-	height: 40px;
-}
-
-.event_display {
-	text-align: center;
-	/*top: 19px;*/
-	height: 40px;
-	font-size: 1.0em;
-}
-
-.cell_all_space {
-	height: 40px;
-}
-
-.train_circule {
-	background-color: rgb(207, 228, 137);
-	color: black;
-}
-
-.train_not_circule {
-	background-color: rgb(229, 135, 156);
-	color: black;
-}
-
-.train_adapted {
-	background-color: orange;
-	color: black;
-}
-</style>
-		<p:fieldset legend="AJUSTEMENT" styleClass="fieldSet">
+        
+		<p:fieldset legend="#{msg.p_header_ajustement_legend}"
+			styleClass="fieldSet">
 			<div class="ui-grid-responsive">
-				<p:panel header="Ajustement par jour" style="margin-bottom:20px">
+				<p:panel header="#{msg.p_header_ajustement}"
+					style="margin-bottom:20px">
 					<div class="ui-grid ui-grid-responsive">
 						<h:form>
 							<p:selectOneMenu valueChangeListener="#{ajustement.valueChanged}"
@@ -278,7 +257,9 @@
 										oncomplete="PF('myschedule_0').update();
 								PF('myschedule_1').update();PF('myschedule_2').update();PF('myschedule_3').update();PF('myschedule_4').update();PF('myschedule_5').update();
 								PF('myschedule_6').update();PF('myschedule_7').update();PF('myschedule_8').update();PF('myschedule_9').update();
-								PF('myschedule_10').update();PF('myschedule_11').update();PF('eventDialog').hide();" />
+								PF('myschedule_10').update();PF('myschedule_11').update();PF('eventDialog').hide();" ajax="true">
+								
+								</p:commandButton>
 								</h:panelGrid>
 							</p:dialog>
 						</h:form>

@@ -61,8 +61,6 @@ public class JobAdaptation implements Job {
       List<CirculationAdapterDataBean> listCirculAdapter = new CirculationDAO().getDistinctCirculation();
       listCirculAdapter = new CirculationDAO().getAll();
       TrainFactory factory = new TrainFactory();
-
-      
       // re-construire les circulations du traions à partir de la table des circulation   
                 
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue() ; 

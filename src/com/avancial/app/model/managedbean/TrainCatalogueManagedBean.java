@@ -21,12 +21,17 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SelectableDataModel;
 
+import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.app.traitements.TraitementExportDAO;
+import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -172,17 +177,48 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String goPointArret() {
-      return "/pages/private/pointArret.xhtml?faces-redirect=true";
+      return APP_TgvAir.NAVIGATION_POINTARRET.toString();
    }
 
    @Override
    public String update() throws ASocleException {
-      super.update();
+      
+      
       if (null != this.selectedTrainsCatalogue) {
+         
          this.selectedTrainsCatalogue.setNumeroTrainCatalogue(this.selectedTrainsCatalogue.getNumeroTrainCatalogue1()
                + (!this.selectedTrainsCatalogue.getNumeroTrainCatalogue2().isEmpty() ? "-" + this.selectedTrainsCatalogue.getNumeroTrainCatalogue2() : ""));
+         
+         /*
+          * Todo : Modification de la date de fin de la validité 
+          */
+         // Comparaison old date fin de validité avec la new date fin de validé
+         // si c'est > => On crée une new circulation avec la date old jusqu'a la date new avec les criteres du train originial
+         CirculationAdapterDataBean c = null;
+         TrainCatalogueDataBean trainCatalogueUpdated = new TrainCatalogueDAO().getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
+         for (TrainCatalogueDataBean t : this.trainsCatalogue) {
+            if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
+               if (this.selectedTrainsCatalogue.getDateFinValidite().after(trainCatalogueUpdated.getDateFinValidite())) {
+                  c = new CirculationAdapterDataBean() ;
+                  c.setDateCreationLigneTrain(new Date());
+                  c.setDateDebutCirculation(trainCatalogueUpdated.getDateFinValidite());
+                  c.setDateFinCirculation(this.selectedTrainsCatalogue.getDateFinValidite());
+                  c.setHeureDepart(StringToDate.toFormatedString(t.getHeureDepartTrainCatalogue()));
+                  c.setHeureArriver(StringToDate.toFormatedString(t.getHeureArriveeTrainCatalogue()));
+                  c.setRegimeCirculation(t.getRegimeJoursTrainCatalogue());
+                  c.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+                  c.setTraitementExport(new TraitementExportDAO().getLastID());                                
+                  break ;                  
+               }
+            }
+         }
+                  
          TrainCatalogueDAO dao = new TrainCatalogueDAO();
+
          try {
+            if (c != null) {
+               new CirculationDAO().save(c);
+            }
             dao.update(this.selectedTrainsCatalogue);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
             this.closeDialog = true;
@@ -192,6 +228,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          }
       }
+      super.update();
       return null;
    }
 

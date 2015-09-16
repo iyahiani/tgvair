@@ -12,6 +12,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+
 import com.avancial.socle.data.controller.dao.RoleDao;
 import com.avancial.socle.data.model.databean.RoleDataBean;
 import com.avancial.socle.exceptions.ASocleException;
@@ -70,7 +72,9 @@ public class RoleManagedBean extends AManageBean {
       try {
          dao.save(roleDataBean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", MessageController.getTraduction("p_message_add_success_role")));
-         // RequestContext.getCurrentInstance().update(":dataTable");
+         
+         RequestContext.getCurrentInstance().update(":dataTable");
+         
          this.closeDialog = true;
       } catch (ASocleException e) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
@@ -89,7 +93,7 @@ public class RoleManagedBean extends AManageBean {
             dao.update(this.selectedItem);
             this.closeDialog = true;
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifié"));
-
+            RequestContext.getCurrentInstance().update(":dataTable");
          } catch (ASocleException e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
@@ -105,7 +109,8 @@ public class RoleManagedBean extends AManageBean {
          RoleDao dao = new RoleDao();
          try {
             dao.delete(this.selectedItem);
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimï¿½"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            RequestContext.getCurrentInstance().update(":dataTable");
             this.closeDialog = true;
          } catch (ASocleException e) {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacï¿½"));

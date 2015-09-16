@@ -17,7 +17,7 @@
 
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
             closable="false" resizable="false" showHeader="false">
-            <p:graphicImage name="/private/image/ajax-loader.gif" />
+            <p:graphicImage name="/private/image/enregistrement.gif" />
         </p:dialog>
         
 
@@ -79,7 +79,8 @@
                 <br />
                 <p:commandButton
                     value="#{msg.p_dialog_bouton_modifier_libelle}" type="submit"
-                    actionListener="#{roleManagedBean.update}" update=":idPageMessages"  oncomplete="if (#{roleManagedBean.closeDialog}=true) PF('Modif').close()"></p:commandButton>
+                    actionListener="#{roleManagedBean.update}" update=":idPageMessages"  
+                    oncomplete="if (#{roleManagedBean.closeDialog}=true) PF('Modif').close()"></p:commandButton>
                 <p:commandButton immediate="true" onclick="PF('Modif').close()"
                     value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel"></p:commandButton>
             </h:form>
@@ -96,7 +97,7 @@
         <br />
 
         <p:dataTable var="item" value="#{roleManagedBean.selectedItems}"
-            id="dataTable" rowIndexVar="index" paginator="true"
+            id="dataTable" rowIndexVar="index" paginator="true" 
             selectionMode="single" selection="#{roleManagedBean.selectedItem}"
             rowKey="#{item.idRole}">
             <p:column headerText="action" width="50" id="colonne_#{item.idRole}">

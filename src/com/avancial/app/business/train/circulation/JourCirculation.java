@@ -97,7 +97,7 @@ public class JourCirculation extends ObservableJoursCirculation implements Compa
    }
 
    public boolean compare(JourCirculation jourCirculation) {
-
+    
       if (!this.getOrigine().equalsIgnoreCase(jourCirculation.getOrigine()))
          return false;
       else if (!this.getDestination().equalsIgnoreCase(jourCirculation.getDestination())) // ne fonctionnera pas dans le cas de lille flandre
@@ -106,7 +106,7 @@ public class JourCirculation extends ObservableJoursCirculation implements Compa
          return false;
       else if (this.getHeureDepart() != jourCirculation.getHeureDepart())
          return false;
-
+     
       return true;
    }
 

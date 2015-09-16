@@ -6,6 +6,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="contenu">
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+            onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
+            closable="false" resizable="false" showHeader="false">
+            <p:graphicImage name="/private/image/enregistrement.gif" />
+        </p:dialog>
+        <p:messages id="idPageMessages" autoUpdate="true" closable="true"
+            redisplay="false" showDetail="true" globalOnly="false" />
     <p:fieldset legend="#{msg.p_titre_legend}" styleClass="fieldSet">
     
     <p:panelGrid> 

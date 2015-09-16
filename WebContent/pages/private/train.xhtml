@@ -9,6 +9,12 @@
 
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+            onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+            closable="false" resizable="false" showHeader="false">
+            <p:graphicImage name="/private/image/enregistrement.gif" />
+        </p:dialog>
 		<script type="text/javascript">
 			function reset() {
 				$("#ajoutTain")[0].reset();
@@ -91,7 +97,7 @@
 											required="true" />
 									</p:selectOneMenu>
 									<p:commandButton icon="ui-icon-circle-plus"
-										actionListener="#{traincatalogue.goTrain}" />
+										actionListener="#{traincatalogue.goPointArret()}" />
 								</h:panelGrid>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
