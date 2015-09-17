@@ -1,6 +1,5 @@
 package com.avancial.app.model.managedbean;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -8,27 +7,15 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.component.schedule.Schedule;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.JobListener;
-import org.quartz.ScheduleBuilder;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.impl.calendar.CronCalendar;
-import org.quartz.impl.matchers.KeyMatcher;
-
-import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.jobs.JobAdaptation;

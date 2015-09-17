@@ -62,6 +62,7 @@ public class JobExport implements Job {
                   compare = true  ;break ;
                }
       } 
+         
          if (compare) {
 
             List<TrainCatalogue> listCatalogue = new ArrayList<TrainCatalogue>();

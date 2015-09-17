@@ -19,11 +19,12 @@
 
 		<p:fieldset legend="#{msg.p_titre_legend}" styleClass="fieldSet">
 			<div class="ui-grid-responsive">
-				<p:panelGrid style="margin:20px;" columns="2">
+				<p:panelGrid style="margin:20px;" columns="3">
 					<p:outputLabel value="#{msg.p_label_import}   "></p:outputLabel>
 					<p:commandButton value="#{msg.p_label_bouton}"
-						actionListener="#{admin.lancerJob()}"></p:commandButton>
-					
+						actionListener="#{admin.lancerJob()}">
+				    </p:commandButton>
+					<p:outputLabel></p:outputLabel>
 					<p:outputLabel value="#{msg.p_label_export}    "> 
 					<br />
 					</p:outputLabel>
@@ -33,13 +34,13 @@
                                 onchange="submit()">
                                 <f:selectItem itemLabel="Selectionnez une Compagnie"
                                     itemValue="#{null}" />
-
                                 <f:selectItems var="compagnie" value="#{admin.listCompagnies}"
                                      itemValue="#{compagnie}" />
                             </p:selectOneMenu>
+                            <p:commandButton value="#{msg.p_label_bouton}"
+                        actionListener="#{admin.lancerExport()}"></p:commandButton>
             </p:panelGrid>
-					<p:commandButton value="#{msg.p_label_bouton}"
-						actionListener="#{admin.lancerExport()}"></p:commandButton>
+					
 
 				
 			</div>

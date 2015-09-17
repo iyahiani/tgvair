@@ -8,7 +8,7 @@
 	<ui:define name="contenu">
 		
 		
-		<p:ajaxStatus onstart="PF('statusDialog').show()" rendered="#{ajustement.finish}"
+		<p:ajaxStatus onstart="PF('statusDialog').show()" 
             onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
             closable="false" resizable="false" showHeader="false">
@@ -16,8 +16,6 @@
         </p:dialog>
             <p:messages id="idPageMessages" autoUpdate="true" closable="true" redisplay="false"
                 showDetail="true"  globalOnly="false" />
-
-        
 		<p:fieldset legend="#{msg.p_header_ajustement_legend}"
 			styleClass="fieldSet">
 			<div class="ui-grid-responsive">

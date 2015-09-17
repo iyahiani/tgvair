@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -16,15 +17,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
-import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
@@ -57,17 +55,13 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private List<TrainCatalogueDataBean> trainsCatalogue;
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean selectedTrainsCatalogue;
-   
-   private List<TrainCatalogueDataBean> listTrainsCatAndValid;
    private List<String> listSelectedJoursCirculation;
 
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
       this.idPointArretDestination = new PointArretDataBean();
-      this.listTrainsCatAndValid = new ArrayList<>();
       this.reload();
-
    }
 
    public void rowSelect(SelectEvent event) {
@@ -75,23 +69,24 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
  
-   public void onRowUnselect(UnselectEvent event) {
+ /*  public void onRowUnselect(UnselectEvent event) {
       this.selectedTrainsCatalogue = null;
-   }
+   }*/
 
+   @SuppressWarnings("static-method")
    public List<PointArretDataBean> getListGDS() {
 
       return new PointArretDAO().getAllGDS();
    }
 
-   private void reload() {
 
+   private void reload() {
       this.trainsCatalogue.clear();
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
 
-  
 
+   @SuppressWarnings("unchecked")
    @Override
    public String add() {
 
@@ -163,6 +158,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
+   @SuppressWarnings("static-method")
    public void goTrain() {
       
       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -175,13 +171,17 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    }
 
+   @SuppressWarnings("static-method")
    public String goPointArret() {
       return APP_TgvAir.NAVIGATION_POINTARRET.toString();
    }
-
+/**
+ * modifer le train et ca cerculation dans les tables trainsCatalogue / Circulation 
+ */
    @Override
    public String update() throws ASocleException {
-      
+      super.update();
+      this.reload();
       
       if (null != this.selectedTrainsCatalogue) {
          
@@ -193,8 +193,10 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
           */
          // Comparaison old date fin de validité avec la new date fin de validé
          // si c'est > => On crée une new circulation avec la date old jusqu'a la date new avec les criteres du train originial
+      
          CirculationAdapterDataBean c = null;
-         TrainCatalogueDataBean trainCatalogueUpdated = new TrainCatalogueDAO().getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
+         new TrainCatalogueDAO().getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
+         
          for (TrainCatalogueDataBean t : this.trainsCatalogue) {
             if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
                if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
@@ -227,11 +229,13 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          }
       }
-      super.update();
+      
       return null;
    }
-
-   @SuppressWarnings("static-access")
+ 
+ 
+   
+   @SuppressWarnings({ "static-access", "static-method" })
    public String formatterString(String chaine) {
 
       char[] temp = chaine.toCharArray();
@@ -261,7 +265,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    
   @SuppressWarnings("static-method")
 public void recupererBeanOrigine(SelectEvent event) {
-     TrainCatalogueDataBean t = (TrainCatalogueDataBean) event.getObject() ;
+     event.getObject();
   }
    public Boolean getCloseDialog() {
       return this.closeDialog;
@@ -396,12 +400,7 @@ public void recupererBeanOrigine(SelectEvent event) {
       this.selectedTrainsCatalogue = selectedTrainsCatalogue;
    }
 
-   public void setListGDS(List<PointArretDataBean> listGDS) {
-   }
-
-   public void setListTrainsCatAndValid(List<TrainCatalogueDataBean> listTrainsCatAndValid) {
-      this.listTrainsCatAndValid = listTrainsCatAndValid;
-   }
+  
 
    public String getNumeroTrainCatalogue() {
       return this.numeroTrainCatalogue;
