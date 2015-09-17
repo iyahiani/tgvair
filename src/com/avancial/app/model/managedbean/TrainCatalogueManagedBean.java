@@ -121,8 +121,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          try {
             dao.save(bean);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Train Catalogue a été créé."));
-            this.closeDialog = true;
+            
             RequestContext.getCurrentInstance().update(":tableTrains");
+            this.closeDialog = true;
 
          } catch (ASocleException e) {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));// e.getClientMessage()
@@ -222,8 +223,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
             }
             dao.update(this.selectedTrainsCatalogue);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
-            this.closeDialog = true;
             RequestContext.getCurrentInstance().update(":tableTrains");
+            this.closeDialog = true;
          } catch (ASocleException e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));

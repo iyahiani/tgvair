@@ -7,14 +7,14 @@
 
 	<ui:define name="contenu">
 
-	
+
 		<script type="text/javascript">
 			function reset() {
 				$("#formAssocier")[0].reset();
 			}
 		</script>
 
-		
+
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 		<p:fieldset legend="#{msg.p_catalogue_legend}" styleClass="fieldSet">
@@ -32,10 +32,12 @@
 							id="tableTrains" var="trains"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
 							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}"
+							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							paginator="true" rowsPerPageTemplate="5,10,15">
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
 								update=":formCompAerienne:tableCompAerienne" delay="1"></p:ajax>
+
 							<p:column headerText="#{msg.p_catalogue_traintable_numTrain}"
 								id="num_train" filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
@@ -43,32 +45,6 @@
 
 							</p:column>
 
-							<p:column headerText="#{msg.p_catalogue_traintable_debVal}">
-								<h:outputText value="#{trains.dateDebutValidite}" >
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-								</h:outputText>
-							</p:column>
-
-							<p:column headerText="#{msg.p_catalogue_traintable_FinVal}">
-
-								<h:outputText value="#{trains.dateFinValidite}"> 
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-								</h:outputText>
-							</p:column>
-
-							<p:column headerText="#{msg.p_catalogue_traintable_heureDep}">
-
-								<h:outputText value="#{trains.heureDepartTrainCatalogue}"> 
-								<f:convertDateTime type="date" pattern="HH:mm"/>
-								</h:outputText>
-							</p:column>
-
-							<p:column headerText="#{msg.p_catalogue_traintable_heureArr}">
-
-								<h:outputText value="#{trains.heureArriveeTrainCatalogue}"> 
-								<f:convertDateTime type="date" pattern="HH:mm"/>
-								</h:outputText>
-							</p:column>
 							<p:column headerText="#{msg.p_catalogue_traintable_origine}"
 								filterBy="#{trains.originePointArret}"
 								filterMatchMode="contains">
@@ -80,6 +56,34 @@
 								filterMatchMode="contains">
 								<h:outputText value="#{trains.destinationPointArret}" />
 							</p:column>
+							<p:column headerText="#{msg.p_catalogue_traintable_heureDep}">
+
+                                <h:outputText value="#{trains.heureDepartTrainCatalogue}">
+                                    <f:convertDateTime type="date" pattern="HH:mm" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg.p_catalogue_traintable_heureArr}">
+
+                                <h:outputText value="#{trains.heureArriveeTrainCatalogue}">
+                                    <f:convertDateTime type="date" pattern="HH:mm" />
+                                </h:outputText>
+                            </p:column>
+							<p:column headerText="#{msg.p_catalogue_traintable_debVal}">
+								<h:outputText value="#{trains.dateDebutValidite}">
+									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="#{msg.p_catalogue_traintable_FinVal}">
+
+								<h:outputText value="#{trains.dateFinValidite}">
+									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+								</h:outputText>
+							</p:column>
+
+							
+
 							<p:column width="50">
 								<f:facet name="header"> #{msg.p_catalogue_traintable_modifier}</f:facet>
 								<p:commandLink update=":modif" id="update_Train"
@@ -110,11 +114,13 @@
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
+				
 				<h:form id="formCompAerienne">
 					<p:dataTable
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
 						paginatorPosition="top" var="compagnie" paginator="true"
-						id="tableCompAerienne" rows="10" selectionMode="single"
+						id="tableCompAerienne" rows="10" 
+						selectionMode="single"
 						selection="#{traintocompagnie.selectedTrain}"
 						rowKey="#{compagnie.idTrainCatalogueToCompagnie}"
 						rowsPerPageTemplate="5,10,15">
@@ -123,35 +129,37 @@
 							id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
 						</p:column>
+						<p:column headerText="#{msg.p_catalogue_t2cTable_marketingFlight}">
+
+                            <h:outputText
+                                value="#{compagnie.marketingFlightTrainCatalogueToCompagnie}" />
+                        </p:column>
+                        <p:column headerText="#{msg.p_catalogue_t2cTable_quota1}">
+
+                            <h:outputText
+                                value="#{compagnie.quotaPremiereTrainCatalogueToCompagnie}" />
+                        </p:column>
+
+                        <p:column headerText="#{msg.p_catalogue_t2cTable_quota2}">
+                            <h:outputText
+                                value="#{compagnie.quotaDeuxiemeTrainCatalogueToCompagnie}" />
+                        </p:column>
 						<p:column headerText="#{msg.p_catalogue_t2cTable_debVal} ">
 							<h:outputText
 								value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}">
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/> 
-								</h:outputText>
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="#{msg.p_catalogue_t2cTable_finVal}">
 							<h:outputText
 								value="#{compagnie.dateFinValiditeTrainCatalogueToCompagnie}">
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-								</h:outputText> 
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
 						</p:column>
-						<p:column headerText="#{msg.p_catalogue_t2cTable_marketingFlight}">
+						
 
-							<h:outputText
-								value="#{compagnie.marketingFlightTrainCatalogueToCompagnie}" />
-						</p:column>
-
-						<p:column headerText="#{msg.p_catalogue_t2cTable_quota1}">
-
-							<h:outputText
-								value="#{compagnie.quotaPremiereTrainCatalogueToCompagnie}" />
-						</p:column>
-
-						<p:column headerText="#{msg.p_catalogue_t2cTable_quota2}">
-							<h:outputText
-								value="#{compagnie.quotaDeuxiemeTrainCatalogueToCompagnie}" />
-						</p:column>
+						
 						<p:column width="50">
 							<f:facet name="header"> #{msg.p_catalogue_t2cTable_modif}</f:facet>
 
@@ -169,15 +177,17 @@
 
 					</p:dataTable>
 				</h:form>
-
+                <div>
 				<h:form id="formAssocier">
 
-					<h:panelGrid columns="2" id="ajoutTC"
-						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+					<h:panelGrid columns="6" id="ajoutTC"
+						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; background-color: #b0c4de; ">
 						<f:facet name="header"> #{msg.p_catalogue_headerAssocierTrain}</f:facet>
 						<p:outputLabel value="#{msg.p_catalogue_t2cTable_codeCompagnie}"></p:outputLabel>
 						<h:selectOneMenu effect="fold" editable="true" required="true"
 							value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
+							<f:selectItem itemLabel="Selectionnez une compagnie"
+                                    itemValue="#{null}" />
 							<f:selectItems value="#{traintocompagnie.allCodeCompagnie}"
 								id="codeComp">
 							</f:selectItems>
@@ -197,21 +207,21 @@
 
 						<p:outputLabel for="marketing_Flight"
 							value="#{msg.p_catalogue_t2cTable_marketingFlight}"></p:outputLabel>
-						<p:inputMask mask="**9999" style="width : 100% auto;"
+						<p:inputText style="width : 100% auto;"
 							id="marketing_Flight" required="true"
-							value="#{traintocompagnie.marketingFlight}"></p:inputMask>
+							value="#{traintocompagnie.marketingFlight}"></p:inputText>
 
 						<p:outputLabel for="Quota1"
 							value="#{msg.p_catalogue_t2cTable_quota1}"></p:outputLabel>
-						<p:inputMask mask="*9999" id="Quota1" style="width :100% auto;"
-							required="true" value="#{traintocompagnie.quota1er}"></p:inputMask>
-
+						<p:inputText id="Quota1" style="width :100% auto;"
+							required="true" value="#{traintocompagnie.quota1er}"></p:inputText>
+							
 						<p:outputLabel for="Quota2"
 							value="#{msg.p_catalogue_t2cTable_quota2}"></p:outputLabel>
-						<p:inputMask mask="*9999" id="Quota2" style="width : 100% auto;"
-							required="true" value="#{traintocompagnie.quota2em}"></p:inputMask>
+						<p:inputText id="Quota2" style="width : 100% auto;"
+							required="true" value="#{traintocompagnie.quota2em}"></p:inputText>
 						<h:panelGrid></h:panelGrid>
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="2" styleClass="ui-grid-responsive">
 							<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
 							<p:commandButton icon="ui-icon-check" type="submit"
 								oncomplete="reset()" title="ajouter"
@@ -223,6 +233,7 @@
 						</h:panelGrid>
 					</h:panelGrid>
 				</h:form>
+				</div>
 			</h:panelGrid>
 		</p:fieldset>
 
@@ -364,7 +375,7 @@
 				</table>
 				<br />
 				<br />
-				<p:commandButton value="ajouter" type="submit"
+				<p:commandButton value="Modifier" type="submit"
 					actionListener="#{traintocompagnie.update}"
 					update=":formCompAerienne:tableCompAerienne"
 					oncomplete="if(#{traintocompagnie.closeDialog}=true) PF('modifT2C').close()">
