@@ -49,7 +49,7 @@ public class JobImport implements Job {
 
       IReader reader = null;
       try {
-         reader = new ReaderSSIM("D:/was_tmp/7989.txt");
+         reader = new ReaderSSIM("D:/was_tmp/7989.txt")  ;
       } catch (IOException e1) {
          this.logger.error(e1.getMessage());
          e1.printStackTrace();

@@ -7,12 +7,12 @@
 
 	<ui:define name="contenu">
 
-<p:ajaxStatus onstart="PF('statusDialog').show()"
-            onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
-            closable="false" resizable="false" showHeader="false">
-            <p:graphicImage name="/private/image/enregistrement.gif" />
-        </p:dialog>
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
 		<script type="text/javascript">
 			function reset() {
 				$("#formAssocier")[0].reset();
@@ -35,40 +35,48 @@
 				<h:form id="tableTrains">
 					<h:panelGrid columns="1"
 						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
-    <!-- selection="#{traincatalogue.selectedTrainsCatalogue}" -->
+						<!-- selection="#{traincatalogue.selectedTrainsCatalogue}" -->
 						<p:dataTable value="#{traincatalogue.trainsCatalogue}" rows="10"
 							scrollable="true" widgetVar="trainsWdg" paginatorPosition="top"
-							id="tableTrains" var="trains"						
+							id="tableTrains" var="trains"
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
 							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}"
-							paginator="true" rowsPerPageTemplate="5,10,15" >
+							paginator="true" rowsPerPageTemplate="5,10,15">
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
 								update=":formCompAerienne:tableCompAerienne" delay="1"></p:ajax>
-							<p:column headerText="#{msg.p_catalogue_traintable_numTrain}" id="num_train"
-								filterMatchMode="contains"
+							<p:column headerText="#{msg.p_catalogue_traintable_numTrain}"
+								id="num_train" filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
 								<h:outputText value="#{trains.numeroTrainCatalogue}" />
 
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_debVal}">
-								<h:outputText value="#{trains.dateDebutValidite}" />
+								<h:outputText value="#{trains.dateDebutValidite}" >
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+								</h:outputText>
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_FinVal}">
 
-								<h:outputText value="#{trains.dateFinValidite}" />
+								<h:outputText value="#{trains.dateFinValidite}"> 
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+								</h:outputText>
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_heureDep}">
 
-								<h:outputText value="#{trains.heureDepartTrainCatalogue}" />
+								<h:outputText value="#{trains.heureDepartTrainCatalogue}"> 
+								<f:convertDateTime type="date" pattern="HH:mm"/>
+								</h:outputText>
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_heureArr}">
 
-								<h:outputText value="#{trains.heureArriveeTrainCatalogue}" />
+								<h:outputText value="#{trains.heureArriveeTrainCatalogue}"> 
+								<f:convertDateTime type="date" pattern="HH:mm"/>
+								</h:outputText>
 							</p:column>
 							<p:column headerText="#{msg.p_catalogue_traintable_origine}"
 								filterBy="#{trains.originePointArret}"
@@ -93,22 +101,21 @@
 											value=" Modifier le Train #{trains.numeroTrainCatalogue}" />
 									</h:graphicImage>
 								</p:commandLink>
-								<p:commandLink id="delete_Train" update=":tableTrains" 
-									onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false" 
-									action="#{traincatalogue.delete}"  ajax="true"  
-									> 
+								<p:commandLink id="delete_Train" update=":tableTrains"
+									onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
+									action="#{traincatalogue.delete}" ajax="true">
 									<p:ajax update=":tableTrains:tableTrains" delay="1"></p:ajax>
 									<f:setPropertyActionListener value="#{trains}"
 										target="#{traincatalogue.selectedTrainsCatalogue}" />
-									 <h:graphicImage id="img_delete"
-										name="private/image/corbeille2.png"
-										styleClass="actionButtons">
+									<h:graphicImage id="img_delete"
+										name="private/image/corbeille2.png" styleClass="actionButtons">
 									</h:graphicImage>
 									<p:tooltip id="toolTip" for="delete_Train"
 										value="supprimer le train #{trains.numeroTrainCatalogue} " />
 								</p:commandLink>
 							</p:column>
-
+							<p:ajax event="rowSelect"
+								listener="#{traincatalogue.recupererBeanOrigine}"></p:ajax>
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
@@ -121,17 +128,22 @@
 						rowKey="#{compagnie.idTrainCatalogueToCompagnie}"
 						rowsPerPageTemplate="5,10,15">
 
-						<p:column headerText="#{msg.p_catalogue_t2cTable_codeCompagnie}" id="comp">
+						<p:column headerText="#{msg.p_catalogue_t2cTable_codeCompagnie}"
+							id="comp">
 							<h:outputText value="#{compagnie.codeCompagnieAerienne}" />
 						</p:column>
 						<p:column headerText="#{msg.p_catalogue_t2cTable_debVal} ">
 							<h:outputText
-								value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}" />
+								value="#{compagnie.dateDebutValiditeTrainCatalogueToCompagnie}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/> 
+								</h:outputText>
 						</p:column>
 
 						<p:column headerText="#{msg.p_catalogue_t2cTable_finVal}">
 							<h:outputText
-								value="#{compagnie.dateFinValiditeTrainCatalogueToCompagnie}" />
+								value="#{compagnie.dateFinValiditeTrainCatalogueToCompagnie}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+								</h:outputText> 
 						</p:column>
 						<p:column headerText="#{msg.p_catalogue_t2cTable_marketingFlight}">
 
@@ -154,14 +166,14 @@
 
 							<p:commandLink update=":modifT2C" id="update_T2C"
 								oncomplete="PF('modifT2C').show();">
-                                
+
 								<h:graphicImage name="private/image/modifier.png"
 									styleClass="actionButtons">
 									<p:tooltip for="update_T2C"
 										value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}" />
 								</h:graphicImage>
 							</p:commandLink>
-							
+
 						</p:column>
 
 					</p:dataTable>
@@ -182,8 +194,7 @@
 						</h:selectOneMenu>
 
 						<p:outputLabel value="#{msg.p_catalogue_t2cTable_debVal}"></p:outputLabel>
-						<p:calendar id="popup2" showOn="both" locale="fr" required="true" 
-						
+						<p:calendar id="popup2" showOn="both" locale="fr" required="true"
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateDebutValidite}"
 							pattern="dd/MM/yyyy" />
@@ -193,16 +204,19 @@
 							styleClass="dateTimeStyle"
 							value="#{traintocompagnie.dateFinValidite}" pattern="dd/MM/yyyy" />
 
-						<p:outputLabel for="marketing_Flight" value="#{msg.p_catalogue_t2cTable_marketingFlight}"></p:outputLabel>
+						<p:outputLabel for="marketing_Flight"
+							value="#{msg.p_catalogue_t2cTable_marketingFlight}"></p:outputLabel>
 						<p:inputMask mask="**9999" style="width : 100% auto;"
 							id="marketing_Flight" required="true"
 							value="#{traintocompagnie.marketingFlight}"></p:inputMask>
 
-						<p:outputLabel for="Quota1" value="#{msg.p_catalogue_t2cTable_quota1}"></p:outputLabel>
+						<p:outputLabel for="Quota1"
+							value="#{msg.p_catalogue_t2cTable_quota1}"></p:outputLabel>
 						<p:inputMask mask="*9999" id="Quota1" style="width :100% auto;"
 							required="true" value="#{traintocompagnie.quota1er}"></p:inputMask>
 
-						<p:outputLabel for="Quota2" value="#{msg.p_catalogue_t2cTable_quota2}"></p:outputLabel>
+						<p:outputLabel for="Quota2"
+							value="#{msg.p_catalogue_t2cTable_quota2}"></p:outputLabel>
 						<p:inputMask mask="*9999" id="Quota2" style="width : 100% auto;"
 							required="true" value="#{traintocompagnie.quota2em}"></p:inputMask>
 						<h:panelGrid></h:panelGrid>
@@ -224,7 +238,7 @@
 
 
 
-		                                  <!-- Fenetre DIALOGUE  -->
+		<!-- Fenetre DIALOGUE  -->
 
 
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"
@@ -294,18 +308,17 @@
 						<td><p:calendar showOn="both" locale="fr" required="true"
 								value="#{traincatalogue.selectedTrainsCatalogue.dateFinValidite}" />
 						</td>
-
 					</tr>
 
 				</table>
 				<br />
 				<br />
-				<p:commandButton value="ajouter" type="submit"
+				<p:commandButton value="Modifer" type="submit"
 					actionListener="#{traincatalogue.update}"
 					oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close(); PF('tableTrains').update()">
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Modif').close()"
-					value="annuler" type="cancel"></p:commandButton>
+					value="Annuler" type="cancel"></p:commandButton>
 			</h:form>
 		</p:dialog>
 

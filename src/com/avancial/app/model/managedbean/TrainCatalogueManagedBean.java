@@ -120,10 +120,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          bean.setHeureArriveeTrainCatalogue(getHeureArriveeTrainCatalogue());
          bean.setDateDebutValidite(getDateDebutValidite());
          bean.setDateFinValidite(getDateFinValidite());
-         // /
+         ///
          bean.setRegimeJoursTrainCatalogue(formatterString(getListSelectedJoursCirculation().toString()));
-         // /
-
+         ///
          try {
             dao.save(bean);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Train Catalogue a été créé."));
@@ -198,10 +197,10 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          TrainCatalogueDataBean trainCatalogueUpdated = new TrainCatalogueDAO().getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
          for (TrainCatalogueDataBean t : this.trainsCatalogue) {
             if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
-               if (this.selectedTrainsCatalogue.getDateFinValidite().after(trainCatalogueUpdated.getDateFinValidite())) {
+               if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
                   c = new CirculationAdapterDataBean() ;
                   c.setDateCreationLigneTrain(new Date());
-                  c.setDateDebutCirculation(trainCatalogueUpdated.getDateFinValidite());
+                  c.setDateDebutCirculation(t.getDateFinValidite());
                   c.setDateFinCirculation(this.selectedTrainsCatalogue.getDateFinValidite());
                   c.setHeureDepart(StringToDate.toFormatedString(t.getHeureDepartTrainCatalogue()));
                   c.setHeureArriver(StringToDate.toFormatedString(t.getHeureArriveeTrainCatalogue()));
@@ -232,6 +231,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
+   @SuppressWarnings("static-access")
    public String formatterString(String chaine) {
 
       char[] temp = chaine.toCharArray();
@@ -259,7 +259,10 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    
-
+  @SuppressWarnings("static-method")
+public void recupererBeanOrigine(SelectEvent event) {
+     TrainCatalogueDataBean t = (TrainCatalogueDataBean) event.getObject() ;
+  }
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
@@ -268,12 +271,13 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       this.closeDialog = closeDialog;
    }
 
+   @SuppressWarnings("static-method")
    public List<TrainCatalogueDataBean> getListTrainsCatAndValid() {
       return new TrainCatalogueDAO().getAllTrainAndValid();
    }
 
    public String getNumeroTrainCatalogue1() {
-      return numeroTrainCatalogue1;
+      return this.numeroTrainCatalogue1;
    }
 
    public void setNumeroTrainCatalogue1(String numeroTrainCatalogue1) {
@@ -281,7 +285,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String getNumeroTrainCatalogue2() {
-      return numeroTrainCatalogue2;
+      return this.numeroTrainCatalogue2;
    }
 
    public void setNumeroTrainCatalogue2(String numeroTrainCatalogue2) {
@@ -289,7 +293,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String getOriginePointArret() {
-      return originePointArret;
+      return this.originePointArret;
    }
 
    public void setOriginePointArret(String originePointArret) {
@@ -297,7 +301,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String getDestinationPointArret() {
-      return destinationPointArret;
+      return this.destinationPointArret;
    }
 
    public void setDestinationPointArret(String destinationPointArret) {
@@ -305,7 +309,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public Date getHeureDepartTrainCatalogue() {
-      return heureDepartTrainCatalogue;
+      return this.heureDepartTrainCatalogue;
    }
 
    public void setHeureDepartTrainCatalogue(Date heureDepartTrainCatalogue) {
@@ -313,7 +317,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public Date getHeureArriveeTrainCatalogue() {
-      return heureArriveeTrainCatalogue;
+      return this.heureArriveeTrainCatalogue;
    }
 
    public void setHeureArriveeTrainCatalogue(Date date) {
@@ -321,7 +325,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String getRegimeJoursTrainCatalogue() {
-      return regimeJoursTrainCatalogue;
+      return this.regimeJoursTrainCatalogue;
    }
 
    public void setRegimeJoursTrainCatalogue(String regimeJoursTrainCatalogue) {
@@ -329,7 +333,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public Date getDateDebutValidite() {
-      return dateDebutValidite;
+      return this.dateDebutValidite;
    }
 
    public void setDateDebutValidite(Date dateDebutValidite) {
@@ -337,7 +341,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public Date getDateFinValidite() {
-      return dateFinValidite;
+      return this.dateFinValidite;
    }
 
    public void setDateFinValidite(Date dateFinValidite) {
@@ -345,7 +349,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String getOperatingFlight() {
-      return operatingFlight;
+      return this.operatingFlight;
    }
 
    public void setOperatingFlight(String operatingFlight) {
@@ -353,7 +357,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public List<TrainCatalogueDataBean> getTrainsCatalogue() {
-      return trainsCatalogue;
+      return this.trainsCatalogue;
    }
 
    public void setTrainsCatalogue(List<TrainCatalogueDataBean> trainsCatalogue) {
@@ -361,7 +365,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public PointArretDataBean getIdPointArretOrigine() {
-      return idPointArretOrigine;
+      return this.idPointArretOrigine;
    }
 
    public void setIdPointArretOrigine(PointArretDataBean idPointArretOrigine) {
@@ -369,7 +373,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public PointArretDataBean getIdPointArretDestination() {
-      return idPointArretDestination;
+      return this.idPointArretDestination;
    }
 
    public void setIdPointArretDestination(PointArretDataBean idPointArretDestination) {
@@ -377,7 +381,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public List<TrainCatalogueDataBean> getFiltredTrainsCatalogue() {
-      return filtredTrainsCatalogue;
+      return this.filtredTrainsCatalogue;
    }
 
    public void setFiltredTrainsCatalogue(List<TrainCatalogueDataBean> filtredTrainsCatalogue) {
@@ -385,7 +389,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public TrainCatalogueDataBean getSelectedTrainsCatalogue() {
-      return selectedTrainsCatalogue;
+      return this.selectedTrainsCatalogue;
    }
 
    public void setSelectedTrainsCatalogue(TrainCatalogueDataBean selectedTrainsCatalogue) {
@@ -400,7 +404,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public String getNumeroTrainCatalogue() {
-      return numeroTrainCatalogue;
+      return this.numeroTrainCatalogue;
    }
 
    public void setNumeroTrainCatalogue(String numeroTrainCatalogue) {
@@ -408,7 +412,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public List<String> getListSelectedJoursCirculation() {
-      return listSelectedJoursCirculation;
+      return this.listSelectedJoursCirculation;
    }
 
    public void setListSelectedJoursCirculation(List<String> listSelectedJoursCirculation) {
