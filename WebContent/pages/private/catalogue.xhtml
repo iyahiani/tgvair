@@ -59,14 +59,14 @@
 							<p:column headerText="#{msg.p_catalogue_traintable_heureDep}">
 
 								<h:outputText value="#{trains.heureDepartTrainCatalogue}"> 
-								<f:convertDateTime type="date" pattern="HH:mm"/>
+								<f:convertDateTime locale="fr_FR" type="date" pattern="HH:mm"/>
 								</h:outputText>
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_heureArr}">
 
 								<h:outputText value="#{trains.heureArriveeTrainCatalogue}"> 
-								<f:convertDateTime type="date" pattern="HH:mm"/>
+								<f:convertDateTime locale="fr_FR" type="date" pattern="HH:mm"/>
 								</h:outputText>
 							</p:column>
 							<p:column headerText="#{msg.p_catalogue_traintable_origine}"
@@ -273,18 +273,25 @@
 					</tr>
 					<tr>
 						<td><h:outputText value="Heure Départ"></h:outputText></td>
-						<td><p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
+						<td><p:calendar id="HeureDep"  pattern="HH:mm" timeOnly="true" 
 								required="true"
 								value="#{traincatalogue.selectedTrainsCatalogue.heureDepartTrainCatalogue}"
-								locale="fr" showOn="both" /></td>
+								 showOn="both" >
+								 <f:convertDateTime locale="fr_FR" type="time"  pattern="HH:mm"  />
+								 </p:calendar>
+								 </td>
 
 					</tr>
 					<tr>
-						<td><h:outputText value="Heure Arriver"></h:outputText></td>
+						<td><h:outputText value="Heure Arrivée"></h:outputText></td>
 						<td><p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
 								required="true"
 								value="#{traincatalogue.selectedTrainsCatalogue.heureArriveeTrainCatalogue}"
-								locale="fr" showOn="both" /></td>
+								locale="fr_FR" showOn="both" >
+								 <f:convertDateTime locale="fr_FR" type="time" pattern="HH:mm"  />
+								</p:calendar>
+								
+								</td>
 
 					</tr>
 					<tr>
