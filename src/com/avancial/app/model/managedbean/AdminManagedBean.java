@@ -93,16 +93,16 @@ public class AdminManagedBean extends AManageBean {
 
    public String lancerExport() {
       this.sf = new StdSchedulerFactory();
-      JobDetail job = JobBuilder.newJob(JobExport.class).withIdentity("JobExportManuel", "JobExportManuel").build();
-      SimpleTrigger trigger = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuel", "JobExportManuel ").build();
+      JobDetail jobexport = JobBuilder.newJob(JobExport.class).withIdentity("JobExportManuel", "JobExportManuel").build();
+      SimpleTrigger triggerexport = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuel", "JobExportManuel ").build();
       try 
       {
          this.sched = this.sf.getScheduler();
+         this.sched.scheduleJob(jobexport, triggerexport);
          this.sched.start();
-          
-         this.sched.scheduleJob(job, trigger);
-         this.sched.shutdown();    
-      } catch (SchedulerException e) {
+         Thread.sleep(600L);
+         this.sched.shutdown(true);
+      } catch (SchedulerException | InterruptedException e) {
 
          e.printStackTrace();
       }
