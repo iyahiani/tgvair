@@ -11,7 +11,7 @@ import com.avancial.app.resources.utils.StringToDate;
 public class EventJourCirculation extends DefaultScheduleEvent {
 	private static final long serialVersionUID = 1L;
 
-	private Long idCatalogueTrain;
+	private Integer idCatalogueTrain;
 	private Date dateDebut 		= null;
 	private Date dateFin 		= null;
 	private Date heureDepart 	= null;
@@ -23,7 +23,7 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		super();					
 	}
 	
-	public EventJourCirculation(Long idCatalogueTrain, Date dateDebut, Date dateFin, int heureDepart,
+	public EventJourCirculation(Integer idCatalogueTrain, Date dateDebut, Date dateFin, int heureDepart,
 			int heureArrivee, boolean flagCirculation, boolean isAdapted) throws Exception {
 	   super(StringToDate.toStringByFormat(dateDebut, "jour"), dateDebut, dateFin);
 				
@@ -92,11 +92,11 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		this.setDescription(numeroTrain + " " + hDepart + " " + hArrivee + " " + flagCirculation + " " + flagAdapted);					
 	}
 
-	public Long getIdCatalogueTrain() {
+	public Integer getIdCatalogueTrain() {
 		return this.idCatalogueTrain;
 	}
 
-	public void setIdCatalogueTrain(Long idCatalogueTrain) {
+	public void setIdCatalogueTrain(Integer idCatalogueTrain) {
 		this.idCatalogueTrain = idCatalogueTrain;
 	}
 

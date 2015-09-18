@@ -141,8 +141,12 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	}
 	
 	private void initCirculationEvent() throws Exception {
-		Long j = (long) 1000;
-		
+		//Long j = (long) 1000;
+		// parcour de la map train.listeCirculation
+	   // foreach debutvalidé jusqu'a la fin
+	   // verifier si date T existe dans train.listeCirculation *
+	   // Non : creer un even
+	   
 		for (Entry<Date, JourCirculation> jourCirculation : this.modifedTrainCatalogue.getJoursCirculation().entrySet()) {
 			// verification du mois
 			//String  date = (new SimpleDateFormat("yyyy").format(jourCirculation.getKey())).toString();
@@ -157,11 +161,20 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 				   isAdapted = true;
 				}
 			   
-			   EventJourCirculation eventJourCirculation = new EventJourCirculation(j,
+				// * Si oui
+			   EventJourCirculation eventJourCirculation = new EventJourCirculation(this.modifedTrainCatalogue.getIdTrain(),
 						jourCirculation.getValue().getDateCircul(), jourCirculation.getValue().getDateCircul(),
 						jourCirculation.getValue().getHeureDepart(), jourCirculation.getValue().getHeureArrivee(),
 						jourCirculation.getValue().isFlagCirculation(), isAdapted);
 				
+			   // * Si non
+			   /*
+			    EventJourCirculation eventJourCirculation = new EventJourCirculation(this.modifedTrainCatalogue.getIdTrain(),
+                  T.getDate, T.getDate,
+                  heureDepartTrainOriginal, heureArriveeTrainOriginal,
+                  false, false);
+			    */
+			   
 				for (int i = 0; i < 12; i++) {
 					String methode = "getSchedule_"+ i;
 					Method action = this.getClass().getMethod(methode, null);

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -64,19 +65,25 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }
 
    public void rowSelect(SelectEvent event) {
-      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject();
+      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject(); 
+      
    }
 
    /*
     * public void onRowUnselect(UnselectEvent event) { this.selectedTrainsCatalogue = null; }
     */
-
+   public TimeZone getTimeZone() {
+      return TimeZone.getDefault();
+  }
+   
    @SuppressWarnings("static-method")
    public List<PointArretDataBean> getListGDS() {
 
       return new PointArretDAO().getAllGDS();
    }
-
+  /**
+   * 
+   */
    private void reload() {
       this.trainsCatalogue.clear();
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
@@ -147,7 +154,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    @Override
    public TrainCatalogueDataBean getRowData(String arg0) {
-      System.out.println(arg0);
+     
       return null;
    }
 

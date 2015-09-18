@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -15,6 +16,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.SelectableDataModel;
 
+import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
@@ -42,6 +44,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    private String marketingFlight;
    private int quota1er;
    private int quota2em;
+   private  String selectedOneMenu ; 
    private TrainCatalogueToCompagnieDataBean selectedTrain;
 
    public TrainCatalToCompManagedBean() {
@@ -51,7 +54,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       this.trainCatalogueBean = new TrainCatalogueDataBean();
       this.compagnieDataBean = new CompagnieAerienneDataBean(); 
       this.allCodeCompagnie = new ArrayList<>() ;
-      this.reload();
+      //this.reload();
    }
 
    public List<CompagnieAerienneDataBean> getAllCompagnie() {
@@ -60,7 +63,16 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       this.allCompagnie.addAll(temp);
       return this.allCompagnie;
    }
-
+/**
+ * @param event 
+ * recupere la valeur choisie dans le selectOneMenu de l'association Train--Compagnie  
+ */
+   public void valueChanged(ValueChangeEvent event) {
+      this.selectedOneMenu = (String) event.getNewValue() ; 
+      System.out.println();
+   }
+   
+   
    public List<CompagnieAerienneDataBean> getAllCodeCompagnie(){
       List<CompagnieAerienneDataBean> temp = new CompagnieAerienneDao().getAllCodeCompagnie();
       this.allCompagnie.clear();
@@ -123,6 +135,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
             dao.delete(this.selectedTrain);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
             this.closeDialog = true;
+            RequestContext.getCurrentInstance().update(":tableCompAerienne");
          } catch (ASocleException e) {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
          }
@@ -130,42 +143,35 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       return null;
    }
 
-   @PostConstruct
+  /* @PostConstruct
    public void init() {
       this.trainsCataloguesToCompagnies.clear();
-   }
+   }*/
+   
    public void rowSelect(SelectEvent event) {
 
       this.trainCatalogueBean = (TrainCatalogueDataBean) event.getObject();
-
       this.trainsCataloguesToCompagnies.clear();
       trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue()));
       RequestContext.getCurrentInstance().update(":tableCompAerienne");
    }
+   
+   public void rowSelectCompagnie(SelectEvent event) {
 
-   public void onRowUnSelect(SelectEvent event) {
-
+      this.selectedTrain = (TrainCatalogueToCompagnieDataBean) event.getObject() ;
    }
+
+   
 
    public void reload() {
       this.trainsCataloguesToCompagnies.clear();
-      this.trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getAll());
+      this.trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue()));
    }
 
   
    public void setSelectedTrain(TrainCatalogueToCompagnieDataBean selectedTrain) {
-      if (selectedTrain != null) {
-         this.selectedTrain = selectedTrain;
-         this.dateDebutValidite = selectedTrain.getDateDebutValiditeTrainCatalogueToCompagnie();
-         this.dateFinValidite = selectedTrain.getDateFinValiditeTrainCatalogueToCompagnie();
-         // this.codeCompagnie=selectedTrain.getCompagnieAerienneDataBean();
-         this.marketingFlight = selectedTrain.getMarketingFlightTrainCatalogueToCompagnie();
-         this.quota1er = selectedTrain.getQuotaPremiereTrainCatalogueToCompagnie();
-         this.quota2em = selectedTrain.getQuotaDeuxiemeTrainCatalogueToCompagnie();
+      this.selectedTrain = selectedTrain ;
 
-      }
-
-      this.selectedTrain = selectedTrain;
    }
 
    public Boolean getCloseDialog() {
@@ -263,6 +269,14 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
 
    public TrainCatalogueToCompagnieDataBean getSelectedTrain() {
       return this.selectedTrain;
+   }
+
+   public String getSelectedOneMenu() {
+      return this.selectedOneMenu;
+   }
+
+   public void setSelectedOneMenu(String selectedOneMenu) {
+      this.selectedOneMenu = selectedOneMenu;
    }
 
 }
