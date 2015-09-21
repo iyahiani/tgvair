@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.primefaces.model.DefaultScheduleEvent;
 
+import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
+import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.HeureFormattage;
 import com.avancial.app.resources.utils.StringToDate;
 
@@ -72,10 +74,11 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		}
 	}
 
-	public void setCirculationDescriptionTooltip() {
-		String numeroTrain = "Le train N° : " + this.getIdCatalogueTrain();		
-		String hDepart = "Heure départ : " + this.getHeureDepart();
-		String hArrivee = "Heure arrivée : " + this.getHeureArrivee();
+	public void setCirculationDescriptionTooltip() { 
+	   TrainCatalogueDataBean tc = new TrainCatalogueDAO().getTrainCatalogueByID(this.getIdCatalogueTrain()) ;
+		String numeroTrain = "Le train N° : " + tc.getNumeroTrainCatalogue();		
+		String hDepart = "Heure départ : " + StringToDate.toFormatedString2( this.getHeureDepart());
+		String hArrivee = "Heure arrivée : " +StringToDate.toFormatedString2( this.getHeureArrivee());
 		String flagCirculation = "Circulant : ";
 		String flagAdapted = "Adapter : ";
 		

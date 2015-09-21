@@ -53,7 +53,14 @@ public class StringToDate {
          
       return myDate; 
    } 
-	
+	public static String toFormatedString2(Date date) { 
+      //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
+      String format = "HH:mm" ; 
+      SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
+      String myDate = df.format(date);  
+         
+      return myDate; 
+   } 
 	public static String toFormatedStringddMMyyyy(Date date) { 
       //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
       String format = "dd/MM/yyyy" ; 

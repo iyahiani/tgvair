@@ -47,15 +47,15 @@
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_origine}"
-								filterBy="#{trains.originePointArret}"
+								filterBy="#{trains.idPointArretOrigine.libellePointArret}"
 								filterMatchMode="contains">
-								<h:outputText value="#{trains.originePointArret}" />
+								<h:outputText value="#{trains.idPointArretOrigine.libellePointArret}" />
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_destination}"
-								filterBy="#{trains.destinationPointArret}"
+								filterBy="#{trains.idPointArretDestination.libellePointArret}"
 								filterMatchMode="contains">
-								<h:outputText value="#{trains.destinationPointArret}" />
+								<h:outputText value="#{trains.idPointArretDestination.libellePointArret}" />
 							</p:column>
 							<p:column headerText="#{msg.p_catalogue_traintable_heureDep}">
 								<h:outputText value="#{trains.heureDepartTrainCatalogue}">
@@ -206,14 +206,14 @@
 								<p:outputLabel value="#{msg.p_catalogue_t2cTable_codeCompagnie}"></p:outputLabel>
 								
 								<h:selectOneMenu effect="fold" editable="true" required="true"    
-								    valueChangeListener="#{traintocompagnie.valueChanged}" 
+								    valueChangeListener="#{traintocompagnie.valueChanged}" onchange="submit()"
 									value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
 									<f:selectItem itemLabel="Selectionnez une compagnie"
-										itemValue="#{traintocompagnie.selectedOneMenu}" /> 
+										itemValue="#{null}" /> 
 									<f:selectItems value="#{traintocompagnie.allCodeCompagnie}" 
-										id="codeComp" > 
+										 > 
 									</f:selectItems>
-									 <f:ajax event="change" execute="@this" immediate="true" render="marketing_Flight" />
+									 <f:ajax event="valueChange" immediate="true" render="marketing_Flight"  />
 								</h:selectOneMenu>
 								
 								
@@ -223,16 +223,22 @@
 									value="#{traintocompagnie.dateDebutValidite}"
 									pattern="dd/MM/yyyy" timeZone="#{traincatalogue.timeZone}">
 								</p:calendar>
-								<p:outputLabel value="#{msg.p_catalogue_t2cTable_finVal}"></p:outputLabel>
+								<p:outputLabel value="#{msg.p_catalogue_t2cTable_finVal}">
+								</p:outputLabel>
+								
 								<p:calendar id="popup3" showOn="both" required="true"
 									styleClass="dateTimeStyle" locale="fr"
 									value="#{traintocompagnie.dateFinValidite}"
 									pattern="dd/MM/yyyy">
 								</p:calendar>
+								
 								<p:outputLabel for="marketing_Flight" id="marketing"
-									value="#{msg.p_catalogue_t2cTable_marketingFlight}"></p:outputLabel>
+									value="#{msg.p_catalogue_t2cTable_marketingFlight}">
+									</p:outputLabel>
+									
 								<p:inputText style="width : 100% auto;" id="marketing_Flight" 
-									required="true" value="#{traintocompagnie.selectedOneMenu}#{traintocompagnie.marketingFlight}" ></p:inputText>
+									required="true" value="#{traintocompagnie.marketingFlight}" >
+									</p:inputText>
 
 								<p:outputLabel for="Quota1"
 									value="#{msg.p_catalogue_t2cTable_quota1}"></p:outputLabel>

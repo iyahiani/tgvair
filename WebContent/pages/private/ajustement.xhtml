@@ -23,7 +23,7 @@
 					style="margin-bottom:20px">
 					<div class="ui-grid ui-grid-responsive">
 						<h:form>
-							<p:selectOneMenu valueChangeListener="#{ajustement.valueChanged}"
+							<p:selectOneMenu valueChangeListener="#{ajustement.valueChanged}" filter="true" 
 								onchange="submit()">
 								<f:selectItem itemLabel="Selectionnez un train"
 									itemValue="#{null}" />
@@ -31,7 +31,11 @@
 								<f:selectItems var="train" value="#{ajustement.listTrains}"
 									itemLabel="#{train.toString()}" itemValue="#{train.idTrain}" />
 							</p:selectOneMenu>
+							<!--  <p:outputPanel rendered="!#{ajustement.modifedTrainCatalogue} eq null">  </p:outputPanel>
+							<h:outputText value="#{modifedTrainCatalogue.pointArretOrigine}" > </h:outputText>--> 
+							
 						</h:form>
+						
 					</div>
 					<div class="ui-grid ui-grid-responsive">
 						<h:form>

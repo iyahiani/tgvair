@@ -156,8 +156,10 @@ public class TrainFactory implements ITrainFactory {
       train.setDateDebutValidite(bean.getTrainCatalogueDataBean().getDateDebutValidite());
       train.setDateFinValidite(bean.getTrainCatalogueDataBean().getDateFinValidite()); 
       train.setIdTrainCatalogue(bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
-      
-      
+      train.setPointArretDestination(bean.getTrainCatalogueDataBean().getIdPointArretDestination());
+      train.setPointArretOrigine(bean.getTrainCatalogueDataBean().getIdPointArretOrigine());
+      train.setHeureDepart(bean.getTrainCatalogueDataBean().getHeureDepartTrainCatalogue()); 
+      train.setHeureArriver(bean.getTrainCatalogueDataBean().getHeureArriveeTrainCatalogue());
       return train ;
    }
 
@@ -185,6 +187,10 @@ public class TrainFactory implements ITrainFactory {
       train.setDateDebutValidite(bean.getDateDebutValidite());
       train.setDateFinValidite(bean.getDateFinValidite()); 
       train.setIdTrainCatalogue(bean.getIdTrainCatalogue()); 
+      train.setPointArretDestination(bean.getIdPointArretDestination());
+      train.setPointArretOrigine(bean.getIdPointArretOrigine());
+      train.setHeureDepart(bean.getHeureDepartTrainCatalogue()); 
+      train.setHeureArriver(bean.getHeureArriveeTrainCatalogue());
       
       return train ;
    } 

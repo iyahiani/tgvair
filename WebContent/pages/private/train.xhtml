@@ -39,7 +39,7 @@
 								<p:inputText
 									value="#{traincatalogue.numeroTrainCatalogue2}"></p:inputText>
 								<p:outputLabel>#{msg.p_operating_flight}</p:outputLabel>
-								<p:inputMask mask="2*9999" required="true"
+								<p:inputMask mask="2C9999" required="true"
 									value="#{traincatalogue.operatingFlight}"></p:inputMask>
 							</p:panelGrid>
 						</h:panelGrid>
@@ -90,7 +90,7 @@
 							<h:panelGrid columns="1">
 								<p:outputLabel value="#{msg.p_gridPanel_origine}"></p:outputLabel>
 								<h:panelGrid columns="2">
-									<p:selectOneMenu value="#{traincatalogue.originePointArret}"
+									<p:selectOneMenu value="#{traincatalogue.idPointArretOrigine.libellePointArret}"
 										filter="true" effect="fold" editable="true"
 										style="width : 100%">
 										<f:selectItems value="#{traincatalogue.listGDS}"
@@ -99,6 +99,7 @@
 									<p:commandButton icon="ui-icon-circle-plus"
 										actionListener="#{traincatalogue.goPointArret()}" />
 								</h:panelGrid>
+								
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<p:outputLabel for="HeureDep" value="#{msg.p_calendar_heure_depart}" />
@@ -117,7 +118,7 @@
 								<h:panelGrid columns="2" style="margin-right :10px">
 									<p:selectOneMenu effect="fold" editable="true" filter="true"
 										required="true"
-										value="#{traincatalogue.destinationPointArret}"
+										value="#{traincatalogue.idPointArretDestination.libellePointArret}"
 										style="width : 100%">
 										<f:selectItems value="#{traincatalogue.listGDS}" />
 									</p:selectOneMenu>
