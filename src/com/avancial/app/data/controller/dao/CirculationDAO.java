@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Session;
+
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
@@ -77,7 +79,7 @@ public class CirculationDAO extends AbstractDao {
      return requete.getResultList();
      
   }
- 
+  
   
   
   public Date getMaxDateCreationCirculationJourPrecedentByIdTrain(int idTrain, Date dateExtract){
@@ -144,5 +146,15 @@ public class CirculationDAO extends AbstractDao {
     
   }
   
+  public void deleteCirculationByID(int id) { 
+     Session session = getSession() ; 
+     org.hibernate.Query q = session.createQuery("delete CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = :id");
+     q.setParameter("id", id);
+     q.executeUpdate() ;
+     
+  }
+  public Session getSession() {
+     return this.getEntityManager().unwrap(Session.class) ;
+  }
   
 }

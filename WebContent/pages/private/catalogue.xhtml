@@ -98,8 +98,8 @@
 											value=" Modifier le Train #{trains.numeroTrainCatalogue}" />
 									</h:graphicImage>
 								</p:commandLink>
-
-								<p:commandLink id="delete_Train" update=":tableTrains"
+                                 <!-- update=":tableTrains"-->
+								<p:commandLink id="delete_Train"
 									onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
 									action="#{traincatalogue.delete}" ajax="true">
 

@@ -134,13 +134,19 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       }
       return null;
    }
-
+ /**
+  * supprime en cascade le train et ces circulations 
+  */
    @Override
    public String delete() throws ASocleException {
-      super.delete();
-      if (null != this.selectedTrainsCatalogue) {
+      super.delete(); 
+      
+      if (null != this.selectedTrainsCatalogue) { 
+         
          TrainCatalogueDAO dao = new TrainCatalogueDAO();
          try {
+ 
+            new CirculationDAO().deleteCirculationByID(this.selectedTrainsCatalogue.getIdTrainCatalogue());  
             dao.delete(this.selectedTrainsCatalogue);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
             RequestContext.getCurrentInstance().update(":tableTrains");

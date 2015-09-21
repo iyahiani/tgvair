@@ -80,6 +80,7 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	
 	
 	public void valueChanged(ValueChangeEvent event) {
+	   
 	   for (TrainCatalogue trainCatalogue : this.listTrains) {
 	      if (event.getNewValue().equals(String.valueOf(trainCatalogue.getIdTrain()))) {
 	         this.modifedTrainCatalogue  = new TrainCatalogue() ;
