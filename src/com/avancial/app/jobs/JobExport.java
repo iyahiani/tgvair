@@ -54,7 +54,6 @@ public class JobExport implements Job {
                if (listeTrainCatalogue.size()>1) { 
                   TrainCatalogue trainPortef1=listeTrainCatalogue.get(0).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                   TrainCatalogue trainPortef2= listeTrainCatalogue.get(1).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
-                        
                   if (!trainPortef1.compare(trainPortef2)) {compare = true ;break ;}
          }
                

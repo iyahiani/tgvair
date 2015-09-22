@@ -19,4 +19,13 @@ public class Item2RoleDao extends AbstractDao {
       Query query = this.getEntityManager().createQuery("FROM Item2RoleDataBean");
       return query.getResultList();
    }
+   
+   public List<Item2RoleDataBean> getItem2RoleByRoleId(Long idRole) {
+   this.getEntityManager().clear();
+   Query query = this.getEntityManager().createQuery("FROM Item2RoleDataBean where idRole=:role");
+   query.setParameter("role", idRole);
+   return query.getResultList();
+}
+   
+   
 }
