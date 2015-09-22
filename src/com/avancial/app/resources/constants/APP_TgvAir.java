@@ -7,7 +7,10 @@ public enum APP_TgvAir {
    NAVIGATION_CATALOGUE("/pages/private/catalogue?faces-redirect=true"),
    NAVIGATION_POINTARRET("/pages/private/pointArret?faces-redirect=true"),
    NAVIGATION_COMPAGNIEAERIENNE("/pages/private/compagnieAerienne?faces-redirect=true"),
-   NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true");
+   NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"), 
+   CHEMIN_SSIM("\\\\reha\\TGVAir_REC\\ssim\\7989.txt"), 
+   CHEMIN_SSIM7("\\\\reha\\TGVAir_REC\\ssim7\\")
+   ;
 
    private String constante;
 
@@ -19,6 +22,7 @@ public enum APP_TgvAir {
    public String getConstante() {
       return this.constante;
    }
+   
 
    public void setConstante(String constante) {
       this.constante = constante;

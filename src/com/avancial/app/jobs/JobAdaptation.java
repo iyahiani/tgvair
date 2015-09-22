@@ -133,6 +133,7 @@ public class JobAdaptation implements Job {
                
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
+               traincat.calculeCirculationFromJoursCirculation();
                //traincat.adaptGuichet(pa);
                //traincat.calculeCirculationFromJoursCirculation();
                traincat.adaptGuichet(listPointsArret);

@@ -31,13 +31,13 @@
 					
 					
 					<p:selectOneMenu valueChangeListener="#{admin.valueChanged()}"
-                                onchange="submit()">
+                                >
                                 <f:selectItem itemLabel="Selectionnez une Compagnie"
                                     itemValue="#{null}" />
                                 <f:selectItems var="compagnie" value="#{admin.listCompagnies}"
                                      itemValue="#{compagnie}" />
                             </p:selectOneMenu>
-                            <p:commandButton value="#{msg.p_label_bouton}"
+                            <p:commandButton value="#{msg.p_label_bouton_exp}"
                         actionListener="#{admin.lancerExport()}"></p:commandButton>
             </p:panelGrid>
 					

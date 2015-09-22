@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -37,6 +40,8 @@ import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
+import com.avancial.app.model.managedbean.ParamGetterManagedBean;
+import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
 import com.avancial.app.resources.utils.StringToDate;
@@ -47,11 +52,16 @@ import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
+import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
+import com.avancial.socle.params.exception.ParamNotFoundException;
 
 public class GlobalJob implements Job {
-
+   @Inject 
+   
+   ParamGetterManagedBean paramGetter;
+   Logger logger = Logger.getLogger(GlobalJob.class) ;
    public void execute(JobExecutionContext context) throws JobExecutionException {
-
+   
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
@@ -59,9 +69,11 @@ public class GlobalJob implements Job {
 
       IReader reader = null;
       try {
-         reader = new ReaderSSIM("D:/was_tmp/7989.txt");
-      } catch (IOException e1) {
-         // this.logger.error(e1.getMessage());
+//         reader = new ReaderSSIM("D:/was_tmp/7989.txt");
+         reader = new ReaderSSIM("//reha/TGVAir_REC/ssim/7989.txt");//this.paramGetter.getParam("directories", APP_TgvAir.CHEMIN_SSIM.getConstante()).getValue()
+         
+      } catch (IOException e1) {//| ParamNotFoundException | ParamCollectionNotLoadedException e1
+         this.logger.error(e1.getMessage());
          e1.printStackTrace();
       }
 

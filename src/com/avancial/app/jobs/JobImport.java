@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -21,6 +23,8 @@ import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.model.managedbean.ParamGetterManagedBean;
+import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
 import com.avancial.app.resources.utils.StringToDate;
@@ -30,6 +34,8 @@ import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
 import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
+import com.avancial.socle.params.exception.ParamNotFoundException;
 
 /**
  *
@@ -37,6 +43,9 @@ import com.avancial.socle.exceptions.ASocleException;
  */
 public class JobImport implements Job {
 
+ @Inject 
+   
+   ParamGetterManagedBean paramGetter;
    Logger logger = Logger.getLogger(JobImport.class);
 
    @Override
@@ -49,9 +58,12 @@ public class JobImport implements Job {
 
       IReader reader = null;
       try {
-         reader = new ReaderSSIM("D:/was_tmp/7989.txt")  ;
-      } catch (IOException e1) {
-         this.logger.error(e1.getMessage());
+         
+         reader = new ReaderSSIM("\\\\reha\\TGVAir_REC\\ssim\\7989.txt")  ; //this.paramGetter.getParam("directories", APP_TgvAir.CHEMIN_SSIM.getConstante()).getValue()
+        
+      } catch (IOException   e1) { //| ParamNotFoundException | ParamCollectionNotLoadedException"\\\\reha\\TGVAir_REC\\ssim\\7989.txt" 
+        // this.logger.error(e1.getMessage());
+         System.out.println(e1.getMessage());
          e1.printStackTrace();
       }
 
@@ -116,10 +128,10 @@ public class JobImport implements Job {
       }
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
-         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode("D:/was_tmp/5137.txt").get("Date_Extraction"));
-         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode("D:/was_tmp/5137.txt").get("Date_Fin"));
+         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\7989.txt").get("Date_Extraction"));
+         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\7989.txt").get("Date_Fin"));
       } catch (Exception e1) {
-         this.logger.error(e1.getMessage());
+         //this.logger.error(e1.getMessage());
          e1.printStackTrace();
 
       }

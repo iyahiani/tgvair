@@ -58,7 +58,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
 
       Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
       File file = new File(String.valueOf(this.numFichier) + bean.getHeureCreation() + ".txt");
-      this.writer = new WriterTxt("D:/exportSSIM7/" + file);
+      this.writer = new WriterTxt("\\\\reha\\TGVAir_REC\\ssim7\\" + file);
       this.cpt = 0;
       try {
          int[] beginsType1 = { 0, 1, 35, 191, 194, 200 };

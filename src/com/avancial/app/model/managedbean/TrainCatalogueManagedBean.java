@@ -1,5 +1,6 @@
 package com.avancial.app.model.managedbean;
 
+import java.awt.Component;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,9 +8,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
+import javax.faces.component.UIInput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -56,7 +63,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean       selectedTrainsCatalogue;
    private List<String>                 listSelectedJoursCirculation;
-
+   private UIForm formulaire  ;
+   private  UIViewRoot view ; 
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
@@ -92,7 +100,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    @SuppressWarnings("unchecked")
    @Override
    public String add() {
-
+        
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
       Session session = dao.getSession();
       Criteria criteria = session.createCriteria(TrainCatalogueDataBean.class).add(Restrictions.eq("numeroTrainCatalogue1", getNumeroTrainCatalogue1()));
@@ -170,10 +178,14 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
+  
+   
    @SuppressWarnings("static-method")
    public void goTrain() {
-
-      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
+      String num = context.getRequestParameterMap().get("ajoutTain:num");System.out.println(num);     
+      this.view =   FacesContext.getCurrentInstance().getViewRoot() ;
+      this.formulaire = (UIForm) FacesContext.getCurrentInstance().getViewRoot().findComponent("ajoutTain") ;  
       try {
          context.redirect("pointArret.xhtml?faces-redirect=true");
       } catch (IOException e) {
@@ -183,7 +195,13 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    }
 
+   public void saveState() {
+      
+   }
+  
+   
    @SuppressWarnings("static-method")
+   
    public String goPointArret() {
       return APP_TgvAir.NAVIGATION_POINTARRET.toString();
    }
@@ -431,6 +449,22 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    public void setListSelectedJoursCirculation(List<String> listSelectedJoursCirculation) {
       this.listSelectedJoursCirculation = listSelectedJoursCirculation;
+   }
+
+   public UIForm  getFormulaire() {
+      return this.formulaire;
+   }
+
+   public void setFormulaire(UIForm laire) {
+      this.formulaire = formulaire;
+   }
+
+   public UIViewRoot getView() {
+      return view;
+   }
+
+   public void setView(UIViewRoot view) {
+      this.view = view;
    }
 
 }

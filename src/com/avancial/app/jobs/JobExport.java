@@ -70,7 +70,6 @@ public class JobExport implements Job {
                tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
                CirculationDAO dao=new CirculationDAO();
                //On récupère les circulations correspondant à l'id du train catalogue on question 
-               
                List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
                TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste);
                 TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(),tc2c.getDateFinValiditeTrainCatalogueToCompagnie());

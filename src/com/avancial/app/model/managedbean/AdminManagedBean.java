@@ -7,6 +7,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.apache.log4j.Logger;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -16,6 +17,7 @@ import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.jobs.JobAdaptation;
@@ -37,6 +39,8 @@ public class AdminManagedBean extends AManageBean {
    private List<CompagnieAerienneDataBean> listCompagnies = new CompagnieAerienneDao().getAllCodeCompagnie();
    private CompagnieAerienneDataBean compagnie;
 
+   Logger logger = Logger.getLogger(AdminManagedBean.class) ;
+   
    public String lancerJob() {
 
       this.sf = new StdSchedulerFactory();
@@ -54,7 +58,7 @@ public class AdminManagedBean extends AManageBean {
 
       try {
          //this.sched.clear();   
-         this.sched = this.sf.getScheduler();
+          this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(job, trigger);
          //this.sched.scheduleJob(jobAd, triggerAd);
          this.sched.start();
@@ -67,7 +71,7 @@ public class AdminManagedBean extends AManageBean {
          this.sched.shutdown(true);
          
       } catch (SchedulerException | InterruptedException e) {
-
+        // logger.error(e.getMessage());
          e.printStackTrace();
       }
 
