@@ -112,5 +112,21 @@ public class StringToDate {
 			e.printStackTrace();
 			return null;
 		}                
+	} 
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static Date toFormatedDate(Date date) {
+	   SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy : HH:mm", Locale.FRENCH) ;
+	   Date temp= new Date();
+      try {
+         temp = sdf.parse(date.toString());
+      } catch (ParseException e) {
+         
+         e.printStackTrace();
+      }
+	   return temp ;
 	}
 }

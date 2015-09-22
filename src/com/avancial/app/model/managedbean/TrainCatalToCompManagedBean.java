@@ -154,6 +154,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       this.trainsCataloguesToCompagnies.clear();
       trainsCataloguesToCompagnies.addAll(new TrainCatalogueToCompagnieDAO().getTrainToCompagnieByID(this.trainCatalogueBean.getIdTrainCatalogue()));
       RequestContext.getCurrentInstance().update(":tableCompAerienne");
+      RequestContext.getCurrentInstance().update(":formAssocier");
    }
    
    public void rowSelectCompagnie(SelectEvent event) {

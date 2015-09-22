@@ -32,6 +32,7 @@ import com.avancial.app.traitements.TraitementExportDataBean;
  * 
  * @author ismael.yahiani Job d'export du fichier SSIM7
  */
+
 public class JobExport implements Job {
 
    public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -50,7 +51,6 @@ public class JobExport implements Job {
          for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
             tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue());
             List<TrainCatalogue> listeTrainCatalogue = TrainFactory.get2DerniersTC(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue(), Calendar.getInstance().getTime());
-
                if (listeTrainCatalogue.size()>1) { 
                   TrainCatalogue trainPortef1=listeTrainCatalogue.get(0).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                   TrainCatalogue trainPortef2= listeTrainCatalogue.get(1).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
@@ -63,7 +63,6 @@ public class JobExport implements Job {
       } 
          
          if (compare) {
-
             List<TrainCatalogue> listCatalogue = new ArrayList<TrainCatalogue>();
             for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
                tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue()); 

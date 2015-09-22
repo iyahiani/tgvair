@@ -65,6 +65,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private List<String>                 listSelectedJoursCirculation;
    private UIForm formulaire  ;
    private  UIViewRoot view ; 
+   
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
@@ -111,7 +112,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "ce Train Existe Déja"));
       } else {
 
-         PointArretDAO pointArretDAO = new PointArretDAO();
+         PointArretDAO pointArretDAO = new PointArretDAO()  ;
          TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
          bean.setIdPointArretDestination(pointArretDAO.getPointArretbyName(this.idPointArretDestination.getLibellePointArret()).get(0));
          bean.setIdPointArretOrigine(pointArretDAO.getPointArretbyName(this.idPointArretOrigine.getLibellePointArret()).get(0)); //pointArretDAO.getPointArretbyName(this.originePointArret).get(0)
@@ -131,7 +132,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
          try {
             dao.save(bean);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Train Catalogue a été créé."));
-
             RequestContext.getCurrentInstance().update(":tableTrains");
             this.closeDialog = true;
 
@@ -195,9 +195,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    }
 
-   public void saveState() {
+   /*public void saveState() {
       
-   }
+   }*/
   
    
    @SuppressWarnings("static-method")
@@ -314,7 +314,31 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    public List<TrainCatalogueDataBean> getListTrainsCatAndValid() {
       return new TrainCatalogueDAO().getAllTrainAndValid();
    }
-
+ 
+   public String getMinDate() {
+      
+      if (this.selectedTrainsCatalogue!=null) {
+         return StringToDate.toFormatedStringddMMyyyy(this.selectedTrainsCatalogue.getDateDebutValidite()) ; 
+      } 
+      return "" ;
+   }
+   /* public String getMinDate(SelectEvent event) {
+      Date date= (Date) event.getObject(); 
+      
+      if (this.selectedTrainsCatalogue!=null) {
+         return StringToDate.toFormatedStringddMMyyyy(this.selectedTrainsCatalogue.getDateDebutValidite()) ; 
+      } 
+      return "" ;
+   }*/
+     
+ public String getMaxDate() {
+      
+      if (this.selectedTrainsCatalogue!=null) {
+         return StringToDate.toFormatedStringddMMyyyy(this.selectedTrainsCatalogue.getDateFinValidite()) ; 
+      } 
+      return "" ;
+   }
+         
    public String getNumeroTrainCatalogue1() {
       return this.numeroTrainCatalogue1;
    }

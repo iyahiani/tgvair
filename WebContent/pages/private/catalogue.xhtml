@@ -37,7 +37,7 @@
 
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
-								update=":formCompAerienne:tableCompAerienne" delay="1"></p:ajax>
+								update=":formCompAerienne:tableCompAerienne,:formAssocier" delay="1" ></p:ajax>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_numTrain}"
 								id="num_train" filterMatchMode="contains"
@@ -218,10 +218,12 @@
 								
 								
 								<p:outputLabel value="#{msg.p_catalogue_t2cTable_debVal}"></p:outputLabel>
-								<p:calendar id="popup2" showOn="both" locale="fr"
+								<p:calendar id="popup2" showOn="both" locale="fr" 
+								
+								      mindate="#{traincatalogue.minDate}"  maxdate="#{traincatalogue.maxDate}" 
 									required="true" styleClass="dateTimeStyle"
 									value="#{traintocompagnie.dateDebutValidite}"
-									pattern="dd/MM/yyyy" timeZone="#{traincatalogue.timeZone}">
+									pattern="dd/MM/yyyy" timeZone="#{traincatalogue.timeZone}" > 
 								</p:calendar>
 								<p:outputLabel value="#{msg.p_catalogue_t2cTable_finVal}">
 								</p:outputLabel>
