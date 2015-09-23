@@ -28,7 +28,6 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 	public EventJourCirculation(Integer idCatalogueTrain, Date dateDebut, Date dateFin, int heureDepart,
 			int heureArrivee, boolean flagCirculation, boolean isAdapted) throws Exception {
 	   super(StringToDate.toStringByFormat(dateDebut, "jour"), dateDebut, dateFin);
-				
 		this.setIdCatalogueTrain(idCatalogueTrain);
 		this.setDateDebut(dateDebut);
 		this.setDateFin(dateFin);				

@@ -83,13 +83,14 @@ public class AdminManagedBean extends AManageBean {
 
    public String lancerExport() {
       this.sf = new StdSchedulerFactory();
-      JobDetail jobAd = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build();
-      SimpleTrigger triggerAd =  TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build(); 
+      JobDetail jobAdap = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build();
+      SimpleTrigger triggerAdap =  TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build(); 
       JobDetail jobexport = JobBuilder.newJob(JobExport.class).withIdentity("JobExportManuel", "JobExportManuel").build();
       SimpleTrigger triggerexport = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuel", "JobExportManuel ").build();
       try 
       {
-         this.sched.scheduleJob(jobAd, triggerAd);
+         this.sched = this.sf.getScheduler();
+         this.sched.scheduleJob(jobAdap, triggerAdap);
          this.sched.start();
          Thread.sleep(600L);
          this.sched.shutdown(true);

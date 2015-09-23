@@ -229,7 +229,7 @@
 								</p:outputLabel>
 								
 								<p:calendar id="popup3" showOn="both" required="true"
-									styleClass="dateTimeStyle" locale="fr"
+									styleClass="dateTimeStyle" locale="fr" mindate="#{traincatalogue.minDate}"  maxdate="#{traincatalogue.maxDate}" 
 									value="#{traintocompagnie.dateFinValidite}"
 									pattern="dd/MM/yyyy">
 								</p:calendar>

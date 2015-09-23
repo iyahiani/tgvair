@@ -195,9 +195,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    }
 
-   /*public void saveState() {
+   public void saveState() {
       
-   }*/
+   }
   
    
    @SuppressWarnings("static-method")

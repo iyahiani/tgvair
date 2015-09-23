@@ -75,8 +75,8 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
       Circulation circulation1 = this.circulation;
       Circulation circulation2 = circulation;
 
-      listeJoursDes2Circulations.putAll(circulation1.getDateJourCirculMap(false));
-      listeJoursDes2Circulations.putAll(circulation2.getDateJourCirculMap(false));
+      listeJoursDes2Circulations.putAll(circulation1.getJourCirculMap(false));
+      listeJoursDes2Circulations.putAll(circulation2.getJourCirculMap(false));
 
       // Array listeJoursFusion
 
@@ -92,7 +92,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
 
       fusionCirculation.setJoursCirculation(jourCirculationUtil.fusionne(circulation1.getJoursCirculation(), circulation2.getJoursCirculation()));
 
-      for (JourCirculation jourCirculation : fusionCirculation.getDateJourCirculMap(false).values()) {
+      for (JourCirculation jourCirculation : fusionCirculation.getJourCirculMap(false).values()) {
          if (!listeJoursDes2Circulations.containsKey(jourCirculation.getDateCircul()))
             return false;
       }
@@ -107,8 +107,8 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
 
       Map<Date, JourCirculation> listeJoursDes2Circulations = new TreeMap<>();
       Set<String> jourCircul = new TreeSet<>();
-      listeJoursDes2Circulations.putAll(circulation1.getDateJourCirculMap(false));
-      listeJoursDes2Circulations.putAll(circulation2.getDateJourCirculMap(false));
+      listeJoursDes2Circulations.putAll(circulation1.getJourCirculMap(false));
+      listeJoursDes2Circulations.putAll(circulation2.getJourCirculMap(false));
 
       // Array listeJoursFusion
 
@@ -128,7 +128,7 @@ public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
 
       fusionCirculation.setJoursCirculation(jourCirculationUtil.fusionne(circulation1.getJoursCirculation(), circulation2.getJoursCirculation()));
 
-      for (JourCirculation jourCirculation : fusionCirculation.getDateJourCirculMap(false).values()) {
+      for (JourCirculation jourCirculation : fusionCirculation.getJourCirculMap(false).values()) {
          if (!listeJoursDes2Circulations.containsKey(jourCirculation.getDateCircul()))
             return false;
       }

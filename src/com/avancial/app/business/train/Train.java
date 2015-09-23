@@ -28,7 +28,8 @@ public class Train implements ITrain {
 
    private int idTrain;
    protected List<String> listeNumeros;
-   protected Map<Date, JourCirculation> listeJoursCirculation;
+   protected Map<Date, JourCirculation> listeJoursCirculation; 
+   protected List<Date>  listJoursValides;
    private Date dateDebutValidite;
    private Date dateFinValidite;
    private String ooperatingFlight;
@@ -42,6 +43,7 @@ public class Train implements ITrain {
    public Train(List<String> num, List<Circulation> circul) {
       this.listeCirculations = circul;
       this.listeJoursCirculation = new TreeMap<>();
+      this.listJoursValides = new ArrayList<>();
       this.listeNumeros = num;
    }
 
@@ -49,12 +51,14 @@ public class Train implements ITrain {
       this.listeCirculations = new ArrayList<>();
       this.listeNumeros = new ArrayList<>();
       this.listeJoursCirculation = new TreeMap<>();
+      this.listJoursValides = new ArrayList<>();
    }
 
    public Train(List<String> listeNumeros2, List<Circulation> circulations, Map<Date, JourCirculation> listeJoursCirculation2) {
       this.listeNumeros = listeNumeros2;
       this.listeCirculations = circulations;
       this.listeJoursCirculation = listeJoursCirculation2;
+      this.listJoursValides = new ArrayList<>();
    }
 
    public Train(List<String> listeNumeros2, List<Circulation> circulations, Map<Date, JourCirculation> listeJoursCirculation2, Date dateDebutValidite, Date dateFinValidite) {
@@ -63,6 +67,7 @@ public class Train implements ITrain {
       this.listeJoursCirculation = listeJoursCirculation2;
       this.dateDebutValidite = dateDebutValidite;
       this.dateFinValidite = dateFinValidite;
+      this.listJoursValides = new ArrayList<>();
    }
 
    @Override
@@ -160,12 +165,26 @@ public class Train implements ITrain {
    /**
     * Remplit la map des jours de circulation avec tous les jours circulant ou
     * non de toutes les listeCirculations
-    */
+    */ 
+   
+   
+   public int calculeDeNbreDeMoisDeValidite() { 
+      
+      Set<Integer> listMois = new TreeSet<>();
+      this.remplirJoursValidite();  
+      Calendar c = Calendar.getInstance() ;
+      for (Date d : this.getListJoursValides()) {
+         c.setTime(d);
+         listMois.add(c.get(Calendar.MONTH)) ;  
+      }
+      return listMois.size();
+   }
+   
    public void remplirJoursCirculations() {
       this.listeJoursCirculation.clear();
       for (Circulation circul : this.listeCirculations) {
 
-         for (Entry<Date, JourCirculation> entry : circul.getDateJourCirculMap(true).entrySet()) {
+         for (Entry<Date, JourCirculation> entry : circul.getJourCirculMap(true).entrySet()) {
             // Si on ne trouve pas le jour, on ajoute
             if (!this.listeJoursCirculation.containsKey(entry.getKey()))
                this.listeJoursCirculation.put(entry.getKey(), entry.getValue());
@@ -175,6 +194,16 @@ public class Train implements ITrain {
                   this.listeJoursCirculation.put(entry.getKey(), entry.getValue());
             }
          }
+      }
+   } 
+   
+   public void remplirJoursValidite() {
+      this.listJoursValides.clear();
+      Calendar c = Calendar.getInstance() ;
+      c.setTime(this.dateDebutValidite);
+      while(!c.getTime().after(this.dateFinValidite)) {
+         this.listJoursValides.add(c.getTime()) ;
+         c.add(Calendar.DATE, 1);
       }
    }
 
@@ -915,6 +944,14 @@ public class Train implements ITrain {
 
    public void setIdTrain(int idTrain) {
       this.idTrain = idTrain;
+   }
+
+   public List<Date> getListJoursValides() {
+      return listJoursValides;
+   }
+
+   public void setListJoursValides(List<Date> listJoursValides) {
+      this.listJoursValides = listJoursValides;
    }
 
 }

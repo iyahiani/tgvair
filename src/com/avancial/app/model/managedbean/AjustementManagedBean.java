@@ -147,11 +147,36 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	   // foreach debutvalidé jusqu'a la fin
 	   // verifier si date T existe dans train.listeCirculation *
 	   // Non : creer un even
+	   this.modifedTrainCatalogue.remplirJoursValidite();
+	   
+	   this.modifedTrainCatalogue.calculeDeNbreDeMoisDeValidite();
+	   
+	   // comparer les jours ou le train est valide mais il ne circule pas 
+	   
+	   for (Date d : this.modifedTrainCatalogue.getListJoursValides()) {
+	      if(!this.modifedTrainCatalogue.getListeJoursCirculation().containsKey(d) && !d.before(this.initialDate)) {
+	         EventJourCirculation eventJourCirculation = new EventJourCirculation(this.modifedTrainCatalogue.getIdTrain(),
+                  d, d, this.modifedTrainCatalogue.getListeCirculations().get(0).getHeureDepart(),this.modifedTrainCatalogue.getListeCirculations().get(0).getHeureDepart(),false,false);
+            for (int i = 0; i < 12; i++) {
+               String methode = "getSchedule_"+ i;
+               Method action = this.getClass().getMethod(methode, null);
+               CustomerSchedule schedul = ((CustomerSchedule) (action.invoke(this, null)));
+               if (schedul.getName().equals(StringToDate.toStringByFormat(d, "dateFrenchAffichage"))) {
+                  schedul.getSchedule().addEvent(eventJourCirculation);
+               }
+            }     
+	      }
+	   }
+	   
+	 
+	   
 	   
 		for (Entry<Date, JourCirculation> jourCirculation : this.modifedTrainCatalogue.getJoursCirculation().entrySet()) {
 			// verification du mois
 			//String  date = (new SimpleDateFormat("yyyy").format(jourCirculation.getKey())).toString();
-			if (jourCirculation.getKey().compareTo(this.initialDate) >= 0 && jourCirculation.getKey().compareTo(StringToDate.moisSuivant(this.initialDate, 12)) < 0 ) {
+	       
+		   
+		   if (jourCirculation.getKey().compareTo(this.initialDate) >= 0 && jourCirculation.getKey().compareTo(StringToDate.moisSuivant(this.initialDate, 12)) < 0  ) {
 				Boolean isAdapted = false;
 				
 			  /* if (!compareJourCirculationWithTrainCatalaogueOrigine(this.modifedTrainCatalogueOrigine, jourCirculation)) {
@@ -184,8 +209,9 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 						schedul.getSchedule().addEvent(eventJourCirculation);
 					}
 				}				
-			}		
-		}
+			}	
+	
+	}
 	}
 	
 	private boolean compareJourCirculationWithTrainCatalaogueOrigine(TrainCatalogue modifedTrainCatalogueOrigine2, Entry<Date, JourCirculation> jourCirculation) {
@@ -224,6 +250,7 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 		this.setEvent(new EventJourCirculation());		
 	} 
 	
+	
 	//Sauvegarder
 	public void saveAdaptation() {
 	   try {
@@ -236,6 +263,7 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	   }
 	}
 
+	
 	// Annule la sauvgarde
 	public void initSelectedTrain() {
 	   int idTrain = this.getModifedTrainCatalogue().getIdTrain();

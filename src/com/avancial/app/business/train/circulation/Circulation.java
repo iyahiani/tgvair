@@ -65,7 +65,7 @@ public class Circulation implements ICirculation {
     *         circulation et de leurs dates
     */
 
-   public Map<Date, JourCirculation> getDateJourCirculMap(boolean avecJoursNonCirculants) {
+   public Map<Date, JourCirculation> getJourCirculMap(boolean avecJoursNonCirculants) {
       Calendar dateDebut = Calendar.getInstance();
       Calendar dateFin = Calendar.getInstance();
 
