@@ -49,9 +49,9 @@
 						value="#{pointsArret.codeResarailPointArret}"></p:inputText>
 					<p:outputLabel for="ajoutheures" value="#{msg.p_pointArret_addHorraire}">
 					</p:outputLabel>
-					<p:selectBooleanButton id="ajoutheures" style="width : 100% auto;"
-						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
-						offIcon="ui-icon-close" value="#{pointsArret.selectedHorraire}"
+					<p:selectBooleanButton id="ajoutheures" style="width : 100% auto;"  
+						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check" offIcon="ui-icon-close"   
+						value="#{pointsArret.selectedHorraire}"
 						onchange="hideOrShow(this.checked);">
 
 					</p:selectBooleanButton>

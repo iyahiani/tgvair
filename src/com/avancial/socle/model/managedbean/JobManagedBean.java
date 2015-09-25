@@ -193,12 +193,4 @@ public class JobManagedBean extends AManageBean {
       this.classe = classe;
    }
 
-   public List<JobBean> getSelectItems() {
-      return selectItems;
-   }
-
-   public void setSelectItems(List<JobBean> selectItems) {
-      this.selectItems = selectItems;
-   }
-
 }

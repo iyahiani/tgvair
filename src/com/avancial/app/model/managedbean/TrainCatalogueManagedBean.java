@@ -63,6 +63,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean       selectedTrainsCatalogue;
    private List<String>                 listSelectedJoursCirculation;
+   private List<String>                 listAvailableJoursCirculation;
    private UIForm formulaire  ;
    private  UIViewRoot view ; 
    
@@ -101,7 +102,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    @SuppressWarnings("unchecked")
    @Override
    public String add() {
-        
+    
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
       Session session = dao.getSession();
       Criteria criteria = session.createCriteria(TrainCatalogueDataBean.class).add(Restrictions.eq("numeroTrainCatalogue1", getNumeroTrainCatalogue1()));
@@ -166,6 +167,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       return null;
    }
 
+   public void availableItems() {
+      
+   }
    @Override
    public TrainCatalogueDataBean getRowData(String arg0) {
      
@@ -489,6 +493,14 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
 
    public void setView(UIViewRoot view) {
       this.view = view;
+   }
+
+   public List<String> getListAvailableJoursCirculation() {
+      return listAvailableJoursCirculation;
+   }
+
+   public void setListAvailableJoursCirculation(List<String> listAvailableJoursCirculation) {
+      this.listAvailableJoursCirculation = listAvailableJoursCirculation;
    }
 
 }

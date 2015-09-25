@@ -116,20 +116,20 @@ public class TrainFactory implements ITrainFactory {
       
       CirculationDAO dao=new CirculationDAO();
       
-      //On récupère les circulations correspondant à l'id et à la date
-      List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrainAndByDate(idTrainCatalogue, date);
+      //On récupère les circulations correspondant à l'id et à la date 
       
-      TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste)  ;
-      listeTC.add(train)                                                      ; 
+      List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrainAndByDate(idTrainCatalogue, date);  
+      TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste)                     ;
+      if (train!=null)   listeTC.add(train)                                                      ; 
       //On récupère la date J-1
       Date dateJM1=dao.getMaxDateCreationCirculationJourPrecedentByIdTrain(idTrainCatalogue, date);
       
       //      On récupère les circulations J-1
       liste.clear();
       if (dateJM1!= null ) { liste= dao.getCirculationByIdTrainAndByDate(idTrainCatalogue, dateJM1);
-      train=TrainFactory.createTrainCatalogueFromBeans(liste);  listeTC.add(train);   
+      train=TrainFactory.createTrainCatalogueFromBeans(liste);  
+      if (train!=null) listeTC.add(train);   
       }
-       
       return listeTC;
    }
 

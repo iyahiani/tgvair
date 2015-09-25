@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "socle_user2role")
-public class User2RoleDataBean implements Serializable {
+public class User2RoleDataBean implements Serializable{
    /**
     * 
     */

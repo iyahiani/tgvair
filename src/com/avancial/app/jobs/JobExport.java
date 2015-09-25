@@ -54,11 +54,17 @@ public class JobExport implements Job {
                if (listeTrainCatalogue.size()>1) { 
                   TrainCatalogue trainPortef1=listeTrainCatalogue.get(0).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                   TrainCatalogue trainPortef2= listeTrainCatalogue.get(1).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
-                  if (!trainPortef1.compare(trainPortef2)) {compare = true ;break ;}
+                  if (!trainPortef1.compare(trainPortef2)) {
+                     compare = true ;break ;
+                     }
          }
                
-               if (listeTrainCatalogue.size()==1) {
+               if (listeTrainCatalogue.size()==1) { 
+                  Calendar c = Calendar.getInstance() ; 
+                  // Regarder si ce train date d'aujourd'hui ou si c'est un ancien train :Si nouveau Export / Sinon ne pas exporter  
+                  if( new CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0).getDateCreationLigneTrain().equals(c.getTime())) {
                   compare = true  ;break ;
+                  }
                }
       } 
          

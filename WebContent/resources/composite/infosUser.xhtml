@@ -37,17 +37,17 @@
 			<dl>
 				<h:outputText value="Rôles" rendered="#{ihmManagedBean.isLogged()}">
 				</h:outputText>
-				<ui:repeat var="table" value="#{ihmManagedBean.getRoles()}">
+				<ui:repeat var="table" value="#{ihmManagedBean.getCurrentUser().getRoles()}">
 					<dt>
 						<h:outputText
 							value="
-					#{table.getRoleDataBean().getLabelRole()}"
+					#{table.getLabelRole()}"
 							rendered="#{ihmManagedBean.isLogged()}"></h:outputText>
 					</dt>
 				</ui:repeat>
 			</dl>
 		</p:tooltip>
-
+<h:outputText rendered="#{security.noRole and ihmManagedBean.isLogged()}" value="#{msg.message_no_role}"></h:outputText>
 	</div>
 </cc:implementation>
 

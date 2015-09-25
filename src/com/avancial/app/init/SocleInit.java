@@ -26,7 +26,7 @@ import com.avancial.app.jobs.JobImport;
  * @author bruno.legloahec
  *
  */
-@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
 
    /**

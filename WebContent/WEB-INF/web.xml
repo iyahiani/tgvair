@@ -27,10 +27,10 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 
-	<!--  --><context-param>
+  <!--  <context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>afternoon</param-value>
-	</context-param>
+		<param-value>theme2</param-value>
+	</context-param> -->
 	<listener>
 		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>
 		<!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> -->

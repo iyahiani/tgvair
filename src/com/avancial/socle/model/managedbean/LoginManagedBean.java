@@ -13,8 +13,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import com.avancial.socle.data.controller.dao.User2RoleDao;
 import com.avancial.socle.data.controller.dao.UserDao;
+import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.resources.ContextController;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
@@ -29,14 +29,16 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 public class LoginManagedBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   private String            login;
-   private String            password;
+   private String login;
+   private String password;
 
    @Inject
-   private IhmManagedBean    ihmManagedBean;
+   private IhmManagedBean ihmManagedBean;
+   @Inject
+   private SecurityManagedBean securityManagedBean;
 
    // Dao de gestion des utilisateurs
-   private UserDao           utilisateurDao   = new UserDao();
+   private UserDao utilisateurDao = new UserDao();
 
    /**
     * Initialisation de l'url courante
@@ -55,29 +57,37 @@ public class LoginManagedBean implements Serializable {
    /**
     * Execute la connexion
     * 
+    * @return
+    * 
     * @throws IOException
     */
    public void login() throws IOException {
       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
       HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-
+      String url = this.ihmManagedBean.getOriginalURL();
       try {
          request.login(this.login, this.password);
-         this.ihmManagedBean.setCurrentUser(this.utilisateurDao.getUserByLogin(this.login));
+         UserDataBean user = this.utilisateurDao.getUserByLogin(this.login);
+         if (null != user) {
+
+            this.ihmManagedBean.setCurrentUser(user);
+            this.securityManagedBean.init();
+
+            this.ihmManagedBean.setOriginalURL(null);
+
+         }
 
          // Si un user est connecté, on va récupérer ses roles
          // On récupère les roles de l'utilisateur
-         if (null != this.ihmManagedBean.getCurrentUser()) {
-            User2RoleDao daoRoles = new User2RoleDao();
-            this.ihmManagedBean.setRoles(daoRoles.getUser2RoleByIdUser(this.ihmManagedBean.getCurrentUser().getIdUser()));
-         }
-
-         String url = this.ihmManagedBean.getOriginalURL();
-         this.ihmManagedBean.setOriginalURL(null);
+         // if (null != this.ihmManagedBean.getCurrentUser()) {
+         // User2RoleDao daoRoles = new User2RoleDao();
+         // this.ihmManagedBean.setRoles(daoRoles.getUser2RoleByIdUser(this.ihmManagedBean.getCurrentUser().getIdUser()));
+         // }
          externalContext.redirect(url);
       } catch (ServletException e) {
          ContextController.addErrorMessage("login_connexion_erreur");
       }
+
    }
 
    /**
@@ -90,7 +100,9 @@ public class LoginManagedBean implements Serializable {
          HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
          request.logout();
          this.ihmManagedBean.setCurrentUser(null);
+         this.securityManagedBean.init();
          ContextController.addInfoMessage("login_deconnexion_ok");
+
       } catch (ServletException e) {
          e.printStackTrace();
       }

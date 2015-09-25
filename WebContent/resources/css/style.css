@@ -22,7 +22,8 @@
 }
 
 #col_menu {
-	vertical-align: top;
+	vertical-align: top; 
+	/*background-color: ;*/  
 }
 
 #col_contenu {
@@ -30,7 +31,8 @@
 	min-height: 90%;
 	max-height: 1000px;
 	vertical-align: top;
-	width: 100%;
+	width: 100%; 
+	
 }
 
 #col_footer {
@@ -73,21 +75,21 @@
 }
 
 #Pied {
-	width: 100%;
-	bottom: 7px;
+	width: 100%    ;
+	bottom: 7px    ;
 	position: fixed;
 	font-size: 12px;
-	color: grey;
+	color: grey    ;
 	margin-left:44%;
 }
 
 #piedhr{
-	width: 100%;
-	bottom: 20px;
+	width: 100%    ;
+	bottom: 20px   ;
 	position: fixed;
 	font-size: 12px;
-	color: grey;
-	
+	color: grey    ;
+	background-image: url("private/images/SncfVdSaLogo.gif"); 
 }
 
 .actionButtons {
@@ -184,4 +186,58 @@ border-color :#0080ff #E0E0E0;
 .train_adapted {
     background-color: orange;
     color: black;
+}
+
+@font-face {
+    font-family: 'perfo';
+    src: url("#{resource['fonts/Perfograma.otf']}"),
+        url("Perfograma.eot?#iefix") format("embedded-opentype");
+    /* src: url("/pfthemeswitcher/javax.faces.resource/Perfograma.otf}")  ; */
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'track';
+    src: url("#{resource['fonts/Track.ttf']}");
+    /* src: url("/pfthemeswitcher/javax.faces.resource/Perfograma.otf}")  ; */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/
+*
+ 
+Webfont
+:
+ 
+BloggerSans
+ 
+*
+/
+@font-face {
+    font-family: 'BloggerSans';
+    src: url('BloggerSans.eot'); /* IE9 Compat Modes */
+    src: url('BloggerSans.eot?#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */
+         url('BloggerSans.woff') format('woff'), /* Modern Browsers */
+         url('BloggerSans.ttf') format('truetype'),
+        /* Safari, Android, iOS */
+         url('BloggerSans.svg#BloggerSans') format('svg');
+    /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+.classDialogUser .ui-dialog-buttonpane {
+    text-align: center !important;
+}
+
+.classFieldsetUser {
+    margin: 0 0 8px;
+}
+
+.classFieldsetUser label {
+    display: block;
+    width: 85px;
 }

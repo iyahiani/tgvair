@@ -59,7 +59,7 @@ public class JobImport implements Job {
       IReader reader = null;
       try {
          
-         reader = new ReaderSSIM("\\\\reha\\TGVAir_REC\\ssim\\7989.txt")  ; //this.paramGetter.getParam("directories", APP_TgvAir.CHEMIN_SSIM.getConstante()).getValue()
+         reader = new ReaderSSIM("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt")  ; //this.paramGetter.getParam("directories", APP_TgvAir.CHEMIN_SSIM.getConstante()).getValue()
         
       } catch (IOException   e1) { //| ParamNotFoundException | ParamCollectionNotLoadedException"\\\\reha\\TGVAir_REC\\ssim\\7989.txt" 
         // this.logger.error(e1.getMessage());
@@ -128,8 +128,8 @@ public class JobImport implements Job {
       }
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
-         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\7989.txt").get("Date_Extraction"));
-         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\7989.txt").get("Date_Fin"));
+         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt").get("Date_Extraction"));
+         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt").get("Date_Fin"));
       } catch (Exception e1) {
          //this.logger.error(e1.getMessage());
          e1.printStackTrace();

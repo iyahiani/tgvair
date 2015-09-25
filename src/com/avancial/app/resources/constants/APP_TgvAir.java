@@ -9,6 +9,7 @@ public enum APP_TgvAir {
    NAVIGATION_COMPAGNIEAERIENNE("/pages/private/compagnieAerienne?faces-redirect=true"),
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"), 
    CHEMIN_SSIM("\\\\reha\\TGVAir_REC\\ssim\\7989.txt"), 
+   NAVIGATION_ADMINISTRATION("/pages/private/Administration?faces-redirect=true"),
    CHEMIN_SSIM7("\\\\reha\\TGVAir_REC\\ssim7\\")
    ;
 

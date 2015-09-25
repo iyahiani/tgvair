@@ -32,7 +32,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  * @author bruno.legloahec
  *
  */
-//@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
 public class SocleInit extends HttpServlet {
    public Scheduler          sched;
 
@@ -82,7 +82,8 @@ public class SocleInit extends HttpServlet {
             Scheduler sched = sf.getScheduler();
             JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
-            sched.scheduleJob(job, trigger)  ;
+            sched.scheduleJob(job, trigger);
+
          } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
          }
