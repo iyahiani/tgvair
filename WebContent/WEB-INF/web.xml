@@ -6,7 +6,11 @@
 	<display-name>TGV AIR</display-name>
 	<welcome-file-list>
 		<welcome-file>pages/public/accueil.xhtml</welcome-file>
-	</welcome-file-list>
+	</welcome-file-list> 
+	<mime-mapping>
+        <extension>otf</extension>
+        <mime-type>application/font-sfnt</mime-type>
+    </mime-mapping>
 	<servlet>
 		<servlet-name>FacesServlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -27,9 +31,9 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 
-  <!--  <context-param>
+   <!-- <context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>theme2</param-value>
+		<param-value>cupertino</param-value>
 	</context-param> -->
 	<listener>
 		<listener-class>com.avancial.app.resources.utils.Log4jListener</listener-class>

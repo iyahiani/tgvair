@@ -33,9 +33,7 @@
 							</p:selectOneMenu>
 							<!--  <p:outputPanel rendered="!#{ajustement.modifedTrainCatalogue} eq null">  </p:outputPanel>
 							<h:outputText value="#{modifedTrainCatalogue.pointArretOrigine}" > </h:outputText>--> 
-							
 						</h:form>
-						
 					</div>
 					<div class="ui-grid ui-grid-responsive">
 						<h:form>
@@ -253,8 +251,8 @@
 									<h:selectBooleanCheckbox id="flagCirculation"
 										value="#{ajustement.event.flagCirculation}" />
 
-									<p:commandButton type="reset" value="Reset" />
-									<p:commandButton id="addButton" value="Save"
+									<p:commandButton type="reset" value="Reset" style="background-color: white ;" />
+									<p:commandButton id="addButton" value="Save" style="background-color: white ;"
 										actionListener="#{ajustement.addEvent}"
 										oncomplete="PF('myschedule_0').update();
 								PF('myschedule_1').update();PF('myschedule_2').update();PF('myschedule_3').update();PF('myschedule_4').update();PF('myschedule_5').update();
@@ -267,10 +265,10 @@
 						</h:form>
 					</div>
 					<div class="ui-grid ui-grid-responsive">
-						<p:commandButton id="saveAdapt" value="Sauvegarder"
+						<p:commandButton id="saveAdapt" value="Sauvegarder" style="background-color: white ;"
 							actionListener="#{ajustement.saveAdaptation()}">
 						</p:commandButton>
-						<p:commandButton id="cancelAdapt" value="Annuler"
+						<p:commandButton id="cancelAdapt" value="Annuler" style="background-color: white ;"
 							actionListener="#{ajustement.initSelectedTrain()}"
 							oncomplete="PF('myschedule_0').update();
                                 PF('myschedule_1').update();PF('myschedule_2').update();PF('myschedule_3').update();PF('myschedule_4').update();PF('myschedule_5').update();

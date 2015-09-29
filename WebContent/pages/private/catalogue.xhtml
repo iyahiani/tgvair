@@ -21,11 +21,11 @@
 
 			<!-- style="font-size: 45px; font-color : red ;"  class="ui-grid ui-grid-responsive"-->
 			<h:panelGrid columns="1" 
-				style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+				>
 
 				<h:form id="tableTrains">
 					<h:panelGrid columns="1"
-						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto;">
+						>
 
 						<p:dataTable value="#{traincatalogue.trainsCatalogue}" rows="10"  
 							scrollable="true" paginatorPosition="top" id="tableTrains"
@@ -197,69 +197,60 @@
 						</p:column>
 					</p:dataTable>
 				</h:form>
-				<div >
+				
+				<div styleClass="ui-grid-responsive">
 					<h:form id="formAssocier">
-						<h:panelGrid columns="2">
-							<h:panelGrid columns="6" id="ajoutTC" styleClass="myPanelGride"
-								>
+						<h:panelGrid columns="2" >
+							<h:panelGrid columns="6" id="ajoutTC">
 								<f:facet name="header" > #{msg.p_catalogue_headerAssocierTrain}</f:facet>
-								<p:outputLabel value="#{msg.p_catalogue_t2cTable_codeCompagnie}"></p:outputLabel>
-								
 								<h:selectOneMenu effect="fold" editable="true" required="true"    
 								    valueChangeListener="#{traintocompagnie.valueChanged}" onchange="submit()"
-									value="#{traintocompagnie.codeCompagnie}" style="width : 100%">
-									<f:selectItem itemLabel="Selectionnez une compagnie"
+									value="#{traintocompagnie.codeCompagnie}"  style="width: auto;" >
+									<f:selectItem itemLabel="Selectionnez une compagnie" 
 										itemValue="#{null}" /> 
 									<f:selectItems value="#{traintocompagnie.allCodeCompagnie}" 
 										 > 
 									</f:selectItems>
 									 <f:ajax event="valueChange" immediate="true" render="marketing_Flight"  />
 								</h:selectOneMenu>
-								
-								
-								<p:outputLabel value="#{msg.p_catalogue_t2cTable_debVal}"></p:outputLabel>
-								<p:calendar id="popup2" showOn="both" locale="fr" 
+								<p:calendar id="popup2" showOn="both" locale="fr" style="width: 20px;"  title="Date Debut Validité"
 								
 								      mindate="#{traincatalogue.minDate}"  maxdate="#{traincatalogue.maxDate}" 
-									required="true" styleClass="dateTimeStyle"
+									required="true" 
 									value="#{traintocompagnie.dateDebutValidite}"
 									pattern="dd/MM/yyyy" timeZone="#{traincatalogue.timeZone}" > 
 								</p:calendar>
-								<p:outputLabel value="#{msg.p_catalogue_t2cTable_finVal}">
-								</p:outputLabel>
 								
-								<p:calendar id="popup3" showOn="both" required="true"
-									styleClass="dateTimeStyle" locale="fr" mindate="#{traincatalogue.minDate}"  maxdate="#{traincatalogue.maxDate}" 
+								 
+								<p:calendar id="popup3" showOn="both" required="true"  title="Date Fin Validité"
+									styleClass="dateTimeStyle" locale="fr" mindate="#{traincatalogue.minDate}"  
+									 maxdate="#{traincatalogue.maxDate}" 
 									value="#{traintocompagnie.dateFinValidite}"
 									pattern="dd/MM/yyyy">
 								</p:calendar>
 								
-								<p:outputLabel for="marketing_Flight" id="marketing"
-									value="#{msg.p_catalogue_t2cTable_marketingFlight}">
-									</p:outputLabel>
+							
 									
-								<p:inputText style="width : 100% auto;" id="marketing_Flight" 
-									required="true" value="#{traintocompagnie.marketingFlight}" >
+								<p:inputText style="width : 100% auto;" id="marketing_Flight"   title="Marketing Flight" 
+									required="true" value="#{traintocompagnie.marketingFlight}" > 
 									</p:inputText>
 
-								<p:outputLabel for="Quota1"
-									value="#{msg.p_catalogue_t2cTable_quota1}"></p:outputLabel>
-								<p:inputText id="Quota1" style="width :100% auto;"
+								
+								<p:inputText id="Quota1"  title="Quota 1ére"
 									required="true" value="#{traintocompagnie.quota1er}"></p:inputText>
 
-								<p:outputLabel for="Quota2"
-									value="#{msg.p_catalogue_t2cTable_quota2}"></p:outputLabel>
-								<p:inputText id="Quota2" style="width : 100% auto;"
+								
+								<p:inputText id="Quota2"  title="Quota 2éme" 
 									required="true" value="#{traintocompagnie.quota2em}"></p:inputText>
 								<h:panelGrid></h:panelGrid>
 
 							</h:panelGrid>
-							<h:panelGrid columns="2" styleClass="ui-grid-responsive"
+							<h:panelGrid columns="2" 
 								>
 								
-								<p:commandButton icon="ui-icon-cancel" type="reset" title="reset" styleClass="ui-icon">
+								<p:commandButton icon="ui-icon-cancel" type="reset" title="reset" style="background: rgb(255,77,77); border-radius: 25px;">      <!-- styleClass="ui-icon" -->
 								</p:commandButton>
-								<p:commandButton icon="ui-icon-check" type="submit" 
+								<p:commandButton icon="ui-icon-check" type="submit"  style="background: rgb(25, 209, 25); border-radius: 25px;"
                                 oncomplete="reset()" title="ajouter"
 									actionListener="#{traintocompagnie.add}" ajax="true">
 									<p:ajax update=":formCompAerienne" delay="1"
@@ -370,10 +361,10 @@
 				<br />
 				<br />
 				<p:commandButton value="Modifer" type="submit"
-					actionListener="#{traincatalogue.update}"
+					actionListener="#{traincatalogue.update}" style="background-color: white ;"
 					oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close(); PF('tableTrains').update()">
 				</p:commandButton>
-				<p:commandButton immediate="true" onclick="PF('Modif').close()"
+				<p:commandButton immediate="true" onclick="PF('Modif').close()" style="background-color: white ;"
 					value="Annuler" type="cancel"></p:commandButton>
 			</h:form>
 		</p:dialog>
@@ -428,12 +419,12 @@
 				</table>
 				<br />
 				<br />
-				<p:commandButton value="Modifier" type="submit"
+				<p:commandButton value="Modifier" type="submit" style="background-color: white ;"
 					actionListener="#{traintocompagnie.update}"
 					update=":formCompAerienne:tableCompAerienne"
 					oncomplete="if(#{traintocompagnie.closeDialog}=true) PF('modifT2C').close()">
 				</p:commandButton>
-				<p:commandButton immediate="true" onclick="PF('modifT2C').close()"
+				<p:commandButton immediate="true" onclick="PF('modifT2C').close()" style="background-color: white ;"
 					value="annuler" type="cancel"></p:commandButton>
 			</h:form>
 		</p:dialog>

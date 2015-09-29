@@ -49,7 +49,7 @@
 						value="#{pointsArret.codeResarailPointArret}"></p:inputText>
 					<p:outputLabel for="ajoutheures" value="#{msg.p_pointArret_addHorraire}">
 					</p:outputLabel>
-					<p:selectBooleanButton id="ajoutheures" style="width : 100% auto;"  
+					<p:selectBooleanButton id="ajoutheures" style="width : 100% auto; background-color:white ;"
 						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check" offIcon="ui-icon-close"   
 						value="#{pointsArret.selectedHorraire}"
 						onchange="hideOrShow(this.checked);">
@@ -112,8 +112,8 @@
 						<h:panelGrid></h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid columns="2">
-						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"></p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit" oncomplete="reset()"
+						<p:commandButton  value="Annuler" iconPos="left" icon="ui-icon-cancel" type="reset" title="reset" style="background-color: white ;"></p:commandButton>
+						<p:commandButton value="Ajouter" iconPos="left" icon="ui-icon-check" type="submit" oncomplete="reset()" style="background-color: white ;"
 							title="ajouter" actionListener="#{pointsArret.add}"></p:commandButton>
 					</h:panelGrid>
 

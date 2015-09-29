@@ -22,69 +22,34 @@
 		</script>
 		<!--  <f:event listener="#{traincatalogue.saveState()}" type=""></f:event> -->
 		<h:form id="ajoutTain">
-			<p:fieldset legend="#{msg.p_titre}" styleClass="fieldSet">
-                
-				<h:panelGrid columns="1" headerClass="gridHeader" id="tout">
-
-					<h:panelGrid columns="2">
+			<p:fieldset legend="#{msg.p_titre}" styleClass="fieldSet" >
+				<h:panelGrid columns="1" headerClass="gridHeader" id="tout">  
+					<h:panelGrid columns="1">
 						<h:panelGrid columns="1"
-							style="margin-bottom: 20px; border-style:solid; border-color :#FFFFFF #E0E0E0;">
-
-
-							<f:facet name="header">#{msg.p_titre_numeros_train}</f:facet>
-							<p:panelGrid columns="2" styleClass="noBorder">
+							style="border-style:solid; border-color :#FFFFFF #E0E0E0;"> <!-- margin-bottom: 20px;  -->
+							<f:facet name="header" >#{msg.p_titre_numeros_train}</f:facet>
+							<p:panelGrid columns="6" styleClass="noBorder">
 								<p:outputLabel for="num">#{msg.p_numero_simple}</p:outputLabel>
 								<p:inputText id="num" maxlength="6" 
  									value="#{traincatalogue.numeroTrainCatalogue1}">
-									
 								</p:inputText> 
-								
-                                
-                                
 								<p:outputLabel>#{msg.p_numero_multi}</p:outputLabel>
-								<p:inputText value="#{traincatalogue.numeroTrainCatalogue2}"></p:inputText>
-								
+								<p:inputText value="#{traincatalogue.numeroTrainCatalogue2}" id="numMulti"></p:inputText>
 								<p:outputLabel>#{msg.p_operating_flight}</p:outputLabel>
-								<p:inputMask mask="2C9999"
+								<p:inputMask mask="2C9999" id="operat"
 									value="#{traincatalogue.operatingFlight}"></p:inputMask>
-									
-							</p:panelGrid>
+							 </p:panelGrid>
 						</h:panelGrid>
-						<h:panelGrid columns="1"
-							style="margin-left: 20px; margin-right: 20px ;border-style:solid; border-color :#FFFFFF #E0E0E0;">
-							<f:facet name="header"> #{msg.p_ckeckBoxHeader_jours_circulation}</f:facet>
-
-							<h:selectManyCheckbox
-								value="#{traincatalogue.listSelectedJoursCirculation}">
-								<f:selectItem itemValue="1" itemLabel="#{msg.p_ckeckBox_lundi}" />
-								<f:selectItem itemValue="2" itemLabel="#{msg.p_ckeckBox_mardi}" />
-								<f:selectItem itemValue="3"
-									itemLabel="#{msg.p_ckeckBox_mercredi}" />
-								<f:selectItem itemValue="4" itemLabel="#{msg.p_ckeckBox_jeudi}" />
-								<f:selectItem itemValue="5"
-									itemLabel="#{msg.p_ckeckBox_vendredi} " />
-								<f:selectItem itemValue="6" itemLabel="#{msg.p_ckeckBox_samedi}" />
-								<f:selectItem itemValue="7"
-									itemLabel="#{msg.p_ckeckBox_dimanche}" />
-							</h:selectManyCheckbox>
-							<h:panelGrid>
-								<p:commandButton value="Exeptions" icon="ui-icon-plus"></p:commandButton>
-							</h:panelGrid>
-						</h:panelGrid>
-					</h:panelGrid>
 					<ui:insert name="js">
 					</ui:insert>
-					<h:panelGrid columns="4"
-						style="margin-left :10px;margin-bottom :10px;">
+					<h:panelGrid columns="1" >  <!-- style="margin-left :10px;margin-bottom :10px;" -->
 						<form>
-
+						<h:panelGrid columns="2">
 							<h:panelGrid columns="1" rendered="true"
-								style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
-
+								style="border-style:solid; border-color :#FFFFFF #E0E0E0;">
 								<f:facet name="header"> #{msg.p_gridPanel_validite}</f:facet>
-								<h:panelGrid columns="1">
+								<h:panelGrid columns="2">
 									<p:outputLabel for="popup" value="#{msg.p_calendar_valide}" />
-
 									<p:calendar id="popup" showOn="both" locale="fr"
 										value="#{traincatalogue.dateDebutValidite}"
 										style="width : 100%" />
@@ -92,24 +57,41 @@
 									<p:calendar id="popup2" locale="fr" showOn="both"
 										value="#{traincatalogue.dateFinValidite}" />
 								</h:panelGrid>
+							</h:panelGrid>  
+							<h:panelGrid columns="1" 
+                            style="border-style:solid; border-color :#FFFFFF #E0E0E0; "> <!-- margin-left: 20px; margin-right: 20px ; -->
+                            <f:facet name="header"> #{msg.p_ckeckBoxHeader_jours_circulation}</f:facet>
+                            <h:selectManyCheckbox layout="lineDirection" id="checkboxes"
+                                value="#{traincatalogue.listSelectedJoursCirculation}" >
+                                <f:selectItem itemValue="1" itemLabel="#{msg.p_ckeckBox_lundi}" />
+                                <f:selectItem itemValue="2" itemLabel="#{msg.p_ckeckBox_mardi}" />
+                                <f:selectItem itemValue="3" itemLabel="#{msg.p_ckeckBox_mercredi}" />
+                                <f:selectItem itemValue="4" itemLabel="#{msg.p_ckeckBox_jeudi}" />
+                                <f:selectItem itemValue="5" itemLabel="#{msg.p_ckeckBox_vendredi} " />
+                                <f:selectItem itemValue="6" itemLabel="#{msg.p_ckeckBox_samedi}" />
+                                <f:selectItem itemValue="7" itemLabel="#{msg.p_ckeckBox_dimanche}" />
+                            </h:selectManyCheckbox>
+                            <h:panelGrid>
+                                <p:commandButton value="Exeptions" icon="ui-icon-plus" style="background-color: white ;"></p:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
 							</h:panelGrid>
-
+							<h:panelGrid columns="2">
 							<h:panelGrid columns="1" rendered="true"
 								style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 								<f:facet name="header"> #{msg.p_gridPanel_origine}</f:facet>
 								<h:panelGrid columns="1">
 									<p:outputLabel value="#{msg.p_gridPanel_origine}"></p:outputLabel>
 									<h:panelGrid columns="2">
-										<p:selectOneMenu
+										<p:selectOneMenu 
 											value="#{traincatalogue.idPointArretOrigine.libellePointArret}"
-											filter="true" effect="fold" editable="true"
-											style="width : 100%">
-											<f:selectItems value="#{traincatalogue.listGDS}" />
+											filter="true" effect="fold" editable="true">  
+											<f:selectItems value="#{traincatalogue.listGDS}"/>
 										</p:selectOneMenu>
-										<p:commandButton icon="ui-icon-circle-plus"
-											actionListener="#{traincatalogue.goTrain()}" />
+										
+										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white;"
+											actionListener="#{savesession.goTrain()}"/> 
 									</h:panelGrid>
-
 								</h:panelGrid>
 								<h:panelGrid columns="1">
 									<p:outputLabel for="HeureDep"
@@ -119,7 +101,6 @@
 										locale="fr" showOn="both" />
 								</h:panelGrid>
 							</h:panelGrid>
-
 							<h:panelGrid columns="1" rendered="true"
 								style="border-style:solid; border-color :#FFFFFF #E0E0E0; ">
 								<f:facet name="header"> #{msg.p_gridPanel_destination}</f:facet>
@@ -129,36 +110,35 @@
 										<p:selectOneMenu effect="fold" editable="true" filter="true"
 											value="#{traincatalogue.idPointArretDestination.libellePointArret}"
 											style="width : 100%">
-											<f:selectItems value="#{traincatalogue.listGDS}" />
+											<f:selectItems value="#{traincatalogue.listGDS}"/>
 										</p:selectOneMenu>
-										<p:commandButton icon="ui-icon-circle-plus"
-											actionListener="#{traincatalogue.goPointArret}" />
+										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white ;"
+											actionListener="#{savesession.goTrain()}"/>
 									</h:panelGrid>
 								</h:panelGrid>
 								<h:panelGrid columns="1">
 									<p:outputLabel for="HeureArr"
-										value="#{msg.p_calendar_heure_arriver}" />
+										value="#{msg.p_calendar_heure_arriver}"/>
 									<p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
 										value="#{traincatalogue.heureArriveeTrainCatalogue}"
 										locale="fr" showOn="both" />
 								</h:panelGrid>
 							</h:panelGrid>
+							</h:panelGrid>
 						</form>
 					</h:panelGrid>
+					</h:panelGrid>
 					<p:panelGrid class="ui-grid-col-2">
-						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset"
+						<p:commandButton icon="ui-icon-cancel" type="reset" title="reset" style="background-color: white ;"
 							value="#{msg.p_bouton_annuler}">
 						</p:commandButton>
-						<p:commandButton icon="ui-icon-check" type="submit"
+						<p:commandButton icon="ui-icon-check" type="submit" style="background-color: white ;"
 							title="ajouter" value="#{msg.p_bouton_ajouter}"
 							oncomplete="reset()" actionListener="#{traincatalogue.add()}">
-							<!-- <f:ajax render="ajoutTain tout" > ajax="true" </f:ajax>-->
-
 						</p:commandButton>
 					</p:panelGrid>
 				</h:panelGrid>
 			</p:fieldset>
-
 		</h:form>
 	</ui:define>
 </ui:composition>

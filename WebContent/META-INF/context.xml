@@ -1,4 +1,5 @@
 <!--DEV sur Caliban -->
+
 <Context antiJARLocking="true" path="/">
 	<Resource name="BeanManager" auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
@@ -13,8 +14,6 @@
 		localDataSource="true" digest="sha1">
 	</Realm>
 </Context>
-
-
 <!--DEV en local
 <Context antiJARLocking="true" path="/">
 	<Resource name="BeanManager" auth="Container"
@@ -31,8 +30,7 @@
 	</Realm>
 </Context>
  -->
-<!--RECETTE sur Francisco  
-
+<!--RECETTE sur Francisco 
 <Context antiJARLocking="true" path="/">
 	<Resource name="BeanManager" auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
@@ -47,4 +45,4 @@
 		localDataSource="true" digest="sha1">
 	</Realm>
 </Context>
- -->
+  -->

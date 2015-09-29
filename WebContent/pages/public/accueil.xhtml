@@ -6,15 +6,27 @@
     xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="contenu">
+    <ui:define name="contenu"> 
+    
+        <style>               
+        .tgvimage{
+            background-image:url("#{request.contextPath}/resources/icon/tgvair2.png") ;  
+            background-repeat:  no-repeat;  
+            border:  none; 
+        }        
+        </style>  
         <h:head>
-
             <title>#{msg.p_user_role_titre}</title>
         </h:head>
-
-        <h:body >
-            <h1>#{msg.p_accueil_texte_accueil}</h1><br/>
-                <h3 align="center">Bienvenue dans l’application de gestion du portefeuille de trains TGV AIR</h3>
+        <h:body> 
+        <div >
+             <h1>#{msg.p_accueil_texte_accueil}</h1><br/> 
+                <h3 align="center">Bienvenue dans l’application de gestion du portefeuille de trains TGV AIR</h3> 
+                   <div id="costumDIV">
+                     <h:graphicImage  name="icon/tgvair2.png" rendered="#{ihmManagedBean.isLogged()}" style="height: 9.21cm ; width: 12.62cm;"></h:graphicImage>
+                     <h:graphicImage  name="icon/tgvair4.png" rendered="#{ihmManagedBean.isLogged()}" style="height: 9.21cm ; width: 12.62cm;"  ></h:graphicImage>
+                 </div>
+             </div>   
         </h:body> 
     </ui:define>
 
