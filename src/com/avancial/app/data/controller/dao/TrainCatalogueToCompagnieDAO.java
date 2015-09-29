@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -16,6 +17,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class TrainCatalogueToCompagnieDAO extends AbstractDao {
 
+   Logger log = Logger.getLogger(TrainCatalogueToCompagnieDAO.class) ;
    @SuppressWarnings("unchecked")
    @Override
    public List<TrainCatalogueToCompagnieDataBean> getAll() {
@@ -30,8 +32,11 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(bean);
          this.getEntityManager().flush();
-         this.getEntityManager().getTransaction().commit();
+         this.getEntityManager().getTransaction().commit(); 
+         log.info("sauvegarde TrainCatalogue To Compagnie Avec Succés");
+         
       } catch (Exception e) {
+         log.info("sauvegarde TrainCatalogue To Compagnie Echouée");
          this.getEntityManager().getTransaction().rollback();
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);

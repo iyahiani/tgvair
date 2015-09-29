@@ -33,7 +33,9 @@
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
 							selectionMode="single" rowKey="#{trains.numeroTrainCatalogue}"
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
-							paginator="true" rowsPerPageTemplate="5,10,15" >
+							paginator="true" rowsPerPageTemplate="5,10,15"  
+							emptyMessage=""
+							>
                             
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
@@ -128,7 +130,9 @@
 						id="tableCompAerienne" rows="10" selectionMode="single"
 						selection="#{traintocompagnie.selectedTrain}"
 						rowKey="#{compagnie.idTrainCatalogueToCompagnie}" 
-						rowsPerPageTemplate="5,10,15">
+						rowsPerPageTemplate="5,10,15" 
+						emptyMessage=""
+						>
 						<p:ajax event="rowSelect"
 							listener="#{traintocompagnie.rowSelectCompagnie}"
 							update=":formCompAerienne:tableCompAerienne" delay="1">

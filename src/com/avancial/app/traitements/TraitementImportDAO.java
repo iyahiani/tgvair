@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
@@ -13,6 +14,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class TraitementImportDAO extends AbstractDao {
 
+   Logger log = Logger.getLogger(TraitementImportDAO.class) ;
    public void save(TraitementsImportDataBean bean) throws ASocleException {
       try {
 
@@ -36,6 +38,7 @@ public class TraitementImportDAO extends AbstractDao {
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }
+   
    public List<TraitementsImportDataBean> getLastID(){
       
       String sql = "from TraitementsImportDataBean order by idTraitementImport DESC";
@@ -45,9 +48,10 @@ public class TraitementImportDAO extends AbstractDao {
    
    public void saveTraitementSSIM(TraitementsImportDataBean bean) {
       try {
-         save(bean);
+         save(bean); 
+         log.info("Import Succes :");
       } catch (ASocleException e) {
-        
+        log.info("Import Echec : " + e.getMessage());
          e.printStackTrace();
       }
    }

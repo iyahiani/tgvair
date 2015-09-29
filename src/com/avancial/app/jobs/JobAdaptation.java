@@ -35,10 +35,12 @@ import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 
 public class JobAdaptation implements Job {
-
+    
+   
+   
    public void execute(JobExecutionContext context) throws JobExecutionException {
       Logger log = Logger.getLogger(JobAdaptation.class); 
-      
+      log.debug("Job Adaptation Lancé");
       ////////////    Archiver la date de l'export 
       
      new TraitementExportDAO().saveExport(new TraitementExportDataBean());

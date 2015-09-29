@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -26,10 +27,13 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class TrainCatalogueDAO extends AbstractDao {
 
+   Logger log = Logger.getLogger(TrainCatalogueDAO.class) ;
    @Override
    public List<TrainCatalogueDataBean> getAll() {
-      String sql = "From TrainCatalogueDataBean";
-      Query requete = this.getEntityManager().createQuery(sql);
+      String sql = "From TrainCatalogueDataBean"; 
+      Query requete = this.getEntityManager().createQuery(sql); 
+      if (requete.getResultList().size()==0) log.info("requette extraction Trains Catalogue DAO Vide "); 
+      else log.info("requette extraction Trains Catalogue DAO Succée ") ; 
       return requete.getResultList();
 
    }
@@ -61,8 +65,10 @@ public class TrainCatalogueDAO extends AbstractDao {
          circBean.setTrainCatalogueDataBean(bean); 
          this.getEntityManager().persist(circBean);
          this.getEntityManager().flush();
-         this.getEntityManager().getTransaction().commit();
+         this.getEntityManager().getTransaction().commit(); 
+         log.info("sauvegarde TrainCatalogue avec succés");
       } catch (Exception e) {
+         log.info("erreur de sauvegarde du trainCatalogue DB");
          this.getEntityManager().getTransaction().rollback();
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);
@@ -85,7 +91,9 @@ public class TrainCatalogueDAO extends AbstractDao {
          this.getEntityManager().remove(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
+         log.info("suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" avec succés");
       } catch (Exception e) {
+         log.info("Echec suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" ");
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }
@@ -98,7 +106,9 @@ public class TrainCatalogueDAO extends AbstractDao {
          this.getEntityManager().merge(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
+         log.info("Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+" avec succés");
       } catch (Exception e) {
+         log.info("Echec Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+"");
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }

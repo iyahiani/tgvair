@@ -64,8 +64,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    private TrainCatalogueDataBean       selectedTrainsCatalogue;
    private List<String>                 listSelectedJoursCirculation;
    private List<String>                 listAvailableJoursCirculation;
-   private UIForm formulaire  ;
-   private  UIViewRoot view ; 
+  
+   private ExternalContext context ; 
    
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
@@ -88,7 +88,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    
    @SuppressWarnings("static-method")
    public List<PointArretDataBean> getListGDS() {
-
       return new PointArretDAO().getAllGDS();
    }
   /**
@@ -180,16 +179,11 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    public Object getRowKey(TrainCatalogueDataBean arg0) {
 
       return null;
-   }
-
-  
-   
-   @SuppressWarnings("static-method")
+   }  
    public void goTrain() {
-      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
-      String num = context.getRequestParameterMap().get("ajoutTain:num");System.out.println(num);     
-      this.view =   FacesContext.getCurrentInstance().getViewRoot() ;
-      this.formulaire = (UIForm) FacesContext.getCurrentInstance().getViewRoot().findComponent("ajoutTain") ;  
+      this.context = FacesContext.getCurrentInstance().getExternalContext(); 
+      String num = this.context.getRequestParameterMap().get("ajoutTain:num");System.out.println(num);     
+    
       try {
          context.redirect("pointArret.xhtml?faces-redirect=true");
       } catch (IOException e) {
@@ -198,12 +192,10 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       }
 
    }
-
    public void saveState() {
       
    }
   
-   
    @SuppressWarnings("static-method")
    
    public String goPointArret() {
@@ -479,22 +471,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
       this.listSelectedJoursCirculation = listSelectedJoursCirculation;
    }
 
-   public UIForm  getFormulaire() {
-      return this.formulaire;
-   }
-
-   public void setFormulaire(UIForm laire) {
-      this.formulaire = formulaire;
-   }
-
-   public UIViewRoot getView() {
-      return view;
-   }
-
-   public void setView(UIViewRoot view) {
-      this.view = view;
-   }
-
+ 
    public List<String> getListAvailableJoursCirculation() {
       return listAvailableJoursCirculation;
    }
@@ -502,5 +479,15 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    public void setListAvailableJoursCirculation(List<String> listAvailableJoursCirculation) {
       this.listAvailableJoursCirculation = listAvailableJoursCirculation;
    }
+
+   public ExternalContext getContext() {
+      return context;
+   }
+
+   public void setContext(ExternalContext context) {
+      this.context = context;
+   }
+
+  
 
 }

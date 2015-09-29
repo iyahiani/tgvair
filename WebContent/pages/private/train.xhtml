@@ -22,7 +22,7 @@
 		</script>
 		<!--  <f:event listener="#{traincatalogue.saveState()}" type=""></f:event> -->
 		<h:form id="ajoutTain">
-			<p:fieldset legend="#{msg.p_titre}" styleClass="fieldSet" >
+			<p:fieldset legend="Ajout Train" styleClass="fieldSet" >
 				<h:panelGrid columns="1" headerClass="gridHeader" id="tout">  
 					<h:panelGrid columns="1">
 						<h:panelGrid columns="1"
@@ -84,19 +84,18 @@
 									<p:outputLabel value="#{msg.p_gridPanel_origine}"></p:outputLabel>
 									<h:panelGrid columns="2">
 										<p:selectOneMenu 
-											value="#{traincatalogue.idPointArretOrigine.libellePointArret}"
-											filter="true" effect="fold" editable="true">  
-											<f:selectItems value="#{traincatalogue.listGDS}"/>
+											value="#{traincatalogue.idPointArretOrigine.libellePointArret}" id="origine"
+											filter="true" effect="fold" editable="true" style="width : 100%">  
+											<f:selectItems value="#{traincatalogue.listGDS}"/> 
 										</p:selectOneMenu>
-										
-										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white;"
-											actionListener="#{savesession.goTrain()}"/> 
+										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white;" title="ajouter un point d'arret"
+											 action="#{savesession.redirectPointArret()}"/> 
 									</h:panelGrid>
 								</h:panelGrid>
 								<h:panelGrid columns="1">
 									<p:outputLabel for="HeureDep"
 										value="#{msg.p_calendar_heure_depart}" />
-									<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
+									<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true" 
 										value="#{traincatalogue.heureDepartTrainCatalogue}"
 										locale="fr" showOn="both" />
 								</h:panelGrid>
@@ -106,14 +105,15 @@
 								<f:facet name="header"> #{msg.p_gridPanel_destination}</f:facet>
 								<h:panelGrid columns="1">
 									<p:outputLabel value="#{msg.p_gridPanel_destination}"></p:outputLabel>
-									<h:panelGrid columns="2" style="margin-right :10px">
+									<h:panelGrid columns="2" >
 										<p:selectOneMenu effect="fold" editable="true" filter="true"
 											value="#{traincatalogue.idPointArretDestination.libellePointArret}"
-											style="width : 100%">
+											 id="destination"
+											 style="width : 100%">
 											<f:selectItems value="#{traincatalogue.listGDS}"/>
 										</p:selectOneMenu>
-										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white ;"
-											actionListener="#{savesession.goTrain()}"/>
+										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white ;" title="ajouter un point d'arret"
+											actionListener="#{traincatalogue.goTrain()}"/>
 									</h:panelGrid>
 								</h:panelGrid>
 								<h:panelGrid columns="1">

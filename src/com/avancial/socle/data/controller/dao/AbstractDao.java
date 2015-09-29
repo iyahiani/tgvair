@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 /**
@@ -17,7 +18,7 @@ import org.hibernate.Session;
  */
 public abstract class AbstractDao {
    private EntityManager entityManager;
-
+   Logger log = Logger.getLogger(AbstractDao.class) ;
    /**
     * Constructeur
     */
@@ -37,7 +38,8 @@ public abstract class AbstractDao {
    protected void setEntityManager(EntityManager entityManager) {
       this.entityManager = entityManager;
    } 
-   public Session getSession() {
+   public Session getSession() { 
+      if(this.getEntityManager().unwrap(Session.class)==null) log.info("erreur de création de session"); 
       return this.getEntityManager().unwrap(Session.class);
    }
 }

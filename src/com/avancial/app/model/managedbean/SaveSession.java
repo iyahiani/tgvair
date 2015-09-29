@@ -2,10 +2,14 @@ package com.avancial.app.model.managedbean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -14,59 +18,86 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
-/** 
- * permet de sauvegareder l'etat du Context d'une page 
+import com.avancial.app.data.controller.dao.PointArretDAO;
+import com.avancial.app.data.model.databean.PointArretDataBean;
+import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.model.managedbean.AManageBean;
+import com.avancial.socle.resources.constants.SOCLE_constants;
+
+/**
+ * permet de sauvegareder l'etat du Context d'une page
+ * 
  * @author ismael.yahiani
  *
- */ 
+ */
 
 @Named("savesession")
-@SessionScoped
-public class SaveSession implements Serializable{
+@ViewScoped
+public class SaveSession extends AManageBean implements Serializable {
 
    /**
     * 
-    */ 
-   
+    */
+
    private static final long serialVersionUID = 1L;
-   private UIComponent formulaire  ;
-   private  UIViewRoot view ; 
+   private StringBuilder num ; 
+   protected FacesContext fc ;
    
-   public void goTrain() {
+   @Inject
+   private PointArretManagedBean pointArretManagedBean;
+   @Inject
+   protected TrainCatalogueManagedBean tc ; 
+   
+  
+   public String redirectPointArret()  {
+      this.num = new StringBuilder() ;
       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
-      String num = context.getRequestParameterMap().get("ajoutTain:num") ;
-      context.getInitParameterMap() ;   
-      this.view =   FacesContext.getCurrentInstance().getViewRoot() ;
-      this.formulaire = FacesContext.getCurrentInstance().getViewRoot().findComponent("ajoutTain:tout") ;   
-      Map<String,String> map = context.getRequestParameterMap() ; 
-      for (Entry<String, String> entry : map.entrySet()) {
-         System.out.println(entry.getKey()+"-----"+entry.getValue());
+      this.num.append( context.getRequestParameterMap().get("ajoutTain:num") ) ; 
+      return "pointArret.xhtml?faces-redirect=true"      ;
       }
+
+   public String redirectTrain() {
       
-      try {
-         context.redirect("pointArret.xhtml?faces-redirect=true");
-      } catch (IOException e) {
-
-         e.printStackTrace();
-      }
+      return "train.xhtml?faces-redirect=true"           ;
    }
 
-   public UIComponent getFormulaire() {
-      return formulaire;
+   public PointArretManagedBean getPointArretManagedBean() {
+      return this.pointArretManagedBean                  ;
    }
 
-   public void setFormulaire(UIComponent formulaire) {
-      this.formulaire = formulaire;
+   public void setPointArretManagedBean(PointArretManagedBean pointArretManagedBean) {
+      this.pointArretManagedBean = pointArretManagedBean ;
    }
 
-   public UIViewRoot getView() {
-      return view;
+   public TrainCatalogueManagedBean getTc() {
+      return this.tc                                     ;
    }
 
-   public void setView(UIViewRoot view) {
-      this.view = view;
+   public void setTc(TrainCatalogueManagedBean tc) {
+      this.tc = tc                                       ;
    }
+
+   public FacesContext getFc() {
+      return this.fc                                     ;
+   }
+
+   public void setFc(FacesContext fc) {
+      this.fc = fc                                       ;
+   }
+
+   public StringBuilder getNum() {
+      return this.num                                    ;
+   }
+   
+   public void setNum(StringBuilder num) {
+      this.num = num                                     ;
+   } 
+   
 }

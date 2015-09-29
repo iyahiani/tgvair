@@ -55,7 +55,7 @@ public class JobImport implements Job {
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
       List<String> listnumsHashed = new ArrayList<>();
-
+      logger.info("Import started"); 
       IReader reader = null;
       try {
          
@@ -63,7 +63,7 @@ public class JobImport implements Job {
         
       } catch (IOException   e1) { //| ParamNotFoundException | ParamCollectionNotLoadedException"\\\\reha\\TGVAir_REC\\ssim\\7989.txt" 
         // this.logger.error(e1.getMessage());
-         System.out.println(e1.getMessage());
+        logger.info("Import:"+e1.getMessage());
          e1.printStackTrace();
       }
 
@@ -116,7 +116,7 @@ public class JobImport implements Job {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               dao.saveSSIM(circulation);
+               if (circulation!=null) dao.saveSSIM(circulation);
             }
          }
       } catch (NumberFormatException e) {
@@ -137,5 +137,6 @@ public class JobImport implements Job {
       }
       TraitementImportDAO daoImport = new TraitementImportDAO();
       daoImport.saveTraitementSSIM(bean);
+      logger.info("Import Finish");
    }
 }

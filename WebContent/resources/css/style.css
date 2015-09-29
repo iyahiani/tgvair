@@ -10,7 +10,7 @@
 	.ui-widget-header .ui-state-default, .ui-widget-header {
 	/**background: -moz-linear-gradient(center top, rgba(255, 255, 255, 1),
 		rgba(255, 0, 255, 1)) repeat scroll 0 0 !important;**/
-	background:#FFEFEF;
+	background:#86c6db;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
@@ -24,6 +24,19 @@
 	background-color: white ;
 
 	} 
+
+.ui-panel .ui-panel-footer {
+    border-width: 1px 0 0;
+    margin: 0.5em 0 0;
+    padding: 0.5em 1em;
+    text-align: left; 
+    background:#86c6db;
+}
+.ui-panel .ui-panel-titlebar {
+    padding: 0.5em 1em 0.3em; 
+    background: #86c6db; 
+    
+}
 
 .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
     padding: 0.6em 1em; 
@@ -51,6 +64,11 @@
     background : gray ;
     text-decoration: none !important;
 }
+
+.ui-button .ui-widget .ui-state-default .ui-corner-all .ui-button-text-only{
+	
+	background: #ffffff ; 
+}
 .iconCalendar{
 	background-image: url("#{resource['icon/calendar.png']}") !important;
     background-position:  left!important;   
@@ -71,7 +89,7 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
     margin: 0;
     padding: 2px;
     text-align: center; 
-    background-color: #b6b6b6; 
+    background-color: #ffffff; 
 }
 
 #costumDIV{

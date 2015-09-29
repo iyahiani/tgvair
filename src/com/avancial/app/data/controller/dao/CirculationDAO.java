@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
@@ -18,6 +19,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class CirculationDAO extends AbstractDao {
 
+   Logger log = Logger.getLogger(CirculationDAO.class) ;
    @Override
    public List<CirculationAdapterDataBean> getAll() {
       
@@ -35,8 +37,10 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(bean);
          this.getEntityManager().flush();
-         this.getEntityManager().getTransaction().commit();
+         this.getEntityManager().getTransaction().commit(); 
+         log.info("sauvegarde circulations adaptées avec succés");
       } catch (Exception e) {
+         log.info("Echec sauvegarde circulations adaptées");
          this.getEntityManager().getTransaction().rollback();
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);
@@ -50,8 +54,10 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().remove(bean);
          this.getEntityManager().flush();
-         this.getEntityManager().getTransaction().commit();
+         this.getEntityManager().getTransaction().commit(); 
+         log.info("suppression circulations adaptées avec succés");
       } catch (Exception e) {
+         log.info("Echec suppression circulations adaptées");
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }
@@ -64,7 +70,9 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().merge(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
+         log.info("Mise à jours circulations adaptées avec succés");
       } catch (Exception e) {
+         log.info("Echec Mise à jours circulations adaptées");
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }
