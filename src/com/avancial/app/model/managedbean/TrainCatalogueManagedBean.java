@@ -182,7 +182,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Serializab
    }  
    public void goTrain() {
       this.context = FacesContext.getCurrentInstance().getExternalContext(); 
-      String num = this.context.getRequestParameterMap().get("ajoutTain:num");System.out.println(num);     
+      //String num = this.context.getRequestParameterMap().get("ajoutTain:num");
     
       try {
          context.redirect("pointArret.xhtml?faces-redirect=true");

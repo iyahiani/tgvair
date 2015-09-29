@@ -1,6 +1,7 @@
 package com.avancial.test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ import org.junit.Test;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.resources.utils.CalculeJoursFeriers;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 
 public class TrainFromBean  {
@@ -64,7 +66,16 @@ public class TrainFromBean  {
 
 
 
+@Test 
 
+public void testCalendar() {
+   
+   List<Calendar> cal = CalculeJoursFeriers.listJoursFeriers(Calendar.getInstance()) ;
+   for (Calendar calendar : cal) {
+      System.out.println(calendar.getTime());
+      
+   }
+         }
    
    
 }

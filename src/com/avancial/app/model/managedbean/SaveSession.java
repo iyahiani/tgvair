@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
@@ -39,7 +40,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  */
 
 @Named("savesession")
-@ViewScoped
+@SessionScoped
 public class SaveSession extends AManageBean implements Serializable {
 
    /**
@@ -48,22 +49,24 @@ public class SaveSession extends AManageBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
    private StringBuilder num ; 
-   protected FacesContext fc ;
+  
    
    @Inject
    private PointArretManagedBean pointArretManagedBean;
-   @Inject
+   @Inject 
    protected TrainCatalogueManagedBean tc ; 
    
   
    public String redirectPointArret()  {
       this.num = new StringBuilder() ;
+     
       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
       this.num.append( context.getRequestParameterMap().get("ajoutTain:num") ) ; 
       return "pointArret.xhtml?faces-redirect=true"      ;
       }
 
    public String redirectTrain() {
+    
       
       return "train.xhtml?faces-redirect=true"           ;
    }
@@ -84,20 +87,6 @@ public class SaveSession extends AManageBean implements Serializable {
       this.tc = tc                                       ;
    }
 
-   public FacesContext getFc() {
-      return this.fc                                     ;
-   }
 
-   public void setFc(FacesContext fc) {
-      this.fc = fc                                       ;
-   }
-
-   public StringBuilder getNum() {
-      return this.num                                    ;
-   }
-   
-   public void setNum(StringBuilder num) {
-      this.num = num                                     ;
-   } 
    
 }
