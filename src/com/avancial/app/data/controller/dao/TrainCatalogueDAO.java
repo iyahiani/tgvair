@@ -93,8 +93,9 @@ public class TrainCatalogueDAO extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
          log.info("suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" avec succés");
       } catch (Exception e) {
-         log.info("Echec suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" ");
+         
          this.getEntityManager().getTransaction().rollback();
+         log.info("Echec suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" ");
          throw SocleExceptionManager.getException();
       }
 

@@ -19,10 +19,11 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 	private Date heureDepart 	= null;
 	private Date heureArrivee 	= null;
 	private boolean flagCirculation;
-	private boolean flagAdapted;
-
+	private boolean flagAdapted; 
+   private String numTrain;
 	public EventJourCirculation() {
-		super();					
+		super();		
+		
 	}
 	
 	public EventJourCirculation(Integer idCatalogueTrain, Date dateDebut, Date dateFin, int heureDepart,
@@ -35,7 +36,7 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		this.setHeureArrivee(HeureFormattage.intToDate(heureArrivee));
 		this.setFlagCirculation(flagCirculation);		
 		this.setFlagAdapted(isAdapted);
-
+		this.numTrain = new TrainCatalogueDAO().getTrainCatalogueByID(this.idCatalogueTrain).getNumeroTrainCatalogue();
 		this.initScheduleEvent();
 	}		
 	
@@ -62,6 +63,8 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		// Set Style Cell
 		this.setStyleCell();
 	}
+	 
+	 
 	
 	public void setStyleCell() {
 		if (this.isFlagCirculation() && !this.isFlagAdapted()) {
@@ -159,4 +162,12 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		
 		return false;
 	}
+
+   public String getNumTrain() {
+      return numTrain;
+   }
+
+   public void setNumTrain(String numTrain) {
+      this.numTrain = numTrain;
+   }
 }

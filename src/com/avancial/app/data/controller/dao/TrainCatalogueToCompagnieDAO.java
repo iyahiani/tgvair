@@ -75,10 +75,8 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
       
       String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue = ?";
       Query requete = this.getEntityManager().createQuery(sql);
-      requete.setParameter(1,idTrainCatalogue) ;
-      
+      requete.setParameter(1,idTrainCatalogue) ;      
       return requete.getResultList() ;
-      
    }
    public Session getSession() {
       return this.getEntityManager().unwrap(Session.class) ;
@@ -86,7 +84,6 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
    
    public TrainCatalogueToCompagnieDataBean getTrainCatalogue2CByID(int id) {
       Criteria criteria = this.getSession().createCriteria(TrainCatalogueToCompagnieDataBean.class) ;  
-      
        List<TrainCatalogueToCompagnieDataBean> list = criteria.add(Restrictions.eqOrIsNull("idTrainCatalogueToCompagnie", id)).list() ;
       return list.get(0);
    } 
@@ -101,7 +98,6 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
       String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.compagnieAerienneDataBean.CodeCompagnieAerienne = ? ";
       Query requete = this.getEntityManager().createQuery(sql);
       requete.setParameter(1,codeCompagnie) ;
-      
       return requete.getResultList() ;
    }
 

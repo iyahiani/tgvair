@@ -45,7 +45,7 @@ public class PointArretManagedBean extends AManageBean {
    private Date dimancheHeureFermeturePointsArret ; 
    private boolean selectedHorraire =true ;
    private List<PointArretDataBean> listPointsArret ;
-
+    
    public PointArretManagedBean() { 
       
       this.listPointsArret = new ArrayList<>();
@@ -90,6 +90,10 @@ public class PointArretManagedBean extends AManageBean {
       }
       }
       return null ;
+   }
+ public String redirectTrain() {
+      
+      return "train.xhtml?faces-redirect=true"           ;
    }
 
    public String getCodeResarailPointArret() {

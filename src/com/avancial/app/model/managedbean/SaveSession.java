@@ -3,12 +3,16 @@ package com.avancial.app.model.managedbean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.StateHolder;
@@ -40,53 +44,51 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  */
 
 @Named("savesession")
-@SessionScoped
-public class SaveSession extends AManageBean implements Serializable {
+@javax.enterprise.context.SessionScoped
+
+public class SaveSession extends AManageBean {
 
    /**
     * 
     */
-
    private static final long serialVersionUID = 1L;
-   private StringBuilder num ; 
+   private Map<String,String> num ; 
+   private Map<String,Date> dates ; 
+   private List<String> listJoursCirculs ; 
   
-   
-   @Inject
-   private PointArretManagedBean pointArretManagedBean;
-   @Inject 
-   protected TrainCatalogueManagedBean tc ; 
-   
-  
-   public String redirectPointArret()  {
-      this.num = new StringBuilder() ;
-     
-      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
-      this.num.append( context.getRequestParameterMap().get("ajoutTain:num") ) ; 
-      return "pointArret.xhtml?faces-redirect=true"      ;
-      }
-
-   public String redirectTrain() {
-    
+   @PostConstruct
+   public void init() {
+      this.num =new TreeMap<>();
+      this.dates =new TreeMap<>();
+      this.listJoursCirculs = new ArrayList<>();
       
-      return "train.xhtml?faces-redirect=true"           ;
    }
-
-   public PointArretManagedBean getPointArretManagedBean() {
-      return this.pointArretManagedBean                  ;
-   }
-
-   public void setPointArretManagedBean(PointArretManagedBean pointArretManagedBean) {
-      this.pointArretManagedBean = pointArretManagedBean ;
-   }
-
-   public TrainCatalogueManagedBean getTc() {
-      return this.tc                                     ;
-   }
-
-   public void setTc(TrainCatalogueManagedBean tc) {
-      this.tc = tc                                       ;
-   }
-
-
    
+   public SaveSession() { 
+      
+   }
+  
+   public Map<String, String> getNum() {
+      return this.num;
+   }
+   public void setNum(Map<String, String> num) {
+      this.num = num;
+   }
+
+   public Map<String, Date> getDates() {
+      return dates;
+   }
+
+   public void setDates(Map<String, Date> dates) {
+      this.dates = dates;
+   }
+
+   public List<String> getListJoursCirculs() {
+      return listJoursCirculs;
+   }
+
+   public void setListJoursCirculs(List<String> listJoursCirculs) {
+      this.listJoursCirculs = listJoursCirculs;
+   }
+
 }

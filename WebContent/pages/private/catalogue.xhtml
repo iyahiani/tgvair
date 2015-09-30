@@ -103,9 +103,9 @@
                                  <!-- update=":tableTrains"-->
 								<p:commandLink id="delete_Train"
 									onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
-									action="#{traincatalogue.delete}" ajax="true">
-
-									<p:ajax update=":tableTrains:tableTrains" delay="1"></p:ajax>
+									actionListener="#{traincatalogue.delete()}"  >
+									<p:ajax update=":tableTrains:tableTrains" delay="1"></p:ajax>  
+									
 									<f:setPropertyActionListener value="#{trains}"
 										target="#{traincatalogue.selectedTrainsCatalogue}" />
 									<h:graphicImage id="img_delete"
@@ -120,9 +120,6 @@
 						</p:dataTable>
 					</h:panelGrid>
 				</h:form>
-
-
-
 				<h:form id="formCompAerienne">
 					<p:dataTable 
 						value="#{traintocompagnie.trainsCataloguesToCompagnies}"
@@ -189,7 +186,7 @@
 								onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
 								action="#{traintocompagnie.delete}" ajax="true" oncomplete="#{traintocompagnie.reload()}"  >
                                     
-								<p:ajax update=":formCompAerienne:tableCompAerienne" delay="1"></p:ajax>
+								<p:ajax update=":formCompAerienne:tableCompAerienne" delay="1" listener="#{traintocompagnie.reload()}"></p:ajax>
 								<f:setPropertyActionListener value="#{compagnie}"
 									target="#{traintocompagnie.selectedTrain}" />
 								<h:graphicImage id="img_delete"
@@ -284,64 +281,63 @@
 						<td><h:outputText value="Simple"></h:outputText></td>
 						<td><p:inputText
 								value="#{traincatalogue.selectedTrainsCatalogue.numeroTrainCatalogue1}"
-								required="true">
+						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Multi"></h:outputText></td>
 						<td><p:inputText
 								value="#{traincatalogue.selectedTrainsCatalogue.numeroTrainCatalogue2}"
-								required="true">
+						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Operating Flight"></h:outputText></td>
 						<td><p:inputText
 								value="#{traincatalogue.selectedTrainsCatalogue.operatingFlight}"
-								required="true">
+						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Origine"></h:outputText></td>
 						<td><p:inputText
 								value="#{traincatalogue.selectedTrainsCatalogue.originePointArret}"
-								required="true">
+						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Destination"></h:outputText></td>
 						<td><p:inputText
 								value="#{traincatalogue.selectedTrainsCatalogue.destinationPointArret}"
-								required="true">
+						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Heure Départ"></h:outputText></td>
-						<td><p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"
-								required="true"
+						<td><p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"  
 								value="#{traincatalogue.selectedTrainsCatalogue.heureDepartTrainCatalogue}"
 								showOn="both">
-								<f:convertDateTime locale="fr" type="time" pattern="HH:mm" />
+								<f:convertDateTime locale="fr" type="time" pattern="HH:mm"  timeZone="#{traincatalogue.timeZone}" />
 							</p:calendar></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Heure Arrivée"></h:outputText></td>
 						<td><p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
-								required="true"
+						 
 								value="#{traincatalogue.selectedTrainsCatalogue.heureArriveeTrainCatalogue}"
 								locale="fr" showOn="both">
-								<f:convertDateTime locale="fr" type="time" pattern="HH:mm" />
+								<f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
 							</p:calendar></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Valide Du "></h:outputText></td>
-						<td><p:calendar showOn="both" locale="fr" required="true"
+						<td><p:calendar showOn="both" locale="fr" 
 								value="#{traincatalogue.selectedTrainsCatalogue.dateDebutValidite}" />
 						</td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Au : "></h:outputText></td>
-						<td><p:calendar showOn="both" locale="fr" required="true"
+						<td><p:calendar showOn="both" locale="fr" 
 								value="#{traincatalogue.selectedTrainsCatalogue.dateFinValidite}" />
 						</td>
 					</tr>
@@ -349,7 +345,7 @@
 						<td><h:outputText value="Jour Circulation: " /> 
 						<p:inplace id="checkBoxes" label="   Cliquez ici" effect="slide">
 								<h:selectManyCheckbox layout="pageDirection" 
-									value="#{traincatalogue.listSelectedJoursCirculation}" required="true">
+									value="#{traincatalogue.listSelectedJoursCirculation}">
 									<f:selectItem itemValue="1" itemLabel="#{msg.p_ckeckBox_lundi}" />
 									<f:selectItem itemValue="2" itemLabel="#{msg.p_ckeckBox_mardi}" />
 									<f:selectItem itemValue="3" itemLabel="#{msg.p_ckeckBox_mercredi}" />
@@ -365,8 +361,11 @@
 				<br />
 				<br />
 				<p:commandButton value="Modifer" type="submit"
-					actionListener="#{traincatalogue.update}" style="background-color: white ;"
-					oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close(); PF('tableTrains').update()">
+					actionListener="#{traincatalogue.update()}" 
+					style="background-color: white ;" oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close();"  
+					ajax="true">      
+					
+					
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Modif').close()" style="background-color: white ;"
 					value="Annuler" type="cancel"></p:commandButton>
