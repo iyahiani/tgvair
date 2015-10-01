@@ -11,8 +11,12 @@
 		<script type="text/javascript">
 			function reset() {
 				$("#formAssocier")[0].reset();
+			} 
+			function refresh(){ 
+				
 			}
-		</script>
+				</script>
+		
 
 
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
@@ -103,9 +107,10 @@
                                  <!-- update=":tableTrains"-->
 								<p:commandLink id="delete_Train"
 									onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
-									actionListener="#{traincatalogue.delete()}"  >
-									<p:ajax update=":tableTrains:tableTrains" delay="1"></p:ajax>  
+									actionListener="#{traincatalogue.delete()}"  oncomplete="#{traincatalogue.reload()}">
 									
+									<p:ajax update=":tableTrains:tableTrains" delay="1" 
+                                              listener="#{traincatalogue.reload()}"></p:ajax>
 									<f:setPropertyActionListener value="#{trains}"
 										target="#{traincatalogue.selectedTrainsCatalogue}" />
 									<h:graphicImage id="img_delete"
@@ -186,7 +191,8 @@
 								onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
 								action="#{traintocompagnie.delete}" ajax="true" oncomplete="#{traintocompagnie.reload()}"  >
                                     
-								<p:ajax update=":formCompAerienne:tableCompAerienne" delay="1" listener="#{traintocompagnie.reload()}"></p:ajax>
+								<p:ajax update=":formCompAerienne:tableCompAerienne" delay="1" 
+								listener="#{traintocompagnie.reload()}"></p:ajax>
 								<f:setPropertyActionListener value="#{compagnie}"
 									target="#{traintocompagnie.selectedTrain}" />
 								<h:graphicImage id="img_delete"
@@ -202,63 +208,53 @@
 				<div styleClass="ui-grid-responsive">
 					<h:form id="formAssocier">
 						<h:panelGrid columns="2" >
-							<h:panelGrid columns="6" id="ajoutTC">
+							<h:panelGrid columns="7" id="ajoutTC">
 								<f:facet name="header" > #{msg.p_catalogue_headerAssocierTrain}</f:facet>
+								
 								<h:selectOneMenu effect="fold" editable="true" required="true"    
-								    valueChangeListener="#{traintocompagnie.valueChanged}" onchange="submit()"
-									value="#{traintocompagnie.codeCompagnie}"  style="width: auto;" >
-									<f:selectItem itemLabel="Selectionnez une compagnie" 
-										itemValue="#{null}" /> 
-									<f:selectItems value="#{traintocompagnie.allCodeCompagnie}" 
-										 > 
-									</f:selectItems>
-									 <f:ajax event="valueChange" immediate="true" render="marketing_Flight"  />
-								</h:selectOneMenu>
+									value="#{traintocompagnie.codeCompagnie}"  
+									valueChangeListener="#{traintocompagnie.valueChanged}" 
+									style="width: auto;"  > 
+									   
+									<f:selectItem itemLabel="Selectionnez une compagnie" itemValue="#{null}"/>
+									<f:selectItems value="#{traintocompagnie.allCodeCompagnie}"/>  
+									 
+								</h:selectOneMenu> 
+								<p:inputText style="width : 100% auto;" id="marketingFlight"   title="Marketing Flight" 
+                                     value="#{traintocompagnie.marketingFlight}" > 
+                                    </p:inputText>
+								<p:inputText id="Quota1"  title="Quota 1ére"
+                                    required="true" value="#{traintocompagnie.quota1er}"></p:inputText>                   
+                                <p:inputText id="Quota2"  title="Quota 2éme" 
+                                    required="true" value="#{traintocompagnie.quota2em}"></p:inputText>
 								<p:calendar id="popup2" showOn="both" locale="fr" style="width: 20px;"  title="Date Debut Validité"
-								
 								      mindate="#{traincatalogue.minDate}"  maxdate="#{traincatalogue.maxDate}" 
-									required="true" 
-									value="#{traintocompagnie.dateDebutValidite}"
-									pattern="dd/MM/yyyy" timeZone="#{traincatalogue.timeZone}" > 
+									  required="true" 
+									  value="#{traintocompagnie.dateDebutValidite}"
+									  pattern="dd/MM/yyyy" timeZone="#{traincatalogue.timeZone}" > 
 								</p:calendar>
-								
-								 
 								<p:calendar id="popup3" showOn="both" required="true"  title="Date Fin Validité"
 									styleClass="dateTimeStyle" locale="fr" mindate="#{traincatalogue.minDate}"  
 									 maxdate="#{traincatalogue.maxDate}" 
 									value="#{traintocompagnie.dateFinValidite}"
 									pattern="dd/MM/yyyy">
 								</p:calendar>
-								
+																	
+								<h:panelGrid columns="2">
+                                
+                                <p:commandButton icon="ui-icon-cancel" type="reset" title="reset" style="background: rgb(255,77,77); border-radius: 25px;">      <!-- styleClass="ui-icon" -->
+                                </p:commandButton>
+                                <p:commandButton icon="ui-icon-check" type="submit"  style="background: rgb(25, 209, 25); border-radius: 25px;"
+                                oncomplete="if (#{traintocompagnie.closeDialog}=true) reset();" title="ajouter"
+                                    actionListener="#{traintocompagnie.add}" ajax="true">
+                                    <p:ajax update=":formCompAerienne" delay="1"
+                                        listener="#{traintocompagnie.reload()}"
+                                        render="formAssocier ajoutTC" resetValues="true"></p:ajax>
+                                </p:commandButton>
+                            </h:panelGrid>
+
+							</h:panelGrid>
 							
-									
-								<p:inputText style="width : 100% auto;" id="marketing_Flight"   title="Marketing Flight" 
-									required="true" value="#{traintocompagnie.marketingFlight}" > 
-									</p:inputText>
-
-								
-								<p:inputText id="Quota1"  title="Quota 1ére"
-									required="true" value="#{traintocompagnie.quota1er}"></p:inputText>
-
-								
-								<p:inputText id="Quota2"  title="Quota 2éme" 
-									required="true" value="#{traintocompagnie.quota2em}"></p:inputText>
-								<h:panelGrid></h:panelGrid>
-
-							</h:panelGrid>
-							<h:panelGrid columns="2" 
-								>
-								
-								<p:commandButton icon="ui-icon-cancel" type="reset" title="reset" style="background: rgb(255,77,77); border-radius: 25px;">      <!-- styleClass="ui-icon" -->
-								</p:commandButton>
-								<p:commandButton icon="ui-icon-check" type="submit"  style="background: rgb(25, 209, 25); border-radius: 25px;"
-                                oncomplete="reset()" title="ajouter"
-									actionListener="#{traintocompagnie.add}" ajax="true">
-									<p:ajax update=":formCompAerienne" delay="1"
-										listener="#{traintocompagnie.reload()}"
-										render="formAssocier ajoutTC" resetValues="true"></p:ajax>
-								</p:commandButton>
-							</h:panelGrid>
 						</h:panelGrid>
 					</h:form>
 				</div>
@@ -301,14 +297,14 @@
 					<tr>
 						<td><h:outputText value="Origine"></h:outputText></td>
 						<td><p:inputText
-								value="#{traincatalogue.selectedTrainsCatalogue.originePointArret}"
+								value="#{traincatalogue.selectedTrainsCatalogue.idPointArretOrigine.libellePointArret}"
 						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Destination"></h:outputText></td>
 						<td><p:inputText
-								value="#{traincatalogue.selectedTrainsCatalogue.destinationPointArret}"
+								value="#{traincatalogue.selectedTrainsCatalogue.idPointArretDestination.libellePointArret}"
 						>
 							</p:inputText></td>
 					</tr>
@@ -364,8 +360,6 @@
 					actionListener="#{traincatalogue.update()}" 
 					style="background-color: white ;" oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close();"  
 					ajax="true">      
-					
-					
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Modif').close()" style="background-color: white ;"
 					value="Annuler" type="cancel"></p:commandButton>

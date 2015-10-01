@@ -237,6 +237,7 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 						schedul.getSchedule().updateEvent(this.event);
 						
 						// Modification de jourCirculation métier
+						
 						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setHeureArrivee(Integer.valueOf( StringToDate.toFormatedString(this.getEvent().getHeureArrivee())));
 						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setHeureDepart(Integer.valueOf( StringToDate.toFormatedString(this.getEvent().getHeureDepart())));
 						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setFlagCirculation(this.getEvent().isFlagCirculation());						

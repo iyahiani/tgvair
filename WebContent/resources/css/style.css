@@ -3,7 +3,10 @@
 }
 
 .ui-menu {
-	background: rgba(255, 255, 255, 1) !important;
+	background: rgba(255, 255, 255, 1) !important; 
+	font :bold;
+	font-weight: bold;
+	
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default,
@@ -117,6 +120,7 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 
 #col_menu {
 	vertical-align: top;
+	font: bold;
 	/*background-color: ;*/
 }
 
@@ -248,7 +252,7 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 	max-width: auto;
 	padding: 16px;
 	font: 200;
-	font-size: x-small;
+	font-size: small;
 	font-family: inherit;
 }
 

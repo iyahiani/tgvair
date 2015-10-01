@@ -31,13 +31,13 @@
 							<p:panelGrid columns="6" styleClass="noBorder">
 								<p:outputLabel for="num">#{msg.p_numero_simple}</p:outputLabel>
 								<p:inputText id="num" maxlength="6" 
- 									value="#{traincatalogue.numeroTrainCatalogue1}">
+ 									value="#{ajouttrain.numeroTrainCatalogue1}">
 								</p:inputText> 
 								<p:outputLabel>#{msg.p_numero_multi}</p:outputLabel>
-								<p:inputText value="#{traincatalogue.numeroTrainCatalogue2}" id="numMulti"></p:inputText>
+								<p:inputText value="#{ajouttrain.numeroTrainCatalogue2}" id="numMulti"></p:inputText>
 								<p:outputLabel>#{msg.p_operating_flight}</p:outputLabel>
 								<p:inputMask mask="2C9999" id="operat"
-									value="#{traincatalogue.operatingFlight}"></p:inputMask>
+									value="#{ajouttrain.operatingFlight}"></p:inputMask>
 							 </p:panelGrid>
 						</h:panelGrid>
 					<ui:insert name="js">
@@ -51,18 +51,18 @@
 								<h:panelGrid columns="2">
 									<p:outputLabel for="popup" value="#{msg.p_calendar_valide}" />
 									<p:calendar id="popup" showOn="both" locale="fr"
-										value="#{traincatalogue.dateDebutValidite}"
+										value="#{ajouttrain.dateDebutValidite}"
 										style="width : 100%" />
 									<p:outputLabel for="popup" value="#{msg.p_calendar_au}" />
 									<p:calendar id="popup2" locale="fr" showOn="both"
-										value="#{traincatalogue.dateFinValidite}" />
+										value="#{ajouttrain.dateFinValidite}" />
 								</h:panelGrid>
 							</h:panelGrid>  
 							<h:panelGrid columns="1" 
                             style="border-style:solid; border-color :#FFFFFF #E0E0E0; "> <!-- margin-left: 20px; margin-right: 20px ; -->
                             <f:facet name="header"> #{msg.p_ckeckBoxHeader_jours_circulation}</f:facet>
                             <h:selectManyCheckbox layout="lineDirection" id="checkboxes"
-                                value="#{traincatalogue.listSelectedJoursCirculation}" >
+                                value="#{ajouttrain.listSelectedJoursCirculation}" >
                                 <f:selectItem itemValue="1" itemLabel="#{msg.p_ckeckBox_lundi}" />
                                 <f:selectItem itemValue="2" itemLabel="#{msg.p_ckeckBox_mardi}" />
                                 <f:selectItem itemValue="3" itemLabel="#{msg.p_ckeckBox_mercredi}" />
@@ -84,9 +84,9 @@
 									<p:outputLabel value="#{msg.p_gridPanel_origine}"></p:outputLabel>
 									<h:panelGrid columns="2">
 										<p:selectOneMenu 
-											value="#{traincatalogue.idPointArretOrigine.libellePointArret}" id="origine"
+											value="#{ajouttrain.idPointArretOrigine.libellePointArret}" id="origine"
 											filter="true" effect="fold" editable="true" style="width : 100%">  
-											<f:selectItems value="#{traincatalogue.listGDS}"/> 
+											<f:selectItems value="#{ajouttrain.listGDS}"/> 
 										</p:selectOneMenu>
 										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white;" title="ajouter un point d'arret"
 											 action="#{traincatalogue.goTrain()}"/> 
@@ -96,7 +96,7 @@
 									<p:outputLabel for="HeureDep"
 										value="#{msg.p_calendar_heure_depart}" />
 									<p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true" 
-										value="#{traincatalogue.heureDepartTrainCatalogue}"
+										value="#{ajouttrain.heureDepartTrainCatalogue}"
 										locale="fr" showOn="both" />
 								</h:panelGrid>
 							</h:panelGrid>
@@ -107,10 +107,10 @@
 									<p:outputLabel value="#{msg.p_gridPanel_destination}"></p:outputLabel>
 									<h:panelGrid columns="2" >
 										<p:selectOneMenu effect="fold" editable="true" filter="true"
-											value="#{traincatalogue.idPointArretDestination.libellePointArret}"
+											value="#{ajouttrain.idPointArretDestination.libellePointArret}"
 											 id="destination"
 											 style="width : 100%">
-											<f:selectItems value="#{traincatalogue.listGDS}"/>
+											<f:selectItems value="#{ajouttrain.listGDS}"/>
 										</p:selectOneMenu>
 										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white ;" title="ajouter un point d'arret"
 											actionListener="#{traincatalogue.goTrain()}"/>
@@ -120,7 +120,7 @@
 									<p:outputLabel for="HeureArr"
 										value="#{msg.p_calendar_heure_arriver}"/>
 									<p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
-										value="#{traincatalogue.heureArriveeTrainCatalogue}"
+										value="#{ajouttrain.heureArriveeTrainCatalogue}"
 										locale="fr" showOn="both" />
 								</h:panelGrid>
 							</h:panelGrid>
@@ -134,7 +134,7 @@
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-check" type="submit" style="background-color: white ;"
 							title="ajouter" value="#{msg.p_bouton_ajouter}"
-							oncomplete="reset()" actionListener="#{traincatalogue.add()}">
+							 actionListener="#{ajouttrain.add}" oncomplete="reset()">
 						</p:commandButton>
 					</p:panelGrid>
 				</h:panelGrid>

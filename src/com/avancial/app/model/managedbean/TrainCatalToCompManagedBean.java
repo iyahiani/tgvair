@@ -69,7 +69,8 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
  */
    public void valueChanged(ValueChangeEvent event) {
       this.selectedOneMenu = (String) event.getNewValue() ; 
-      System.out.println();
+      this.marketingFlight = (String) event.getNewValue() ; 
+      System.out.println(this.marketingFlight);
    }
    
    
@@ -94,7 +95,12 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       bean.setQuotaPremiereTrainCatalogueToCompagnie(getQuota1er());
       bean.setQuotaDeuxiemeTrainCatalogueToCompagnie(getQuota2em());
       bean.setCodeCompagnieAerienne(getCodeCompagnie());
-
+      if(bean.getTrainCatalogueDataBean().getNumeroTrainCatalogue()==null)   {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
+               new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur", "Selectionnez Un train."));
+         this.closeDialog = true;
+      }
+      else 
       try {
          dao.save(bean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
@@ -142,11 +148,8 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       }
       return null;
    }
-
-  /* @PostConstruct
-   public void init() {
-      this.trainsCataloguesToCompagnies.clear();
-   }*/
+    
+   
    
    public void rowSelect(SelectEvent event) {
 
