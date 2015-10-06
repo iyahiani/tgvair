@@ -1,5 +1,8 @@
 package com.avancial.app.resources.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringToFormatedString {
 
    public static String formatterString(String chaine) {      
@@ -19,6 +22,21 @@ public class StringToFormatedString {
          if (v=='7')  temp2[6] ='7';
       }  
       return s.copyValueOf(temp2);
+   } 
+   
+  /**
+   * 
+   * @param String joursCircul 
+   * @return la list des jours de circulation du train selectionné
+   */
+   public static List<String> getRegimeCirculFromSelectedTrain(String joursCircul){
+     
+      List<String> temp = new ArrayList<>() ; 
+      for (int i = 0; i < joursCircul.length(); i++) { 
+         temp.add(String.valueOf(joursCircul.charAt(i))) ;
+      }
+      return temp ; 
    }
+   
    
 }

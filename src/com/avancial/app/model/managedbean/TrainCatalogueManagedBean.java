@@ -20,6 +20,7 @@ import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.app.resources.utils.StringToFormatedString;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.socle.exceptions.ASocleException;
@@ -56,7 +57,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public void rowSelect(SelectEvent event) {
-      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject();
+      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject(); 
+     
+           
    }
    
    public TimeZone getTimeZone() {
@@ -341,13 +344,11 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public List<String> getListSelectedJoursCirculation() {
-    
-      List<String> temp = new ArrayList<>() ;
-      String t = this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue() ; 
-      
+       
+      if (null != this.selectedTrainsCatalogue) return  StringToFormatedString.getRegimeCirculFromSelectedTrain(this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue()) ;
       return this.listSelectedJoursCirculation;
    }
-
+   
    public void setListSelectedJoursCirculation(List<String> listSelectedJoursCirculation) {
       this.listSelectedJoursCirculation = listSelectedJoursCirculation;
    }

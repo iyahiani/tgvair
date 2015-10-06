@@ -83,7 +83,12 @@ public class StringToDate {
       String myDate = df.format(date);  
          
       return myDate; 
-   } 
+   }  
+	/**
+	 * 
+	 * @param date
+	 * @return date en chaine de caratctere dd/MM/yyyy
+	 */
 	public static String toFormatedStringddMMyyyy(Date date) { 
       //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
       String format = "dd/MM/yyyy" ; 
@@ -91,7 +96,22 @@ public class StringToDate {
       String myDate = df.format(date);  
          
       return myDate; 
-   } 
+   }  
+	/**
+	 * 
+	 * @param date
+	 * @param format
+	 * @return date sous format : 
+	 * dateBySlashSansHeure   dd/MM/yyyy
+	 * dateSlashAvecHeure  dd/MM/yyyy HH:mm 
+	 * dateTireSansHeure   dd-MM-yyyy HH:mm
+	 * dateFrenchSansHeure dd MMM yyyy
+	 * dateEnglishSansHeure   dd MMM yyyy
+	 * dateEnglishAvecHeure   dd MMM yyyy HH:mm
+	 * dateFrenchAffichage MMM yyyy
+	 * dateSansSeparateurs ddMMyyyy
+	 * @throws Exception
+	 */
 	
 	public static String toStringByFormat(Date date, String format) throws Exception {
 		SimpleDateFormat formatDate = null;
@@ -116,7 +136,9 @@ public class StringToDate {
 			formatDate = new SimpleDateFormat("MMM yyyy", Locale.FRENCH);
 		} else if  (format.equals("jour")) {
 		   formatDate = new SimpleDateFormat("dd", Locale.FRENCH);
-		} else {
+		} else if  (format.equals("dateSansSeparateurs")) {
+         formatDate = new SimpleDateFormat("ddMMyyyy", Locale.FRENCH);
+      }else {
 			return null;
 		}
 		
@@ -124,7 +146,12 @@ public class StringToDate {
 		
 		return myDate;		 		
 	}
-	
+	/**
+	 * 
+	 * @param date
+	 * @param mois
+	 * @return le mois +1
+	 */
 	public static Date moisSuivant(final Date date, final int mois) {
 		try {
 			GregorianCalendar gc = new GregorianCalendar();
@@ -139,7 +166,7 @@ public class StringToDate {
 	/**
 	 * 
 	 * @param date
-	 * @return
+	 * @return dd MMM yyyy : HH:mm format 
 	 */
 	public static Date toFormatedDate(Date date) {
 	   SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy : HH:mm", Locale.FRENCH) ;

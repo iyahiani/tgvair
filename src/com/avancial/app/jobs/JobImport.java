@@ -28,6 +28,7 @@ import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.model.managedbean.ParamGetterManagedBean;
 import com.avancial.app.resources.constants.APP_TgvAir;
+import com.avancial.app.resources.utils.DeplacerFicher;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
 import com.avancial.app.resources.utils.StringToDate;
@@ -62,8 +63,8 @@ public class JobImport implements Job {
       IReader reader = null;
       try {
          
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ; 
-         
+        //reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ; 
+         reader = new ReaderSSIM("D:\\was_tmp\7989.txt")  ;
         
       } catch (IOException   e1) {  
         
@@ -145,7 +146,24 @@ public class JobImport implements Job {
       TraitementImportDAO daoImport = new TraitementImportDAO();
       daoImport.saveTraitementSSIM(bean); 
       this.logger.info("Import Finish");  
+      try {
+         archiveSSIM();
+      } catch (Exception e) {
+         logger.error("erreur d'archivage du fichier SSIM");
+         e.printStackTrace();
+      } 
       
+   } 
+   /**
+    * Archiver le Fichier SSIM dans \\reha\TGVAir_REC\Archives\ 
+    * @throws Exception
+    */
+   private void archiveSSIM() throws Exception { 
+      File source= new File(APP_TgvAir.CHEMIN_SSIM.toString()) ;   
+      File dest= new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString()+"archiveSSIM"+ StringToDate.toStringByFormat(new Date(),"dateSansSeparateurs")+".txt") ; 
+      
+      DeplacerFicher.copierFile(source, dest);  
+      source.delete() ;
    }
 
   

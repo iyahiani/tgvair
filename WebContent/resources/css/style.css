@@ -27,19 +27,25 @@
 	background-color: white ;
 
 	} 
+.ui-panel .ui-panel-content {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+   /* border: none;**/
+    padding: 1px;
+}
 
 .ui-panel .ui-panel-footer {
-    border-width: 1px 0 0;
+    /*border-width: 1px 0 0;*/
     margin: 0.5em 0 0;
     padding: 0.5em 1em;
-    text-align: left; 
-    background:#86c6db;
+    text-align: center; 
+   
 }
 .ui-panel .ui-panel-titlebar {
     padding: 0.5em 1em 0.3em; 
-    background: #86c6db; 
+    background: #ffffff; 
     
 }
+
 
 .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
     padding: 0.6em 1em; 
@@ -353,4 +359,22 @@ BloggerSans
 .classFieldsetUser label {
 	display: block;
 	width: 85px;
+} 
+
+.centeredPanel{
+    width:500px;
+    height:30px;
+    position:absolute;
+    left:50%; /*sets left edge at the midway point of it's container*/
+    top:50%; /*sets top edge at the midway point of it's container*/
+    margin-left:-250px; /*moves the div back half it's width to centre it.*/
+    margin-top:-250px; /*moves the div up half it's height to centre it.*/
+} 
+
+.loginPage{
+	
+	border-style: ridge ; 
+	border-width: thin;  
+	border-color: blue; 
+	
 }

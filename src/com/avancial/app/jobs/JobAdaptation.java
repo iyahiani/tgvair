@@ -40,7 +40,7 @@ public class JobAdaptation implements Job {
    
    public void execute(JobExecutionContext context) throws JobExecutionException {
       Logger log = Logger.getLogger(JobAdaptation.class); 
-      log.debug("Job Adaptation Lancé");
+      log.info("Job Adaptation Lancé");
       ////////////    Archiver la date de l'export 
       
      new TraitementExportDAO().saveExport(new TraitementExportDataBean());

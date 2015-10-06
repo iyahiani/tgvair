@@ -14,25 +14,28 @@
 		<div class="container" style="margin: 20px;"> <!--  border-bottom:solid white 20px;" -->
 			
 			<div class="well" >
-			<p:panel style="width:600px;margin: 0 auto;" >
-			    <p:commandButton></p:commandButton>
+			<p:panel style="width:60%;margin:absolute auto;border:none;align:right;"  >
+			 <h:graphicImage  name="icon/bondeau tgvair.png" rendered="#{!ihmManagedBean.isLogged()}"  style="margin-left:270px;width:100%;padding:20px;"
+			 > 
+			 </h:graphicImage>  
 			</p:panel>
 			</div>
 			
 			<h:form class="form-horizontal" >
-				<p:panel header="#{msg.nom_application}" style="width:400px;margin: 0 auto;"  >		
-				<div class="well">
-					<h:panelGrid columns="2" id="grid" >
-
-						<h:outputText value="#{msg.p_login_user}" />
-						<p:inputText id="login" value="#{login.login}" styleClass="" />
-						<h:outputText value="#{msg.p_login_password}" />
+				<p:panel 
+				 style="width:400px;margin: 5px auto; border-style:ridge; border-width:5px; border-color: #CC4040;  border-radius: 25px;" >		
+				<div class="well" >
+					<h:panelGrid columns="2" id="grid">
+					
+						<h:outputText value="#{msg.p_login_user}" style="color :#000099; " />
+						<p:inputText id="login" value="#{login.login}"  />
+						<h:outputText value="#{msg.p_login_password}" style="color :#000099; "/>
 						<p:password id="password" value="#{login.password}"  />
 
 					</h:panelGrid>
 				</div> 		
-					<f:facet name="footer" >
-						<p:commandButton id="submit" value="#{msg.libelle_valider}" ajax="false"
+					<h:panelGrid columns="3" >
+						<p:commandButton id="submit" value="#{msg.libelle_valider}" ajax="false" style="margin-left:20px;"
 							action="#{login.login}" >  					
 						</p:commandButton>
 						<p:commandButton id="cancel" value="#{msg.libelle_annuler}" ajax="false"
@@ -40,7 +43,7 @@
 						<p:commandButton id="Mdp" value="#{msg.p_login_mdpoublie}" ajax="false"
 							action="#{menu.goMdpOublie}" > 
 						</p:commandButton>
-					</f:facet>
+				</h:panelGrid>
 					
 				</p:panel>				
 			</h:form>

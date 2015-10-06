@@ -193,11 +193,13 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setHeureArriver(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
          cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation()); 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
-         CirculationDAO dao1 = new CirculationDAO();
+         CirculationDAO dao1 = new CirculationDAO(); 
+         
          try {
-            dao1.save(cirAdapterDataBean);
+             dao1.save(cirAdapterDataBean); 
+             log.info("ADAPTATION TERMINEE");
          } catch (ASocleException e) {
-            //log.error(e.getMessage());
+            log.error(e.getMessage());
             e.printStackTrace();
          }
       }

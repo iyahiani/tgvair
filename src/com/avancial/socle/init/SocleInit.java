@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -32,14 +33,15 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  * @author bruno.legloahec
  *
  */
-//@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
 public class SocleInit extends HttpServlet {
    public Scheduler          sched;
-
+         
    /**
     * 
-    */
-   private static final long serialVersionUID = 1L;
+    */ 
+   Logger log = Logger.getLogger(SocleInit.class);
+    private static final long serialVersionUID = 1L;
 
    /*
     * (non-Javadoc)
@@ -55,8 +57,10 @@ public class SocleInit extends HttpServlet {
       try {
          this.quartzInit();
          FacesContext.getCurrentInstance().getExternalContext().redirect(SOCLE_constants.NAVIGATION_ACCUEIL.name());
+         log.info("quartz SOCLE initialisé");
       } catch (SchedulerException | IOException e) {
-         e.printStackTrace();
+         e.printStackTrace(); 
+         log.error("erreur d'initialisation de Quartz"+e.getMessage());
       }
    }
 
