@@ -1,8 +1,11 @@
 package com.avancial.app.jobs;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,7 +50,7 @@ public class JobImport implements Job {
    
    ParamGetterManagedBean paramGetter;
    Logger logger = Logger.getLogger(JobImport.class);
-
+   Date dateCourante = new Date(); 
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
 
@@ -59,14 +62,14 @@ public class JobImport implements Job {
       IReader reader = null;
       try {
          
-         reader = new ReaderSSIM("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt")  ; //this.paramGetter.getParam("directories", APP_TgvAir.CHEMIN_SSIM.getConstante()).getValue()
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ; 
+         
         
-      } catch (IOException   e1) { //| ParamNotFoundException | ParamCollectionNotLoadedException"\\\\reha\\TGVAir_REC\\ssim\\7989.txt" 
-        // this.logger.error(e1.getMessage());
+      } catch (IOException   e1) {  
+        
         logger.info("Import:"+e1.getMessage());
          e1.printStackTrace();
       }
-
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
          listnums.add(tc.getNumeroTrainCatalogue());
       }
@@ -128,15 +131,17 @@ public class JobImport implements Job {
       }
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
-         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt").get("Date_Extraction"));
-         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt").get("Date_Fin"));
+         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
+         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin")); 
+        // archiveSSIM() ;
       } catch (Exception e1) {
          //this.logger.error(e1.getMessage());
          e1.printStackTrace();
-
       }
       TraitementImportDAO daoImport = new TraitementImportDAO();
-      daoImport.saveTraitementSSIM(bean);
-      logger.info("Import Finish");
+      daoImport.saveTraitementSSIM(bean); 
+      logger.info("Import Finish"); 
    }
+
+  
 }

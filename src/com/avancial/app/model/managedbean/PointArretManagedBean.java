@@ -43,6 +43,8 @@ public class PointArretManagedBean extends AManageBean {
    private Date samediHeureFermeturePointsArret ; 
    private Date dimancheHeureOuverturePointsArret ;
    private Date dimancheHeureFermeturePointsArret ; 
+   private Date ferieHeureOuverturePointsArret ; 
+   private Date ferieHeureFermeturePointsArret ;
    private boolean selectedHorraire =true ;
    private List<PointArretDataBean> listPointsArret ;
     
@@ -214,6 +216,18 @@ public class PointArretManagedBean extends AManageBean {
    }
    public void setDimancheHeureFermeturePointsArret(Date dimancheHeureFermeturePointsArret) {
       this.dimancheHeureFermeturePointsArret = dimancheHeureFermeturePointsArret;
+   }
+   public Date getFerieHeureOuverturePointsArret() {
+      return ferieHeureOuverturePointsArret;
+   }
+   public void setFerieHeureOuverturePointsArret(Date ferieHeureOuverturePointsArret) {
+      this.ferieHeureOuverturePointsArret = ferieHeureOuverturePointsArret;
+   }
+   public Date getFerieHeureFermeturePointsArret() {
+      return ferieHeureFermeturePointsArret;
+   }
+   public void setFerieHeureFermeturePointsArret(Date ferieHeureFermeturePointsArret) {
+      this.ferieHeureFermeturePointsArret = ferieHeureFermeturePointsArret;
    }
 
 }

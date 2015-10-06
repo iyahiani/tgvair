@@ -77,14 +77,14 @@ public class SocleInit extends HttpServlet {
          Job newjob = null;
          JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean);
          try {
-
             newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
             Scheduler sched = sf.getScheduler();
             JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
             sched.scheduleJob(job, trigger);
 
-         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+         } 
+         catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
          }
 
@@ -95,5 +95,12 @@ public class SocleInit extends HttpServlet {
       // Trigger the job to run on the next round minute
 
       this.sched.start();
+      try {
+         Thread.sleep(600L);
+         
+      } catch (InterruptedException e) {
+       
+         e.printStackTrace();
+      }
    }
 }

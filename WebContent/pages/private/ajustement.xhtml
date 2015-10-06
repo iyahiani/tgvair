@@ -3,10 +3,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
 
 	<ui:define name="contenu">
-		
+		 <p:dialog id="dlg" header="Info Couleur" widgetVar="dlg" modal="true" dynamic="true" closable="true" closeOnEscape="true">
+		      <p:graphicImage name="/icon/Image1.png" />
+		 </p:dialog>
 		
 		<p:ajaxStatus onstart="PF('statusDialog').show()" 
             onsuccess="PF('statusDialog').hide()" />
@@ -16,7 +19,7 @@
         </p:dialog>
             <p:messages id="idPageMessages" autoUpdate="true" closable="true" redisplay="false"
                 showDetail="true"  globalOnly="false" />
-		<p:fieldset legend="#{msg.p_header_ajustement_legend}"
+	          	<p:fieldset legend="#{msg.p_header_ajustement_legend}"
 			styleClass="fieldSet">
 			<div class="ui-grid-responsive">
 				<p:panel header="#{msg.p_header_ajustement}"
@@ -27,28 +30,28 @@
 								onchange="submit()">
 								<f:selectItem itemLabel="Selectionnez un train"
 									itemValue="#{null}" />
-
 								<f:selectItems var="train" value="#{ajustement.listTrains}"
 									itemLabel="#{train.toString()}" itemValue="#{train.idTrain}" />
 							</p:selectOneMenu>
-							<!--  <p:outputPanel rendered="!#{ajustement.modifedTrainCatalogue} eq null">  </p:outputPanel>
-							<h:outputText value="#{modifedTrainCatalogue.pointArretOrigine}" > </h:outputText>--> 
+					         <p:commandButton style="position: absolute; right: 40px;" icon="ui-icon-info" update=":dlg" oncomplete="PF('dlg').show();"
+					         title="Inofrmations"></p:commandButton>
 						</h:form>
 					</div>
 					<div class="ui-grid ui-grid-responsive">
 						<h:form>
-
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_0.name}</h3>
+									    <p:row rendered="#{ajustement.schedule_0.isRendered}">
+									       <h3>#{ajustement.schedule_0.name}</h3>
+									    </p:row>				   									
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_0.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_0.initialDate}"
-										ignoreTimezone="false" allDay="true" showHeader="false"
-										editable="true" widgetVar="myschedule_0">
+										ignoreTimezone="false" allDay="true" showHeader="false" rendered="#{ajustement.schedule_0.isRendered}"
+										editable="true" widgetVar="myschedule_0" >
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
 											oncomplete="PF('eventDialog').show();" />
@@ -56,13 +59,15 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_1.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_1.isRendered}">
+                                           <h3>#{ajustement.schedule_1.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_1.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_1.initialDate}"
-										ignoreTimezone="false" allDay="true" showHeader="false"
+										ignoreTimezone="false" allDay="true" showHeader="false" rendered="#{ajustement.schedule_1.isRendered}"
 										editable="true" widgetVar="myschedule_1">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
@@ -71,13 +76,15 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_2.name}</h3>
+									 <p:row rendered="#{ajustement.schedule_2.isRendered}">
+                                           <h3>#{ajustement.schedule_2.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_2.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_2.initialDate}"
-										ignoreTimezone="false" allDay="true" showHeader="false"
+										ignoreTimezone="false" allDay="true" showHeader="false" rendered="#{ajustement.schedule_2.isRendered}"
 										editable="true" widgetVar="myschedule_2">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
@@ -86,12 +93,14 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_3.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_3.isRendered}">
+                                           <h3>#{ajustement.schedule_3.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_3.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
-										initialDate="#{ajustement.schedule_3.initialDate}"
+										initialDate="#{ajustement.schedule_3.initialDate}" rendered="#{ajustement.schedule_3.isRendered}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
 										editable="true" widgetVar="myschedule_3">
 										<p:ajax event="eventSelect"
@@ -103,13 +112,15 @@
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_4.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_4.isRendered}">
+                                           <h3>#{ajustement.schedule_4.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_4.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_4.initialDate}"
-										ignoreTimezone="false" allDay="true" showHeader="false"
+										ignoreTimezone="false" allDay="true" showHeader="false" rendered="#{ajustement.schedule_4.isRendered}"
 										editable="true" widgetVar="myschedule_4">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
@@ -118,11 +129,13 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_5.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_5.isRendered}">
+                                           <h3>#{ajustement.schedule_5.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_5.schedule}" draggable="false"
-										resizable="false" tooltip="true" view="month"
+										resizable="false" tooltip="true" view="month" rendered="#{ajustement.schedule_5.isRendered}"
 										initialDate="#{ajustement.schedule_5.initialDate}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
 										editable="true" widgetVar="myschedule_5">
@@ -133,12 +146,14 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_6.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_6.isRendered}">
+                                           <h3>#{ajustement.schedule_6.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_6.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
-										initialDate="#{ajustement.schedule_6.initialDate}"
+										initialDate="#{ajustement.schedule_6.initialDate}" rendered="#{ajustement.schedule_6.isRendered}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
 										editable="true" widgetVar="myschedule_6">
 										<p:ajax event="eventSelect"
@@ -148,13 +163,15 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_7.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_7.isRendered}">
+                                           <h3>#{ajustement.schedule_7.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_7.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_7.initialDate}"
-										ignoreTimezone="false" allDay="true" showHeader="false"
+										ignoreTimezone="false" allDay="true" showHeader="false" rendered="#{ajustement.schedule_7.isRendered}"
 										editable="true" widgetVar="myschedule_7">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
@@ -165,14 +182,16 @@
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_8.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_8.isRendered}">
+                                           <h3>#{ajustement.schedule_8.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_8.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_8.initialDate}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
-										editable="true" widgetVar="myschedule_8">
+										editable="true" widgetVar="myschedule_8" rendered="#{ajustement.schedule_8.isRendered}" >
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
 											oncomplete="PF('eventDialog').show();" />
@@ -180,14 +199,17 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_9.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_9.isRendered}">
+                                           <h3>#{ajustement.schedule_9.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_9.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_9.initialDate}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
-										editable="true" widgetVar="myschedule_9">
+										editable="true" widgetVar="myschedule_9"
+										rendered="#{ajustement.schedule_9.isRendered}">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
 											oncomplete="PF('eventDialog').show();" />
@@ -195,14 +217,17 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_10.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_10.isRendered}">
+                                           <h3>#{ajustement.schedule_10.name}</h3>
+                                        </p:row>    
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_10.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_10.initialDate}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
-										editable="true" widgetVar="myschedule_10">
+										editable="true" widgetVar="myschedule_10"
+										rendered="#{ajustement.schedule_10.isRendered}">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
 											oncomplete="PF('eventDialog').show();" />
@@ -210,14 +235,17 @@
 								</div>
 								<div class="ui-grid-col-3" style="padding: 5px; float: left">
 									<div style="padding-left: 40%;">
-										<h3>#{ajustement.schedule_11.name}</h3>
+										 <p:row rendered="#{ajustement.schedule_11.isRendered}">
+                                           <h3>#{ajustement.schedule_11.name}</h3>
+                                        </p:row>  
 									</div>
 									<p:schedule styleClass="td_table_css_ajustement"
 										value="#{ajustement.schedule_11.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_11.initialDate}"
 										ignoreTimezone="false" allDay="true" showHeader="false"
-										editable="true" widgetVar="myschedule_11">
+										editable="true" widgetVar="myschedule_11"
+										rendered="#{ajustement.schedule_11.isRendered}">
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"
 											oncomplete="PF('eventDialog').show();" />
@@ -281,7 +309,8 @@
 		<br />
 	</ui:define>
 	<script type="text/javascript">
-		
+
+	  
 	</script>
 </ui:composition>
 

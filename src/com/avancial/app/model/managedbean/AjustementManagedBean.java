@@ -76,8 +76,7 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	private List<TrainCatalogue> listTrains ;
    private List<TrainCatalogue> listTrainOrigine;
    private TrainCatalogue modifedTrainCatalogue;
-   private TrainCatalogue modifedTrainCatalogueOrigine;
-	
+   private TrainCatalogue modifedTrainCatalogueOrigine;   	
 	
 	public void valueChanged(ValueChangeEvent event) {
 	   
@@ -98,6 +97,7 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 	}
 	
 	private void generatSchedules() {
+	   
 	   try {         
          // Remplire ou a tester         
 	      this.modifedTrainCatalogue.remplirJoursCirculations();
@@ -111,11 +111,17 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
          int num = 0;
          Class[] args = new Class[1];
          args[0] = CustomerSchedule.class;
-         for (int i = this.initialDate.getMonth(); i < this.initialDate.getMonth() + 12; i++) {
+         Boolean isRender;
+         
+         for (int i = this.initialDate.getMonth();i < this.initialDate.getMonth() + 12; i++) {
             String methode = "setSchedule_"+ num;
-            Method action = this.getClass().getMethod(methode, args);         
+            Method action = this.getClass().getMethod(methode, args);
+            isRender = false;
+            if (!getDatePlusUn(this.initialDate, num).after( this.modifedTrainCatalogue.getDateFinValidite())) {
+               isRender = true;
+            }
             action.invoke(this, (new CustomerSchedule(StringToDate.moisSuivant(this.initialDate, num), 
-                  StringToDate.toStringByFormat(StringToDate.moisSuivant(this.initialDate, num), "dateFrenchAffichage"))));                 
+                  StringToDate.toStringByFormat(StringToDate.moisSuivant(this.initialDate, num), "dateFrenchAffichage"),isRender)));                 
             num++;
          }        
          this.initCirculationEvent();        
@@ -126,6 +132,12 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
       }
    }
 
+	public Date getDatePlusUn(Date c, int i) { 
+	   Calendar cal  = Calendar.getInstance() ;
+	   cal.setTime(c);
+	   cal.add(Calendar.MONTH, i);
+	   return cal.getTime() ;
+	}
    public AjustementManagedBean() { 
 	   this.listTrains = new ArrayList<TrainCatalogue>();
 	   this.listTrainOrigine = new ArrayList<TrainCatalogue>();
@@ -228,16 +240,16 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
 			if (!this.getEvent().compareJourCirculation(this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).getHeureArrivee(),
 					this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).getHeureDepart(), 
 					this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).isFlagCirculation())) {								
-				for (int i = 0; i < 12; i++) {
+							   
+			   for (int i = 0; i < 12; i++) {
 					String methode = "getSchedule_"+ i;
 					Method action = this.getClass().getMethod(methode, null);
 					CustomerSchedule schedul = ((CustomerSchedule) (action.invoke(this, null)));
 					if (schedul.getName().equals(StringToDate.toStringByFormat(this.event.getDateDebut(), "dateFrenchAffichage"))) {
-					   this.getEvent().update();
-						schedul.getSchedule().updateEvent(this.event);
-						
-						// Modification de jourCirculation métier
-						
+					   this.getEvent().setFlagAdapted(false);
+                  this.getEvent().update(this.getEvent().compareAvecOrigine(this.modifedTrainCatalogueOrigine.getListeJoursCirculation().get(this.event.getDateDebut())));
+                  schedul.getSchedule().updateEvent(this.event);                  					      					   						
+						// Modification de jourCirculation métier						
 						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setHeureArrivee(Integer.valueOf( StringToDate.toFormatedString(this.getEvent().getHeureArrivee())));
 						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setHeureDepart(Integer.valueOf( StringToDate.toFormatedString(this.getEvent().getHeureDepart())));
 						this.getModifedTrainCatalogue().getListeJoursCirculation().get(this.getEvent().getDateDebut()).setFlagCirculation(this.getEvent().isFlagCirculation());						
@@ -291,7 +303,9 @@ public class AjustementManagedBean extends AManageBean implements Serializable {
       }
 	*/   
 	}
-	
+	/**
+	 * permet de transformer un train DataBean vers un train Metier 
+	 */
 	public void getTrains() {
 	   
 	   List<CirculationAdapterDataBean> listCirculationAdapter = new CirculationDAO().getDistinctCirculation() ; 

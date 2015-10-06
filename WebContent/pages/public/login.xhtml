@@ -11,10 +11,17 @@
 			<title>#{msg.p_login_titre}</title>
 		</h:head>
 		<h:body>
-		<div class="container">
+		<div class="container" style="margin: 20px;"> <!--  border-bottom:solid white 20px;" -->
+			
+			<div class="well" >
+			<p:panel style="width:600px;margin: 0 auto;" >
+			    <p:commandButton></p:commandButton>
+			</p:panel>
+			</div>
+			
 			<h:form class="form-horizontal" >
 				<p:panel header="#{msg.nom_application}" style="width:400px;margin: 0 auto;"  >		
-				<div class="well" >
+				<div class="well">
 					<h:panelGrid columns="2" id="grid" >
 
 						<h:outputText value="#{msg.p_login_user}" />

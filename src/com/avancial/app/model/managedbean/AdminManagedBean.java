@@ -22,6 +22,7 @@ import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.jobs.JobAdaptation;
 import com.avancial.app.jobs.JobExport;
+import com.avancial.app.jobs.JobExportByCompagnie;
 import com.avancial.app.jobs.JobImport;
 import com.avancial.socle.model.managedbean.AManageBean;
 
@@ -37,17 +38,18 @@ public class AdminManagedBean extends AManageBean {
    private SchedulerFactory sf;
    private Scheduler sched;
    private List<CompagnieAerienneDataBean> listCompagnies = new CompagnieAerienneDao().getAllCodeCompagnie();
-   private CompagnieAerienneDataBean compagnie;
-
+   private String compagnie ;
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
+   public AdminManagedBean() { 
+      System.out.println("AdminManagedBean.AdminManagedBean()"); 
+   }
+   
    public String lancerJob() {
-
-      this.sf = new StdSchedulerFactory();
-
-      Calendar calendarEndAdapt = Calendar.getInstance();
-      calendarEndAdapt.add(Calendar.MINUTE, 10);
-
+      
+      this.sf = new StdSchedulerFactory()                                                               ;
+      Calendar calendarEndAdapt = Calendar.getInstance()                                                ;
+      calendarEndAdapt.add(Calendar.MINUTE, 10)                                                         ;
       JobDetail job = JobBuilder.newJob(JobImport.class).withIdentity("JOBManuel", "JOBManuel ").build();
       // Trigger the job to run on the next round minute
       SimpleTrigger trigger = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBManuel", "JOBManuel ").build();
@@ -60,7 +62,7 @@ public class AdminManagedBean extends AManageBean {
          //this.sched.clear();   //this.sched.scheduleJob(jobAd, triggerAd);  
           this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(job, trigger);
-         this.sched.start();
+         this.sched.start()                  ;
          Thread.sleep(600L);
          this.sched.shutdown(true);
          this.sched = this.sf.getScheduler();
@@ -78,7 +80,8 @@ public class AdminManagedBean extends AManageBean {
    }
 
    public void valueChanged(ValueChangeEvent event) {
-      this.compagnie = (CompagnieAerienneDataBean) event.getNewValue();
+      System.out.println(event.getNewValue());  
+      this.compagnie =  (String) event.getNewValue(); 
    }
 
    public String lancerExport() {
@@ -87,6 +90,9 @@ public class AdminManagedBean extends AManageBean {
       SimpleTrigger triggerAdap =  TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build(); 
       JobDetail jobexport = JobBuilder.newJob(JobExport.class).withIdentity("JobExportManuel", "JobExportManuel").build();
       SimpleTrigger triggerexport = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuel", "JobExportManuel ").build();
+      JobDetail jobexportByCompagnie = JobBuilder.newJob(JobExportByCompagnie.class).withIdentity("JobExportManuelByCompagnie ", "JobExportManuelByCompagnie ").build();
+      SimpleTrigger triggerexportByCompagnie  = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuelByCompagnie ", "JobExportManuelByCompagnie  ").build();
+     
       try 
       {
          this.sched = this.sf.getScheduler();
@@ -94,19 +100,28 @@ public class AdminManagedBean extends AManageBean {
          this.sched.start();
          Thread.sleep(600L);
          this.sched.shutdown(true);
+         if(this.compagnie.equalsIgnoreCase("")) {    
          this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(jobexport, triggerexport);
          this.sched.start();
          Thread.sleep(600L);
-         this.sched.shutdown(true);
-      } catch (SchedulerException | InterruptedException e) {
+         this.sched.shutdown(true); 
+         }  else {
+            this.sched = this.sf.getScheduler();
+            this.sched.scheduleJob(jobexportByCompagnie, triggerexportByCompagnie);
+            this.sched.start();
+            Thread.sleep(600L);
+            this.sched.shutdown(true); 
+      }
+      }
+      catch (SchedulerException | InterruptedException e) {
 
          e.printStackTrace();
       }
-   
+    
       return null;
    }
-
+   
    public boolean isFinish() {
       return this.finish;
    }
@@ -141,12 +156,14 @@ public class AdminManagedBean extends AManageBean {
       this.listCompagnies = listCompagnies;
    }
 
-   public CompagnieAerienneDataBean getCompagnie() {
+   public String getCompagnie() {
       return this.compagnie;
    }
 
-   public void setCompagnie(CompagnieAerienneDataBean compagnie) {
+   public void setCompagnie(String compagnie) {
       this.compagnie = compagnie;
    }
+
+  
 
 }

@@ -11,7 +11,7 @@ public class GetTrainsNums {
  * 1111/4 -> 001111 et 001114 
  */
    public static List<String> getTrainsNums(String numeroTrain) {
-      String[] split =numeroTrain.split("-");
+      String[] split =numeroTrain.split(" - ");
       String temp = "", temp1 = "";
       List<String> buff = new ArrayList<>();
       for (String s : split) {

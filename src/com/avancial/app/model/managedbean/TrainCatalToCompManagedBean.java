@@ -37,7 +37,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    private List<CompagnieAerienneDataBean> allCodeCompagnie ;
    private Integer idTrainCatalogueToCompagnie;
    private TrainCatalogueDataBean trainCatalogueBean;
-   private CompagnieAerienneDataBean compagnieDataBean;
+   private CompagnieAerienneDataBean compagnieAerienneDataBean;
    private String codeCompagnie;
    private Date dateDebutValidite;
    private Date dateFinValidite;
@@ -52,7 +52,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       this.trainsCataloguesToCompagnies = new ArrayList<>();
       this.allCompagnie = new ArrayList<>();
       this.trainCatalogueBean = new TrainCatalogueDataBean();
-      this.compagnieDataBean = new CompagnieAerienneDataBean(); 
+      this.compagnieAerienneDataBean = new CompagnieAerienneDataBean(); 
       this.allCodeCompagnie = new ArrayList<>() ;
       //this.reload();
    }
@@ -86,9 +86,9 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
       CompagnieAerienneDao compagnieDao = new CompagnieAerienneDao();
       TrainCatalogueToCompagnieDAO dao = new TrainCatalogueToCompagnieDAO();
       TrainCatalogueToCompagnieDataBean bean = new TrainCatalogueToCompagnieDataBean();
-      this.compagnieDataBean = compagnieDao.getCompagnieByCode(getCodeCompagnie()).get(0);
+      this.compagnieAerienneDataBean = compagnieDao.getCompagnieByCode(getCodeCompagnie()).get(0);
       bean.setTrainCatalogueDataBean(this.trainCatalogueBean);
-      bean.setCompagnieAerienneDataBean(this.compagnieDataBean);
+      bean.setCompagnieAerienneDataBean(this.compagnieAerienneDataBean);
       bean.setDateFinValiditeTrainCatalogueToCompagnie(getDateFinValidite());
       bean.setDateDebutValiditeTrainCatalogueToCompagnie(getDateDebutValidite());
       bean.setMarketingFlightTrainCatalogueToCompagnie(getMarketingFlight());
@@ -281,6 +281,14 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
 
    public void setSelectedOneMenu(String selectedOneMenu) {
       this.selectedOneMenu = selectedOneMenu;
+   }
+
+   public CompagnieAerienneDataBean getCompagnieAerienneDataBean() {
+      return compagnieAerienneDataBean;
+   }
+
+   public void setCompagnieAerienneDataBean(CompagnieAerienneDataBean compagnieAerienneDataBean) {
+      this.compagnieAerienneDataBean = compagnieAerienneDataBean;
    }
 
 }

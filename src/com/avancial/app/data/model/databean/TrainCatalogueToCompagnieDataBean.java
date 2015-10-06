@@ -29,11 +29,11 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
   
    private Integer idTrainCatalogueToCompagnie;
 
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(cascade = CascadeType.REFRESH)
    @JoinColumn(name = "idTrainCatalogue")
    private TrainCatalogueDataBean trainCatalogueDataBean;
 
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(cascade = CascadeType.REFRESH)
    @JoinColumn(name = "idCompagnieAerienne")
    private CompagnieAerienneDataBean compagnieAerienneDataBean; 
    
@@ -70,8 +70,6 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       this.compagnieAerienneDataBean = compagnieAerienneDataBean;
    }
 
-   
-
    public int getQuotaPremiereTrainCatalogueToCompagnie() {
       return quotaPremiereTrainCatalogueToCompagnie;
    }
@@ -102,7 +100,6 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
 
    public void setDateDebutValiditeTrainCatalogueToCompagnie(Date dateDebutValiditeTrainCatalogueToCompagnie) {
       
-      
       this.dateDebutValiditeTrainCatalogueToCompagnie = dateDebutValiditeTrainCatalogueToCompagnie;
       
    }
@@ -114,10 +111,7 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
    public void setDateFinValiditeTrainCatalogueToCompagnie(Date dateFinValiditeTrainCatalogueToCompagnie) {
       this.dateFinValiditeTrainCatalogueToCompagnie = dateFinValiditeTrainCatalogueToCompagnie ;
    }
-
-  
-
-   
+ 
    public String getCodeCompagnieAerienne() {
       return codeCompagnieAerienne;
    }
@@ -126,7 +120,4 @@ public class TrainCatalogueToCompagnieDataBean implements Serializable {
       this.codeCompagnieAerienne = codeCompagnieAerienne;
    }
 
-   
-
-  
 }

@@ -31,7 +31,10 @@ public class CompagnieAerienneDataBean implements Serializable {
    
    @Column(name="libelleCompagnieAerienne",nullable=true)
    private String libelleCompagnieAerienne ;
-
+    
+   @Column(name="imageCompagnieAerienne",nullable=true)
+   private String imageCompagnieAerienne ;
+   
    public int getIdCompagnieAeriennne() {
       return idCompagnieAeriennne;
    }
@@ -58,6 +61,14 @@ public class CompagnieAerienneDataBean implements Serializable {
    public String toString() {
       
       return this.CodeCompagnieAerienne+""+this.libelleCompagnieAerienne ;
+   }
+
+   public String getImageCompagnieAerienne() {
+      return imageCompagnieAerienne;
+   }
+
+   public void setImageCompagnieAerienne(String imageCompagnieAerienne) {
+      this.imageCompagnieAerienne = imageCompagnieAerienne;
    }
    
 }

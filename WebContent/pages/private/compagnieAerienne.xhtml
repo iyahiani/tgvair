@@ -20,23 +20,38 @@
      }
      </script>
     
-        
+         
         <p:fieldset legend="#{msg.p_titre}" styleClass="fieldSet">
 			<h:form id="ajoutCompagnie">
 				<h:panelGrid columns="2" 
 					style="border-style:solid; border-color :#FFFFFF #E0E0E0; font-size:20px;">
 					<h:outputText value="#{msg.p_label_codeCompagnie}"></h:outputText>
-					<p:inputText
+					<p:inputText id="codeCompagnie"
 						value="#{compagnieAerienneMangedBean.codeCompagnieAerienne}"
-						required="true" style="width :100% auto;"></p:inputText>
-					<h:outputText value="#{msg.p_label_libelleCompagnie}"></h:outputText>
-					<p:inputText
+						required="true" style="width :100% auto;" requiredMessage="Veuillez inserer le code de la Compagnie"></p:inputText>
+					<h:outputText value="#{msg.p_label_libelleCompagnie}" ></h:outputText>
+					<p:inputText 
 						value="#{compagnieAerienneMangedBean.libelleCompagnieAerienne}"
-						required="true" style="width : 100% auto;"></p:inputText>
-					<h:panelGrid></h:panelGrid>
+						required="true" style="width : 100% auto;" requiredMessage="Veuillez inserer le libellé de la Compagnie"></p:inputText> 
+						<p:growl id="msg"></p:growl>
+						<!-- <h:outputText value="Charger Logo"></h:outputText> update="msg" -->
+						<h:outputLabel value="Charger Logo" for="upload"/>
+				    <p:fileUpload dragDropSupport="true" uploadLabel="Charger Image"  style="font-style:normal; font-size:20px"  
+				   
+				    allowTypes="/(\.|\/)(gif|jpg|png|jpeg)$/" id="upload" 
+				     fileLimit="1"  
+				    fileUploadListener="#{compagnieAerienneMangedBean.uploadesFile}" >  
+				    
+				    </p:fileUpload> 
+				    <h:outputText></h:outputText>
+				     		
+					<h:panelGrid>
+					</h:panelGrid>
 					<h:panelGrid columns="2">
-						<p:commandButton value="Annuler" iconPos="left" icon="ui-icon-cancel" style="background-color: white ;" title="Annuler" ></p:commandButton>
-						<p:commandButton value="Ajouter" iconPos="left"  icon="ui-icon-check" type="submit" oncomplete="reset()" style="background-color: white ;" title="Ajouter" 
+						<p:commandButton value="Annuler" iconPos="left" icon="ui-icon-cancel"
+                            style="background-color: white ;font-style:normal; font-size:10px" title="Annuler" ></p:commandButton>
+						<p:commandButton value="Ajouter" iconPos="left"  icon="ui-icon-check" type="submit" oncomplete="reset()" 
+						     style="background-color: white ;" title="Ajouter" 
 							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne}"> 
 							<p:ajax onsuccess="#{compagnieAerienneMangedBean.initProperties()}"></p:ajax>
 							</p:commandButton>

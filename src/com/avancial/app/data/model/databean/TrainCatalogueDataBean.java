@@ -47,8 +47,7 @@ public class TrainCatalogueDataBean implements Serializable {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "idPointArretOrigine")
    private PointArretDataBean idPointArretOrigine ;
-   private String originePointArret ;
-   private String destinationPointArret ;
+   
    private Date heureDepartTrainCatalogue ;
    private Date heureArriveeTrainCatalogue ;
    private String regimeJoursTrainCatalogue ;
@@ -63,23 +62,6 @@ public class TrainCatalogueDataBean implements Serializable {
       this.idTrainCatalogue = idTrainCatalogue;
    }
 
-
-
-   public String getOriginePointArret() {
-      return originePointArret;
-   }
-
-   public void setOriginePointArret(String originePointArret) {
-      this.originePointArret = originePointArret;
-   }
-
-   public String getDestinationPointArret() {
-      return destinationPointArret;
-   }
-
-   public void setDestinationPointArret(String destinationPointArret) {
-      this.destinationPointArret = destinationPointArret;
-   }
 
    public Date getHeureDepartTrainCatalogue() {
       return heureDepartTrainCatalogue;

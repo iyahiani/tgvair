@@ -14,6 +14,7 @@
 		localDataSource="true" digest="sha1">
 	</Realm>
 </Context>
+
 <!--DEV en local
 <Context antiJARLocking="true" path="/">
 	<Resource name="BeanManager" auth="Container"
@@ -45,4 +46,5 @@
 		localDataSource="true" digest="sha1">
 	</Realm>
 </Context>
-  -->
+ -->
+ 

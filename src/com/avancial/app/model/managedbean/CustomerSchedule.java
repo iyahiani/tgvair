@@ -10,11 +10,13 @@ public class CustomerSchedule implements Serializable {
 	private DefaultScheduleModel schedule;
 	private Date initialDate;
 	private String name;
+	private Boolean isRendered ;
 	
-	public CustomerSchedule(Date initialDate, String name) throws Exception {
+	public CustomerSchedule(Date initialDate, String name, Boolean isRendered) throws Exception {
 		super();
 		this.schedule = new DefaultScheduleModel();	
 		this.initialDate = initialDate;
+		this.isRendered = isRendered ;
 		this.name = name;
 	}	
 	
@@ -37,4 +39,12 @@ public class CustomerSchedule implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+   public Boolean getIsRendered() {
+      return isRendered;
+   }
+
+   public void setIsRendered(Boolean isRendered) {
+      this.isRendered = isRendered;
+   }
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.primefaces.model.DefaultScheduleEvent;
 
+import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.HeureFormattage;
@@ -49,11 +50,15 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 		this.setDescriptionAndStyle();
 	}
 	
-	public void update() {
-	   if (this.flagCirculation)
-	      this.setFlagAdapted(true);
-	   else
+	public void update(Boolean isOrigine) {
+	   if (!isOrigine) {
+   	   if (this.flagCirculation)
+   	      this.setFlagAdapted(true);
+   	   else
+   	      this.setFlagAdapted(false);
+	   } else {
 	      this.setFlagAdapted(false);
+	   }
 		this.initScheduleEvent();
 	}
 	
@@ -164,10 +169,22 @@ public class EventJourCirculation extends DefaultScheduleEvent {
 	}
 
    public String getNumTrain() {
-      return numTrain;
+      return this.numTrain;
    }
 
    public void setNumTrain(String numTrain) {
       this.numTrain = numTrain;
+   }
+
+   /**
+    * permet de comparer le jour de circulation modifié du train avec le meme jour de circulation du  train original
+    * @param jourCirculation
+    */
+   public Boolean compareAvecOrigine(JourCirculation jourCirculation) { 
+      if (this.flagCirculation == jourCirculation.isFlagCirculation() && Integer.valueOf(StringToDate.toFormatedString(this.heureDepart)) == jourCirculation.getHeureDepart() 
+            && Integer.valueOf(StringToDate.toFormatedString(this.heureArrivee)) == jourCirculation.getHeureArrivee())
+         return true;
+      
+      return false;         
    }
 }

@@ -89,7 +89,7 @@
 											<f:selectItems value="#{ajouttrain.listGDS}"/> 
 										</p:selectOneMenu>
 										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white;" title="ajouter un point d'arret"
-											 action="#{traincatalogue.goTrain()}"/> 
+											 action="#{ajouttrain.goTrain()}"/> 
 									</h:panelGrid>
 								</h:panelGrid>
 								<h:panelGrid columns="1">
@@ -112,8 +112,9 @@
 											 style="width : 100%">
 											<f:selectItems value="#{ajouttrain.listGDS}"/>
 										</p:selectOneMenu>
-										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white ;" title="ajouter un point d'arret"
-											actionListener="#{traincatalogue.goTrain()}"/>
+										<p:commandButton icon="ui-icon-circle-plus" style="background-color: white ;" 
+										title="ajouter un point d'arret"
+											actionListener="#{ajouttrain.goTrain()}"/>
 									</h:panelGrid>
 								</h:panelGrid>
 								<h:panelGrid columns="1">

@@ -109,6 +109,13 @@
 						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
 							showOn="both"
 							value="#{pointsArret.dimancheHeureFermeturePointsArret}" />
+					   <p:outputLabel value="#{msg.p_pointArret_ferie}"></p:outputLabel>
+                        <p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+                            showOn="both"
+                            value="#{pointsArret.ferieHeureOuverturePointsArret}" />
+                        <p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+                            showOn="both"
+                            value="#{pointsArret.ferieHeureFermeturePointsArret}" />
 						<h:panelGrid></h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid columns="2">

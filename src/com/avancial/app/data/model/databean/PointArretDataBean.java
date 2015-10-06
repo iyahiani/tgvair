@@ -50,7 +50,9 @@ public class PointArretDataBean implements Serializable {
    private Date samediHeureOuverturePointsArret ; 
    private Date samediHeureFermeturePointsArret ; 
    private Date dimancheHeureOuverturePointsArret ;
-   private Date dimancheHeureFermeturePointsArret ; 
+   private Date dimancheHeureFermeturePointsArret ;  
+   private Date ferieHeureOuverturePointsArret ; 
+   private Date ferieHeureFermeturePointsArret ;
    
    public int getIdPointArret() {
       return idPointArret;
@@ -198,6 +200,22 @@ public class PointArretDataBean implements Serializable {
 
    public void setIdPointArret(Integer idPointArret) {
       this.idPointArret = idPointArret;
+   }
+
+   public Date getFerieHeureOuverturePointsArret() {
+      return ferieHeureOuverturePointsArret;
+   }
+
+   public void setFerieHeureOuverturePointsArret(Date ferieHeureOuverturePointsArret) {
+      this.ferieHeureOuverturePointsArret = ferieHeureOuverturePointsArret;
+   }
+
+   public Date getFerieHeureFermeturePointsArret() {
+      return ferieHeureFermeturePointsArret;
+   }
+
+   public void setFerieHeureFermeturePointsArret(Date ferieHeureFermeturePointsArret) {
+      this.ferieHeureFermeturePointsArret = ferieHeureFermeturePointsArret;
    } 
 	
 	

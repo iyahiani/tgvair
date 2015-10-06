@@ -36,6 +36,11 @@ public class StringToDate {
       } 
 	  return chaine; 
 	}
+	/**
+    * 
+    * @param date
+    * @return  date sous format jjMMMyy
+    */
 	
 	public static String toString(Date date) { 
 	   //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
@@ -53,7 +58,25 @@ public class StringToDate {
          
       return myDate; 
    } 
+	/**
+    * 
+    * @param date
+    * @return  date sous format HH:mm
+    */
 	public static String toFormatedString2(Date date) { 
+      //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
+      String format = "HH:mm" ; 
+      SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;
+      String myDate = df.format(date);  
+         
+      return myDate; 
+   }  
+	/**
+	 * 
+	 * @param date
+	 * @return  date sous format 
+	 */
+	public static String toFormatedString3(Date date) { 
       //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
       String format = "HH:mm" ; 
       SimpleDateFormat df = new SimpleDateFormat(format,Locale.ENGLISH) ;

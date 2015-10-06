@@ -17,6 +17,8 @@ import javax.persistence.criteria.Expression;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
@@ -35,8 +37,9 @@ public class CompagnieAerienneManagedBean extends AManageBean {
    private static final long               serialVersionUID = 1L;
    private List<CompagnieAerienneDataBean> compagniesAerienne;
    private String                          codeCompagnieAerienne;
-   private String                          libelleCompagnieAerienne;
-
+   private String                          libelleCompagnieAerienne; 
+   private String                          imageCompagnieAerienne ;   
+   private UploadedFile file ;
    public CompagnieAerienneManagedBean() {
       this.compagniesAerienne = new ArrayList<>();
 
@@ -46,12 +49,30 @@ public class CompagnieAerienneManagedBean extends AManageBean {
       this.compagniesAerienne.clear();
       this.compagniesAerienne.addAll(new CompagnieAerienneDao().getAll());
    }
-
+  
    public void initProperties() {
       this.codeCompagnieAerienne = "";
       this.libelleCompagnieAerienne = "";
    }
-
+   
+   public void uploadesFile(FileUploadEvent event) {
+      this.file = event.getFile() ; 
+      try {
+         if(null!= this.file)
+         this.file.write(this.file.getFileName());
+      } catch (Exception e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } 
+      
+      
+   }
+  public void upload() {
+     if(file != null) {
+        FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+  }
    public void addCompagnieAerienne() {
       CompagnieAerienneDao dao = new CompagnieAerienneDao();
       Session session = dao.getSession(); 
@@ -65,7 +86,8 @@ public class CompagnieAerienneManagedBean extends AManageBean {
       {
       CompagnieAerienneDataBean compagnieAerienneDataBean = new CompagnieAerienneDataBean();
       compagnieAerienneDataBean.setCodeCompagnieAerienne(getCodeCompagnieAerienne());
-      compagnieAerienneDataBean.setLibelleCompagnieAerienne(getLibelleCompagnieAerienne());
+      compagnieAerienneDataBean.setLibelleCompagnieAerienne(getLibelleCompagnieAerienne()); 
+      compagnieAerienneDataBean.setImageCompagnieAerienne(this.file.getFileName());
       
       try {
          dao.save(compagnieAerienneDataBean);
@@ -102,6 +124,22 @@ public class CompagnieAerienneManagedBean extends AManageBean {
 
    public void setLibelleCompagnieAerienne(String libelleCompagnieAerienne) {
       this.libelleCompagnieAerienne = libelleCompagnieAerienne;
+   }
+
+   public UploadedFile getFile() {
+      return this.file;
+   }
+
+   public void setFile(UploadedFile uploadFile) {
+      this.file = uploadFile;
+   }
+
+   public String getImageCompagnieAerienne() {
+      return imageCompagnieAerienne;
+   }
+
+   public void setImageCompagnieAerienne(String imageCompagnieAerienne) {
+      this.imageCompagnieAerienne = imageCompagnieAerienne;
    }
 
 }

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.business.train.Service;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.resources.utils.TimeZoneOffSet;
 import com.avancial.app.traitements.TraitementExportDataBean;
@@ -32,7 +33,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    private DateFormat df;
    private IWriter    writer;
    private int        numFichier;
-
+   
    /**
     * 
     @author Yahiani Ismail
@@ -55,10 +56,11 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
     * 
     */
    public void export(List<TrainCatalogue> listCatalogue, TraitementExportDataBean bean, Service service) throws ParseException {
-
-      Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
-      File file = new File(String.valueOf(this.numFichier) + bean.getHeureCreation() + ".txt");
-      this.writer = new WriterTxt("\\\\reha\\TGVAir_REC\\ssim7\\" + file);
+      
+      Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class); 
+      String compagnieName = listCatalogue.get(0).getCodeCompagnie() ; 
+      File file = new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt");
+      this.writer = new WriterTxt(APP_TgvAir.CHEMIN_SSIM7.toString() + file);
       this.cpt = 0;
       try {
          int[] beginsType1 = { 0, 1, 35, 191, 194, 200 };
