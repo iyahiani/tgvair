@@ -44,7 +44,7 @@ public class SecurityManagedBean implements Serializable {
     */
    public SecurityManagedBean() {
       this.listeItem2Role = new HashMap<>();
-      System.out.println("SecurityManagedBean.SecurityManagedBean()");
+//      System.out.println("SecurityManagedBean.SecurityManagedBean()");
    }
 
    /**

@@ -22,6 +22,7 @@ import com.avancial.app.business.train.circulation.IObservableCirculationSemaine
 import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.business.train.circulation.ObservableCirculationBuilder;
 import com.avancial.app.data.model.databean.PointArretDataBean;
+import com.avancial.app.resources.utils.CalculeJoursFeriers;
 import com.avancial.app.resources.utils.StringToDate;
 
 public class Train implements ITrain {
@@ -518,8 +519,15 @@ public class Train implements ITrain {
                         entry.getValue().setFlagCirculation(false);
                   }}
                   ;
-                  
+                  ////////////////////////////////////////  JOURS FERIES 
                
+                  if ( CalculeJoursFeriers.listJoursFeriers(Calendar.getInstance()).contains(calendarTrain)) {
+                     if (pArret.getFerieHeureOuverturePointsArret()!=null && pArret.getFerieHeureFermeturePointsArret()!=null) { 
+                     if (entry.getValue().getHeureDepart() < Integer.valueOf(pArret.getDimancheHeureOuverturePointsArret().toString().substring(11,13)+pArret.getDimancheHeureOuverturePointsArret().toString().substring(14,16)) 
+                           || (entry.getValue().getHeureDepart() > Integer.valueOf(pArret.getDimancheHeureFermeturePointsArret().toString().substring(11,13)+pArret.getDimancheHeureFermeturePointsArret().toString().substring(14,16))))
+                        entry.getValue().setFlagCirculation(false);
+                  }}
+                  
             }
          }
       }

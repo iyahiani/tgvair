@@ -25,6 +25,7 @@ import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.ExportSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
+import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementExportDataBean;
 
@@ -59,13 +60,18 @@ public class JobExport implements Job {
                      }
          }
                
-               if (listeTrainCatalogue.size()==1) { 
-                  Calendar c = Calendar.getInstance() ; 
+               /*if (listeTrainCatalogue.size()==1) { 
+                 // Calendar c = Calendar.getInstance() ; 
                   // Regarder si ce train date d'aujourd'hui ou si c'est un ancien train :Si nouveau Export / Sinon ne pas exporter  
-                  if( new CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0).getDateCreationLigneTrain().equals(c.getTime())) {
-                  compare = true  ;break ;
-                  }
-               }
+                //  try {
+                 //    if( StringToDate.toStringByFormat(new CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0).getDateCreationLigneTrain(),"dateBySlashSansHeure").equals(StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"))) {
+                     compare = true  ;break ;
+                 //    }
+                //  } catch (Exception e) {
+                     // TODO Auto-generated catch block
+                 //    e.printStackTrace();
+                 // }
+               }*/
       } 
          
          if (compare) {
@@ -77,7 +83,7 @@ public class JobExport implements Job {
                List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
                TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste);
                 TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(),tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
-                trainPortf.setCodeCompagnie(tc2c.getCodeCompagnieAerienne()); 
+                trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne()); 
                 trainPortf.setQuota1er(tc2c.getQuotaPremiereTrainCatalogueToCompagnie()); 
                 trainPortf.setQuota2eme(tc2c.getQuotaDeuxiemeTrainCatalogueToCompagnie()); 
                 trainPortf.setPointArretOrigine(tc2c.getTrainCatalogueDataBean().getIdPointArretOrigine());

@@ -7,6 +7,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent"/>
 
         <property name="java-output-path" value="/tgvAir/build/classes"/>
-        <property name="context-root" value="TGV_Air"/>
+        <property name="context-root" value="tgvair"/>
     </wb-module>
 </project-modules>

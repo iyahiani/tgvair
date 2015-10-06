@@ -82,8 +82,8 @@ public class TrainFactory implements ITrainFactory {
       Circulation circulation = new Circulation();  
       circulation.setDateDebut(bean.getDateDebutValiditeTrainCatalogueToCompagnie());
       circulation.setDateFin(bean.getDateFinValiditeTrainCatalogueToCompagnie());
-      circulation.setOrigine(bean.getTrainCatalogueDataBean().getOriginePointArret());
-      circulation.setDestination(bean.getTrainCatalogueDataBean().getDestinationPointArret());
+      circulation.setOrigine(bean.getTrainCatalogueDataBean().getIdPointArretOrigine().getCodeGDSPointArret());
+      circulation.setDestination(bean.getTrainCatalogueDataBean().getIdPointArretDestination().getCodeGDSPointArret());
       circulation.setHeureDepart(Integer.valueOf(StringToDate.toFormatedString(bean.getTrainCatalogueDataBean().getHeureDepartTrainCatalogue())));
       circulation.setHeureArrivee(Integer.valueOf(StringToDate.toFormatedString(bean.getTrainCatalogueDataBean().getHeureArriveeTrainCatalogue()))); 
       circulation.setJoursCirculation(bean.getTrainCatalogueDataBean().getRegimeJoursTrainCatalogue()); 

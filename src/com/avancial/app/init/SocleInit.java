@@ -26,7 +26,7 @@ import com.avancial.app.jobs.JobImport;
  * @author bruno.legloahec
  *
  */
-//@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
 
    /**
@@ -64,7 +64,7 @@ public class SocleInit extends HttpServlet {
       // define the job and tie it to our HelloJob class
       JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
       // Trigger the job to run on the next round minute
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* * */1 * * ?")).build();
+      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* 1 * * * ?")).build();
             
       sched.start()                    ;
       sched.scheduleJob(job , trigger)  ;

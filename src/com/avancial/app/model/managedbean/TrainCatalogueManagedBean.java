@@ -5,12 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
@@ -22,7 +19,6 @@ import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementImportDAO;
@@ -147,8 +143,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
 
          for (TrainCatalogueDataBean t : this.trainsCatalogue) {
 
-            System.out.println(this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue().toString());
-            System.out.println(this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue().toString());
+           // System.out.println(this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue().toString());
+           // System.out.println(this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue().toString());
             if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
 
                if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
@@ -247,7 +243,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.numeroTrainCatalogue2 = numeroTrainCatalogue2;
    }
 
-  
 
    public Date getHeureDepartTrainCatalogue() {
       return this.heureDepartTrainCatalogue;
@@ -346,6 +341,10 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public List<String> getListSelectedJoursCirculation() {
+    
+      List<String> temp = new ArrayList<>() ;
+      String t = this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue() ; 
+      
       return this.listSelectedJoursCirculation;
    }
 

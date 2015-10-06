@@ -58,7 +58,7 @@ public class JobImport implements Job {
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
       List<String> listnumsHashed = new ArrayList<>();
-      logger.info("Import started"); 
+      this.logger.info("Import started"); 
       IReader reader = null;
       try {
          
@@ -67,7 +67,7 @@ public class JobImport implements Job {
         
       } catch (IOException   e1) {  
         
-        logger.info("Import:"+e1.getMessage());
+        this.logger.info("Import:"+e1.getMessage());
          e1.printStackTrace();
       }
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
@@ -88,7 +88,6 @@ public class JobImport implements Job {
 
       }
       IParser par = new ParserFixedLength(new FilterEncodage(new FiltreTrancheOptionnel(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
-
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
       List<CirculationSSIMDataBean> list = dao.getAll() ;
@@ -119,11 +118,14 @@ public class JobImport implements Job {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               if (circulation!=null) dao.saveSSIM(circulation);
+               if (circulation!=null) 
+                  dao.saveSSIM(circulation);
+                  
+               
             }
          }
       } catch (NumberFormatException e) {
-         // logger.error(e.getMessage());
+          logger.error(e.getMessage());
          e.printStackTrace();
       } catch (IOException e) {
          this.logger.error(e.getMessage());
@@ -133,14 +135,17 @@ public class JobImport implements Job {
       try {
          bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
          bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin")); 
-        // archiveSSIM() ;
+         // archiveSSIM() ;
       } catch (Exception e1) {
          //this.logger.error(e1.getMessage());
          e1.printStackTrace();
+         this.logger.error(e1.getMessage());
       }
+      
       TraitementImportDAO daoImport = new TraitementImportDAO();
       daoImport.saveTraitementSSIM(bean); 
-      logger.info("Import Finish"); 
+      this.logger.info("Import Finish");  
+      
    }
 
   

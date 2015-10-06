@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -22,6 +23,8 @@ public class Log4jListener implements ServletContextListener {
 
    @Override
    public void contextInitialized(ServletContextEvent e) {
+      Logger log = Logger.getLogger("org.hibernate");
+      log.setLevel(Level.ERROR);
        ServletContext ctx = e.getServletContext();
        Properties prop = new Properties() ; 
        String pref = ctx.getRealPath("/") ;

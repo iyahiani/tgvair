@@ -70,7 +70,7 @@ public class TrainCatalToCompManagedBean extends AManageBean implements Serializ
    public void valueChanged(ValueChangeEvent event) {
       this.selectedOneMenu = (String) event.getNewValue() ; 
       this.marketingFlight = (String) event.getNewValue() ; 
-      System.out.println(this.marketingFlight);
+     // System.out.println(this.marketingFlight);
    }
    
    

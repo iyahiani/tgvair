@@ -32,7 +32,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  * @author bruno.legloahec
  *
  */
-@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
+//@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
 public class SocleInit extends HttpServlet {
    public Scheduler          sched;
 

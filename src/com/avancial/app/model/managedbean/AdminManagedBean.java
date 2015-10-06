@@ -3,6 +3,8 @@ package com.avancial.app.model.managedbean;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -25,6 +27,7 @@ import com.avancial.app.jobs.JobExport;
 import com.avancial.app.jobs.JobExportByCompagnie;
 import com.avancial.app.jobs.JobImport;
 import com.avancial.socle.model.managedbean.AManageBean;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("admin")
 @ViewScoped
@@ -42,10 +45,10 @@ public class AdminManagedBean extends AManageBean {
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
    public AdminManagedBean() { 
-      System.out.println("AdminManagedBean.AdminManagedBean()"); 
+   //   System.out.println("AdminManagedBean.AdminManagedBean()"); 
    }
    
-   public String lancerJob() {
+   public String lancerImport() {
       
       this.sf = new StdSchedulerFactory()                                                               ;
       Calendar calendarEndAdapt = Calendar.getInstance()                                                ;
@@ -60,19 +63,20 @@ public class AdminManagedBean extends AManageBean {
 
       try {
          //this.sched.clear();   //this.sched.scheduleJob(jobAd, triggerAd);  
-          this.sched = this.sf.getScheduler();
+         this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(job, trigger);
          this.sched.start()                  ;
          Thread.sleep(600L);
          this.sched.shutdown(true);
          this.sched = this.sf.getScheduler();
-         this.sched.scheduleJob(jobAd, triggerAd);
-         this.sched.start();
-         Thread.sleep(300L);
+         this.sched.scheduleJob(jobAd, triggerAd)  ;
+         this.sched.start()                        ;
+         Thread.sleep(600L)                        ;
          this.sched.shutdown(true);
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "SUCCES Import SSIM"));
          
       } catch (SchedulerException | InterruptedException e) {
-        // logger.error(e.getMessage());
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "Echec Import SSIM"));
          e.printStackTrace();
       }
 
@@ -80,7 +84,7 @@ public class AdminManagedBean extends AManageBean {
    }
 
    public void valueChanged(ValueChangeEvent event) {
-      System.out.println(event.getNewValue());  
+      //System.out.println(event.getNewValue());  
       this.compagnie =  (String) event.getNewValue(); 
    }
 
@@ -100,19 +104,19 @@ public class AdminManagedBean extends AManageBean {
          this.sched.start();
          Thread.sleep(600L);
          this.sched.shutdown(true);
-         if(this.compagnie.equalsIgnoreCase("")) {    
+        // if(this.compagnie.equalsIgnoreCase("")) {    
          this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(jobexport, triggerexport);
          this.sched.start();
          Thread.sleep(600L);
          this.sched.shutdown(true); 
-         }  else {
+       /*  }  else {
             this.sched = this.sf.getScheduler();
             this.sched.scheduleJob(jobexportByCompagnie, triggerexportByCompagnie);
             this.sched.start();
             Thread.sleep(600L);
-            this.sched.shutdown(true); 
-      }
+            this.sched.shutdown(true);
+      } */
       }
       catch (SchedulerException | InterruptedException e) {
 
