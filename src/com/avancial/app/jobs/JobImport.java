@@ -58,23 +58,14 @@ public class JobImport implements Job {
       this.logger.info("Import started");
       IReader reader = null;
       try {
-<<<<<<< HEAD
-         
-        //reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ; 
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ;
-        
-      } catch (IOException   e1) {  
-        
-        this.logger.info("Import:"+e1.getMessage());
-=======
 
          // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
-         reader = new ReaderSSIM("D:\\was_tmp\7989.txt");
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
 
          this.logger.info("Import:" + e1.getMessage());
->>>>>>> bcd1fb8ebe097e166274f410037d364444bd38f4
+
          e1.printStackTrace();
       }
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
@@ -148,16 +139,13 @@ public class JobImport implements Job {
       }
 
       TraitementImportDAO daoImport = new TraitementImportDAO();
-<<<<<<< HEAD
-      daoImport.saveTraitementSSIM(bean); 
-      this.logger.info("Import Terminé");  
-=======
+
       daoImport.saveTraitementSSIM(bean);
-      this.logger.info("Import Finish");
->>>>>>> bcd1fb8ebe097e166274f410037d364444bd38f4
+      this.logger.info("Import Terminé");
+
       try {
          archiveSSIM();
-         this.logger.info("Archivage Terminé");  
+         this.logger.info("Archivage Terminé");
       } catch (Exception e) {
          this.logger.error("erreur d'archivage du fichier SSIM");
          e.printStackTrace();
