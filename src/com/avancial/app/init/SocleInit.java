@@ -20,12 +20,13 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.avancial.app.jobs.JobAdaptation;
+import com.avancial.app.jobs.JobImport;
 
 /**
  * @author bruno.legloahec
  *
  */
-//@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
    Logger                    log              = Logger.getLogger(SocleInit.class);
    /**
@@ -45,14 +46,11 @@ public class SocleInit extends HttpServlet {
       System.out.println("********  Application initialization  ********");
       System.out.println("**********************************************");
       try {
-<<<<<<< HEAD
-         this.quartzInit(); 
-         log.info("quartz initialisé"); 
-=======
+
          this.quartzInit();
          this.log.info("quartz initialisé");
 
->>>>>>> bcd1fb8ebe097e166274f410037d364444bd38f4
+
       } catch (SchedulerException e) {
          e.printStackTrace();
          this.log.error("erreur d'initialisation de Quartz");
@@ -68,12 +66,12 @@ public class SocleInit extends HttpServlet {
       SchedulerFactory sf = new StdSchedulerFactory();
       Scheduler sched = sf.getScheduler();
       // define the job and tie it to our HelloJob class
-      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
+      JobDetail job = JobBuilder.newJob(JobImport.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
       // Trigger the job to run on the next round minute
-<<<<<<< HEAD
+
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* */15 * * * ?")).build();
             
-     // sched.start()                    ;
+     sched.start()                    ;
       sched.scheduleJob(job , trigger)  ; 
       try {
          Thread.sleep(600L);
@@ -81,15 +79,7 @@ public class SocleInit extends HttpServlet {
         
          e.printStackTrace();
       }
-    //  sched.shutdown(true);
-      
-=======
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* */1 * * * ?")).build();
-
-      sched.start();
-      // sched.scheduleJob(job, trigger);
       sched.shutdown(true);
-
->>>>>>> bcd1fb8ebe097e166274f410037d364444bd38f4
+   
    }
 }
