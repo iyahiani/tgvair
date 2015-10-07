@@ -198,14 +198,14 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
       liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
       liste.add(TimeZoneOffSet.getGMTDiff());// tc2c.getGMTDepart()
-            if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
-      else liste.add("");// ajouter un test si CDG alors TN sinon "  "
+               // ajouter un test si CDG alors TN sinon "  "
       
       liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
       liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
       liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
       liste.add(TimeZoneOffSet.getGMTDiff()); //
-      liste.add("");
+      if (tc2c.getPointArretDestination().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
+      else liste.add("");
       liste.add("TRN");
       liste.add("C" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota1er())) + "Y" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota2eme())));
       liste.add("");

@@ -7,7 +7,11 @@
   <mime-mapping>
     <extension>otf</extension>
     <mime-type>application/font-sfnt</mime-type>
-  </mime-mapping>
+  </mime-mapping> 
+   <context-param>
+        <param-name>log4j-config-location</param-name>
+        <param-value>WEB-INF/log4j.properties</param-value>
+    </context-param>
   <servlet>
     <servlet-name>FacesServlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

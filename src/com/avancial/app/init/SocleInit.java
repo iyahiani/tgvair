@@ -26,7 +26,7 @@ import com.avancial.app.jobs.JobImport;
  * @author bruno.legloahec
  *
  */
-@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
+//@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
    Logger                    log              = Logger.getLogger(SocleInit.class);
    /**
@@ -71,7 +71,7 @@ public class SocleInit extends HttpServlet {
 
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* */15 * * * ?")).build();
             
-     sched.start()                    ;
+      //sched.start()                    ;
       sched.scheduleJob(job , trigger)  ; 
       try {
          Thread.sleep(600L);
@@ -79,7 +79,7 @@ public class SocleInit extends HttpServlet {
         
          e.printStackTrace();
       }
-      sched.shutdown(true);
+     // sched.shutdown(true);
    
    }
 }

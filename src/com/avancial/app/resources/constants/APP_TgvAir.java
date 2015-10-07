@@ -13,7 +13,8 @@ public enum APP_TgvAir {
    CHEMIN_SSIM("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt"),
    CHEMIN_SSIM7("\\\\reha\\TGVAir_REC\\ssim7\\"),
    CHEMIN_SSIMARCHIVE("\\\\reha\\TGVAir_REC\\archives\\"),
-   CHEMIN_APP_PROPERTIES("/classes/com/avancial/app/resources/app.properties");
+   CHEMIN_APP_PROPERTIES("/classes/com/avancial/app/resources/app.properties") 
+   ;
 
    private String constante;
 
