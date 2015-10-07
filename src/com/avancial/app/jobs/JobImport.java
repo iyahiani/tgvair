@@ -64,7 +64,7 @@ public class JobImport implements Job {
       try {
          
         //reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ; 
-         reader = new ReaderSSIM("D:\\was_tmp\7989.txt")  ;
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ;
         
       } catch (IOException   e1) {  
         
@@ -145,11 +145,12 @@ public class JobImport implements Job {
       
       TraitementImportDAO daoImport = new TraitementImportDAO();
       daoImport.saveTraitementSSIM(bean); 
-      this.logger.info("Import Finish");  
+      this.logger.info("Import Terminé");  
       try {
          archiveSSIM();
+         this.logger.info("Archivage Terminé");  
       } catch (Exception e) {
-         logger.error("erreur d'archivage du fichier SSIM");
+         this.logger.error("erreur d'archivage du fichier SSIM");
          e.printStackTrace();
       } 
       

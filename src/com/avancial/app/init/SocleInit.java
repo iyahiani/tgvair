@@ -3,6 +3,7 @@
  */
 package com.avancial.app.init;
 
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ import com.avancial.app.jobs.JobImport;
  * @author bruno.legloahec
  *
  */
-@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
+//@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
    Logger log  =Logger.getLogger(SocleInit.class) ;
    /**
@@ -48,8 +49,7 @@ public class SocleInit extends HttpServlet {
       System.out.println("**********************************************");
       try {
          this.quartzInit(); 
-         log.info("quartz initialisé");
-
+         log.info("quartz initialisé"); 
       } catch (SchedulerException e) {
          e.printStackTrace(); 
          log.error("erreur d'initialisation de Quartz");
@@ -67,11 +67,17 @@ public class SocleInit extends HttpServlet {
       // define the job and tie it to our HelloJob class
       JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
       // Trigger the job to run on the next round minute
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* */1 * * * ?")).build();
+      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* */15 * * * ?")).build();
             
-      sched.start()                    ;
-      sched.scheduleJob(job , trigger)  ;
-      sched.shutdown(true);
+     // sched.start()                    ;
+      sched.scheduleJob(job , trigger)  ; 
+      try {
+         Thread.sleep(600L);
+      } catch (InterruptedException e) {
+        
+         e.printStackTrace();
+      }
+    //  sched.shutdown(true);
       
    }
 }

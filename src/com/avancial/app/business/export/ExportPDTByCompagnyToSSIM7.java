@@ -16,6 +16,7 @@ import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.app.resources.utils.StringToFormatedString;
 import com.avancial.app.resources.utils.TimeZoneOffSet;
 import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.writer.FormaterLeftSpaces;
@@ -197,19 +198,20 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
       liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
       liste.add(TimeZoneOffSet.getGMTDiff());// tc2c.getGMTDepart()
-      if (tc2c.getPointArretOrigine().getCodeGDSPointArret().endsWith("CDG"))
+      if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG"))
          liste.add("TN");
       else
          liste.add("");// ajouter un test si CDG alors TN sinon "  "
-      liste.add("ZLN");
+      
+      liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
       liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
       liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
       liste.add(TimeZoneOffSet.getGMTDiff()); //
       liste.add("");
-      liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
-      liste.add("C" + String.valueOf(tc2c.getQuota1er()) + "Y" + String.valueOf(tc2c.getQuota2eme()));
+      liste.add("TRN");
+      liste.add("C" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota1er())) + "Y" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota2eme())));
       liste.add("");
-      liste.add("C" + String.valueOf(tc2c.getQuota1er()) + "Y" + String.valueOf(tc2c.getQuota2eme()));
+      liste.add("C" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota1er())) + "Y" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota2eme())));
       liste.add("");
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)

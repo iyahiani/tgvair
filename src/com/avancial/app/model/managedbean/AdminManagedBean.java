@@ -74,10 +74,11 @@ public class AdminManagedBean extends AManageBean {
          Thread.sleep(600L)                        ;
          this.sched.shutdown(true);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "SUCCES Import SSIM"));
-         
+         this.logger.info("SUCCES Import SSIM");
       } catch (SchedulerException | InterruptedException e) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "Echec Import SSIM"));
          e.printStackTrace();
+         this.logger.error("Echec Import SSIM");
       }
 
       return null;
@@ -89,6 +90,7 @@ public class AdminManagedBean extends AManageBean {
    }
 
    public String lancerExport() {
+      
       this.sf = new StdSchedulerFactory();
       JobDetail jobAdap = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build();
       SimpleTrigger triggerAdap =  TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build(); 
@@ -102,14 +104,16 @@ public class AdminManagedBean extends AManageBean {
          this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(jobAdap, triggerAdap);
          this.sched.start();
-         Thread.sleep(600L);
-         this.sched.shutdown(true);
+       //  Thread.sleep(600L);
+        // this.sched.shutdown(true);
         // if(this.compagnie.equalsIgnoreCase("")) {    
          this.sched = this.sf.getScheduler();
          this.sched.scheduleJob(jobexport, triggerexport);
          this.sched.start();
          Thread.sleep(600L);
          this.sched.shutdown(true); 
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "SUCCES Export SSIM7"));
+         this.logger.info("SUCCES Export SSIM7");
        /*  }  else {
             this.sched = this.sf.getScheduler();
             this.sched.scheduleJob(jobexportByCompagnie, triggerexportByCompagnie);
@@ -119,7 +123,8 @@ public class AdminManagedBean extends AManageBean {
       } */
       }
       catch (SchedulerException | InterruptedException e) {
-
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "Echec Export SSIM")); 
+         this.logger.error("Echec Export SSIM");
          e.printStackTrace();
       }
     

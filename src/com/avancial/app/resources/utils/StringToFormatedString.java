@@ -5,6 +5,11 @@ import java.util.List;
 
 public class StringToFormatedString {
 
+   /**
+    * 
+    * @param chaine
+    * @return  un regime de circulation du  train selon le format : 1234567
+    */
    public static String formatterString(String chaine) {      
       
       char[] temp = chaine.toCharArray() ; 
@@ -27,7 +32,7 @@ public class StringToFormatedString {
   /**
    * 
    * @param String joursCircul 
-   * @return la list des jours de circulation du train selectionné
+   * @return la list des jours de circulation du train selectionné 
    */
    public static List<String> getRegimeCirculFromSelectedTrain(String joursCircul){
      
@@ -38,5 +43,13 @@ public class StringToFormatedString {
       return temp ; 
    }
    
+   public static String formaterQuotas(String chaine) {
+      
+      int temp = Integer.valueOf(chaine) ;
+      if(temp<10) return "00".concat(String.valueOf(temp)); 
+      else if (temp < 100) return "0".concat(String.valueOf(temp)) ; 
+      
+      return String.valueOf(temp) ;
+   }
    
 }
