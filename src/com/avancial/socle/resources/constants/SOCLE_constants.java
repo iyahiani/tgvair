@@ -9,6 +9,7 @@ public enum SOCLE_constants {
  * 
  */
    BUNDLE_PATH("com.avancial.app.resources.internationalization.Message"),
+   SOCLE_PROPERTIES_PATH("/classes/com/avancial/socle/resources/socle.properties"),
    MESSAGE_ERR_TRANSLATION_NOT_FOUND("erreur_traduction_non_trouve"),
    MESSAGE_CONNECTION_ACTIVE("message_connection_active"),
    MESSAGE_CONNECTION_INACTIVE("message_connection_inactive"),
