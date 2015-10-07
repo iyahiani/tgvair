@@ -18,10 +18,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.avancial.app.jobs.GlobalJob;
 import com.avancial.app.jobs.JobAdaptation;
-import com.avancial.app.jobs.JobExport;
-import com.avancial.app.jobs.JobImport;
 
 /**
  * @author bruno.legloahec
@@ -29,7 +26,7 @@ import com.avancial.app.jobs.JobImport;
  */
 @WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
-   Logger log  =Logger.getLogger(SocleInit.class) ;
+   Logger                    log              = Logger.getLogger(SocleInit.class);
    /**
     * 
     */
@@ -47,20 +44,20 @@ public class SocleInit extends HttpServlet {
       System.out.println("********  Application initialization  ********");
       System.out.println("**********************************************");
       try {
-         this.quartzInit(); 
-         log.info("quartz initialisé");
+         this.quartzInit();
+         this.log.info("quartz initialisé");
 
       } catch (SchedulerException e) {
-         e.printStackTrace(); 
-         log.error("erreur d'initialisation de Quartz");
+         e.printStackTrace();
+         this.log.error("erreur d'initialisation de Quartz");
       }
    }
-   
+
    /**
     * @throws SchedulerException
     * 
     */
-   
+
    private void quartzInit() throws SchedulerException {
       SchedulerFactory sf = new StdSchedulerFactory();
       Scheduler sched = sf.getScheduler();
@@ -68,10 +65,10 @@ public class SocleInit extends HttpServlet {
       JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
       // Trigger the job to run on the next round minute
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* */1 * * * ?")).build();
-            
-      sched.start()                    ;
-      sched.scheduleJob(job , trigger)  ;
+
+      sched.start();
+      // sched.scheduleJob(job, trigger);
       sched.shutdown(true);
-      
+
    }
 }
