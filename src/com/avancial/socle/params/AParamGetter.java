@@ -23,6 +23,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  *
  */
 public abstract class AParamGetter implements IParamGetter {
+   
    private Map<String, Map<String, IParamBean>> mapParamBean;
    private String                               pathToWebInf;
 
@@ -32,6 +33,7 @@ public abstract class AParamGetter implements IParamGetter {
     * @throws Exception
     */
    public AParamGetter() throws Exception {
+     
       this.mapParamBean = new HashMap<>();
       this.initPathToWebInf();
 

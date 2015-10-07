@@ -114,6 +114,6 @@ public class TestObesrvateurT2C {
      
       listTrainToCompagnie.add(tc2c);//listTrainToCompagnie.add(tc2c_2);
       ExportPDTByCompagnyToSSIM7  compagnyToSSIM7 = new ExportPDTByCompagnyToSSIM7(); 
-      compagnyToSSIM7.export(listTrainToCompagnie);
+     // compagnyToSSIM7.export(listTrainToCompagnie);
    }
 }
