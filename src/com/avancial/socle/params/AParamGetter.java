@@ -13,10 +13,10 @@ import com.avancial.socle.data.controller.dao.RefDirectoryDao;
 import com.avancial.socle.params.beans.IParamBean;
 import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
 import com.avancial.socle.params.exception.ParamNotFoundException;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
- * Classe abstraite servant de base pour créer une classe implémentant la
- * gestion des paramètres d'une application
+ * Classe abstraite servant de base pour créer une classe implémentant la gestion des paramètres d'une application
  * 
  * 
  * @author bruno.legloahec
@@ -36,7 +36,7 @@ public abstract class AParamGetter implements IParamGetter {
       this.initPathToWebInf();
 
       // On instancie les Paramètres du socle
-      ParamReaderFileGeneric socle = new ParamReaderFileGeneric(this.pathToWebInf + "/classes/com/avancial/socle/resources/socle.properties");
+      ParamReaderFileGeneric socle = new ParamReaderFileGeneric(this.pathToWebInf + SOCLE_constants.SOCLE_PROPERTIES_PATH.toString());
       socle.loadParams("socle");
       this.add(socle);
 
@@ -62,8 +62,7 @@ public abstract class AParamGetter implements IParamGetter {
    }
 
    /**
-    * Permet de récupérer le chemin d'accès au répertoire web-inf. Utilisé pour
-    * atteindre les fichiers de paramètres (.properties)
+    * Permet de récupérer le chemin d'accès au répertoire web-inf. Utilisé pour atteindre les fichiers de paramètres (.properties)
     */
    private void initPathToWebInf() {
       String path = "";
