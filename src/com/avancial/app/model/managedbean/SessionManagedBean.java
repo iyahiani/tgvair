@@ -46,7 +46,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @Named("savesession")
 @javax.enterprise.context.SessionScoped
 
-public class SaveSession extends AManageBean {
+public class SessionManagedBean extends AManageBean {
 
    /**
     * 
@@ -64,7 +64,7 @@ public class SaveSession extends AManageBean {
       
    }
    
-   public SaveSession() { 
+   public SessionManagedBean() { 
       
    }
   

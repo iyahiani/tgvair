@@ -58,7 +58,7 @@ public class TrainManagedBean extends AManageBean{
    private List<String> listSelectedJoursCirculation;
   
    @Inject
-   SaveSession saveSession;
+   SessionManagedBean sessionManagedBean;
    
    public TrainManagedBean() { 
       this.idPointArretOrigine = new PointArretDataBean();
@@ -68,31 +68,31 @@ public class TrainManagedBean extends AManageBean{
    @PostConstruct
    public void init() {
 
-      if (this.saveSession.getNum() != null) {
+      if (this.sessionManagedBean.getNum() != null) {
          
-               if (this.saveSession.getNum().get("num1") != null)
-                  this.numeroTrainCatalogue1 = this.saveSession.getNum().get("num1");
-               if (this.saveSession.getNum().get("num2") != null)
-                  this.numeroTrainCatalogue2 = this.saveSession.getNum().get("num2");
-               if (this.saveSession.getNum().get("op") != null)
-                  this.operatingFlight = this.saveSession.getNum().get("op");
-               if (this.saveSession.getListJoursCirculs().size()>0) 
-                  this.listSelectedJoursCirculation =this.saveSession.getListJoursCirculs();
-               if (this.saveSession.getDates().get("debut") != null)
-                  this.dateDebutValidite = this.saveSession.getDates().get("debut");
-               if (this.saveSession.getDates().get("fin") != null)
-                  this.dateFinValidite = this.saveSession.getDates().get("fin");
-               if (this.saveSession.getNum().get("origine") != null)
-                  this.idPointArretOrigine.setLibellePointArret(this.saveSession.getNum().get("origine"));  
-               if (this.saveSession.getNum().get("destination") != null)
-                  this.idPointArretDestination.setLibellePointArret(this.saveSession.getNum().get("destination"));
-               if (this.saveSession.getDates().get("heureArr") != null)
-                  this.heureArriveeTrainCatalogue = this.saveSession.getDates().get("heureArr");
-               if (this.saveSession.getDates().get("heureDep") != null)
-                  this.heureDepartTrainCatalogue = this.saveSession.getDates().get("heureDep");
-               this.saveSession.getNum().clear();
-               this.saveSession.getDates().clear(); 
-               this.saveSession.getListJoursCirculs().clear();
+               if (this.sessionManagedBean.getNum().get("num1") != null)
+                  this.numeroTrainCatalogue1 = this.sessionManagedBean.getNum().get("num1");
+               if (this.sessionManagedBean.getNum().get("num2") != null)
+                  this.numeroTrainCatalogue2 = this.sessionManagedBean.getNum().get("num2");
+               if (this.sessionManagedBean.getNum().get("op") != null)
+                  this.operatingFlight = this.sessionManagedBean.getNum().get("op");
+               if (this.sessionManagedBean.getListJoursCirculs().size()>0) 
+                  this.listSelectedJoursCirculation =this.sessionManagedBean.getListJoursCirculs();
+               if (this.sessionManagedBean.getDates().get("debut") != null)
+                  this.dateDebutValidite = this.sessionManagedBean.getDates().get("debut");
+               if (this.sessionManagedBean.getDates().get("fin") != null)
+                  this.dateFinValidite = this.sessionManagedBean.getDates().get("fin");
+               if (this.sessionManagedBean.getNum().get("origine") != null)
+                  this.idPointArretOrigine.setLibellePointArret(this.sessionManagedBean.getNum().get("origine"));  
+               if (this.sessionManagedBean.getNum().get("destination") != null)
+                  this.idPointArretDestination.setLibellePointArret(this.sessionManagedBean.getNum().get("destination"));
+               if (this.sessionManagedBean.getDates().get("heureArr") != null)
+                  this.heureArriveeTrainCatalogue = this.sessionManagedBean.getDates().get("heureArr");
+               if (this.sessionManagedBean.getDates().get("heureDep") != null)
+                  this.heureDepartTrainCatalogue = this.sessionManagedBean.getDates().get("heureDep");
+               this.sessionManagedBean.getNum().clear();
+               this.sessionManagedBean.getDates().clear(); 
+               this.sessionManagedBean.getListJoursCirculs().clear();
       }
    }
    @Override
@@ -146,16 +146,16 @@ public class TrainManagedBean extends AManageBean{
    public String goTrain() {
 
       System.out.println("TrainCatalogueManagedBean.goTrain()");
-      this.saveSession.getNum().put("num1", this.numeroTrainCatalogue1);
-      this.saveSession.getNum().put("num2", this.numeroTrainCatalogue2);
-      this.saveSession.getNum().put("op", this.operatingFlight);
-      this.saveSession.getListJoursCirculs().addAll(this.listSelectedJoursCirculation);
-      this.saveSession.getDates().put("debut", this.dateDebutValidite);
-      this.saveSession.getDates().put("fin", this.dateFinValidite);
-      this.saveSession.getNum().put("origine", this.idPointArretOrigine.getLibellePointArret());
-      this.saveSession.getNum().put("destination", this.idPointArretDestination.getLibellePointArret());
-      this.saveSession.getDates().put("heureDep", this.heureDepartTrainCatalogue);
-      this.saveSession.getDates().put("heureArr", this.heureArriveeTrainCatalogue);
+      this.sessionManagedBean.getNum().put("num1", this.numeroTrainCatalogue1);
+      this.sessionManagedBean.getNum().put("num2", this.numeroTrainCatalogue2);
+      this.sessionManagedBean.getNum().put("op", this.operatingFlight);
+      this.sessionManagedBean.getListJoursCirculs().addAll(this.listSelectedJoursCirculation);
+      this.sessionManagedBean.getDates().put("debut", this.dateDebutValidite);
+      this.sessionManagedBean.getDates().put("fin", this.dateFinValidite);
+      this.sessionManagedBean.getNum().put("origine", this.idPointArretOrigine.getLibellePointArret());
+      this.sessionManagedBean.getNum().put("destination", this.idPointArretDestination.getLibellePointArret());
+      this.sessionManagedBean.getDates().put("heureDep", this.heureDepartTrainCatalogue);
+      this.sessionManagedBean.getDates().put("heureArr", this.heureArriveeTrainCatalogue);
       return APP_TgvAir.NAVIGATION_POINTARRET.toString();
    }
    

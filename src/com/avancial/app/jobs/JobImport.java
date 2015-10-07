@@ -59,6 +59,7 @@ public class JobImport implements Job {
       IReader reader = null;
       try {
 
+
          // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
          reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
@@ -67,6 +68,7 @@ public class JobImport implements Job {
          this.logger.info("Import:" + e1.getMessage());
 
          e1.printStackTrace();
+
       }
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
          listnums.add(tc.getNumeroTrainCatalogue());
@@ -141,7 +143,9 @@ public class JobImport implements Job {
       TraitementImportDAO daoImport = new TraitementImportDAO();
 
       daoImport.saveTraitementSSIM(bean);
+
       this.logger.info("Import Terminé");
+
 
       try {
          archiveSSIM();

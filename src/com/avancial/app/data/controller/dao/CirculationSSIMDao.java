@@ -22,6 +22,7 @@ public class CirculationSSIMDao extends AbstractDao {
 
    public void save(CirculationSSIMDataBean t) throws ASocleException {
 
+      if (null!= t) 
       try {
          this.getEntityManager().getTransaction().begin();
          this.getEntityManager().persist(t);
@@ -31,7 +32,6 @@ public class CirculationSSIMDao extends AbstractDao {
          this.getEntityManager().getTransaction().rollback();
          this.getEntityManager().close();
          throw SocleExceptionManager.getException();
-
       }
    }
 
