@@ -10,6 +10,9 @@
 	
 		<h:outputText value="#{msg.libelle_version_socle}"></h:outputText>
 		<h:outputText value="#{paramGetterBean.getParam('socle','version').value}"></h:outputText>
+		<h:outputText value=" --- "></h:outputText>
+		<h:outputText value="#{msg.libelle_version_app}"></h:outputText>
+		<h:outputText value="#{paramGetterBean.getParam('app','version').value}"></h:outputText>
 	</div>
 
 </ui:composition>
