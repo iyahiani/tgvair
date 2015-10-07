@@ -2,7 +2,6 @@ package com.avancial.app.jobs;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,9 +36,6 @@ import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
-import com.avancial.socle.exceptions.ASocleException;
-import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
-import com.avancial.socle.params.exception.ParamNotFoundException;
 
 /**
  *
@@ -47,11 +43,11 @@ import com.avancial.socle.params.exception.ParamNotFoundException;
  */
 public class JobImport implements Job {
 
- @Inject 
-   
+   @Inject
    ParamGetterManagedBean paramGetter;
-   Logger logger = Logger.getLogger(JobImport.class);
-   Date dateCourante = new Date(); 
+   Logger                 logger       = Logger.getLogger(JobImport.class);
+   Date                   dateCourante = new Date();
+
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
 
@@ -59,16 +55,16 @@ public class JobImport implements Job {
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
       List<String> listnumsHashed = new ArrayList<>();
-      this.logger.info("Import started"); 
+      this.logger.info("Import started");
       IReader reader = null;
       try {
-         
-        //reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString())  ; 
-         reader = new ReaderSSIM("D:\\was_tmp\7989.txt")  ;
-        
-      } catch (IOException   e1) {  
-        
-        this.logger.info("Import:"+e1.getMessage());
+
+         // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
+         reader = new ReaderSSIM("D:\\was_tmp\7989.txt");
+
+      } catch (IOException e1) {
+
+         this.logger.info("Import:" + e1.getMessage());
          e1.printStackTrace();
       }
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
@@ -91,7 +87,7 @@ public class JobImport implements Job {
       IParser par = new ParserFixedLength(new FilterEncodage(new FiltreTrancheOptionnel(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
-      List<CirculationSSIMDataBean> list = dao.getAll() ;
+      List<CirculationSSIMDataBean> list = dao.getAll();
       dao.deleteAll(0);
       try {
          while ((chaine = reader.readLine()) != null) {
@@ -119,14 +115,12 @@ public class JobImport implements Job {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               if (circulation!=null) 
-                  dao.saveSSIM(circulation);
-                  
-               
+               dao.saveSSIM(circulation);
+
             }
          }
       } catch (NumberFormatException e) {
-          logger.error(e.getMessage());
+         this.logger.error(e.getMessage());
          e.printStackTrace();
       } catch (IOException e) {
          this.logger.error(e.getMessage());
@@ -135,36 +129,37 @@ public class JobImport implements Job {
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
          bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
-         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin")); 
+         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin"));
          // archiveSSIM() ;
       } catch (Exception e1) {
-         //this.logger.error(e1.getMessage());
+         // this.logger.error(e1.getMessage());
          e1.printStackTrace();
          this.logger.error(e1.getMessage());
       }
-      
+
       TraitementImportDAO daoImport = new TraitementImportDAO();
-      daoImport.saveTraitementSSIM(bean); 
-      this.logger.info("Import Finish");  
+      daoImport.saveTraitementSSIM(bean);
+      this.logger.info("Import Finish");
       try {
          archiveSSIM();
       } catch (Exception e) {
-         logger.error("erreur d'archivage du fichier SSIM");
+         this.logger.error("erreur d'archivage du fichier SSIM");
          e.printStackTrace();
-      } 
-      
-   } 
-   /**
-    * Archiver le Fichier SSIM dans \\reha\TGVAir_REC\Archives\ 
-    * @throws Exception
-    */
-   private void archiveSSIM() throws Exception { 
-      File source= new File(APP_TgvAir.CHEMIN_SSIM.toString()) ;   
-      File dest= new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString()+"archiveSSIM"+ StringToDate.toStringByFormat(new Date(),"dateSansSeparateurs")+".txt") ; 
-      
-      DeplacerFicher.copierFile(source, dest);  
-      source.delete() ;
+      }
+
    }
 
-  
+   /**
+    * Archiver le Fichier SSIM dans \\reha\TGVAir_REC\Archives\
+    * 
+    * @throws Exception
+    */
+   private void archiveSSIM() throws Exception {
+      File source = new File(APP_TgvAir.CHEMIN_SSIM.toString());
+      File dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
+
+      DeplacerFicher.copierFile(source, dest);
+      source.delete();
+   }
+
 }
