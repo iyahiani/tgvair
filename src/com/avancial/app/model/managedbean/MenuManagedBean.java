@@ -62,5 +62,9 @@ public class MenuManagedBean implements Serializable {
    }
    public static String goJobPlanif() {
       return SOCLE_constants.NAVIGATION_JOB_PLANIF.toString();
+   } 
+   
+   public static String goJournalLog() {
+      return SOCLE_constants.NAVIGATION_JOURNAL_LOG.toString();
    }
 }

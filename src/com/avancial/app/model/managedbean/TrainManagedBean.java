@@ -98,15 +98,7 @@ public class TrainManagedBean extends AManageBean{
    @Override
    public String add() {
 
-     /* TrainCatalogueDAO dao = new TrainCatalogueDAO();
-      Session session = dao.getSession();
-      Criteria criteria = session.createCriteria(TrainCatalogueDataBean.class).add(Restrictions.eq("numeroTrainCatalogue1", getNumeroTrainCatalogue1()));
-      List<TrainCatalogueDataBean> c = new ArrayList<>();
-      c.clear();
-      c.addAll(criteria.list());
-      if (c.size() > 0) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "ce Train Existe Déja"));
-      } else {*/
+   
          TrainCatalogueDAO dao = new TrainCatalogueDAO();
          PointArretDAO pointArretDAO = new PointArretDAO();
          TrainCatalogueDataBean bean = new TrainCatalogueDataBean();

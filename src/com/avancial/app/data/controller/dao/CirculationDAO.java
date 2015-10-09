@@ -160,6 +160,12 @@ public class CirculationDAO extends AbstractDao {
      q.setParameter("id", id);
      q.executeUpdate() ;
      
+  } 
+  
+  public  CirculationAdapterDataBean getLastDateCreation () {
+     String sql = "from CirculationAdapterDataBean t group by t.dateCreationLigneTrain order by t.dateCreationLigneTrain DESC " ;
+     Query requete = this.getEntityManager().createQuery(sql); 
+     return (CirculationAdapterDataBean) requete.getResultList().get(0) ; 
   }
   public Session getSession() {
      return this.getEntityManager().unwrap(Session.class) ;

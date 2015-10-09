@@ -1,0 +1,46 @@
+<ui:composition template="/pages/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="contenu">
+
+		<p:fieldset legend="#{msg.p_logs_legend}" styleClass="fieldSet">
+
+			<h:panelGrid columns="1">
+
+				<p:dataTable
+					value="#{logs.listLogs}" var="log"
+					paginatorPosition="top"
+					rows="50"  scrollable="true"
+					paginator="true" rowsPerPageTemplate="10,20,40"  emptyMessage="Pas de log">
+					<p:column headerText="#{msg.p_logs_userID}">
+                            <h:outputText value="#{log.userID}" />
+                        </p:column>
+                        
+                    <p:column headerText="#{msg.p_logs_date}"
+                           >
+                            <h:outputText value="#{log.dateLog}" />
+                        </p:column> 
+                        
+                     <p:column headerText="#{msg.p_logs_classLog}"
+                           >
+                            <h:outputText value="#{log.loggerClass}" />
+                        </p:column>    
+                        
+                      <p:column headerText="#{msg.p_logs_levelLog}"
+                            >
+                            <h:outputText value="#{log.levelLog}" />
+                        </p:column>   
+                               
+                       <p:column headerText="#{msg.p_logs_message}"
+                            >
+                            <h:outputText value="#{log.message}" />
+                        </p:column>  
+				</p:dataTable>
+			</h:panelGrid>
+			</p:fieldset>
+	</ui:define>
+</ui:composition>

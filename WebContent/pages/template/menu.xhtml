@@ -13,31 +13,32 @@
 
 .col_menu {
     vertical-align: top; 
-   background-color: aqua;  
+   /*background-color: aqua;*/  
+   /* styleClass="btn btn-default"*/
 }
-</style>
-		<p:menu styleClass="horizontalMenu col_menu" id="menu" style="background-color: blue;">
+</style>  
+		<p:menu >
 			<p:menuitem value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" />
 			
 			<p:menuitem value="#{msg.p_catalogue_menu}" 
-                action="#{menu.goCatalogue}" styleClass="btn btn-default"
+                action="#{menu.goCatalogue}"
                 title="Gestion Catalogue" rendered="#{ihmManagedBean.isLogged()}" />
 			
 			<p:menuitem value="#{msg.p_ajust_menu}" action="#{menu.goAjustement}"
-                styleClass="btn btn-default" title="Ajustement Plan Transport"
+                title="Ajustement Plan Transport"
                 rendered="#{ihmManagedBean.isLogged()}" />
                 
 			<p:menuitem value="#{msg.p_train_menu}" action="#{menu.goTrain}"
-				styleClass="btn btn-default" title="Gestion Train"
+				 title="Gestion Train"
 				rendered="#{ihmManagedBean.isLogged()}" />
 		
 			<p:menuitem value="#{msg.p_CompAerien_menu}"
-				action="#{menu.goCompagnieAerienne}" styleClass="btn btn-default"
+				action="#{menu.goCompagnieAerienne}" 
 				title="Gestion Compagnies Aeriennes"
 				rendered="#{ihmManagedBean.isLogged()}" />
 			
 			<p:menuitem value="#{msg.p_point_arret}"
-				action="#{menu.goPointArret}" styleClass="btn btn-default"
+				action="#{menu.goPointArret}" 
 				title="Gestion Points Arret" rendered="#{ihmManagedBean.isLogged()}" />
 			
 			<p:menuitem value="#{msg.p_role_menu}" action="#{menu.goRole}"
@@ -55,7 +56,11 @@
 		    
 		    <p:menuitem value="#{msg.p_titre_page_admin}" action="#{menu.goAdministration}"
                 rendered="#{ihmManagedBean.isLogged()}"/>
-		   </p:menu>
+		   
+		   
+		     <p:menuitem value="#{msg.p_logs_log}" action="#{menu.goJournalLog}"
+               rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJournalLogs')}"/>
+           </p:menu>
 	</h:form>
 </ui:composition>
 

@@ -19,7 +19,8 @@ public enum SOCLE_constants {
    NAVIGATION_ROLE("/pages/private/role?faces-redirect=true"),
    NAVIGATION_USER("/pages/private/user?faces-redirect=true"),
    NAVIGATION_JOB("/pages/private/job?faces-redirect=true"),
-   NAVIGATION_JOB_PLANIF("/pages/private/jobPlanif?faces-redirect=true"),
+   NAVIGATION_JOB_PLANIF("/pages/private/jobPlanif?faces-redirect=true"), 
+   NAVIGATION_JOURNAL_LOG("/pages/private/journalLogs?faces-redirect=true"),
    /**
     * ID du statut des messages généraux à l'IHM
     */
@@ -36,6 +37,7 @@ public enum SOCLE_constants {
     * ID du statut des messages pour la suppression des données
     */
    DIALOG_DEL_MESSAGES("message_del"),
+   
 
    EXCEPTION_DUPICATE_ID("exception_duplicate_id"),
    EXCEPTION_UNKNOWN("exception_unknown");

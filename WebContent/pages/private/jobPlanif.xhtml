@@ -27,7 +27,7 @@
 			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
 				showDetail="true" />
 			<h:form>
-				<socle:jobPlanifForm/>  
+				<socle:jobPlanifForm />
 				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
 					type="submit" actionListener="#{jobPlanifManagedBean.add}"
 					onsuccess="if (#{jobPlanifManagedBean.closeDialog}=true) PF('Ajout').close()"
@@ -44,9 +44,9 @@
 			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
 				showDetail="true" />
 			<h:form>
-				
-			 <socle:jobPlanifForm/> 
-				
+
+				<socle:jobPlanifForm />
+
 				<br />
 				<br />
 				<p:commandButton value="#{msg.p_dialog_bouton_modifier_libelle}"
@@ -73,7 +73,7 @@
 			selectionMode="single"
 			selection="#{jobPlanifManagedBean.selectedItem}"
 			rowKey="#{item.idJobPlanif}">
-		
+
 			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
 				<h:outputText value="#{item.idJobPlanif}"></h:outputText>
 			</p:column>
@@ -83,9 +83,20 @@
 			<p:column headerText="#{msg.p_header_colonne_libelle}">
 				<h:outputText value="#{item.libelleJobPlanif}"></h:outputText>
 			</p:column>
-			 <p:column headerText="action" width="50"
-                id="colonne_#{item.idJobPlanif}">
-                <p:commandLink id="delete_role" update="dataTable :idPageMessages"
+			<p:column headerText="action" width="50"
+				id="colonne_#{item.idJobPlanif}">
+				<p:commandLink update=":modif" id="update_item"
+					oncomplete="PF('Modif').show()">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{jobPlanifManagedBean.selectedItem}" />
+					<h:graphicImage name="private/image/edit.png"
+						styleClass="actionButtons">
+						<p:tooltip for="update_item"
+							value="#{msg.p_bouton_modifier_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
+					</h:graphicImage>
+				</p:commandLink> 
+				
+				<p:commandLink id="delete_role" update="dataTable :idPageMessages"
                     action="#{jobPlanifManagedBean.delete}"
                     onsuccess="#{jobPlanifManagedBean.reload()}"
                     onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif}) ?')) return false">
@@ -98,22 +109,8 @@
                         value="#{msg.p_bouton_supprimer_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
                 </p:commandLink>
 
-
-                <p:commandLink update=":modif" id="update_item"
-                    oncomplete="PF('Modif').show()">
-                    <f:setPropertyActionListener value="#{item}"
-                        target="#{jobPlanifManagedBean.selectedItem}" />
-                    <h:graphicImage name="private/image/edit.png"
-                        styleClass="actionButtons">
-                        <p:tooltip for="update_item"
-                            value="#{msg.p_bouton_modifier_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
-                    </h:graphicImage>
-                </p:commandLink>
-
-            </p:column>
+			</p:column>
 		</p:dataTable>
-
-
 
 	</ui:define>
 </ui:composition>

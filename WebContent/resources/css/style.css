@@ -22,6 +22,13 @@
     /**text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);**/
 }
 
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)) repeat scroll 0 0 #0080ff;
+    border: 1px solid #7096ab;
+    box-shadow: 0 0 8px #0080ff;
+    color: #ffffff;
+    font-weight: bold;
+}
 
 .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield { 
 	background-color: white ;
@@ -135,7 +142,8 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 	min-height: 90%;
 	max-height: 1000px;
 	vertical-align: top;
-	width: 100%;
+	width: 100%; 
+	
 }
 
 #col_footer {
@@ -152,7 +160,8 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 	text-align: center;
 	border-right: dotted;
 	border-right-color: #A8D1F5;
-	padding-right: 15px;
+	padding-right: 15px; 
+	
 }
 
 #col_header_left a {
@@ -360,6 +369,8 @@ BloggerSans
 	display: block;
 	width: 85px;
 } 
+
+
 
 .centeredPanel{
     width:500px;

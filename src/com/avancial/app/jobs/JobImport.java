@@ -58,8 +58,6 @@ public class JobImport implements Job {
       this.logger.info("Import started");
       IReader reader = null;
       try {
-
-
          // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
          reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
@@ -106,36 +104,31 @@ public class JobImport implements Job {
                circulation.setGMTArriver(par.getParsedResult().get(APP_enumParserSSIM.POSITION_DIFFERENCE_GMT_ARRIVER.name()));
                try {
                   circulation.setDateDebutCirculation(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
-               } catch (ParseException e) {
-                  e.printStackTrace();
-               }
-               try {
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
                } catch (ParseException e) {
                   e.printStackTrace();
                }
+               
                circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(), APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               dao.saveSSIM(circulation);
+               if(circulation!=null) dao.saveSSIM(circulation);
 
             }
          }
-      } catch (NumberFormatException e) {
+      } catch (Exception e) {
          this.logger.error(e.getMessage());
          e.printStackTrace();
-      } catch (IOException e) {
-         this.logger.error(e.getMessage());
-         e.printStackTrace();
-      }
+      } 
+      
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
          bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
          bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin"));
-         // archiveSSIM() ;
+         
       } catch (Exception e1) {
-         // this.logger.error(e1.getMessage());
+        
          e1.printStackTrace();
          this.logger.error(e1.getMessage());
       }
@@ -162,7 +155,7 @@ public class JobImport implements Job {
     * 
     * @throws Exception
     */
-   private void archiveSSIM() throws Exception {
+     private  void archiveSSIM() throws Exception {
       File source = new File(APP_TgvAir.CHEMIN_SSIM.toString());
       File dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
 

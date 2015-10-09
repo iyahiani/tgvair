@@ -26,6 +26,7 @@ import com.avancial.app.jobs.JobAdaptation;
 import com.avancial.app.jobs.JobExport;
 import com.avancial.app.jobs.JobExportByCompagnie;
 import com.avancial.app.jobs.JobImport;
+import com.avancial.app.traitements.AdminTraitements;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
@@ -47,87 +48,37 @@ public class AdminManagedBean extends AManageBean {
    public AdminManagedBean() { 
    //   System.out.println("AdminManagedBean.AdminManagedBean()"); 
    }
-   
+   /**
+    * 
+    * @return lancement Manuel de l'import SSIM 
+    */
    public String lancerImport() {
       
       this.sf = new StdSchedulerFactory()                                                               ;
       Calendar calendarEndAdapt = Calendar.getInstance()                                                ;
       calendarEndAdapt.add(Calendar.MINUTE, 10)                                                         ;
-      JobDetail job = JobBuilder.newJob(JobImport.class).withIdentity("JOBManuel", "JOBManuel ").build();
-      // Trigger the job to run on the next round minute
-      SimpleTrigger trigger = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBManuel", "JOBManuel ").build();
-        
-      JobDetail jobAd = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOBadapManuel", "JOBadapManuel ").build();
-      // Trigger the job to run on the next round minute
-      SimpleTrigger triggerAd =  TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBadapManuel", "JOBadapManuel ").build();
-
-      try {
-         //this.sched.clear();   //this.sched.scheduleJob(jobAd, triggerAd);  
-         this.sched = this.sf.getScheduler();
-         this.sched.scheduleJob(job, trigger);
-         this.sched.start()                  ;
-         Thread.sleep(600L);
-         this.sched.shutdown(true);
-         this.sched = this.sf.getScheduler();
-         this.sched.scheduleJob(jobAd, triggerAd)  ;
-         this.sched.start()                        ;
-         Thread.sleep(600L)                        ;
-         this.sched.shutdown(true);
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "SUCCES Import SSIM"));
-         this.logger.info("SUCCES Import SSIM");
-      } catch (SchedulerException | InterruptedException e) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "Echec Import SSIM"));
-         e.printStackTrace();
-         this.logger.error("Echec Import SSIM");
-      }
-
+     
+      this.logger.info("SUCCES Import SSIM");      
+      AdminTraitements adminTraitements = new AdminTraitements() ;
+      adminTraitements.traitementImportSSIM();       
+      adminTraitements.traitementAdaptation();
+      
       return null;
    }
 
    public void valueChanged(ValueChangeEvent event) {
-      //System.out.println(event.getNewValue());  
+       
       this.compagnie =  (String) event.getNewValue(); 
    }
-
+/**
+ * lancement manuel de l'export SSIM 7 
+ * 
+ * @return
+ */
    public String lancerExport() {
-      
-      this.sf = new StdSchedulerFactory();
-      JobDetail jobAdap = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build();
-      SimpleTrigger triggerAdap =  TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JOBadapManuelExpo", "JOBadapManuelExpo").build(); 
-      JobDetail jobexport = JobBuilder.newJob(JobExport.class).withIdentity("JobExportManuel", "JobExportManuel").build();
-      SimpleTrigger triggerexport = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuel", "JobExportManuel ").build();
-      JobDetail jobexportByCompagnie = JobBuilder.newJob(JobExportByCompagnie.class).withIdentity("JobExportManuelByCompagnie ", "JobExportManuelByCompagnie ").build();
-      SimpleTrigger triggerexportByCompagnie  = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule()).withIdentity("JobExportManuelByCompagnie ", "JobExportManuelByCompagnie  ").build();
-     
-      try 
-      {
-         this.sched = this.sf.getScheduler();
-         this.sched.scheduleJob(jobAdap, triggerAdap);
-         this.sched.start();
-       //  Thread.sleep(600L);
-        // this.sched.shutdown(true);
-        // if(this.compagnie.equalsIgnoreCase("")) {    
-         this.sched = this.sf.getScheduler();
-         this.sched.scheduleJob(jobexport, triggerexport);
-         this.sched.start();
-         Thread.sleep(600L);
-         this.sched.shutdown(true); 
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "SUCCES Export SSIM7"));
-         this.logger.info("SUCCES Export SSIM7");
-       /*  }  else {
-            this.sched = this.sf.getScheduler();
-            this.sched.scheduleJob(jobexportByCompagnie, triggerexportByCompagnie);
-            this.sched.start();
-            Thread.sleep(600L);
-            this.sched.shutdown(true);
-      } */
-      }
-      catch (SchedulerException | InterruptedException e) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "JOB", "Echec Export SSIM")); 
-         this.logger.error("Echec Export SSIM");
-         e.printStackTrace();
-      }
-    
+      AdminTraitements adminTraitements = new AdminTraitements() ;
+      adminTraitements.traitementAdaptation(); 
+      adminTraitements.traitementExport();
       return null;
    }
    

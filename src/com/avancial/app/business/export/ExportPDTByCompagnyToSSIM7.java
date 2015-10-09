@@ -102,13 +102,13 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
 
          for (TrainCatalogue tc : listCatalogue) {
             for (Circulation c : tc.getListeCirculations()) {
-
+                
                this.writer.setFormaterStrategy(formater3);
                this.writer.write(this.getEnrgType3(tc, c));
                this.writer.setFormaterStrategy(formater4);
                this.writer.write(this.getEnrgType4(tc, c));
-
-            }
+            } 
+           this.varianceCirculation = 0 ;
          }
 
          this.writer.setFormaterStrategy(formater5);
@@ -199,7 +199,9 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
       liste.add(TimeZoneOffSet.getGMTDiff());// tc2c.getGMTDepart()
                // ajouter un test si CDG alors TN sinon "  "
-      
+      if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
+         else liste.add("");// ajouter un test si CDG alors TN sinon "  "
+
       liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
       liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
       liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
