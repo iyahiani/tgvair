@@ -13,28 +13,28 @@
 		<h:body>
 		<div class="container" style="margin: 20px;"> <!--  border-bottom:solid white 20px;" -->
 			
-			<div class="well" >
-			<p:panel style="width:60%;margin:absolute auto;border:none;align:right;"  >
-			 <h:graphicImage  name="icon/bondeau tgvair.png" rendered="#{!ihmManagedBean.isLogged()}"  style="margin-left:270px;width:100%;padding:20px;"
+			<div class="well" id="div">
+			<p:panel style="width:60%;margin:absolute auto;border:none;align:right;"  id="panel1" >
+			 <h:graphicImage  id="grphiqueBalise" name="icon/bondeau tgvair.png" rendered="#{!ihmManagedBean.isLogged()}"  style="margin-left:270px;width:100%;padding:20px;"
 			 > 
 			 </h:graphicImage>  
 			</p:panel>
 			</div>
 			
-			<h:form class="form-horizontal" >
-				<p:panel 
+			<h:form class="form-horizontal" id="formulaire"  >
+				<p:panel id="panel2"
 				 style="width:400px;margin: 5px auto; border-style:ridge; border-width:5px; border-color: #CC4040;  border-radius: 25px;" >		
-				<div class="well" >
+				<div class="well" id="div2">
 					<h:panelGrid columns="2" id="grid">
 					
-						<h:outputText value="#{msg.p_login_user}" style="color :#000099; " />
+						<h:outputText value="#{msg.p_login_user}" style="color :#000099; " id="output1" />
 						<p:inputText id="login" value="#{login.login}"  />
-						<h:outputText value="#{msg.p_login_password}" style="color :#000099; "/>
+						<h:outputText value="#{msg.p_login_password}" style="color :#000099; " id="output2"/>
 						<p:password id="password" value="#{login.password}"  />
 
 					</h:panelGrid>
 				</div> 		
-					<h:panelGrid columns="3" >
+					<h:panelGrid columns="3" id="panel3">
 						<p:commandButton id="submit" value="#{msg.libelle_valider}" ajax="false" style="margin-left:20px;"
 							action="#{login.login}" >  					
 						</p:commandButton>

@@ -15,6 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.avancial.app.business.train.Train;
 
@@ -23,11 +30,14 @@ import com.avancial.app.business.train.Train;
 public class CirculationSSIMDataBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "idCirculationSSIMtgvair", unique = true, nullable = false)
-   private Long idCirculation;
-   private String numeroTrain;
+   @Id 
+   
+   @GeneratedValue(strategy = GenerationType.AUTO) 
+ // @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+  
+   @Column(name = "idCirculationSSIMtgvair")
+   private  Long idCirculation;
+   private transient String numeroTrain;
    private String originePointArret;
    private String destinationPointArret;
    private String heureDepartCirculation;
@@ -40,10 +50,11 @@ public class CirculationSSIMDataBean implements Serializable {
    private int rangTroncon;
    private String trancheFacultatif;
    private String restrictionTrafic;
-
+   
    public CirculationSSIMDataBean() {
    }
 
+   
    public Long getIdCirculation() {
       return idCirculation;
    }
@@ -121,11 +132,13 @@ public class CirculationSSIMDataBean implements Serializable {
    public static long getSerialversionuid() {
       return serialVersionUID;
    }
-
+ 
+ 
    public String getNumeroTrain() {
       return numeroTrain;
    }
-
+   
+  
    public void setNumeroTrain(String numeroTrain) {
       this.numeroTrain = numeroTrain;
    }

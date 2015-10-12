@@ -43,6 +43,7 @@ public class CirculationSSIMDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close();
          throw SocleExceptionManager.getException();
       }
 
@@ -56,6 +57,7 @@ public class CirculationSSIMDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close();
          throw SocleExceptionManager.getException();
       }
 
@@ -86,9 +88,29 @@ public class CirculationSSIMDao extends AbstractDao {
       try {
          this.save(c);
       } catch (ASocleException e) {
-         // TODO Auto-generated catch block
+        
          e.printStackTrace();
       }
-   }
+   } 
    
+   public void saveModeBatch(CirculationSSIMDataBean t) throws ASocleException {
+      try {
+                 this.getEntityManager().getTransaction().begin();
+        this.getEntityManager().persist(t);
+         //this.getEntityManager().flush();
+         //this.getEntityManager().getTransaction().commit();
+            } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         throw SocleExceptionManager.getException();
+      }
+   } 
+   
+   public void closeEntity() throws ASocleException {
+    if (this.getEntityManager().isOpen())
+          {
+       this.getEntityManager().flush();
+       this.getEntityManager().getTransaction().commit();
+     this.getEntityManager().close();
+          }
+   }
 }

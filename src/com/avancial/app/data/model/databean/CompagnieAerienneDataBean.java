@@ -1,5 +1,7 @@
 package com.avancial.app.data.model.databean;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -7,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 /**
  * 
@@ -31,9 +34,9 @@ public class CompagnieAerienneDataBean implements Serializable {
    
    @Column(name="libelleCompagnieAerienne",nullable=true)
    private String libelleCompagnieAerienne ;
-    
+   @Lob
    @Column(name="imageCompagnieAerienne",nullable=true)
-   private String imageCompagnieAerienne ;
+   private InputStream imageCompagnieAerienne ;
    
    public int getIdCompagnieAeriennne() {
       return idCompagnieAeriennne;
@@ -63,11 +66,11 @@ public class CompagnieAerienneDataBean implements Serializable {
       return this.CodeCompagnieAerienne+""+this.libelleCompagnieAerienne ;
    }
 
-   public String getImageCompagnieAerienne() {
+   public InputStream getImageCompagnieAerienne() {
       return imageCompagnieAerienne;
    }
 
-   public void setImageCompagnieAerienne(String imageCompagnieAerienne) {
+   public void setImageCompagnieAerienne(InputStream imageCompagnieAerienne) {
       this.imageCompagnieAerienne = imageCompagnieAerienne;
    }
    

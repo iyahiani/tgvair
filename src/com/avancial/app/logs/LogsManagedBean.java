@@ -12,6 +12,7 @@ import javax.inject.Named;
 public class LogsManagedBean {
    
    private List<LogsDataBean> listLogs  ; 
+   
    @PostConstruct
    public void init() {
       this.listLogs = new LogsDAO().getAll() ;

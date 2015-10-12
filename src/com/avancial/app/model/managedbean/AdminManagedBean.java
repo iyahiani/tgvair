@@ -60,8 +60,8 @@ public class AdminManagedBean extends AManageBean {
      
       this.logger.info("SUCCES Import SSIM");      
       AdminTraitements adminTraitements = new AdminTraitements() ;
-      adminTraitements.traitementImportSSIM();       
-      adminTraitements.traitementAdaptation();
+     // adminTraitements.traitementImportSSIM();        
+     adminTraitements.traitementAdaptation();
       
       return null;
    }

@@ -12,10 +12,12 @@
 			<h:panelGrid columns="1">
 
 				<p:dataTable
-					value="#{logs.listLogs}" var="log"
+					value="#{logs.listLogs}"
+					 var="log"
 					paginatorPosition="top"
 					rows="50"  scrollable="true"
-					paginator="true" rowsPerPageTemplate="10,20,40"  emptyMessage="Pas de log">
+					paginator="true"
+					 rowsPerPageTemplate="10,20,40"  emptyMessage="Pas de log">
 					<p:column headerText="#{msg.p_logs_userID}">
                             <h:outputText value="#{log.userID}" />
                         </p:column>
@@ -24,7 +26,6 @@
                            >
                             <h:outputText value="#{log.dateLog}" />
                         </p:column> 
-                        
                      <p:column headerText="#{msg.p_logs_classLog}"
                            >
                             <h:outputText value="#{log.loggerClass}" />

@@ -50,7 +50,7 @@ public class JobImport implements Job {
 
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
-
+      
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
@@ -107,6 +107,7 @@ public class JobImport implements Job {
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
                } catch (ParseException e) {
                   e.printStackTrace();
+                  this.logger.error("Job Import"+e.getMessage());
                }
                
                circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(), APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
@@ -118,7 +119,7 @@ public class JobImport implements Job {
             }
          }
       } catch (Exception e) {
-         this.logger.error(e.getMessage());
+         this.logger.error("Job Import"+e.getMessage());
          e.printStackTrace();
       } 
       
@@ -130,7 +131,7 @@ public class JobImport implements Job {
       } catch (Exception e1) {
         
          e1.printStackTrace();
-         this.logger.error(e1.getMessage());
+         this.logger.error("Job Import"+e1.getMessage());
       }
 
       TraitementImportDAO daoImport = new TraitementImportDAO();

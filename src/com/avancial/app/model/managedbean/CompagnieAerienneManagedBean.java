@@ -1,5 +1,9 @@
 package com.avancial.app.model.managedbean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +42,10 @@ public class CompagnieAerienneManagedBean extends AManageBean {
    private List<CompagnieAerienneDataBean> compagniesAerienne;
    private String                          codeCompagnieAerienne;
    private String                          libelleCompagnieAerienne; 
-   private String                          imageCompagnieAerienne ;   
+   private InputStream                 imageCompagnieAerienne ;   
    private UploadedFile file ;
+  
+   
    public CompagnieAerienneManagedBean() {
       this.compagniesAerienne = new ArrayList<>();
 
@@ -61,19 +67,21 @@ public class CompagnieAerienneManagedBean extends AManageBean {
          if(null!= this.file)
          this.file.write(this.file.getFileName());
       } catch (Exception e) {
-         // TODO Auto-generated catch block
+        
          e.printStackTrace();
       } 
       
       
    }
   public void upload() {
-     if(file != null) {
-        FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+     if(this.file != null) {
+        FacesMessage message = new FacesMessage("Succes", this.file.getFileName() + " est chargé.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
   }
-   public void addCompagnieAerienne() {
+   public void addCompagnieAerienne() { 
+      //File file = new File(this.file.getFileName()); 
+      
       CompagnieAerienneDao dao = new CompagnieAerienneDao();
       Session session = dao.getSession(); 
       Criteria criteria =  session.createCriteria(CompagnieAerienneDataBean.class).add(Restrictions.eq("CodeCompagnieAerienne", getCodeCompagnieAerienne())) ;   
@@ -86,9 +94,14 @@ public class CompagnieAerienneManagedBean extends AManageBean {
       {
       CompagnieAerienneDataBean compagnieAerienneDataBean = new CompagnieAerienneDataBean();
       compagnieAerienneDataBean.setCodeCompagnieAerienne(getCodeCompagnieAerienne());
-      compagnieAerienneDataBean.setLibelleCompagnieAerienne(getLibelleCompagnieAerienne()); 
-      compagnieAerienneDataBean.setImageCompagnieAerienne(this.file.getFileName());
-      
+    //  compagnieAerienneDataBean.setLibelleCompagnieAerienne(getLibelleCompagnieAerienne()); 
+      try {
+         compagnieAerienneDataBean.setImageCompagnieAerienne(this.file.getInputstream());
+      } catch (IOException e1) {
+        System.out.println("erreur logo compagnie aerienne ");
+         e1.printStackTrace();
+      }
+    
       try {
          dao.save(compagnieAerienneDataBean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "La compagnie a été créé."));
@@ -134,11 +147,11 @@ public class CompagnieAerienneManagedBean extends AManageBean {
       this.file = uploadFile;
    }
 
-   public String getImageCompagnieAerienne() {
-      return imageCompagnieAerienne;
+   public InputStream getImageCompagnieAerienne() {
+      return this.imageCompagnieAerienne;
    }
 
-   public void setImageCompagnieAerienne(String imageCompagnieAerienne) {
+   public void setImageCompagnieAerienne(InputStream imageCompagnieAerienne) {
       this.imageCompagnieAerienne = imageCompagnieAerienne;
    }
 

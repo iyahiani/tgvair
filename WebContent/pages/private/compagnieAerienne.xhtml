@@ -1,64 +1,66 @@
 <ui:composition template="/pages/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="title"> </ui:define>
-    <ui:define name="contenu"> 
-    <p:messages id="idPageMessages" autoUpdate="true" closable="true"
-            redisplay="false" showDetail="true" globalOnly="false"  />
-            <p:ajaxStatus onstart="PF('statusDialog').show()"
-            onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-            closable="false" resizable="false" showHeader="false">
-            <p:graphicImage name="/private/image/enregistrement.gif" />
-        </p:dialog>
-     <script type="text/javascript">  
-     function reset(){
-     $("#ajoutCompagnie")[0].reset();
-     }
-     </script>
-    
-         
-        <p:fieldset legend="#{msg.p_titre}" styleClass="fieldSet">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">
+	</ui:define>
+	<ui:define name="contenu">
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
+		<script type="text/javascript">
+			function reset() {
+				$("#ajoutCompagnie")[0].reset();
+			}
+		</script>
+
+
+		<p:fieldset legend="#{msg.p_titre}" styleClass="fieldSet">
 			<h:form id="ajoutCompagnie">
-				<h:panelGrid columns="2" 
+				<h:panelGrid columns="2"
 					style="border-style:solid; border-color :#FFFFFF #E0E0E0; font-size:20px;">
 					<h:outputText value="#{msg.p_label_codeCompagnie}"></h:outputText>
 					<p:inputText id="codeCompagnie"
 						value="#{compagnieAerienneMangedBean.codeCompagnieAerienne}"
-						required="true" style="width :100% auto;" requiredMessage="Veuillez inserer le code de la Compagnie"></p:inputText>
-					<h:outputText value="#{msg.p_label_libelleCompagnie}" ></h:outputText>
-					<p:inputText 
+						required="true" style="width :100% auto;"
+						requiredMessage="Veuillez inserer le code de la Compagnie"></p:inputText>
+					<h:outputText value="#{msg.p_label_libelleCompagnie}"></h:outputText>
+					<p:inputText
 						value="#{compagnieAerienneMangedBean.libelleCompagnieAerienne}"
-						required="true" style="width : 100% auto;" requiredMessage="Veuillez inserer le libellé de la Compagnie"></p:inputText> 
-						<p:growl id="msg"></p:growl>
-						<!-- <h:outputText value="Charger Logo"></h:outputText> update="msg" -->
-						<h:outputLabel value="Charger Logo" for="upload"/>
-				    <p:fileUpload dragDropSupport="true" uploadLabel="Charger Image"  style="font-style:normal; font-size:20px"  
-				   
-				    allowTypes="/(\.|\/)(gif|jpg|png|jpeg)$/" id="upload" 
-				     fileLimit="1"  
-				    fileUploadListener="#{compagnieAerienneMangedBean.uploadesFile}" >  
-				    
-				    </p:fileUpload> 
-				    <h:outputText></h:outputText>
-				     		
+						required="true" style="width : 100% auto;"
+						requiredMessage="Veuillez inserer le libellé de la Compagnie"></p:inputText>
+					<p:growl id="msg"></p:growl>
+					<!-- <h:outputText value="Charger Logo"></h:outputText> update="msg" -->
+					<p:fileUpload mode="simple" Value="#{compagnieAerienneMangedBean.file}"  allowTypes="/(\.|\/)(gif|jpg|png|jpeg)$/">
+					
+					</p:fileUpload>
+
+
 					<h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid columns="2">
-						<p:commandButton value="Annuler" iconPos="left" icon="ui-icon-cancel"
-                            style="background-color: white ;font-style:normal; font-size:10px" title="Annuler" ></p:commandButton>
-						<p:commandButton value="Ajouter" iconPos="left"  icon="ui-icon-check" type="submit" oncomplete="reset()" 
-						     style="background-color: white ;" title="Ajouter" 
-							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne}"> 
-							<p:ajax onsuccess="#{compagnieAerienneMangedBean.initProperties()}"></p:ajax>
-							</p:commandButton>
+						<p:commandButton value="Annuler" iconPos="left"
+							icon="ui-icon-cancel"
+							style="background-color: white ;font-style:normal; font-size:10px"
+							title="Annuler"></p:commandButton>
+						<p:commandButton value="Ajouter" iconPos="left"
+							icon="ui-icon-check" type="submit" oncomplete="reset()"
+							style="background-color: white ;" title="Ajouter"
+							actionListener="#{compagnieAerienneMangedBean.addCompagnieAerienne}">
+							<p:ajax
+								onsuccess="#{compagnieAerienneMangedBean.initProperties()}"></p:ajax>
+						</p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
 			</h:form>
 		</p:fieldset>
-        
-    </ui:define>
+
+	</ui:define>
 </ui:composition>

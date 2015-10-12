@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -36,8 +37,9 @@ import com.avancial.app.traitements.TraitementExportDataBean;
 
 public class JobExport implements Job {
 
+   Logger log = Logger.getLogger(JobExport.class) ;
    public void execute(JobExecutionContext context) throws JobExecutionException {
-
+      log.info("Job Export Started");
       List<TrainCatalogueToCompagnieDataBean> listTC2C = new TrainCatalogueToCompagnieDAO().getAll();
       List<CompagnieAerienneDataBean> listeCompagnie = new CompagnieAerienneDao().getAll();
 
@@ -98,6 +100,7 @@ public class JobExport implements Job {
                
                
             } catch (ParseException e) {
+               log.error("Job Export Erreur"+e.getMessage());
                 e.printStackTrace();
             }
          }

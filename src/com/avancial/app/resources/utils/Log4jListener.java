@@ -20,6 +20,7 @@ import com.avancial.app.resources.constants.APP_TgvAir;
 @WebListener("application context listener")
 public class Log4jListener implements ServletContextListener {
 
+   private static final long serialVersionUID = 1L;
    private static Logger log = Logger.getLogger(Log4jListener.class);
 
    @Override
@@ -31,10 +32,9 @@ public class Log4jListener implements ServletContextListener {
    public void contextInitialized(ServletContextEvent event) {
       Logger log = Logger.getLogger("org.hibernate");
       log.setLevel(Level.ERROR);
-      ServletContext context = event.getServletContext();
-      String log4jConfigFile = context.getInitParameter("log4j-config-location");
-      String fullPath = context.getRealPath("") + File.separator + log4jConfigFile;
-
+      ServletContext context = event.getServletContext()                           ;
+      String log4jConfigFile = context.getInitParameter("log4j-config-location")   ;
+      String fullPath = context.getRealPath("") + File.separator + log4jConfigFile ;
       PropertyConfigurator.configure(fullPath);
       System.out.println("Log4j Configuré");
    }

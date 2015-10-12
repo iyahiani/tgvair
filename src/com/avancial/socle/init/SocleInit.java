@@ -98,7 +98,8 @@ public class SocleInit extends HttpServlet {
 
       // Trigger the job to run on the next round minute
 
-      this.sched.start();
+      this.sched.start(); 
+      this.log.info("Crone Job Started");  
       try {
          Thread.sleep(600L);
          

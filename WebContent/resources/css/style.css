@@ -26,12 +26,13 @@
     background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)) repeat scroll 0 0 #0080ff;
     border: 1px solid #7096ab;
     box-shadow: 0 0 8px #0080ff;
-    color: #ffffff;
+    color: #000000;
     font-weight: bold;
 }
 
 .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield { 
-	background-color: white ;
+	background-color: white ; 
+	
 
 	} 
 .ui-panel .ui-panel-content {
