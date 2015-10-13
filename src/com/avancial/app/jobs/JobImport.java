@@ -108,7 +108,7 @@ public class JobImport implements Job {
                   circulation.setDateDebutCirculation(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
                } catch (ParseException e) {
-                  e.printStackTrace();
+                  e.printStackTrace() ;
                   this.logger.error("Job Import"+e.getMessage());
                }
                

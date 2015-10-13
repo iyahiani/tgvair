@@ -82,7 +82,7 @@ public class AdminTraitements {
       InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
          // APP_TgvAir.CHEMIN_SSIM.toString()
-         reader = new ReaderSSIM("D:/SSIM.txt");
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "SSIM", "Erreur Lecture SSIM"));
