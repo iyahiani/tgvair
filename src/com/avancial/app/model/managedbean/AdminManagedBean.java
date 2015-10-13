@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
@@ -42,6 +43,7 @@ public class AdminManagedBean extends AManageBean {
    private SchedulerFactory sf;
    private Scheduler sched;
    private List<CompagnieAerienneDataBean> listCompagnies = new CompagnieAerienneDao().getAllCodeCompagnie();
+  
    private String compagnie ;
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
@@ -54,21 +56,21 @@ public class AdminManagedBean extends AManageBean {
     */
    public String lancerImport() {
       
-      this.sf = new StdSchedulerFactory()                                                               ;
+                                                                   ;
       Calendar calendarEndAdapt = Calendar.getInstance()                                                ;
       calendarEndAdapt.add(Calendar.MINUTE, 10)                                                         ;
-     
-      this.logger.info("SUCCES Import SSIM");      
+         
       AdminTraitements adminTraitements = new AdminTraitements() ;
-     // adminTraitements.traitementImportSSIM();        
-     adminTraitements.traitementAdaptation();
-      
+      adminTraitements.traitementImportSSIM();       
+      adminTraitements.traitementAdaptation();
+     this.logger.info("SUCCES Import SSIM");  
+     
       return null;
    }
 
    public void valueChanged(ValueChangeEvent event) {
        
-      this.compagnie =  (String) event.getNewValue(); 
+      String a =  (String) event.getNewValue(); 
    }
 /**
  * lancement manuel de l'export SSIM 7 
@@ -78,7 +80,7 @@ public class AdminManagedBean extends AManageBean {
    public String lancerExport() {
       AdminTraitements adminTraitements = new AdminTraitements() ;
       adminTraitements.traitementAdaptation(); 
-      adminTraitements.traitementExport();
+     adminTraitements.traitementExport();
       return null;
    }
    
@@ -91,7 +93,6 @@ public class AdminManagedBean extends AManageBean {
    }
 
    
-
    public SchedulerFactory getSf() {
       return this.sf;
    }

@@ -2,6 +2,7 @@ package com.avancial.test;
 
 import org.junit.Test;
 
+import com.avancial.app.resources.utils.FormatterInteger2String;
 import com.avancial.app.resources.utils.StringToFormatedString;
 
 public class TestFormatedString {
@@ -21,5 +22,13 @@ public class TestFormatedString {
     String  a ="123 5 7"; 
     System.out.println(StringToFormatedString.getRegimeCirculFromSelectedTrain(a)); 
     
+ } 
+ 
+ @Test 
+ 
+ public void test3() {
+    int a = 340  ; 
+    
+    System.out.println(FormatterInteger2String.getFormatedIntToStr(a));
  }
 }

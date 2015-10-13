@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.hibernate.CacheMode;
+import org.hibernate.SessionFactory;
 
 import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
 import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
@@ -29,6 +30,7 @@ import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.TrainFactory;
 import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.business.train.circulation.CirculationFactory;
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
@@ -70,6 +72,7 @@ public class AdminTraitements {
 
    // //////////////////////////////////////////////////////////////////////////////////////
    public void traitementImportSSIM() {
+      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Import", "Traitement Import SSIM Lancé"));
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
@@ -79,7 +82,7 @@ public class AdminTraitements {
       InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
          // APP_TgvAir.CHEMIN_SSIM.toString()
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
+         reader = new ReaderSSIM("D:/SSIM.txt");
 
       } catch (IOException e1) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "SSIM", "Erreur Lecture SSIM"));
@@ -112,9 +115,7 @@ public class AdminTraitements {
       List<CirculationSSIMDataBean> list = dao.getAll();
       dao.deleteAll(0);
       try {
-                  //////// test
-              System.out.println(StringToDate.toFormatedString2(new Date()));
-     //////// test
+              
          while ((chaine = reader.readLine()) != null) {
             par.parse(chaine);
             if (!par.getParsedResult().isEmpty()) {
@@ -133,7 +134,7 @@ public class AdminTraitements {
 
                } catch (ParseException e) {
                   logger.error("erreur ssim parse date deb/fin circulation ");
-
+                  FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur Import", "Erreur De lecture fichier SSIM"));
                   e.printStackTrace();
                }
 
@@ -141,13 +142,20 @@ public class AdminTraitements {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-                insertWithJDBC.insertRecordIntoTable(circulation);
-              
+                insertWithJDBC.insertRecordIntoTable(circulation); 
+                /*
+                      try {
+
+                         dao.save(circulation);
+                      } catch (ASocleException e) {
+                         this.logger.error("sauvegarde SSIM erreur" + e.getMessage());
+                         e.printStackTrace();
+                      }
+                  
+              */
             }
          } 
-         //////// test
-         System.out.println(StringToDate.toFormatedString2(new Date()));
-         //////// test
+         
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Import SSIM"));
       } catch (Exception e) {
          this.logger.error(e.getMessage());
@@ -161,23 +169,28 @@ public class AdminTraitements {
          bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin"));
 
       } catch (Exception e1) {
-         // this.logger.error(e1.getMessage());
-         e1.printStackTrace();
+        
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Import", "Erreur Import SSIM"));
          this.logger.error(e1.getMessage());
+         
       }
 
       TraitementImportDAO daoImport = new TraitementImportDAO();
 
       daoImport.saveTraitementSSIM(bean);
-
+      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Import", "Traitement Import SSIM Terminé"));
       this.logger.info("Import Terminé");
    }
 
    // //////////////////////////////////////////////////////////////////////////////////////////////////////
+
    public void traitementAdaptation() {
 
       // / update table circulation adapter avec la table des TrainsCatalogue
-
+    
+      FacesContext.getCurrentInstance()
+      .addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajustement", "Ajustement Des Trains Lancé"));
+      
       Boolean succes = false;
 
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
@@ -188,6 +201,7 @@ public class AdminTraitements {
       // /////////////////////////////////////////////////////////////
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();
+      
       List<TrainToCompagnie> listTrainToCompagnie = new ArrayList<>();
       List<PointArretDataBean> listPointsArret = new PointArretDAO().getAll();
 
@@ -225,28 +239,16 @@ public class AdminTraitements {
       }
 
       // //////////////////////////// recuperer les circulations de la ssim
-
+      
       Train trainsSSIM = new Train();
-
+      CirculationFactory circulationFactory = new CirculationFactory() ;
       int i = 0;
+      
       for (CirculationSSIMDataBean circulationBean : listCirculationSSIM) {
-         Circulation circulation = new Circulation();
-         circulation.setOrigine(circulationBean.getOriginePointArret());
-         circulation.setDestination(circulationBean.getDestinationPointArret());
-         circulation.setHeureArrivee(Integer.valueOf(circulationBean.getHeureArriverCirculation()));
-         circulation.setHeureDepart(Integer.valueOf(circulationBean.getHeureDepartCirculation()));
-         circulation.setJoursCirculation(circulationBean.getJoursCirculation());
-         circulation.setDateDebut(circulationBean.getDateDebutCirculation());
-         circulation.setDateFin(circulationBean.getDateFinCirculation());
-         circulation.setGMTDepart(circulationBean.getGMTDepart());
-         circulation.setGMTArrivee(circulationBean.getGMTArriver());
-         circulation.setTrancheFacultatif(circulationBean.getTrancheFacultatif());
-         circulation.setRestrictionTrafic(String.valueOf(circulationBean.getRangTroncon()));
-         circulation.setRangTranson(circulationBean.getRangTroncon());
-         circulation.setNumeroTrain(circulationBean.getNumeroTrain());
+         Circulation circulation = circulationFactory.createCirculationFromSSIMBean(circulationBean);
          trainsSSIM.addNumeroTrain(circulationBean.getNumeroTrain());
          trainsSSIM.addCirculation(circulation);
-         System.out.println(i++);
+         //System.out.println(i++);
 
       }
       // //////////////////////////////// recuperer la trains restreints et
@@ -257,7 +259,7 @@ public class AdminTraitements {
       Date dateDebutSSIM = listTraitements.get(0).getDateDebutSSIM();
       Date dateFinSSIM = listTraitements.get(0).getDateFinSSIM();
       Date dateExtraction = listTraitements.get(0).getDateImport();
-      Service services = new Service();
+      Service services = new Service()   ;
       Date dateDebutService = services.getDateDebutService();
       Date dateFinService = services.getDateFinService();
 
@@ -286,9 +288,10 @@ public class AdminTraitements {
    }
 
    public void traitementExport() {
+      
       List<TrainCatalogueToCompagnieDataBean> listTC2C = new TrainCatalogueToCompagnieDAO().getAll();
       List<CompagnieAerienneDataBean> listeCompagnie = new CompagnieAerienneDao().getAll();
-
+      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Export", "Traitement Export SSIM 7 lancé"));
       Calendar lastCircule = Calendar.getInstance();
       lastCircule.setTime(new CirculationDAO().getLastDateCreation().getDateCreationLigneTrain());
 
@@ -298,7 +301,7 @@ public class AdminTraitements {
 
       for (CompagnieAerienneDataBean compagnie : listeCompagnie) {
          listTC2C = catalogueToCompagnieDAO.getTrainCatalogueByIdCompagnie(compagnie.getIdCompagnieAeriennne());
-         boolean compare = false;
+         boolean compare = false    ;
 
          for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
             tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue());

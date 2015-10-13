@@ -12,8 +12,10 @@
 			function reset() {
 				$("#pointArret")[0].reset();
 			}
+
 			function hideOrShow(show) {
-				var obj = document.getElementById("pointArret:heures");
+				var obj = document.getElementById("tabView:pointArret:heures");
+				console.log(obj);
 				if (show) {
 					obj.style.display = "block";
 				} else {
@@ -22,110 +24,317 @@
 			}
 		</script>
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
-            onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-            closable="false" resizable="false" showHeader="false">
-            <p:graphicImage name="/private/image/enregistrement.gif" />
-        </p:dialog>
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 
 		<p:fieldset styleClass="fieldSet" legend="#{msg.p_pointArret_legend}">
-			<h:form id="pointArret">
+			<p:tabView id="tabView" styleClass="tabView">
+				<p:tab title="Ajouter Un Point d'Arret">
+					<h:form id="pointArret">
 
-				<h:panelGrid columns="2"
-					style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
+						<h:panelGrid columns="2"
+							style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
 
-					<p:outputLabel for="codeComp" value="#{msg.p_pointArret_codeGare}"
-						title="Code Compagnie en MAJUSCULE"></p:outputLabel>
-					<p:inputText id="codeComp" style="width :100% auto;"
-						value="#{pointsArret.codeGDSPointArret}"></p:inputText>
-					<p:outputLabel for="labelCompgn" value="#{msg.p_pointArret_libGare}"></p:outputLabel>
-					<p:inputText id="labelCompgn" style="width : 100% auto;"
-						value="#{pointsArret.libellePointArret}"></p:inputText>
-					<p:outputLabel for="codeResarail" value="#{msg.p_pointArret_codeRes}">
-					</p:outputLabel>
-					<p:inputText id="codeResarail" style="width : 100% auto;"
-						value="#{pointsArret.codeResarailPointArret}"></p:inputText>
-					<p:outputLabel for="ajoutheures" value="#{msg.p_pointArret_addHorraire}">
-					</p:outputLabel>
-					<p:selectBooleanButton id="ajoutheures" style="width : 100% auto; background-color:white ;"
-						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check" offIcon="ui-icon-close"   
-						value="#{pointsArret.selectedHorraire}"
-						onchange="hideOrShow(this.checked);">
+							<p:outputLabel for="codeComp"
+								value="#{msg.p_pointArret_codeGare}"
+								title="Code Compagnie en MAJUSCULE"></p:outputLabel>
+							<p:inputText id="codeComp" style="width :100% auto;"
+								value="#{pointsArret.codeGDSPointArret}"></p:inputText>
+							<p:outputLabel for="labelCompgn"
+								value="#{msg.p_pointArret_libGare}"></p:outputLabel>
+							<p:inputText id="labelCompgn" style="width : 100% auto;"
+								value="#{pointsArret.libellePointArret}"></p:inputText>
+							<p:outputLabel for="codeResarail"
+								value="#{msg.p_pointArret_codeRes}">
+							</p:outputLabel>
+							<p:inputText id="codeResarail" style="width : 100% auto;"
+								value="#{pointsArret.codeResarailPointArret}"></p:inputText>
+							<p:outputLabel for="ajoutheures"
+								value="#{msg.p_pointArret_addHorraire}">
+							</p:outputLabel>
+							<p:selectBooleanButton id="ajoutheures"
+								style="width : 100% auto; background-color:white ;"
+								onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
+								offIcon="ui-icon-close" value="#{pointsArret.selectedHorraire}"
+								onchange="hideOrShow(this.checked);">
 
-					</p:selectBooleanButton>
-				</h:panelGrid>
-				<h:panelGroup>
-					<h:panelGrid columns="3" id="heures"
-						style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
-						<f:facet name="header"> #{msg.p_pointArret_headerAjout} </f:facet>
-						<p:outputLabel value="#{msg.p_pointArret_lundi}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.lundiHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.lundiHeureFermeturePointsArret}" />
-						<p:outputLabel value="#{msg.p_pointArret_mardi}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.mardiHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.mardiHeureFermeturePointsArret}" />
-						<p:outputLabel value="#{msg.p_pointArret_mercredi}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.mercrediHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.mercrediHeureFermeturePointsArret}" />
-						<p:outputLabel value="#{msg.p_pointArret_jeudi}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.jeudiHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.jeudiHeureFermeturePointsArret}" />
-						<p:outputLabel value="#{msg.p_pointArret_vendredi}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.vendrediHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.vendrediHeureFermeturePointsArret}" />
-						<p:outputLabel value="#{msg.p_pointArret_samedi}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.samediHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.samediHeureFermeturePointsArret}" />
-						<p:outputLabel value="#{msg.p_pointArret_dimanche}"></p:outputLabel>
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.dimancheHeureOuverturePointsArret}" />
-						<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-							showOn="both"
-							value="#{pointsArret.dimancheHeureFermeturePointsArret}" />
-					   <p:outputLabel value="#{msg.p_pointArret_ferie}"></p:outputLabel>
-                        <p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-                            showOn="both"
-                            value="#{pointsArret.ferieHeureOuverturePointsArret}" />
-                        <p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
-                            showOn="both"
-                            value="#{pointsArret.ferieHeureFermeturePointsArret}" />
-						<h:panelGrid></h:panelGrid>
-					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<p:commandButton  value="Annuler" iconPos="left" icon="ui-icon-cancel" type="reset" title="reset" style="background-color: white ;"></p:commandButton>
-						<p:commandButton value="Ajouter" iconPos="left" icon="ui-icon-check" type="submit" oncomplete="reset() " style="background-color: white ;"
-							title="ajouter" actionListener="#{pointsArret.add}" action="#{pointsArret.redirectTrain()}"></p:commandButton>
-					</h:panelGrid>
+								<!--  onchange="hideOrShow(this.checked);" <p:ajax event="change" ></p:ajax> -->
 
-				</h:panelGroup>
-			</h:form>
+							</p:selectBooleanButton>
+						</h:panelGrid>
+						<h:panelGroup>
+							<h:panelGrid columns="3" id="heures"
+								style="border-style:solid; border-color :#FFFFFF #E0E0E0; width : auto; ">
+								<f:facet name="header"> #{msg.p_pointArret_headerAjout} </f:facet>
+								<p:outputLabel value="#{msg.p_pointArret_lundi}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.lundiHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.lundiHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_mardi}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.mardiHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.mardiHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_mercredi}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.mercrediHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.mercrediHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_jeudi}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.jeudiHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.jeudiHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_vendredi}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.vendrediHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.vendrediHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_samedi}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.samediHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.samediHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_dimanche}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.dimancheHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.dimancheHeureFermeturePointsArret}" />
+								<p:outputLabel value="#{msg.p_pointArret_ferie}"></p:outputLabel>
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.ferieHeureOuverturePointsArret}" />
+								<p:calendar pattern="HH:mm" timeOnly="true" locale="fr"
+									showOn="both"
+									value="#{pointsArret.ferieHeureFermeturePointsArret}" />
+								<h:panelGrid></h:panelGrid>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:commandButton value="Annuler" iconPos="left"
+									icon="ui-icon-cancel" type="reset" title="reset"
+									style="background-color: white ;"></p:commandButton>
+								<p:commandButton value="Ajouter" iconPos="left"
+									icon="ui-icon-check" type="submit" oncomplete="reset() "
+									style="background-color: white ;" title="ajouter"
+									actionListener="#{pointsArret.add}"
+									action="#{pointsArret.redirectTrain()}"></p:commandButton>
+							</h:panelGrid>
+
+						</h:panelGroup>
+					</h:form>
+
+				</p:tab>
+				<p:tab title="Modifier Un Point d'Arret">
+					<h:form id="formPointsArret">
+						<p:dataTable value="#{pointsArret.listPointsArret}" rows="10"
+							scrollable="true" paginatorPosition="top" id="tablePointsArret"
+							var="arret" widgetVar="pointArretWdg"
+							filteredValue="#{pointsArret.filtredPointArret}"
+							selectionMode="single" rowKey="#{arret.libellePointArret}"
+							selection="#{pointsArret.selectedPointArret}" paginator="true"
+							resizableColumns="true" rowsPerPageTemplate="5,10,15"
+							emptyMessage="">
+							<p:ajax event="rowSelect" listener="#{pointsArret.rowSelect}"
+								update=":tabView:formPointsArret:tablePointsArret:" delay="1"></p:ajax>
+
+
+							<p:column headerText="Libellé Gare"
+								filterBy="#{arret.libellePointArret}" filterMatchMode="contains">
+								<h:outputText value="#{arret.libellePointArret}" />
+							</p:column>
+							<p:column headerText="Modifier / Supprimer ">
+								<p:commandLink id="update_gare" update=":modif"
+									oncomplete="PF('Modif').show()">
+									
+									<f:setPropertyActionListener value="#{arret}"
+										target="#{pointsArret.selectedPointArret}" />
+									<h:graphicImage name="private/image/edit.png"
+										styleClass="actionButtons">
+										<p:tooltip for="update_gare"
+											value=" Modifier les horaire pour la gare #{arret.libellePointArret}" />
+									</h:graphicImage>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</p:tab>
+			</p:tabView>
 		</p:fieldset>
+
+
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			draggable="false" header="Modifier Train" closeOnEscape="true">
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="Lundi Ouverture"></h:outputText></td>
+						<td><p:calendar timeOnly="true" pattern="HH:mm"
+								value="#{pointsArret.selectedPointArret.lundiHeureOuverturePointsArret}">
+								<f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+							</p:calendar>
+					    </td>
+							
+						<td>
+						<h:outputText value="Lundi Fermeture"></h:outputText>
+						</td>
+                          <td><p:calendar  timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.lundiHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+					</tr>
+					
+					<tr>
+                        <td><h:outputText value="Mardi Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.mardiHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Mardi Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.mardiHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Mercredi Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.mercrediHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Mercredi Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.mercrediHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><h:outputText value="Jeudi Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.jeudiHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Jeudi Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.jeudiHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Vendredi Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.vendrediHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Vendredi Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.vendrediHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+                    
+                     <tr>
+                        <td><h:outputText value="Samedi Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.samediHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Samedi Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.samediHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+                    
+                     <tr>
+                        <td><h:outputText value="Dimanche Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.dimancheHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Samedi Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.dimancheHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><h:outputText value="Jours Fériés Ouverture"></h:outputText></td>
+                        <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.ferieHeureOuverturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar>
+                        </td>
+                            
+                        <td>
+                        <h:outputText value="Jours Fériés Fermeture"></h:outputText>
+                        </td>
+                          <td><p:calendar timeOnly="true" pattern="HH:mm"
+                                value="#{pointsArret.selectedPointArret.ferieHeureFermeturePointsArret}">
+                                <f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
+                            </p:calendar></td>
+                    </tr>
+					
+				</table>
+				<br />
+                <br />
+                <p:commandButton value="Modifer" type="submit"
+                    actionListener="#{pointsArret.update()}" 
+                    style="background-color: white ;" 
+                    oncomplete="if (#{pointArret.closeDialog}=true) PF('Modif').close();"  
+                    ajax="true">      
+                </p:commandButton>
+                <p:commandButton immediate="true" onclick="PF('Modif').close()" style="background-color: white ;"
+                    value="Annuler" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
+
 	</ui:define>
 </ui:composition>

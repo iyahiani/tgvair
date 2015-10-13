@@ -38,5 +38,14 @@ public class ReaderSSIM implements IReader {
          return ligne;
       }
       return ligne;
+   } 
+   
+   public void closeReader(){
+      try {
+         this.br.close();
+      } catch (IOException e) {
+         
+         e.printStackTrace();
+      }
    }
 }

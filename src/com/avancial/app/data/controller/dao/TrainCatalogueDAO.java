@@ -29,11 +29,10 @@ public class TrainCatalogueDAO extends AbstractDao {
 
    Logger log = Logger.getLogger(TrainCatalogueDAO.class) ;
    @Override
+  
    public List<TrainCatalogueDataBean> getAll() {
       String sql = "From TrainCatalogueDataBean"; 
       Query requete = this.getEntityManager().createQuery(sql); 
-      if (requete.getResultList().size()==0) log.info("requette extraction Trains Catalogue DAO Vide "); 
-      else log.info("requette extraction Trains Catalogue DAO Succée ") ; 
       return requete.getResultList();
 
    }

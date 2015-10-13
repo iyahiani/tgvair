@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -13,19 +14,24 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
+import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
+import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("pointsArret")
 @ViewScoped
-public class PointArretManagedBean extends AManageBean {
+public class PointArretManagedBean extends AManageBean implements SelectableDataModel<PointArretDataBean> {
 
    private static final long serialVersionUID = 1L;
+   private int idPointArret ;
    private String codeResarailPointArret;
    private String codeGDSPointArret;
    private String libellePointArret; 
@@ -45,13 +51,26 @@ public class PointArretManagedBean extends AManageBean {
    private Date dimancheHeureFermeturePointsArret ; 
    private Date ferieHeureOuverturePointsArret ; 
    private Date ferieHeureFermeturePointsArret ;
-   private boolean selectedHorraire =true ;
+   private boolean selectedHorraire =true ; 
+   private PointArretDataBean selectedPointArret ;
    private List<PointArretDataBean> listPointsArret ;
-    
+   private List<PointArretDataBean> filtredPointArret; 
+   
+   
+   
+   
    public PointArretManagedBean() { 
       
-      this.listPointsArret = new ArrayList<>();
+      super() ;
+   } 
+   
+   
+   @PostConstruct 
+   
+   public void init() {
+      this.listPointsArret = new PointArretDAO().getAll();
    }
+   
    @Override
    public String add() throws ASocleException {
       PointArretDAO dao = new PointArretDAO();  
@@ -70,18 +89,18 @@ public class PointArretManagedBean extends AManageBean {
       bean.setLibellePointArret(getLibellePointArret()); 
       bean.setLundiHeureOuverturePointsArret(getLundiHeureOuverturePointsArret());
       bean.setLundiHeureFermeturePointsArret(getLundiHeureFermeturePointsArret());
-      bean.setMardiHeureOuverturePointsArret(mardiHeureOuverturePointsArret)      ; 
-      bean.setMardiHeureFermeturePointsArret(mardiHeureFermeturePointsArret)      ;
-      bean.setMercrediHeureOuverturePointsArret(mercrediHeureOuverturePointsArret);
-      bean.setMercrediHeureFermeturePointsArret(mercrediHeureFermeturePointsArret);
-      bean.setJeudiHeureOuverturePointsArret(jeudiHeureOuverturePointsArret)      ;
-      bean.setJeudiHeureFermeturePointsArret(jeudiHeureFermeturePointsArret)      ;
-      bean.setVendrediHeureOuverturePointsArret(vendrediHeureOuverturePointsArret);
-      bean.setVendrediHeureFermeturePointsArret(vendrediHeureFermeturePointsArret);
-      bean.setSamediHeureOuverturePointsArret(samediHeureOuverturePointsArret)    ;
-      bean.setSamediHeureFermeturePointsArret(samediHeureFermeturePointsArret)    ;
-      bean.setDimancheHeureOuverturePointsArret(dimancheHeureOuverturePointsArret);
-      bean.setDimancheHeureFermeturePointsArret(dimancheHeureFermeturePointsArret);
+      bean.setMardiHeureOuverturePointsArret(this.mardiHeureOuverturePointsArret)      ; 
+      bean.setMardiHeureFermeturePointsArret(this.mardiHeureFermeturePointsArret)      ;
+      bean.setMercrediHeureOuverturePointsArret(this.mercrediHeureOuverturePointsArret);
+      bean.setMercrediHeureFermeturePointsArret(this.mercrediHeureFermeturePointsArret);
+      bean.setJeudiHeureOuverturePointsArret(this.jeudiHeureOuverturePointsArret)      ;
+      bean.setJeudiHeureFermeturePointsArret(this.jeudiHeureFermeturePointsArret)      ;
+      bean.setVendrediHeureOuverturePointsArret(this.vendrediHeureOuverturePointsArret);
+      bean.setVendrediHeureFermeturePointsArret(this.vendrediHeureFermeturePointsArret);
+      bean.setSamediHeureOuverturePointsArret(this.samediHeureOuverturePointsArret)    ;
+      bean.setSamediHeureFermeturePointsArret(this.samediHeureFermeturePointsArret)    ;
+      bean.setDimancheHeureOuverturePointsArret(this.dimancheHeureOuverturePointsArret);
+      bean.setDimancheHeureFermeturePointsArret(this.dimancheHeureFermeturePointsArret);
       try {
          dao.save(bean);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le point d'arret a été créé."));
@@ -92,14 +111,38 @@ public class PointArretManagedBean extends AManageBean {
       }
       }
       return null ;
-   }
+   } 
+   
+   @Override
+   public String update() throws ASocleException {
+      super.update();
+           PointArretDAO dao = new PointArretDAO();
+         try {
+            dao.update(this.selectedPointArret);
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Point d'Arrêt modifié"));
+            this.closeDialog = true;
+            RequestContext.getCurrentInstance().update(":tableCompAerienne");
+         } catch (ASocleException e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         }
+      
+      return null;
+   } 
  public String redirectTrain() {
       
       return "train.xhtml?faces-redirect=true"           ;
    }
 
+ public void rowSelect(SelectEvent event) {
+    this.selectedPointArret = (PointArretDataBean) event.getObject(); 
+   
+         
+ }
+   
+ 
    public String getCodeResarailPointArret() {
-      return codeResarailPointArret;
+      return this.codeResarailPointArret;
    }
 
    public void setCodeResarailPointArret(String codeResarailPointArret) {
@@ -107,7 +150,7 @@ public class PointArretManagedBean extends AManageBean {
    }
 
    public String getCodeGDSPointArret() {
-      return codeGDSPointArret;
+      return this.codeGDSPointArret;
    }
 
    public void setCodeGDSPointArret(String codeGDSPointArret) {
@@ -115,119 +158,147 @@ public class PointArretManagedBean extends AManageBean {
    }
 
    public String getLibellePointArret() {
-      return libellePointArret;
+      return this.libellePointArret;
    }
 
    public void setLibellePointArret(String libellePointArret) {
       this.libellePointArret = libellePointArret;
    }
    public boolean isSelectedHorraire() {
-      return selectedHorraire;
+      return this.selectedHorraire;
    }
    public void setSelectedHorraire(boolean selectedHorraire) {
       this.selectedHorraire = selectedHorraire;
    }
    public List<PointArretDataBean> getListPointsArret() {
-      return listPointsArret;
+      return this.listPointsArret;
    }
    public void setListPointsArret(List<PointArretDataBean> listPointsArret) {
       this.listPointsArret = listPointsArret;
    }
    public Date getLundiHeureOuverturePointsArret() {
-      return lundiHeureOuverturePointsArret;
+      return this.lundiHeureOuverturePointsArret;
    }
    public void setLundiHeureOuverturePointsArret(Date lundiHeureOuverturePointsArret) {
       this.lundiHeureOuverturePointsArret = lundiHeureOuverturePointsArret;
    }
    public Date getLundiHeureFermeturePointsArret() {
-      return lundiHeureFermeturePointsArret;
+      return this.lundiHeureFermeturePointsArret;
    }
    public void setLundiHeureFermeturePointsArret(Date lundiHeureFermeturePointsArret) {
       this.lundiHeureFermeturePointsArret = lundiHeureFermeturePointsArret;
    }
    public Date getMardiHeureOuverturePointsArret() {
-      return mardiHeureOuverturePointsArret;
+      return this.mardiHeureOuverturePointsArret;
    }
    public void setMardiHeureOuverturePointsArret(Date mardiHeureOuverturePointsArret) {
       this.mardiHeureOuverturePointsArret = mardiHeureOuverturePointsArret;
    }
    public Date getMardiHeureFermeturePointsArret() {
-      return mardiHeureFermeturePointsArret;
+      return this.mardiHeureFermeturePointsArret;
    }
    public void setMardiHeureFermeturePointsArret(Date mardiHeureFermeturePointsArret) {
       this.mardiHeureFermeturePointsArret = mardiHeureFermeturePointsArret;
    }
    public Date getMercrediHeureOuverturePointsArret() {
-      return mercrediHeureOuverturePointsArret;
+      return this.mercrediHeureOuverturePointsArret;
    }
    public void setMercrediHeureOuverturePointsArret(Date mercrediHeureOuverturePointsArret) {
       this.mercrediHeureOuverturePointsArret = mercrediHeureOuverturePointsArret;
    }
    public Date getMercrediHeureFermeturePointsArret() {
-      return mercrediHeureFermeturePointsArret;
+      return this.mercrediHeureFermeturePointsArret;
    }
    public void setMercrediHeureFermeturePointsArret(Date mercrediHeureFermeturePointsArret) {
       this.mercrediHeureFermeturePointsArret = mercrediHeureFermeturePointsArret;
    }
    public Date getJeudiHeureOuverturePointsArret() {
-      return jeudiHeureOuverturePointsArret;
+      return this.jeudiHeureOuverturePointsArret;
    }
    public void setJeudiHeureOuverturePointsArret(Date jeudiHeureOuverturePointsArret) {
       this.jeudiHeureOuverturePointsArret = jeudiHeureOuverturePointsArret;
    }
    public Date getJeudiHeureFermeturePointsArret() {
-      return jeudiHeureFermeturePointsArret;
+      return this.jeudiHeureFermeturePointsArret;
    }
    public void setJeudiHeureFermeturePointsArret(Date jeudiHeureFermeturePointsArret) {
       this.jeudiHeureFermeturePointsArret = jeudiHeureFermeturePointsArret;
    }
    public Date getVendrediHeureOuverturePointsArret() {
-      return vendrediHeureOuverturePointsArret;
+      return this.vendrediHeureOuverturePointsArret;
    }
    public void setVendrediHeureOuverturePointsArret(Date vendrediHeureOuverturePointsArret) {
       this.vendrediHeureOuverturePointsArret = vendrediHeureOuverturePointsArret;
    }
    public Date getVendrediHeureFermeturePointsArret() {
-      return vendrediHeureFermeturePointsArret;
+      return this.vendrediHeureFermeturePointsArret;
    }
    public void setVendrediHeureFermeturePointsArret(Date vendrediHeureFermeturePointsArret) {
       this.vendrediHeureFermeturePointsArret = vendrediHeureFermeturePointsArret;
    }
    public Date getSamediHeureOuverturePointsArret() {
-      return samediHeureOuverturePointsArret;
+      return this.samediHeureOuverturePointsArret;
    }
    public void setSamediHeureOuverturePointsArret(Date samediHeureOuverturePointsArret) {
       this.samediHeureOuverturePointsArret = samediHeureOuverturePointsArret;
    }
    public Date getSamediHeureFermeturePointsArret() {
-      return samediHeureFermeturePointsArret;
+      return this.samediHeureFermeturePointsArret;
    }
    public void setSamediHeureFermeturePointsArret(Date samediHeureFermeturePointsArret) {
       this.samediHeureFermeturePointsArret = samediHeureFermeturePointsArret;
    }
    public Date getDimancheHeureOuverturePointsArret() {
-      return dimancheHeureOuverturePointsArret;
+      return this.dimancheHeureOuverturePointsArret;
    }
    public void setDimancheHeureOuverturePointsArret(Date dimancheHeureOuverturePointsArret) {
       this.dimancheHeureOuverturePointsArret = dimancheHeureOuverturePointsArret;
    }
    public Date getDimancheHeureFermeturePointsArret() {
-      return dimancheHeureFermeturePointsArret;
+      return this.dimancheHeureFermeturePointsArret;
    }
    public void setDimancheHeureFermeturePointsArret(Date dimancheHeureFermeturePointsArret) {
       this.dimancheHeureFermeturePointsArret = dimancheHeureFermeturePointsArret;
    }
    public Date getFerieHeureOuverturePointsArret() {
-      return ferieHeureOuverturePointsArret;
+      return this.ferieHeureOuverturePointsArret;
    }
    public void setFerieHeureOuverturePointsArret(Date ferieHeureOuverturePointsArret) {
       this.ferieHeureOuverturePointsArret = ferieHeureOuverturePointsArret;
    }
    public Date getFerieHeureFermeturePointsArret() {
-      return ferieHeureFermeturePointsArret;
+      return this.ferieHeureFermeturePointsArret;
    }
    public void setFerieHeureFermeturePointsArret(Date ferieHeureFermeturePointsArret) {
       this.ferieHeureFermeturePointsArret = ferieHeureFermeturePointsArret;
+   }
+   public List<PointArretDataBean> getFiltredPointArret() {
+      return filtredPointArret;
+   }
+   public void setFiltredPointArret(List<PointArretDataBean> filtredPointArret) {
+      this.filtredPointArret = filtredPointArret;
+   }
+   public int getIdPointArret() {
+      return idPointArret;
+   }
+   public void setIdPointArret(int idPointArret) {
+      this.idPointArret = idPointArret;
+   }
+
+   
+   public Object getRowKey(PointArretDataBean object) {
+      
+      return null;
+   }
+   public PointArretDataBean getRowData(String rowKey) {
+      
+      return null;
+   }
+   public PointArretDataBean getSelectedPointArret() {
+      return selectedPointArret;
+   }
+   public void setSelectedPointArret(PointArretDataBean selectedPointArret) {
+      this.selectedPointArret = selectedPointArret;
    }
 
 }

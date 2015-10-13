@@ -15,6 +15,7 @@ import com.avancial.app.business.train.Service;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.resources.constants.APP_TgvAir;
+import com.avancial.app.resources.utils.FormatterInteger2String;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.resources.utils.StringToFormatedString;
 import com.avancial.app.resources.utils.TimeZoneOffSet;
@@ -56,6 +57,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
     * @throws ParseException
     * 
     */
+   
    public void export(List<TrainCatalogue> listCatalogue, TraitementExportDataBean bean, Service service) throws ParseException {
       
       Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class); 
@@ -195,16 +197,16 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(c.getJoursCirculation());
       liste.add("");
       liste.add(tc2c.getPointArretOrigine().getCodeGDSPointArret());
-      liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
-      liste.add(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart()));
+      liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureDepart()));
+      liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureDepart()));
       liste.add(TimeZoneOffSet.getGMTDiff());// tc2c.getGMTDepart()
                // ajouter un test si CDG alors TN sinon "  "
       if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
          else liste.add("");// ajouter un test si CDG alors TN sinon "  "
 
       liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
-      liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
-      liste.add(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee()));
+      liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureArrivee()));
+      liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureArrivee()));
       liste.add(TimeZoneOffSet.getGMTDiff()); //
       if (tc2c.getPointArretDestination().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
       else liste.add("");

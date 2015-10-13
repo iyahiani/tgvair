@@ -121,6 +121,8 @@ public class Circulation implements ICirculation {
          return false;
       return true;
    }
+   
+   
 
    public String getNumeroTrain() {
       return this.numeroTrain;

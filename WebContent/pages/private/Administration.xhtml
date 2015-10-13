@@ -6,14 +6,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="contenu">
-		<p:ajaxStatus onstart="PF('statusDialog').show()" 
-			onsuccess="PF('statusDialog').hide()" />
+		 <p:ajaxStatus onstart="PF('statusDialog').show()" 
+			oncomplete="PF('statusDialog').hide()" />
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage name="/private/image/enregistrement.gif" />
 		</p:dialog>
+		
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
-			redisplay="false" showDetail="true" globalOnly="false" />
+			redisplay="false" showDetail="true" globalOnly="false"  />
         <div> 
        <h:form>
 		<p:fieldset legend="#{msg.p_titre_legend}" styleClass="fieldSet">
@@ -28,10 +29,11 @@
 					<br />
 					</p:outputLabel>
 					<p:selectOneMenu 
-					value="#{admin.compagnie}" onchange="submit()"
-					effect="fold" 
-					valueChangeListener="#{admin.valueChanged}"
-					      >
+					value="#{admin.compagnie}" 
+					effect="fold"> 
+					
+					<!-- valueChangeListener="#{admin.valueChanged}" onchange="submit()"-->
+					      
                                 <f:selectItem itemLabel="Selectionnez une Compagnie"
                                     itemValue="#{null}" />
                                 <f:selectItems var="compagnie" value="#{admin.listCompagnies}"

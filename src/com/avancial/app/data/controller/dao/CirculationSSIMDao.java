@@ -14,7 +14,8 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 /**
  * 
- * @author ismael.yahiani cette Classe offre des fonctionnalités pour l'objet Circulation
+ * @author ismael.yahiani cette Classe offre des fonctionnalités pour l'objet
+ *         Circulation
  */
 public class CirculationSSIMDao extends AbstractDao {
 
@@ -22,17 +23,17 @@ public class CirculationSSIMDao extends AbstractDao {
 
    public void save(CirculationSSIMDataBean t) throws ASocleException {
 
-      if (null!= t) 
-      try {
-         this.getEntityManager().getTransaction().begin();
-         this.getEntityManager().persist(t);
-         this.getEntityManager().flush();
-         this.getEntityManager().getTransaction().commit();
-      } catch (Exception e) {
-         this.getEntityManager().getTransaction().rollback();
-         this.getEntityManager().close();
-         throw SocleExceptionManager.getException();
-      }
+      if (null != t)
+         try {
+            this.getEntityManager().getTransaction().begin();
+            this.getEntityManager().persist(t);
+            this.getEntityManager().flush();
+            this.getEntityManager().getTransaction().commit();
+         } catch (Exception e) {
+            this.getEntityManager().getTransaction().rollback();
+            this.getEntityManager().close();
+            throw SocleExceptionManager.getException();
+         }
    }
 
    public void delete(CirculationSSIMDataBean bean) throws ASocleException {
@@ -61,56 +62,56 @@ public class CirculationSSIMDao extends AbstractDao {
          throw SocleExceptionManager.getException();
       }
 
-   } 
+   }
+
    @Override
    public List<CirculationSSIMDataBean> getAll() {
 
       String sql = "From CirculationSSIMDataBean";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
-    
+
    }
 
    public void truncateTable(String tableName) {
-    this.getSession().createSQLQuery("truncate table CirculationSSIMDataBean").executeUpdate();  
+      this.getSession().createSQLQuery("truncate table CirculationSSIMDataBean").executeUpdate();
    }
-   
+
    @Override
    public Session getSession() {
-      
+
       return super.getSession();
    }
+
    public void deleteAll(int id) {
-      this.getSession().createSQLQuery("DELETE FROM tgvair_import_SSIM where idCirculationSSIMtgvair <> :id").setParameter("id", id).executeUpdate() ;
-   } 
-   
+      this.getSession().createSQLQuery("DELETE FROM tgvair_import_SSIM where idCirculationSSIMtgvair <> :id").setParameter("id", id).executeUpdate();
+   }
+
    public void saveSSIM(CirculationSSIMDataBean c) {
       try {
          this.save(c);
       } catch (ASocleException e) {
-        
+
          e.printStackTrace();
       }
-   } 
-   
+   }
+
    public void saveModeBatch(CirculationSSIMDataBean t) throws ASocleException {
       try {
-                 this.getEntityManager().getTransaction().begin();
-        this.getEntityManager().persist(t);
-         //this.getEntityManager().flush();
-         //this.getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().persist(t);
+         
+      } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }
-   } 
-   
+   }
+
    public void closeEntity() throws ASocleException {
-    if (this.getEntityManager().isOpen())
-          {
-       this.getEntityManager().flush();
-       this.getEntityManager().getTransaction().commit();
-     this.getEntityManager().close();
-          }
+      if (this.getEntityManager().isOpen()) {
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+         this.getEntityManager().close();
+      }
    }
 }

@@ -137,7 +137,7 @@ public class TrainManagedBean extends AManageBean{
    }
    public String goTrain() {
 
-      System.out.println("TrainCatalogueManagedBean.goTrain()");
+      
       this.sessionManagedBean.getNum().put("num1", this.numeroTrainCatalogue1);
       this.sessionManagedBean.getNum().put("num2", this.numeroTrainCatalogue2);
       this.sessionManagedBean.getNum().put("op", this.operatingFlight);

@@ -31,7 +31,10 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
+import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.PointArretDataBean;
+import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.data.model.databean.TrainSSIMDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -55,17 +58,18 @@ public class SessionManagedBean extends AManageBean {
    private Map<String,String> num ; 
    private Map<String,Date> dates ; 
    private List<String> listJoursCirculs ; 
+   private List<TrainCatalogueDataBean> tempListTrainDataBean  ;
   
    @PostConstruct
    public void init() {
       this.num =new TreeMap<>();
       this.dates =new TreeMap<>();
       this.listJoursCirculs = new ArrayList<>();
-      
+      this.tempListTrainDataBean = new ArrayList<>(); 
    }
    
    public SessionManagedBean() { 
-      
+      this.tempListTrainDataBean.addAll(new TrainCatalogueDAO().getAll()) ;
    }
   
    public Map<String, String> getNum() {
@@ -89,6 +93,14 @@ public class SessionManagedBean extends AManageBean {
 
    public void setListJoursCirculs(List<String> listJoursCirculs) {
       this.listJoursCirculs = listJoursCirculs;
+   }
+
+   public List<TrainCatalogueDataBean> getTempListTrainDataBean() {
+      return tempListTrainDataBean;
+   }
+
+   public void setTempListTrainDataBean(List<TrainCatalogueDataBean> tempListTrainDataBean) {
+      this.tempListTrainDataBean = tempListTrainDataBean;
    }
 
 }

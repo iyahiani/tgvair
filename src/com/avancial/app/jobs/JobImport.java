@@ -36,6 +36,7 @@ import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
+import com.avancial.test.InsertWithJDBC;
 
 /**
  *
@@ -50,21 +51,22 @@ public class JobImport implements Job {
 
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
-      
+      InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
       List<String> listnumsHashed = new ArrayList<>();
       this.logger.info("Import started");
-      IReader reader = null;
+      ReaderSSIM reader = null;
       try {
          // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
          reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
 
+        
          this.logger.info("Import:" + e1.getMessage());
-
+           
          e1.printStackTrace();
 
       }
@@ -114,10 +116,11 @@ public class JobImport implements Job {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               if(circulation!=null) dao.saveSSIM(circulation);
-
+               if(circulation!=null) //  dao.saveSSIM(circulation);
+                  insertWithJDBC.insertRecordIntoTable(circulation);
             }
-         }
+         } 
+         reader.closeReader();
       } catch (Exception e) {
          this.logger.error("Job Import"+e.getMessage());
          e.printStackTrace();

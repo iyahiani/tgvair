@@ -45,21 +45,21 @@
 				rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}" />
 			
 			<p:menuitem value="#{msg.p_job_menu}" action="#{menu.goJob}"
-				rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}" />
+				rendered="#{ihmManagedBean.isLogged()}" />
 			
-			<p:menuitem value="#{msg.p_jobPlanif_menu}" rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobPlanif')}"
-				action="#{menu.goJobPlanif}"
-				 />
+			<p:menuitem value="#{msg.p_jobPlanif_menu}"  action="#{menu.goJobPlanif}" 
+			rendered="#{ihmManagedBean.isLogged()}"
+			 />
 			
 			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}"
 				rendered="#{ihmManagedBean.isLogged()}"/>
 		    
 		    <p:menuitem value="#{msg.p_titre_page_admin}" action="#{menu.goAdministration}"
-                rendered="#{ihmManagedBean.isLogged()}"/>
+                rendered="#{ihmManagedBean.isLogged()  and security.isRendered('pageAdministration')}" />
 		   
 		   
 		     <p:menuitem value="#{msg.p_logs_log}" action="#{menu.goJournalLog}"
-               rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJournalLogs')}"/>
+               rendered="#{ihmManagedBean.isLogged()}"/>
            </p:menu>
 	</h:form>
 </ui:composition>
