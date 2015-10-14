@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
@@ -13,6 +14,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class CompagnieAerienneDao extends AbstractDao {
 
+    Logger log  =Logger.getLogger(CompagnieAerienneDao.class);  
    @Override
    public List<CompagnieAerienneDataBean> getAll() {
 
@@ -31,8 +33,10 @@ public class CompagnieAerienneDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-         SocleExceptionManager manager = new SocleExceptionManager(e);
+         this.getEntityManager().close();
+          log.error("erreur Sauvegarde Compagnie Aerienne"+e.getMessage()); 
+         /*@SuppressWarnings("unused")
+         SocleExceptionManager manager = new SocleExceptionManager(e);*/
          throw SocleExceptionManager.getException();
 
       }
@@ -54,6 +58,8 @@ public class CompagnieAerienneDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close();
+         log.error("erreur Suppression Compagnie Aerienne"+e.getMessage());
          throw SocleExceptionManager.getException();
       }
 
@@ -67,6 +73,8 @@ public class CompagnieAerienneDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close();
+         log.error("erreur Mise à Jour Compagnie Aerienne"+e.getMessage());
          throw SocleExceptionManager.getException();
       }
    }

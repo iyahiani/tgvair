@@ -33,11 +33,13 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
          this.getEntityManager().persist(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit(); 
-         log.info("sauvegarde TrainCatalogue To Compagnie Avec Succés");
+        
          
       } catch (Exception e) {
+         
+         this.getEntityManager().getTransaction().rollback(); 
+         this.getEntityManager().close();
          log.info("sauvegarde TrainCatalogue To Compagnie Echouée");
-         this.getEntityManager().getTransaction().rollback();
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);
          throw SocleExceptionManager.getException();
@@ -52,7 +54,10 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
+         
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close(); 
+         log.error("erreur lors de la suppression train2Compagnie"+e.getMessage());
          throw SocleExceptionManager.getException();
       }
 
@@ -66,6 +71,8 @@ public class TrainCatalogueToCompagnieDAO extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close(); 
+         log.error("erreur lors de la mise à jour train2Compagnie"+e.getMessage());
          throw SocleExceptionManager.getException();
       }
 

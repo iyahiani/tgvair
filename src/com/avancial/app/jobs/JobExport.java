@@ -97,7 +97,7 @@ public class JobExport implements Job {
             ExportPDTByCompagnyToSSIM7 export = new ExportPDTByCompagnyToSSIM7() ;
             try {
                export.export(listCatalogue , new TraitementExportDataBean(), new Service()); 
-               
+               log.info("Job Export terminé");
                
             } catch (ParseException e) {
                log.error("Job Export Erreur"+e.getMessage());

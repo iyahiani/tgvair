@@ -54,6 +54,7 @@ public class SocleInit extends HttpServlet {
       System.out.println("**********************************************");
       System.out.println("********  Application initialization  ********");
       System.out.println("**********************************************");
+      log.info("Quartz Socle initialisé");
       try {
          this.quartzInit();
          FacesContext.getCurrentInstance().getExternalContext().redirect(SOCLE_constants.NAVIGATION_ACCUEIL.name());

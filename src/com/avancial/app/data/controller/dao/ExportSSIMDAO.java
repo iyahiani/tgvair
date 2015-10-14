@@ -11,6 +11,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class ExportSSIMDAO extends AbstractDao {
 
+   
    @Override
    public List<ExportSSIMDataBean> getAll() {
       String sql = "From ExportSSIMDataBean";

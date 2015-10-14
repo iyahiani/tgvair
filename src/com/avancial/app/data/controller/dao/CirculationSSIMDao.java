@@ -1,6 +1,7 @@
 package com.avancial.app.data.controller.dao;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.persistence.Query;
 
@@ -18,9 +19,11 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  *         Circulation
  */
 public class CirculationSSIMDao extends AbstractDao {
-
+   
+   org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CirculationSSIMDao.class) ;
+   
    private CirculationSSIMDataBean circulationSSIMDataBean;
-
+    
    public void save(CirculationSSIMDataBean t) throws ASocleException {
 
       if (null != t)
@@ -30,8 +33,10 @@ public class CirculationSSIMDao extends AbstractDao {
             this.getEntityManager().flush();
             this.getEntityManager().getTransaction().commit();
          } catch (Exception e) {
+            
             this.getEntityManager().getTransaction().rollback();
             this.getEntityManager().close();
+            log.error("erreur Sauvegarde SSIM" + e.getMessage());
             throw SocleExceptionManager.getException();
          }
    }
@@ -45,6 +50,7 @@ public class CirculationSSIMDao extends AbstractDao {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          this.getEntityManager().close();
+         log.error("erreur Suppression SSIM" + e.getMessage());
          throw SocleExceptionManager.getException();
       }
 
@@ -58,7 +64,8 @@ public class CirculationSSIMDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         this.getEntityManager().close();
+         this.getEntityManager().close(); 
+         log.error("erreur Mise à jour SSIM" + e.getMessage());
          throw SocleExceptionManager.getException();
       }
 

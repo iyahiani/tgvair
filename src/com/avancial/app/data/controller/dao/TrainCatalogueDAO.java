@@ -65,10 +65,12 @@ public class TrainCatalogueDAO extends AbstractDao {
          this.getEntityManager().persist(circBean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit(); 
-         log.info("sauvegarde TrainCatalogue avec succés");
+        
       } catch (Exception e) {
-         log.info("erreur de sauvegarde du trainCatalogue DB");
+         
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close();
+         log.info("erreur de sauvegarde du trainCatalogue DB");
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);
          throw SocleExceptionManager.getException();
@@ -90,10 +92,11 @@ public class TrainCatalogueDAO extends AbstractDao {
          this.getEntityManager().remove(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
-         log.info("suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" avec succés");
+         
       } catch (Exception e) {
          
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close(); 
          log.info("Echec suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" ");
          throw SocleExceptionManager.getException();
       }
@@ -106,10 +109,12 @@ public class TrainCatalogueDAO extends AbstractDao {
          this.getEntityManager().merge(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
-         log.info("Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+" avec succés");
+      
       } catch (Exception e) {
-         log.info("Echec Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+"");
+      
          this.getEntityManager().getTransaction().rollback();
+         this.getEntityManager().close(); 
+         log.info("Echec Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+"");
          throw SocleExceptionManager.getException();
       }
 
@@ -190,18 +195,18 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setTraitementExport(new TraitementExportDAO().getLastID());
          cirAdapterDataBean.setHeureDepart(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart())));
          cirAdapterDataBean.setHeureArriver(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
-         cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation()); 
+         cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
-         CirculationDAO dao1 = new CirculationDAO(); 
-         
+         CirculationDAO dao1 = new CirculationDAO()                                    ; 
          try {
              dao1.save(cirAdapterDataBean); 
-             log.info("ADAPTATION TERMINEE");
+             
          } catch (ASocleException e) {
-            log.error(e.getMessage());
+            log.error("erreur lors de l'adaptation"+e.getMessage());
             e.printStackTrace();
          }
-      }
+      } 
+      
    }
    
    

@@ -21,11 +21,10 @@ public class LogsDataBean implements Serializable {
    
    private static final long serialVersionUID = 1L;
 
+ 
+   @Column(name = "UserIdLogs_tgvAir")
+   private int userID ;
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "UserIdLogs_tgvAir", unique = true, nullable = false)
-   private int userID ;  
-   
    @Column(name="dateLogs_tgvair")  
    private Date dateLog ; 
     
@@ -38,13 +37,14 @@ public class LogsDataBean implements Serializable {
    @Column (name="Message_tgvair") 
    private String message ;
 
-   public int getUserID() {
+  /* public int getUserID() {
       return userID;
    }
 
    public void setUserID(int userID) {
+      
       this.userID = userID;
-   }
+   }*/
 
    public Date getDateLog() {
       return dateLog;
@@ -77,5 +77,13 @@ public class LogsDataBean implements Serializable {
    public void setMessage(String message) {
       this.message = message;
    }
+
+  /* public int getIdLog_tgvair() {
+      return idLog_tgvair;
+   }
+
+   public void setIdLog_tgvair(int idLog_tgvair) {
+      this.idLog_tgvair = idLog_tgvair;
+   } */ 
    
 }

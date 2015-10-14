@@ -13,6 +13,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.resources.ContextController;
@@ -28,6 +30,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @RequestScoped
 public class LoginManagedBean implements Serializable {
 
+   Logger log =Logger.getLogger(LoginManagedBean.class);
    private static final long serialVersionUID = 1L;
    private String login;
    private String password;
@@ -74,7 +77,7 @@ public class LoginManagedBean implements Serializable {
             this.securityManagedBean.init();
 
             this.ihmManagedBean.setOriginalURL(null);
-
+            log.info("utilisateur connecté"+this.login);
          }
 
          // Si un user est connecté, on va récupérer ses roles
@@ -99,6 +102,7 @@ public class LoginManagedBean implements Serializable {
       try {
          HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
          request.logout();
+         log.info("utilisateur déconnecté"+this.login);
          this.ihmManagedBean.setCurrentUser(null);
          this.securityManagedBean.init();
          ContextController.addInfoMessage("login_deconnexion_ok");

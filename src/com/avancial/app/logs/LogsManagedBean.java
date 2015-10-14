@@ -1,5 +1,6 @@
 package com.avancial.app.logs;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,8 +10,12 @@ import javax.inject.Named;
 
 @Named("logs")
 @ViewScoped
-public class LogsManagedBean {
+public class LogsManagedBean implements Serializable {
    
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    private List<LogsDataBean> listLogs  ; 
    
    @PostConstruct

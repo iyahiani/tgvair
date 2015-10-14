@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -65,11 +66,15 @@ public class SessionManagedBean extends AManageBean {
       this.num =new TreeMap<>();
       this.dates =new TreeMap<>();
       this.listJoursCirculs = new ArrayList<>();
-      this.tempListTrainDataBean = new ArrayList<>(); 
+      this.tempListTrainDataBean = new TrainCatalogueDAO().getAll() ;  
    }
-   
+  
+   public  TimeZone getTimeZone() {
+      return TimeZone.getDefault();
+   }
+
    public SessionManagedBean() { 
-      this.tempListTrainDataBean.addAll(new TrainCatalogueDAO().getAll()) ;
+      //this.tempListTrainDataBean.addAll(new TrainCatalogueDAO().getAll()) ;
    }
   
    public Map<String, String> getNum() {

@@ -1,6 +1,7 @@
 package com.avancial.app.model.managedbean;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -21,13 +22,17 @@ import org.quartz.SimpleTrigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.avancial.app.business.train.Service;
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
+import com.avancial.app.data.controller.dao.ServiceDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
+import com.avancial.app.data.model.databean.ServiceDataBean;
 import com.avancial.app.jobs.JobAdaptation;
 import com.avancial.app.jobs.JobExport;
 import com.avancial.app.jobs.JobExportByCompagnie;
 import com.avancial.app.jobs.JobImport;
 import com.avancial.app.traitements.AdminTraitements;
+import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
@@ -43,7 +48,8 @@ public class AdminManagedBean extends AManageBean {
    private SchedulerFactory sf;
    private Scheduler sched;
    private List<CompagnieAerienneDataBean> listCompagnies = new CompagnieAerienneDao().getAllCodeCompagnie();
-  
+   private Date dateDebut ; 
+   private Date dateFin ;
    private String compagnie ;
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
@@ -79,9 +85,25 @@ public class AdminManagedBean extends AManageBean {
  */
    public String lancerExport() {
       AdminTraitements adminTraitements = new AdminTraitements() ;
+      
       adminTraitements.traitementAdaptation(); 
      adminTraitements.traitementExport();
       return null;
+   }
+   
+   
+   public String creerService() { 
+      ServiceDataBean bean = new ServiceDataBean() ;
+      ServiceDAO dao = new ServiceDAO() ;
+      bean.setDateDebutService_tgvAir(this.dateDebut); 
+      bean.setDatefinService_tgvAir(this.dateFin); 
+      try {
+         dao.save(bean);
+      } catch (ASocleException e) {
+         this.logger.error("erreur sauvegarde Service");
+         e.printStackTrace();
+      }      
+      return null ;
    }
    
    public boolean isFinish() {
@@ -123,6 +145,18 @@ public class AdminManagedBean extends AManageBean {
 
    public void setCompagnie(String compagnie) {
       this.compagnie = compagnie;
+   }
+   public Date getDateDebut() {
+      return dateDebut;
+   }
+   public void setDateDebut(Date dateDebut) {
+      this.dateDebut = dateDebut;
+   }
+   public Date getDateFin() {
+      return dateFin;
+   }
+   public void setDateFin(Date dateFin) {
+      this.dateFin = dateFin;
    }
 
   

@@ -38,7 +38,7 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().persist(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit(); 
-         log.info("sauvegarde circulations adaptées avec succés");
+         
       } catch (Exception e) {
          log.info("Echec sauvegarde circulations adaptées");
          this.getEntityManager().getTransaction().rollback();
@@ -55,7 +55,7 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().remove(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit(); 
-         log.info("suppression circulations adaptées avec succés");
+        
       } catch (Exception e) {
          log.info("Echec suppression circulations adaptées");
          this.getEntityManager().getTransaction().rollback();
@@ -70,7 +70,7 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().merge(bean);
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
-         log.info("Mise à jours circulations adaptées avec succés");
+        
       } catch (Exception e) {
          log.info("Echec Mise à jours circulations adaptées");
          this.getEntityManager().getTransaction().rollback();

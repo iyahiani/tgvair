@@ -187,7 +187,7 @@ public class AdminTraitements {
    public void traitementAdaptation() {
 
       // / update table circulation adapter avec la table des TrainsCatalogue
-    
+      Service services = new Service()   ;
       FacesContext.getCurrentInstance()
       .addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajustement", "Ajustement Des Trains Lancé"));
       
@@ -217,7 +217,7 @@ public class AdminTraitements {
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue();
       Circulation circulTemp = new Circulation();
       circulTemp.createCirculationFromBean(listCirculAdapter.get(0));
-      List<Circulation> listCirculation = new ArrayList<Circulation>();
+      List<Circulation> listCirculation = new ArrayList<>();
       TrainCatalogue train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(0));
       ;
       train.addCirculation(circulTemp);
@@ -237,20 +237,24 @@ public class AdminTraitements {
          if (i == listCirculAdapter.size() - 1)
             listTrains.add(train);
       }
-
+      
       // //////////////////////////// recuperer les circulations de la ssim
       
-      Train trainsSSIM = new Train();
+      Train trainsSSIM = new Train(); 
+      List<Circulation> circulations = new ArrayList<>();
       CirculationFactory circulationFactory = new CirculationFactory() ;
       int i = 0;
       
       for (CirculationSSIMDataBean circulationBean : listCirculationSSIM) {
          Circulation circulation = circulationFactory.createCirculationFromSSIMBean(circulationBean);
          trainsSSIM.addNumeroTrain(circulationBean.getNumeroTrain());
-         trainsSSIM.addCirculation(circulation);
-         //System.out.println(i++);
+         //trainsSSIM.addCirculation(circulation); 
+         circulations.add(circulation);
+         System.out.println(i++);
 
-      }
+      } 
+      trainsSSIM.setListeCirculations(circulations);
+      trainsSSIM.remplirJoursCirculations();
       // //////////////////////////////// recuperer la trains restreints et
       // lancer l'adaptation
 
@@ -259,7 +263,7 @@ public class AdminTraitements {
       Date dateDebutSSIM = listTraitements.get(0).getDateDebutSSIM();
       Date dateFinSSIM = listTraitements.get(0).getDateFinSSIM();
       Date dateExtraction = listTraitements.get(0).getDateImport();
-      Service services = new Service()   ;
+     
       Date dateDebutService = services.getDateDebutService();
       Date dateFinService = services.getDateFinService();
 
@@ -335,7 +339,7 @@ public class AdminTraitements {
              */
          }
          if (compare) {
-            List<TrainCatalogue> listCatalogue = new ArrayList<TrainCatalogue>();
+            List<TrainCatalogue> listCatalogue = new ArrayList<>();
             for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
                tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue());
                CirculationDAO dao = new CirculationDAO();

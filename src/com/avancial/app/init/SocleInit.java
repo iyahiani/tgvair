@@ -23,7 +23,7 @@ import com.avancial.app.jobs.JobAdaptation;
 import com.avancial.app.jobs.JobImport;
 
 /**
- * @author bruno.legloahec
+ *@author ismael.yahiani
  *
  */
 //@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
@@ -44,16 +44,17 @@ public class SocleInit extends HttpServlet {
       super.init();
       System.out.println("**********************************************");
       System.out.println("********  Application initialization  ********");
-      System.out.println("**********************************************");
+      System.out.println("**********************************************"); 
+      log.info("Quartz APP initialisé");
       try {
 
          this.quartzInit();
-         this.log.info("quartz initialisé");
+         
 
 
       } catch (SchedulerException e) {
          e.printStackTrace();
-         this.log.error("erreur d'initialisation de Quartz");
+         this.log.error("erreur d'initialisation de Quartz APP");
       }
    }
 

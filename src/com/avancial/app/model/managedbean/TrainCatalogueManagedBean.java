@@ -53,26 +53,34 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean selectedTrainsCatalogue;
    private List<String> listSelectedJoursCirculation; 
-   private List<TrainCatalogueDataBean> tempTrainsCatalogue;
+   private List<TrainCatalogueDataBean> tempListTrainDataBean  ;
+   private TrainCatalogueDataBean tempTrainDataBean  ;
+    
+  @Inject 
+  private SessionManagedBean session ;
   
-  /*@Inject
-   private SessionManagedBean sessionManagedBean;*/
-   
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
       this.idPointArretDestination = new PointArretDataBean(); 
-      this.tempTrainsCatalogue = new ArrayList<>();
-     //this.tempTrainsCatalogue.addAll(this.sessionManagedBean.getTempListTrainDataBean()) ; 
+     // this.setTempListTrainDataBean(this.session.getTempListTrainDataBean()) ;
       this.reload();
    }
 
+  @PostConstruct
+  public void init() {
+    this.setTempListTrainDataBean(this.session.getTempListTrainDataBean()) ;
+    
+  }
+  
    public void rowSelect(SelectEvent event) {
       this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject(); 
+     
    }
    
    public  TimeZone getTimeZone() {
-      return TimeZone.getDefault();
+       
+      return this.session.getTimeZone() ;
    }
 
    /**
@@ -135,6 +143,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
     */
    @Override
    public String update() throws ASocleException {
+     
+    //  this.tempTrainDataBean = new TrainCatalogueDAO().getTrainCatalogueByID(this.selectedTrainsCatalogue.getIdTrainCatalogue());
       super.update();
       
       if (null != this.selectedTrainsCatalogue) {
@@ -144,6 +154,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
          /*
           * Todo : Modification de la date de fin de la validité
           */
+         
          // Comparaison old date fin de validité avec la new date fin de validé
          // si c'est > => On crée une new circulation avec la date old jusqu'a
          // la date new avec les criteres du train originial
@@ -369,8 +380,27 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.idTrainCatalogue = idTrainCatalogue;
    }
 
-   
+   public SessionManagedBean getSession() {
+      return this.session;
+   }
 
-   
+   public void setSession(SessionManagedBean session) {
+      this.session = session;
+   }
 
-}
+   public List<TrainCatalogueDataBean> getTempListTrainDataBean() {
+      return this.tempListTrainDataBean;
+   }
+
+   public void setTempListTrainDataBean(List<TrainCatalogueDataBean> tempListTrainDataBean) {
+      this.tempListTrainDataBean = tempListTrainDataBean;
+   }
+
+   public TrainCatalogueDataBean getTempTrainDataBean() {
+      return this.tempTrainDataBean;
+   }
+
+   public void setTempTrainDataBean(TrainCatalogueDataBean tempTrainDataBean) {
+      this.tempTrainDataBean = tempTrainDataBean;
+   }
+ }

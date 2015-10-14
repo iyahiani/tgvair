@@ -68,7 +68,7 @@ public class JobAdaptation implements Job {
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue() ; 
       Circulation circulTemp = new Circulation() ;
       circulTemp.createCirculationFromBean(listCirculAdapter.get(0)) ;
-      List<Circulation> listCirculation = new ArrayList<Circulation>(); 
+      List<Circulation> listCirculation = new ArrayList<>(); 
       TrainCatalogue train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(0)); ;
       train.addCirculation(circulTemp);
      
@@ -89,7 +89,7 @@ public class JobAdaptation implements Job {
       
       
       // //////////////////////////// recuperer les circulations de la ssim
-
+      List<Circulation> circulations = new ArrayList<>();
       Train trainsSSIM = new Train();
       for (CirculationSSIMDataBean circulationBean : listCirculationSSIM) {
          Circulation circulation = new Circulation();
@@ -107,8 +107,11 @@ public class JobAdaptation implements Job {
          circulation.setRangTranson(circulationBean.getRangTroncon());
          circulation.setNumeroTrain(circulationBean.getNumeroTrain());
          trainsSSIM.addNumeroTrain(circulationBean.getNumeroTrain());
-         trainsSSIM.addCirculation(circulation);
-      }
+         //trainsSSIM.addCirculation(circulation); 
+         circulations.add(circulation) ;
+      }  
+      trainsSSIM.setListeCirculations(circulations);
+      trainsSSIM.remplirJoursCirculations();
       // //////////////////////////////// recuperer la trains restreints et
       // lancer l'adaptation
 
