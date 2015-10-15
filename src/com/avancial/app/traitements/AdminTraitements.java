@@ -112,7 +112,7 @@ public class AdminTraitements {
             APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
-      List<CirculationSSIMDataBean> list = dao.getAll();
+      dao.getAll();
       dao.deleteAll(0);
       try {
               
@@ -133,7 +133,7 @@ public class AdminTraitements {
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
 
                } catch (ParseException e) {
-                  logger.error("erreur ssim parse date deb/fin circulation ");
+                  this.logger.error("erreur ssim parse date deb/fin circulation ");
                   FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur Import", "Erreur De lecture fichier SSIM"));
                   e.printStackTrace();
                }
@@ -192,8 +192,6 @@ public class AdminTraitements {
       FacesContext.getCurrentInstance()
       .addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajustement", "Ajustement Des Trains Lancé"));
       
-      Boolean succes = false;
-
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
       for (TrainCatalogueDataBean tc : listTrainsCat) {
          new TrainCatalogueDAO().saveCirculation(tc);
@@ -203,14 +201,15 @@ public class AdminTraitements {
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();
       
-      List<TrainToCompagnie> listTrainToCompagnie = new ArrayList<>();
       List<PointArretDataBean> listPointsArret = new PointArretDAO().getAll();
 
       // /////////////////////////////////////////////////////// recuperer les
       // train catalogue à partir des circulation adaptées
 
-      List<CirculationAdapterDataBean> listCirculAdapter = new CirculationDAO().getDistinctCirculation();
-      listCirculAdapter = new CirculationDAO().getAll();
+     // List<CirculationAdapterDataBean> listCirculAdapter = new CirculationDAO().getDistinctCirculation();
+      List<CirculationAdapterDataBean> listCirculAdapter = new  ArrayList<>();
+      listCirculAdapter.clear();
+      listCirculAdapter.addAll(new CirculationDAO().getAll()) ;
       TrainFactory factory = new TrainFactory();
       // re-construire les circulations du trains à partir de la table des
       // circulation adaptés
@@ -218,9 +217,8 @@ public class AdminTraitements {
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue();
       Circulation circulTemp = new Circulation();
       circulTemp.createCirculationFromBean(listCirculAdapter.get(0));
-      List<Circulation> listCirculation = new ArrayList<>();
       TrainCatalogue train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(0));
-      ;
+      
       train.addCirculation(circulTemp);
 
       for (int i = 1; i < listCirculAdapter.size(); i++) {
@@ -263,10 +261,10 @@ public class AdminTraitements {
       List<TraitementsImportDataBean> listTraitements = dao.getLastID();
       Date dateDebutSSIM = listTraitements.get(0).getDateDebutSSIM();
       Date dateFinSSIM = listTraitements.get(0).getDateFinSSIM();
-      Date dateExtraction = listTraitements.get(0).getDateImport();
+      listTraitements.get(0).getDateImport();
      
-      Date dateDebutService = services.getDateDebutService();
-      Date dateFinService = services.getDateFinService();
+      services.getDateDebutService();
+      services.getDateFinService();
 
       for (TrainCatalogue traincat : listTrains) {
 
@@ -277,15 +275,14 @@ public class AdminTraitements {
          if (trainSSIMRestreint.getListeCirculations().size() > 0) {
          trainSSIMRestreint.remplirJoursCirculations();
          trainSSIMRestreint.calculeCirculationFromJoursCirculation();
-            
-         if (!traincat.compare(trainSSIMRestreint)) {
+            if (!traincat.compare(trainSSIMRestreint)) {
 
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
-               traincat.calculeCirculationFromJoursCirculation();
+               //traincat.calculeCirculationFromJoursCirculation();
                traincat.adaptGuichet(listPointsArret);
                traincat.calculeCirculationFromJoursCirculation();
-               // //////////////////Updater les circulations
+               // //////////////////   Updater les circulations
                new TrainCatalogueDAO().updateCirculation(traincat);
             }
          }

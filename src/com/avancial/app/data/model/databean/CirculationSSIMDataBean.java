@@ -37,7 +37,7 @@ public class CirculationSSIMDataBean implements Serializable {
   
    @Column(name = "idCirculationSSIMtgvair")
    private  Long idCirculation;
-   private transient String numeroTrain;
+   private String numeroTrain;
    private String originePointArret;
    private String destinationPointArret;
    private String heureDepartCirculation;
