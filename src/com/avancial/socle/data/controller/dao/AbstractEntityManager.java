@@ -53,4 +53,12 @@ public class AbstractEntityManager {
       return this.em;
    }
 
+   public EntityManagerFactory getEmf() {
+      return emf;
+   }
+
+   public void setEmf(EntityManagerFactory emf) {
+      this.emf = emf;
+   }
+
 }

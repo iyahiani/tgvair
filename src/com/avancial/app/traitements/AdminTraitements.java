@@ -142,7 +142,8 @@ public class AdminTraitements {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-                insertWithJDBC.insertRecordIntoTable(circulation); 
+               insertWithJDBC.insertRecordIntoTable(circulation); 
+              // dao.customSAave(circulation);
                 /*
                       try {
 
@@ -211,8 +212,8 @@ public class AdminTraitements {
       List<CirculationAdapterDataBean> listCirculAdapter = new CirculationDAO().getDistinctCirculation();
       listCirculAdapter = new CirculationDAO().getAll();
       TrainFactory factory = new TrainFactory();
-      // re-construire les circulations du traions à partir de la table des
-      // circulation
+      // re-construire les circulations du trains à partir de la table des
+      // circulation adaptés
 
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue();
       Circulation circulTemp = new Circulation();
@@ -272,12 +273,12 @@ public class AdminTraitements {
          IObservableJoursCirculation iObs = new ObservableJoursCirculation();
 
          Train trainSSIMRestreint = trainsSSIM.getTrainSSIMRestreint(traincat);
-
+         
+         if (trainSSIMRestreint.getListeCirculations().size() > 0) {
          trainSSIMRestreint.remplirJoursCirculations();
          trainSSIMRestreint.calculeCirculationFromJoursCirculation();
-
-         if (trainSSIMRestreint.getListeCirculations().size() > 0)
-            if (!traincat.compare(trainSSIMRestreint)) {
+            
+         if (!traincat.compare(trainSSIMRestreint)) {
 
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
@@ -287,6 +288,7 @@ public class AdminTraitements {
                // //////////////////Updater les circulations
                new TrainCatalogueDAO().updateCirculation(traincat);
             }
+         }
       }
       FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Ajustement des Trains"));
    }

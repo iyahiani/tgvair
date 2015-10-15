@@ -67,8 +67,8 @@ public class AdminManagedBean extends AManageBean {
       calendarEndAdapt.add(Calendar.MINUTE, 10)                                                         ;
          
       AdminTraitements adminTraitements = new AdminTraitements() ;
-      adminTraitements.traitementImportSSIM();       
-      adminTraitements.traitementAdaptation();
+     adminTraitements.traitementImportSSIM();       
+     adminTraitements.traitementAdaptation();
      this.logger.info("SUCCES Import SSIM");  
      
       return null;

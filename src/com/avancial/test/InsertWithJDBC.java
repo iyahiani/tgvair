@@ -55,7 +55,7 @@ public class InsertWithJDBC {
          preparedStatement.setString(13, c.getHeureDepartCirculation());
          preparedStatement.executeUpdate();
 
-         System.out.println("Record is inserted into SSIMImport table!");
+         //System.out.println("Record is inserted into SSIMImport table!");
 
       } catch (SQLException e) {
 
