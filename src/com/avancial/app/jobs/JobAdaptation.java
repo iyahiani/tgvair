@@ -54,6 +54,7 @@ public class JobAdaptation implements Job {
       
       ///////////////////////////////////////////////////////////////
       List<TrainCatalogue> listTrains = new ArrayList<>();
+      List<TrainCatalogue> listCatalogue = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();
       List<TrainToCompagnie> listTrainToCompagnie = new ArrayList<>();
       List<PointArretDataBean> listPointsArret = new PointArretDAO().getAll() ;
@@ -138,15 +139,16 @@ public class JobAdaptation implements Job {
                
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
-               traincat.calculeCirculationFromJoursCirculation();
+               // traincat.calculeCirculationFromJoursCirculation();
                //traincat.adaptGuichet(pa);
                //traincat.calculeCirculationFromJoursCirculation();
                traincat.adaptGuichet(listPointsArret);
                traincat.calculeCirculationFromJoursCirculation();
-               // //////////////////Updater les circulations 
-               new TrainCatalogueDAO().updateCirculation(traincat);
+               listCatalogue.add(traincat);
+              
             }
       }
-      
+      // //////////////////Updater les circulations 
+      new TrainCatalogueDAO().updateCirculation(listCatalogue); 
    }
 }

@@ -153,7 +153,27 @@ public class CirculationDAO extends AbstractDao {
     return listCirculAdap ;
     
   }
+  public void customSave(CirculationAdapterDataBean bean) {
+     Session session = this.getSessionFactory().openSession() ;
+     org.hibernate.Transaction tx = session.beginTransaction() ;
+     for (int i = 0 ; i < 10000 ; i++) {
+        session.save("CirculationAdapterDataBean",bean);
+
+        if(i%100==0) {
+           session.flush(); 
+           session.clear();
+        }
+     } 
+     tx.commit();
+     session.close() ;
+  } 
   
+  public void deleteAllNewCirculation() {
+     Session session = getSession() ; 
+     org.hibernate.Query q = session.createQuery("delete CirculationAdapterDataBean t where t.dateCreationLigneTrain = :today");
+     q.setParameter("today", new Date());
+     q.executeUpdate() ;
+  }
   public void deleteCirculationByID(int id) { 
      Session session = getSession() ; 
      org.hibernate.Query q = session.createQuery("delete CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = :id");

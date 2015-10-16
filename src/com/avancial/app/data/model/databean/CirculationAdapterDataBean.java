@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.app.traitements.TraitementsImportDataBean;
 
-@Entity 
+@Entity
 @Table(name="tgvair_circulation")
 public class CirculationAdapterDataBean implements Serializable  {
 

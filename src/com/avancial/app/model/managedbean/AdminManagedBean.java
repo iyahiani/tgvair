@@ -4,37 +4,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.SimpleTrigger;
-import org.quartz.TriggerBuilder;
-import org.quartz.impl.StdSchedulerFactory;
-
-import com.avancial.app.business.train.Service;
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.controller.dao.ServiceDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.ServiceDataBean;
-import com.avancial.app.jobs.JobAdaptation;
-import com.avancial.app.jobs.JobExport;
-import com.avancial.app.jobs.JobExportByCompagnie;
-import com.avancial.app.jobs.JobImport;
-import com.avancial.app.traitements.AdminTraitements;
+import com.avancial.app.traitements.LancementJobManuelle;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
-import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @Named("admin")
 @ViewScoped
@@ -63,12 +46,10 @@ public class AdminManagedBean extends AManageBean {
    public String lancerImport() {
       
                                                                    ;
-      Calendar calendarEndAdapt = Calendar.getInstance()                                                ;
-      calendarEndAdapt.add(Calendar.MINUTE, 10)                                                         ;
-         
-      AdminTraitements adminTraitements = new AdminTraitements() ;
-    // adminTraitements.traitementImportSSIM();       
-     adminTraitements.traitementAdaptation();
+      
+      LancementJobManuelle lancementJobManuelle = new LancementJobManuelle() ;
+     lancementJobManuelle.traitementImportSSIM();       
+     lancementJobManuelle.traitementAdaptation();
      this.logger.info("SUCCES Import SSIM");  
      
       return null;
@@ -84,10 +65,10 @@ public class AdminManagedBean extends AManageBean {
  * @return
  */
    public String lancerExport() {
-      AdminTraitements adminTraitements = new AdminTraitements() ;
+      LancementJobManuelle lancementJobManuelle = new LancementJobManuelle() ;
       
-      adminTraitements.traitementAdaptation(); 
-     adminTraitements.traitementExport();
+    // lancementJobManuelle.traitementAdaptation(); 
+     lancementJobManuelle.traitementExport();
       return null;
    }
    

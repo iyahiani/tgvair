@@ -20,7 +20,8 @@ public class LogsManagedBean implements Serializable {
    
    @PostConstruct
    public void init() {
-      this.listLogs = new LogsDAO().getAll() ;
+      this.listLogs = new LogsDAO().getAll() ; 
+      System.out.println("LogsManagedBean.init()");
    }
    public List<LogsDataBean> getListLogs() {
       return this.listLogs;

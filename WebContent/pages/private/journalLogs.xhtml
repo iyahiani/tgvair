@@ -11,12 +11,13 @@
 
 			<h:panelGrid columns="1">
 
-				<p:dataTable
+				<p:dataTable 
 					value="#{logs.listLogs}"
 					 var="log"
 					paginatorPosition="top"
 					rows="50"  scrollable="true" rowKey="#{log.dateLog}" 
-					paginator="true"
+					paginator="true" 
+					rowStyleClass="#{log.levelLog eq 'ERROR' ? 'redROW' : log.levelLog eq 'INFO' ? 'blueROW' : null}"
 					 rowsPerPageTemplate="10,20,40"  emptyMessage="Pas de log">
 					<!--<p:column headerText="ID LOG">
                             <h:outputText value="#{log.idLog_tgvair}" />
@@ -25,21 +26,21 @@
                             <h:outputText value="#{log.userID}" />
                         </p:column>
                         -->
-                    <p:column headerText="#{msg.p_logs_date}"
+                    <p:column headerText="#{msg.p_logs_date}" sortBy="#{log.dateLog}" 
                            >
                             <h:outputText value="#{log.dateLog}" />
                         </p:column> 
-                     <p:column headerText="#{msg.p_logs_classLog}"
+                     <p:column headerText="#{msg.p_logs_classLog}" sortBy="#{log.loggerClass}"
                            >
                             <h:outputText value="#{log.loggerClass}" />
                         </p:column>    
                         
-                      <p:column headerText="#{msg.p_logs_levelLog}"
+                      <p:column headerText="#{msg.p_logs_levelLog}" sortBy="#{log.levelLog}"
                             >
                             <h:outputText value="#{log.levelLog}" />
                         </p:column>   
                                
-                       <p:column headerText="#{msg.p_logs_message}"
+                       <p:column headerText="#{msg.p_logs_message}" sortBy="#{log.message}"
                             >
                             <h:outputText value="#{log.message}" />
                         </p:column>  

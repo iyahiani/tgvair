@@ -21,7 +21,22 @@
     font-weight: normal; 
     /**text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);**/
 }
+.blueROW{
+	 background-color:#56A7E5;
+   background-image:none;
+} 
+.redROW{
+	 background-color:red;
+   background-image:none;
+}
 
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    padding: 4px 10px; 
+    color: black ;
+}
 .ui-tabs.ui-tabs-top > .ui-tabs-nav {
     padding: 0.2em 0.2em 0; 
     background: none ; 
@@ -107,6 +122,9 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
     text-align: center; 
     background-color: #ffffff; 
 }
+.ui-datatable .ui-state-highlight {
+   background: #56A7E5 !important;
+} 
 
 #costumDIV{
 	 position:absolute;

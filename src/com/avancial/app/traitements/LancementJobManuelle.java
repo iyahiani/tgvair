@@ -11,12 +11,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
-import org.hibernate.CacheMode;
-import org.hibernate.SessionFactory;
-
 import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
 import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
-import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.export.ExportPDTByCompagnyToSSIM7;
 import com.avancial.app.business.parser.APP_enumParserSSIM;
 import com.avancial.app.business.parser.FilterEncodage;
@@ -43,8 +39,6 @@ import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
-import com.avancial.app.jobs.JobAdaptation;
-import com.avancial.app.jobs.JobImport;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
@@ -52,22 +46,21 @@ import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
-import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 import com.avancial.test.InsertWithJDBC;
 
 /**
- * lancer les Imports et les Export SSIM/SSIM7 depuis la fenetre
+ * Methodes pour le lancement les Imports et les Exports SSIM/SSIM7 depuis la fenetre
  * d'administration
  * 
  * @author ismael.yahiani
  * 
  */
-public class AdminTraitements {
+public class LancementJobManuelle {
 
-   Logger logger = Logger.getLogger(AdminTraitements.class);
+   Logger logger = Logger.getLogger(LancementJobManuelle.class);
 
-   public AdminTraitements() {
+   public LancementJobManuelle() {
    }
 
    // //////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +74,7 @@ public class AdminTraitements {
       IReader reader = null;
       InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
-         // APP_TgvAir.CHEMIN_SSIM.toString()
+         
          reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
@@ -113,7 +106,7 @@ public class AdminTraitements {
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
       dao.getAll();
-      dao.deleteAll(0);
+      if(dao.getAll().size()>0) dao.deleteAll(0);
       try {
               
          while ((chaine = reader.readLine()) != null) {
@@ -127,7 +120,6 @@ public class AdminTraitements {
                circulation.setJoursCirculation(par.getParsedResult().get(APP_enumParserSSIM.POSITION_JOURS_CIRCULATION.name()));
                circulation.setGMTDepart(par.getParsedResult().get(APP_enumParserSSIM.POSITION_DIFFERENCE_GMT_DEPART.name()));
                circulation.setGMTArriver(par.getParsedResult().get(APP_enumParserSSIM.POSITION_DIFFERENCE_GMT_ARRIVER.name()));
-
                try {
                   circulation.setDateDebutCirculation(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
@@ -143,7 +135,7 @@ public class AdminTraitements {
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
                insertWithJDBC.insertRecordIntoTable(circulation); 
-              // dao.customSAave(circulation);
+              // dao.customSave(circulation);
                 /*
                       try {
 
@@ -199,6 +191,7 @@ public class AdminTraitements {
 
       // /////////////////////////////////////////////////////////////
       List<TrainCatalogue> listTrains = new ArrayList<>();
+      List<TrainCatalogue> listTrainsAdapt = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();
       
       List<PointArretDataBean> listPointsArret = new PointArretDAO().getAll();
@@ -247,9 +240,8 @@ public class AdminTraitements {
       for (CirculationSSIMDataBean circulationBean : listCirculationSSIM) {
          Circulation circulation = circulationFactory.createCirculationFromSSIMBean(circulationBean);
          trainsSSIM.addNumeroTrain(circulationBean.getNumeroTrain());
-         //trainsSSIM.addCirculation(circulation); 
+        
          circulations.add(circulation);
-         System.out.println(i++);
 
       } 
       trainsSSIM.setListeCirculations(circulations);
@@ -265,28 +257,29 @@ public class AdminTraitements {
      
       services.getDateDebutService();
       services.getDateFinService();
-
+       
       for (TrainCatalogue traincat : listTrains) {
 
          IObservableJoursCirculation iObs = new ObservableJoursCirculation();
-
          Train trainSSIMRestreint = trainsSSIM.getTrainSSIMRestreint(traincat);
-         
          if (trainSSIMRestreint.getListeCirculations().size() > 0) {
          trainSSIMRestreint.remplirJoursCirculations();
          trainSSIMRestreint.calculeCirculationFromJoursCirculation();
             if (!traincat.compare(trainSSIMRestreint)) {
-
+ 
                traincat.remplirJoursCirculations();
                traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
-               //traincat.calculeCirculationFromJoursCirculation();
+              
                traincat.adaptGuichet(listPointsArret);
                traincat.calculeCirculationFromJoursCirculation();
                // //////////////////   Updater les circulations
-               new TrainCatalogueDAO().updateCirculation(traincat);
+               listTrainsAdapt.add(traincat) ;
+         
             }
          }
-      }
+      } 
+      
+      new TrainCatalogueDAO().updateCirculation(listTrainsAdapt);
       FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Ajustement des Trains"));
    }
 
@@ -321,21 +314,20 @@ public class AdminTraitements {
                }
             }
                
-            /*
-             * if (listeTrainCatalogue.size()==1) { Calendar c =
-             * Calendar.getInstance() ; // Regarder si ce train date
-             * d'aujourd'hui ou si c'est un ancien train :Si nouveau Export /
-             * Sinon ne pas exporter try { if( StringToDate.toStringByFormat(new
-             * CirculationDAO
-             * ().getCirculationByIdTrain(listeTrainCatalogue.get(0
-             * ).getIdTrain()
-             * ).get(0).getDateCreationLigneTrain(),"dateBySlashSansHeure"
-             * ).equals
-             * (StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"
-             * ))) { compare = true ;break ; } } catch (Exception e) {
-             * 
-             * e.printStackTrace(); } }
-             */
+            
+             if (listeTrainCatalogue.size()==1) {
+                Calendar c = Calendar.getInstance() ; // Regarder si ce train date
+           // d'aujourd'hui ou si c'est un ancien train :Si nouveau Export /
+             // Sinon ne pas exporter 
+                try {
+                   if( StringToDate.toStringByFormat(new
+             CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0)
+             .getDateCreationLigneTrain(),"dateBySlashSansHeure").equals
+              (StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"
+          ))) { compare = true ;break ; } } catch (Exception e) {
+           
+              e.printStackTrace(); } }
+           
          }
          if (compare) {
             List<TrainCatalogue> listCatalogue = new ArrayList<>();
@@ -345,7 +337,11 @@ public class AdminTraitements {
                // On récupère les circulations correspondant à l'id du train
                // catalogue on question
                List<CirculationAdapterDataBean> liste = dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
+               if (liste.size()>0) {
                TrainCatalogue train = TrainFactory.createTrainCatalogueFromBeans(liste);
+               System.out.println(tc.getIdTrainCatalogue());
+            // System.out.println(train.getIdTrain());
+            
                TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne());
                trainPortf.setQuota1er(tc2c.getQuotaPremiereTrainCatalogueToCompagnie());
@@ -354,6 +350,7 @@ public class AdminTraitements {
                trainPortf.setPointArretDestination(tc2c.getTrainCatalogueDataBean().getIdPointArretDestination());
                trainPortf.setMarketingFlight(tc2c.getMarketingFlightTrainCatalogueToCompagnie());
                listCatalogue.add(trainPortf);
+             } 
             }
             ExportPDTByCompagnyToSSIM7 export = new ExportPDTByCompagnyToSSIM7();
             try {

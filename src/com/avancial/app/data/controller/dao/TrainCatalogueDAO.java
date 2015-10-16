@@ -1,5 +1,6 @@
 package com.avancial.app.data.controller.dao;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
+import com.avancial.test.InsertWithJDBC;
 
 public class TrainCatalogueDAO extends AbstractDao {
 
@@ -70,7 +72,7 @@ public class TrainCatalogueDAO extends AbstractDao {
          
          this.getEntityManager().getTransaction().rollback();
          this.getEntityManager().close();
-         log.info("erreur de sauvegarde du trainCatalogue DB");
+         this.log.info("erreur de sauvegarde du trainCatalogue DB");
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);
          throw SocleExceptionManager.getException();
@@ -97,7 +99,7 @@ public class TrainCatalogueDAO extends AbstractDao {
          
          this.getEntityManager().getTransaction().rollback();
          this.getEntityManager().close(); 
-         log.info("Echec suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" ");
+         this.log.info("Echec suppression TrainCatalogue"+bean.getIdTrainCatalogue()+" ");
          throw SocleExceptionManager.getException();
       }
 
@@ -114,7 +116,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       
          this.getEntityManager().getTransaction().rollback();
          this.getEntityManager().close(); 
-         log.info("Echec Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+"");
+         this.log.info("Echec Mise à Jours TrainCatalogue"+bean.getIdTrainCatalogue()+"");
          throw SocleExceptionManager.getException();
       }
 
@@ -168,13 +170,16 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
  
    public void updateCirculation(TrainCatalogue tc) {
-
+      InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
       CirculationDAO daoDelete = new CirculationDAO();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
       String today ;
       today = sdf.format(Calendar.getInstance().getTime()) ; 
+      
+      
       List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
       String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain()) ;
+    
       for (CirculationAdapterDataBean c : listCircAdapt) {
          
          if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain() 
@@ -185,7 +190,8 @@ public class TrainCatalogueDAO extends AbstractDao {
             } catch (ASocleException e) {
                e.printStackTrace()           ;
             }
-      } 
+      }  
+      
       for (Circulation c : tc.getListeCirculations()) {
          CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
          cirAdapterDataBean.setDateDebutCirculation(c.getDateDebut());
@@ -197,16 +203,66 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setHeureArriver(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
          cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
-         CirculationDAO dao1 = new CirculationDAO()                                    ; 
          try {
-             dao1.save(cirAdapterDataBean); 
-             
-         } catch (ASocleException e) {
-            log.error("erreur lors de l'adaptation"+e.getMessage());
+           insertWithJDBC.insertRecordIntoTable(cirAdapterDataBean);
+         } catch (Exception e) {
+            this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();
          }
+         
+        
+      } 
+   }
+   public void updateCirculation(List<TrainCatalogue> listTC) {
+      InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
+      CirculationDAO daoDelete = new CirculationDAO();
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
+      String today ;
+      today = sdf.format(Calendar.getInstance().getTime()) ; 
+      
+      for(TrainCatalogue tc : listTC) {
+      List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
+      String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain()) ;
+    
+      for (CirculationAdapterDataBean c : listCircAdapt) {
+         
+         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain() 
+               && lastDate.equalsIgnoreCase(today)
+               ) 
+            try {
+               daoDelete.delete(c);
+            } catch (ASocleException e) {
+               e.printStackTrace()           ;
+            }
+      }  
+     
+       
+      if (tc.getListeCirculations().size()==0) {
+         this.log.info("Le Train"+new TrainCatalogueDAO().getTrainCatalogueByID(tc.getIdTrain()).getNumeroTrainCatalogue()+" à été supprimé");
+      }
+      
+      for (Circulation c : tc.getListeCirculations()) {
+         CirculationAdapterDataBean cirAdapterDataBean = new CirculationAdapterDataBean();
+         cirAdapterDataBean.setDateDebutCirculation(c.getDateDebut());
+         cirAdapterDataBean.setDateFinCirculation(c.getDateFin());
+         cirAdapterDataBean.setTrainCatalogueDataBean(new TrainCatalogueDAO().getTrainCatalogueByID(tc.getIdTrain()));
+         cirAdapterDataBean.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+         cirAdapterDataBean.setTraitementExport(new TraitementExportDAO().getLastID());
+         cirAdapterDataBean.setHeureDepart(String.valueOf(c.getHeureDepart() < 1000 ? "0".concat(String.valueOf(c.getHeureDepart())) : String.valueOf(c.getHeureDepart())));
+         cirAdapterDataBean.setHeureArriver(String.valueOf(c.getHeureArrivee() < 1000 ? "0".concat(String.valueOf(c.getHeureArrivee())) : String.valueOf(c.getHeureArrivee())));
+         cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
+         cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
+         try {
+           insertWithJDBC.insertRecordIntoTable(cirAdapterDataBean);
+         } catch (Exception e) {
+            this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
+            e.printStackTrace();
+         }
+         
+        
       } 
       
+   }
    }
    
    

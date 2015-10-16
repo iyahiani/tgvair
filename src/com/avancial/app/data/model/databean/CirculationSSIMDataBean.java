@@ -25,18 +25,24 @@ import org.hibernate.annotations.FetchMode;
 
 import com.avancial.app.business.train.Train;
 
+
+
+
+
+
+
 @Entity
-@Table(name = "tgvair_import_SSIM")
+@Table(name = "tgvair_import_SSIM") 
+
 public class CirculationSSIMDataBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   @Id 
    
-   @GeneratedValue(strategy = GenerationType.AUTO) 
- // @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-  
+ 
+   
+  @Id 
    @Column(name = "idCirculationSSIMtgvair")
-   private  Long idCirculation;
+   private  int idCirculation;
    private String numeroTrain;
    private String originePointArret;
    private String destinationPointArret;
@@ -50,21 +56,23 @@ public class CirculationSSIMDataBean implements Serializable {
    private int rangTroncon;
    private String trancheFacultatif;
    private String restrictionTrafic;
+// @GeneratedValue(strategy = GenerationType.AUTO) 
+// @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
    
    public CirculationSSIMDataBean() {
    }
 
    
-   public Long getIdCirculation() {
-      return idCirculation;
+   public int getIdCirculation() {
+      return this.idCirculation;
    }
 
-   public void setIdCirculation(Long idCirculation) {
+   public void setIdCirculation(int idCirculation) {
       this.idCirculation = idCirculation;
    }
 
    public String getHeureDepartCirculation() {
-      return heureDepartCirculation;
+      return this.heureDepartCirculation;
    }
 
    public void setHeureDepartCirculation(String heureDepartCirculation) {
@@ -72,7 +80,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getHeureArriverCirculation() {
-      return heureArriverCirculation;
+      return this.heureArriverCirculation;
    }
 
    public void setHeureArriverCirculation(String heureArriverCirculation) {
@@ -80,7 +88,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public Date getDateDebutCirculation() {
-      return dateDebutCirculation;
+      return this.dateDebutCirculation;
    }
 
    public void setDateDebutCirculation(Date dateDebutCirculation) {
@@ -88,7 +96,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public Date getDateFinCirculation() {
-      return dateFinCirculation;
+      return this.dateFinCirculation;
    }
 
    public void setDateFinCirculation(Date dateFinCirculation) {
@@ -96,7 +104,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getJoursCirculation() {
-      return joursCirculation;
+      return this.joursCirculation;
    }
 
    public void setJoursCirculation(String joursCirculation) {
@@ -106,7 +114,7 @@ public class CirculationSSIMDataBean implements Serializable {
    
 
    public int getRangTroncon() {
-      return rangTroncon;
+      return this.rangTroncon;
    }
 
    public void setRangTroncon(int rangTroncon) {
@@ -114,7 +122,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getTrancheFacultatif() {
-      return trancheFacultatif;
+      return this.trancheFacultatif;
    }
 
    public void setTrancheFacultatif(String trancheFacultatif) {
@@ -122,7 +130,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getRestrictionTrafic() {
-      return restrictionTrafic;
+      return this.restrictionTrafic;
    }
 
    public void setRestrictionTrafic(String restrictionTrafic) {
@@ -135,7 +143,7 @@ public class CirculationSSIMDataBean implements Serializable {
  
  
    public String getNumeroTrain() {
-      return numeroTrain;
+      return this.numeroTrain;
    }
    
   
@@ -144,7 +152,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getOriginePointArret() {
-      return originePointArret;
+      return this.originePointArret;
    }
 
    public void setOriginePointArret(String originePointArret) {
@@ -152,7 +160,7 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getDestinationPointArret() {
-      return destinationPointArret;
+      return this.destinationPointArret;
    }
 
    public void setDestinationPointArret(String destinationPointArret) {
@@ -160,19 +168,19 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    public String getGMTDepart() {
-      return GMTDepart;
+      return this.GMTDepart;
    }
 
    public void setGMTDepart(String gMTDepart) {
-      GMTDepart = gMTDepart;
+      this.GMTDepart = gMTDepart;
    }
 
    public String getGMTArriver() {
-      return GMTArriver;
+      return this.GMTArriver;
    }
 
    public void setGMTArriver(String gMTArriver) {
-      GMTArriver = gMTArriver;
+      this.GMTArriver = gMTArriver;
    }
 
    @Override

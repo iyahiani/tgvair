@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.Query;
+import javax.transaction.Transaction;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.jdbc.Work;
 
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
@@ -121,7 +124,7 @@ public class CirculationSSIMDao extends AbstractDao {
       }
    }
 
-   public void closeEntity() throws ASocleException {
+   public void closeEntity() {
       if (this.getEntityManager().isOpen()) {
          this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
@@ -131,31 +134,23 @@ public class CirculationSSIMDao extends AbstractDao {
     
    
    
-   public void customSAave  (CirculationSSIMDataBean bean) throws SQLException {
+   public void customSave  (CirculationSSIMDataBean bean) {
       
-      SessionFactory factory = (SessionFactory) this.getEntityManager().getEntityManagerFactory() ;
+      Session session = this.getSessionFactory().openSession() ;
+      org.hibernate.Transaction tx = session.beginTransaction() ;
+    
+         //CirculationSSIMDataBean c = (CirculationSSIMDataBean) session.get(bean.getClass(), 2L) ;
+         session.save(bean); //"CirculationSSIMDataBean",bean
+         
+            session.flush(); 
+            session.clear();
+         
       
-      String sql = "INSERT INTO CirculationSSIMDataBean (numeroTrain, originePointArret, destinationPointArret, GMTDepart,GMTArriver,dateDebutCirculation,dateFinCirculation,joursCirculation,rangTroncon,trancheFacultatif,restrictionTrafic,heureArriverCirculation,heureDepartCirculation) (?,?,?,?,?,?,?,?,?,?,?,?,?)"
-          ; 
-       Query query = this.getEntityManager().createQuery(sql) ;
-       
-       //this.getSession().beginTransaction(); 
-       query.setParameter(1,bean.getNumeroTrain());
-       query.setParameter(2,bean.getOriginePointArret());
-       query.setParameter(3,bean.getDestinationPointArret());
-       
-       query.setParameter(4,bean.getGMTArriver());
-       query.setParameter(5,bean.getGMTDepart());
-       query.setParameter(6,bean.getDateDebutCirculation());
-       query.setParameter(7,bean.getDateFinCirculation());
-       query.setParameter(8,bean.getJoursCirculation());
-       query.setParameter(9,bean.getRangTroncon());
-       query.setParameter(10,bean.getTrancheFacultatif());
-       query.setParameter(11,bean.getRestrictionTrafic());
-       query.setParameter(12,bean.getHeureArriverCirculation());
-       query.setParameter(13,bean.getHeureDepartCirculation());
-       query.executeUpdate();
-       //this.getSession().getTransaction().commit(); 
-       // this.getSession().close() ;    
-   }
+      tx.commit();
+      session.close() ;
+      
+ 
+   } 
+   
+  
 }

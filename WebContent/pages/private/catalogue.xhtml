@@ -28,18 +28,16 @@
 				>
 
 				<h:form id="tableTrains">
-					<h:panelGrid columns="1"
-						>
+					<h:panelGrid columns="1">
 
 						<p:dataTable value="#{traincatalogue.trainsCatalogue}" rows="10"  
 							scrollable="true" paginatorPosition="top" id="tableTrains"
-							var="trains" widgetVar="trainsWdg"
+							var="trains" widgetVar="trainsWdg" 
 							filteredValue="#{traincatalogue.filtredTrainsCatalogue}"
 							selectionMode="single" rowKey="#{trains.idTrainCatalogue}"
 							selection="#{traincatalogue.selectedTrainsCatalogue}"
 							paginator="true" rowsPerPageTemplate="5,10,15"  
-							emptyMessage=""
-							>
+							emptyMessage="">
                             
 							<p:ajax event="rowSelect"
 								listener="#{traintocompagnie.rowSelect}"
@@ -49,7 +47,6 @@
 								id="num_train" filterMatchMode="contains"
 								filterBy="#{trains.numeroTrainCatalogue}">
 								<h:outputText value="#{trains.numeroTrainCatalogue}" />
-
 							</p:column>
 
 							<p:column headerText="#{msg.p_catalogue_traintable_origine}" 

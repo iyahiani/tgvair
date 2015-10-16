@@ -62,18 +62,18 @@ public class JobExport implements Job {
                      }
          }
                
-               /*if (listeTrainCatalogue.size()==1) { 
-                 // Calendar c = Calendar.getInstance() ; 
+               if (listeTrainCatalogue.size()==1) { 
+                 Calendar c = Calendar.getInstance() ; 
                   // Regarder si ce train date d'aujourd'hui ou si c'est un ancien train :Si nouveau Export / Sinon ne pas exporter  
-                //  try {
-                 //    if( StringToDate.toStringByFormat(new CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0).getDateCreationLigneTrain(),"dateBySlashSansHeure").equals(StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"))) {
+                 try {
+                    if( StringToDate.toStringByFormat(new CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0).getDateCreationLigneTrain(),"dateBySlashSansHeure").equals(StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"))) {
                      compare = true  ;break ;
-                 //    }
-                //  } catch (Exception e) {
+                    }
+                 } catch (Exception e) {
                      // TODO Auto-generated catch block
-                 //    e.printStackTrace();
-                 // }
-               }*/
+                     e.printStackTrace();
+                 }
+               }
       } 
          
          if (compare) {
