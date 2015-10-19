@@ -38,5 +38,9 @@ public class TestFormatedString {
     StringToFormatedString.formaterMatketingFlight("AF4125") ;
  }
  
+ @Test
+ public void test5() {
+    System.out.println(StringToFormatedString.formatterCompteurSSIM7(100000));
+ }
 }
  

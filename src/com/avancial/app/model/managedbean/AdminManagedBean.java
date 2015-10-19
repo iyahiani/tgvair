@@ -33,24 +33,23 @@ public class AdminManagedBean extends AManageBean {
    private List<CompagnieAerienneDataBean> listCompagnies = new CompagnieAerienneDao().getAllCodeCompagnie();
    private Date dateDebut ; 
    private Date dateFin ;
-   private String compagnie ;
+   private String compagnie ; 
+   private  LancementTraitementsManuelle lancementTraitementsManuelle ;
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
    public AdminManagedBean() { 
   
-      
+    this.lancementTraitementsManuelle  = new LancementTraitementsManuelle() ;
    }
    /**
-    * 
-    * @return lancement Manuel de l'import SSIM 
+    * lancement Manuel de l'import SSIM 
+    * @return null
     */
    public String lancerImport() {
-      
-                                                                   ;
-      
-      LancementTraitementsManuelle lancementTraitementsManuelle = new LancementTraitementsManuelle() ;
-     lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
-     lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+       
+     
+     this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
+     this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
      this.logger.info("SUCCES Import SSIM");  
      
       return null;
@@ -60,17 +59,17 @@ public class AdminManagedBean extends AManageBean {
        
       String a =  (String) event.getNewValue(); 
    }
+   
 /**
  * lancement manuel de l'export SSIM 7 
  * 
- * @return
+ * @return null
  */
    public String lancerExport() {
       
-      LancementTraitementsManuelle lancementTraitementsManuelle = new LancementTraitementsManuelle() ;
-             
-      lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
-      lancementTraitementsManuelle.getExportManuel().traitementExport();
+              
+      this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+      this.lancementTraitementsManuelle.getExportManuel().traitementExport();
       this.logger.info("SUCCES Export SSIM 7");  
       
        return null;
@@ -133,16 +132,28 @@ public class AdminManagedBean extends AManageBean {
       this.compagnie = compagnie;
    }
    public Date getDateDebut() {
-      return dateDebut;
+      return this.dateDebut;
    }
    public void setDateDebut(Date dateDebut) {
       this.dateDebut = dateDebut;
    }
    public Date getDateFin() {
-      return dateFin;
+      return this.dateFin;
    }
    public void setDateFin(Date dateFin) {
       this.dateFin = dateFin;
+   }
+   public LancementTraitementsManuelle getLancementTraitementsManuelle() {
+      return lancementTraitementsManuelle;
+   }
+   public void setLancementTraitementsManuelle(LancementTraitementsManuelle lancementTraitementsManuelle) {
+      this.lancementTraitementsManuelle = lancementTraitementsManuelle;
+   }
+   public Logger getLogger() {
+      return logger;
+   }
+   public void setLogger(Logger logger) {
+      this.logger = logger;
    }
 
   

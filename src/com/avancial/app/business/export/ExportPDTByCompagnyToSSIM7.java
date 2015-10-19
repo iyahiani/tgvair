@@ -82,8 +82,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          int[] beginsType4 = { 0, 1, 2, 5, 9, 11, 13, 14, 28, 29, 30, 33, 36, 39, 194, 200 };
          int[] lengthsType4 = { 1, 1, 3, 4, 2, 2, 1, 14, 1, 1, 3, 3, 3, 155, 6, 1 };
 
-         int[] beginsType5 = { 0,  1, 2,   5,193,194, 200 };
-         int[] lengthsType5 = { 1, 1, 3, 188,  1,  6, 1 };
+         int[] beginsType5 = { 0, 1, 2, 5, 187,193, 194, 200 };
+         int[] lengthsType5 = { 1, 1, 3, 182,6,1, 6, 1 };
 
          IFormaterFixedLength[] formatersType1 = new IFormaterFixedLength[6];
          IFormaterStrategy formater = new FormaterStrategyFixedLength(beginsType1, lengthsType1, formatersType1, null, false, new FormaterLeftSpaces());
@@ -101,12 +101,11 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          IFormaterFixedLength[] formatersType4 = new IFormaterFixedLength[16];
          IFormaterStrategy formater4 = new FormaterStrategyFixedLength(beginsType4, lengthsType4, formatersType4, null, false, new FormaterLeftSpaces());
 
-         IFormaterFixedLength[] formatersType5 = new IFormaterFixedLength[6];
+         IFormaterFixedLength[] formatersType5 = new IFormaterFixedLength[8];
          IFormaterStrategy formater5 = new FormaterStrategyFixedLength(beginsType5, lengthsType5, formatersType5, null, false, new FormaterLeftSpaces());
 
          for (TrainCatalogue tc : listCatalogue) {
             for (Circulation c : tc.getListeCirculations()) {
-                
                this.writer.setFormaterStrategy(formater3);
                this.writer.write(this.getEnrgType3(tc, c));
                this.writer.setFormaterStrategy(formater4);
@@ -134,18 +133,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("AIRLINE STANDARD SCHEDULE DATA SET");
       liste.add("");
       liste.add("001");
-      if (String.valueOf(this.cpt).length() == 1)
-         liste.add("00000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 2)
-         liste.add("0000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 3)
-         liste.add("000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 4)
-         liste.add("00" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 5)
-         liste.add("0" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 6)
-         liste.add(String.valueOf(this.cpt));
+      liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("\n");
       return liste;
    }
@@ -164,18 +152,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("");
       liste.add(String.valueOf(Integer.valueOf(bean.getHeureCreation()) < 1000 ? "0".concat(bean.getHeureCreation()) : bean.getHeureCreation()));
       this.cpt++;
-      if (String.valueOf(this.cpt).length() == 1)
-         liste.add("00000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 2)
-         liste.add("0000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 3)
-         liste.add("000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 4)
-         liste.add("00" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 5)
-         liste.add("0" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 6)
-         liste.add(String.valueOf(this.cpt));
+      liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("\n");
       return liste;
    }
@@ -218,18 +195,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("C" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota1er())) + "Y" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota2eme())));
       liste.add("");
       this.cpt++;
-      if (String.valueOf(this.cpt).length() == 1)
-         liste.add("00000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 2)
-         liste.add("0000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 3)
-         liste.add("000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 4)
-         liste.add("00" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 5)
-         liste.add("0" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 6)
-         liste.add(String.valueOf(this.cpt));
+      liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("\n");
       return liste;
    }
@@ -259,18 +225,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       
       liste.add(StringToFormatedString.formaterMatketingFlight(tc2c.getMarketingFlight()));
       this.cpt++;
-      if (String.valueOf(this.cpt).length() == 1)
-         liste.add("00000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 2)
-         liste.add("0000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 3)
-         liste.add("000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 4)
-         liste.add("00" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 5)
-         liste.add("0" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 6)
-         liste.add(String.valueOf(this.cpt));
+      liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("\n");
       return liste;
    }
@@ -281,20 +236,11 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("");
       liste.add("2C");
       liste.add("");
+      this.cpt++;
+      liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("E") ;
       this.cpt++;
-      if (String.valueOf(this.cpt).length() == 1)
-         liste.add("00000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 2)
-         liste.add("0000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 3)
-         liste.add("000" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 4)
-         liste.add("00" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 5)
-         liste.add("0" + String.valueOf(this.cpt));
-      if (String.valueOf(this.cpt).length() == 6)
-         liste.add(String.valueOf(this.cpt));
+      liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("\n");
       return liste;
    }

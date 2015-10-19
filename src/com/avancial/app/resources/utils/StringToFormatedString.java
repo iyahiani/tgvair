@@ -66,5 +66,26 @@ public class StringToFormatedString {
       
       return sb.toString() ;
    }
-   
+   /**
+    * 
+    * @param Int compteur 
+    * @return le String de compteur en format 
+    * exemple : compteur = 1   string = 000001 / int = 10  string = 000010   
+    */
+   public static String formatterCompteurSSIM7(int compteur) {
+      String temp = ""; 
+      if (String.valueOf(compteur).length() == 1)
+              temp = "00000".concat(String.valueOf(compteur)) ;
+      if (String.valueOf(compteur).length() == 2)
+         temp =  "0000".concat(String.valueOf(compteur)) ;
+      if (String.valueOf(compteur).length() == 3)
+         temp =  "000".concat(String.valueOf(compteur)) ;
+      if (String.valueOf(compteur).length() == 4)
+         temp =   "00".concat(String.valueOf(compteur)) ;
+      if (String.valueOf(compteur).length() == 5)
+         temp =   "0".concat(String.valueOf(compteur)) ;
+      if (String.valueOf(compteur).length() == 6)
+         temp =   String.valueOf(compteur) ;
+      return temp ;
+   }
 }

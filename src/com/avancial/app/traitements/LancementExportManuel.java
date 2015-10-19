@@ -94,8 +94,7 @@ public class LancementExportManuel {
                List<CirculationAdapterDataBean> liste = dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
                if (liste.size()>0) {
                TrainCatalogue train = TrainFactory.createTrainCatalogueFromBeans(liste);
-               System.out.println(tc.getIdTrainCatalogue());
-            // System.out.println(train.getIdTrain());
+             
             
                TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne());
