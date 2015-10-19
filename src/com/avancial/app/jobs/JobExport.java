@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -29,6 +32,7 @@ import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementExportDataBean;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * 
@@ -77,31 +81,37 @@ public class JobExport implements Job {
       } 
          
          if (compare) {
-            List<TrainCatalogue> listCatalogue = new ArrayList<TrainCatalogue>();
+            List<TrainCatalogue> listCatalogue = new ArrayList<>();
             for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
-               tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue()); 
-               CirculationDAO dao=new CirculationDAO();
-               //On récupère les circulations correspondant à l'id du train catalogue on question 
-               List<CirculationAdapterDataBean> liste= dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
-               TrainCatalogue train=TrainFactory.createTrainCatalogueFromBeans(liste);
-                TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(),tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
-                trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne()); 
-                trainPortf.setQuota1er(tc2c.getQuotaPremiereTrainCatalogueToCompagnie()); 
-                trainPortf.setQuota2eme(tc2c.getQuotaDeuxiemeTrainCatalogueToCompagnie()); 
-                trainPortf.setPointArretOrigine(tc2c.getTrainCatalogueDataBean().getIdPointArretOrigine());
-                trainPortf.setPointArretDestination(tc2c.getTrainCatalogueDataBean().getIdPointArretDestination());
-                trainPortf.setMarketingFlight(tc2c.getMarketingFlightTrainCatalogueToCompagnie());
-                listCatalogue.add(trainPortf)   ;  
-            }
+               tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue());
+               CirculationDAO dao = new CirculationDAO();
+               // On récupère les circulations correspondant à l'id du train
+               // catalogue on question
+               List<CirculationAdapterDataBean> liste = dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
+               if (liste.size()>0) {
+               TrainCatalogue train = TrainFactory.createTrainCatalogueFromBeans(liste);
+             
             
-            ExportPDTByCompagnyToSSIM7 export = new ExportPDTByCompagnyToSSIM7() ;
+               TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
+               trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne());
+               trainPortf.setQuota1er(tc2c.getQuotaPremiereTrainCatalogueToCompagnie());
+               trainPortf.setQuota2eme(tc2c.getQuotaDeuxiemeTrainCatalogueToCompagnie());
+               trainPortf.setPointArretOrigine(tc2c.getTrainCatalogueDataBean().getIdPointArretOrigine());
+               trainPortf.setPointArretDestination(tc2c.getTrainCatalogueDataBean().getIdPointArretDestination());
+               trainPortf.setMarketingFlight(tc2c.getMarketingFlightTrainCatalogueToCompagnie());
+               listCatalogue.add(trainPortf);
+             } 
+            }
+            ExportPDTByCompagnyToSSIM7 export = new ExportPDTByCompagnyToSSIM7();
             try {
-               export.export(listCatalogue , new TraitementExportDataBean(), new Service()); 
-               log.info("Job Export terminé");
-               
+               export.export(listCatalogue, new TraitementExportDataBean(), new Service());
+              // FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Export SSIM7"));
+               this.log.info("JOB Export SSIM7 Terminé");
+
             } catch (ParseException e) {
-               log.error("Job Export Erreur"+e.getMessage());
-                e.printStackTrace();
+              // FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "Echec Export SSIM7"));
+               this.log.error("Echec JOB Export SSIm7");
+               e.printStackTrace();
             }
          }
    }
