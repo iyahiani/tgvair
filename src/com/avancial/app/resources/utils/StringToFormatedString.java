@@ -51,5 +51,20 @@ public class StringToFormatedString {
       
       return String.valueOf(temp) ;
    }
+    /**
+     * 
+     * @param s
+     * @return String  
+     * 
+     * formatter le marketingFilght de AFXXXX vers AF XXXX 
+     */
+   public static String formaterMatketingFlight(String s) {
+      
+      StringBuilder sb = new StringBuilder() ;
+      sb.append(s); 
+      sb.insert(2, " ") ;
+      
+      return sb.toString() ;
+   }
    
 }

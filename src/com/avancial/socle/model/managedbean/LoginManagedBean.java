@@ -79,13 +79,6 @@ public class LoginManagedBean implements Serializable {
             this.ihmManagedBean.setOriginalURL(null);
             log.info("utilisateur connecté"+this.login);
          }
-
-         // Si un user est connecté, on va récupérer ses roles
-         // On récupère les roles de l'utilisateur
-         // if (null != this.ihmManagedBean.getCurrentUser()) {
-         // User2RoleDao daoRoles = new User2RoleDao();
-         // this.ihmManagedBean.setRoles(daoRoles.getUser2RoleByIdUser(this.ihmManagedBean.getCurrentUser().getIdUser()));
-         // }
          externalContext.redirect(url);
       } catch (ServletException e) {
          ContextController.addErrorMessage("login_connexion_erreur");

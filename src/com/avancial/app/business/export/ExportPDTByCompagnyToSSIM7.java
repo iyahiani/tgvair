@@ -39,8 +39,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    /**
     * 
     @author Yahiani Ismail
-    * @param Export
-    *           des trains Compagnie Impactés par les modifications implementation de la class WriterSSIM pour ecrire dans un fichier
+    * @param Export des trains Compagnie Impactés par les 
+    *           modifications implementation de la class WriterSSIM pour ecrire dans un fichier
     */
    public ExportPDTByCompagnyToSSIM7() {
       this.cpt = 0;
@@ -54,7 +54,9 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    /**
     * @author ismael.yahiani
     * @param tc2c
-    * @throws ParseException
+    * @throws ParseException 
+    * 
+    * exporter la liste des trains relatifs a la compagnie sous le format SSIM 7 
     * 
     */
    
@@ -72,7 +74,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          int[] lengthsCompteurType1 = { 6 };
 
          int[] beginsType2 = { 0, 1, 2, 5, 10, 14, 28, 35, 71, 72, 190, 194, 200 };
-         int[] lengthsType2 = { 1, 1, 3, 5, 4, 14, 7, 37, 1, 117, 4, 6, 1 };
+         int[] lengthsType2 = { 1, 1, 3, 5, 4, 14, 7, 36, 1, 118, 4, 6, 1 };
 
          int[] beginsType3 = { 0, 1, 2, 5, 9, 11, 13, 14, 28, 35, 36, 39, 43, 47, 52, 54, 57, 61, 65, 70, 72, 75, 95, 172, 192, 194, 200 };
          int[] lengthsType3 = { 1, 1, 3, 4, 2, 2, 1, 14, 7, 1, 3, 4, 4, 5, 2, 3, 4, 4, 5, 2, 3, 20, 77, 20, 2, 6, 1 };
@@ -80,8 +82,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          int[] beginsType4 = { 0, 1, 2, 5, 9, 11, 13, 14, 28, 29, 30, 33, 36, 39, 194, 200 };
          int[] lengthsType4 = { 1, 1, 3, 4, 2, 2, 1, 14, 1, 1, 3, 3, 3, 155, 6, 1 };
 
-         int[] beginsType5 = { 0, 1, 2, 5, 194, 200 };
-         int[] lengthsType5 = { 1, 1, 3, 189, 6, 1 };
+         int[] beginsType5 = { 0,  1, 2,   5,193,194, 200 };
+         int[] lengthsType5 = { 1, 1, 3, 188,  1,  6, 1 };
 
          IFormaterFixedLength[] formatersType1 = new IFormaterFixedLength[6];
          IFormaterStrategy formater = new FormaterStrategyFixedLength(beginsType1, lengthsType1, formatersType1, null, false, new FormaterLeftSpaces());
@@ -254,7 +256,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
                                                                          // le
                                                                          // code
                                                                          // IATA
-      liste.add(tc2c.getMarketingFlight());
+      
+      liste.add(StringToFormatedString.formaterMatketingFlight(tc2c.getMarketingFlight()));
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)
          liste.add("00000" + String.valueOf(this.cpt));
@@ -278,7 +281,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("");
       liste.add("2C");
       liste.add("");
-
+      liste.add("E") ;
       this.cpt++;
       if (String.valueOf(this.cpt).length() == 1)
          liste.add("00000" + String.valueOf(this.cpt));

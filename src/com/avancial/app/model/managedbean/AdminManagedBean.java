@@ -15,7 +15,7 @@ import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.controller.dao.ServiceDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.ServiceDataBean;
-import com.avancial.app.traitements.LancementJobManuelle;
+import com.avancial.app.traitements.LancementTraitementsManuelle;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 
@@ -37,7 +37,8 @@ public class AdminManagedBean extends AManageBean {
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
    public AdminManagedBean() { 
-   //   System.out.println("AdminManagedBean.AdminManagedBean()"); 
+  
+      
    }
    /**
     * 
@@ -47,9 +48,9 @@ public class AdminManagedBean extends AManageBean {
       
                                                                    ;
       
-      LancementJobManuelle lancementJobManuelle = new LancementJobManuelle() ;
-     lancementJobManuelle.traitementImportSSIM();       
-     lancementJobManuelle.traitementAdaptation();
+      LancementTraitementsManuelle lancementTraitementsManuelle = new LancementTraitementsManuelle() ;
+     lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
+     lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
      this.logger.info("SUCCES Import SSIM");  
      
       return null;
@@ -65,11 +66,15 @@ public class AdminManagedBean extends AManageBean {
  * @return
  */
    public String lancerExport() {
-      LancementJobManuelle lancementJobManuelle = new LancementJobManuelle() ;
       
-    // lancementJobManuelle.traitementAdaptation(); 
-     lancementJobManuelle.traitementExport();
-      return null;
+      LancementTraitementsManuelle lancementTraitementsManuelle = new LancementTraitementsManuelle() ;
+             
+      lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+      lancementTraitementsManuelle.getExportManuel().traitementExport();
+      this.logger.info("SUCCES Export SSIM 7");  
+      
+       return null;
+    
    }
    
    

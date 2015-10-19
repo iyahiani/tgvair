@@ -30,5 +30,13 @@ public class TestFormatedString {
     int a = 340  ; 
     
     System.out.println(FormatterInteger2String.getFormatedIntToStr(a));
+ } 
+ 
+ 
+ @Test
+ public void test4() {
+    StringToFormatedString.formaterMatketingFlight("AF4125") ;
  }
+ 
 }
+ 
