@@ -17,7 +17,7 @@
 					paginatorPosition="top"
 					rows="50"  scrollable="true" rowKey="#{log.dateLog}" 
 					paginator="true" 
-					rowStyleClass="#{log.levelLog eq 'ERROR' ? 'redROW' : log.levelLog eq 'INFO' ? 'blueROW' : null}"
+					rowStyleClass="#{log.levelLog eq 'ERROR' ? 'redROW' : log.levelLog eq 'INFO' ? 'blueROW': log.levelLog eq 'WARN' ? 'orangeROW' : null}"
 					 rowsPerPageTemplate="10,20,40"  emptyMessage="Pas de log">
 					<!--<p:column headerText="ID LOG">
                             <h:outputText value="#{log.idLog_tgvair}" />

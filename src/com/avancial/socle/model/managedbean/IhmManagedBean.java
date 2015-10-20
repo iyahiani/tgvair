@@ -29,7 +29,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @SessionScoped
 public class IhmManagedBean implements Serializable {
 
-   Logger log = Logger.getLogger(IhmManagedBean.class) ;
+ //  Logger log = Logger.getLogger(IhmManagedBean.class) ;
    private static final long       serialVersionUID = 1L;
    private UserDataBean            currentUser;
    private List<User2RoleDataBean> roles;
@@ -60,7 +60,7 @@ public class IhmManagedBean implements Serializable {
          
       } catch (ServletException e) {
          e.printStackTrace();
-         log.error("deconnexion de l'uitilisateur"+ this.getCurrentUser().getNomUser());
+       //  log.error("deconnexion de l'uitilisateur"+ this.getCurrentUser().getNomUser());
       }
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
@@ -78,7 +78,7 @@ public class IhmManagedBean implements Serializable {
       if (this.getOriginalURL() == null) {
          this.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
       }
-      if (this.isLogged()) log.info("connexion de l'uitilisateur"+ this.getCurrentUser().getNomUser());
+      //if (this.isLogged()) log.info("connexion de l'uitilisateur"+ this.getCurrentUser().getNomUser());
       return SOCLE_constants.NAVIGATION_LOGIN.toString();
    }
 

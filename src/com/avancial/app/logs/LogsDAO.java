@@ -11,7 +11,7 @@ public class LogsDAO extends AbstractDao {
    @Override
    public List<LogsDataBean> getAll() {
       
-      String sql = "From LogsDataBean ";
+      String sql = "From LogsDataBean t order by t.dateLog DESC ";
 
       Query requete = this.getEntityManager().createQuery(sql);
       

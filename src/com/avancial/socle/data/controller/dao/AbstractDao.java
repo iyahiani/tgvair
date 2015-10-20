@@ -7,14 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-
-import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
-import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 
 /**
  * Classe abstraite servant de base à tous les objets DAO
@@ -24,7 +17,7 @@ import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
  */
 public abstract class AbstractDao {
    private EntityManager entityManager;
-   Logger log = Logger.getLogger(AbstractDao.class) ;
+   
    /**
     * Constructeur
     */
@@ -45,17 +38,10 @@ public abstract class AbstractDao {
       this.entityManager = entityManager;
    } 
    public Session getSession() { 
-      if(this.getEntityManager().unwrap(Session.class)==null) log.info("erreur de création de session"); 
+      //if(this.getEntityManager().unwrap(Session.class)==null) System.out.println("erreur cration session");
       return this.getEntityManager().unwrap(Session.class);
    } 
   
    
-   public SessionFactory getSessionFactory() {
-      Configuration configuration = new Configuration().configure();
-      
-       StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
-       applySettings(configuration.getProperties());
-       SessionFactory factory = configuration.buildSessionFactory(builder.build()); 
-       return factory ;
-   }
+  
 }

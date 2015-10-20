@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.resources.utils.HibernateUtils;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
@@ -154,7 +155,7 @@ public class CirculationDAO extends AbstractDao {
     
   }
   public void customSave(CirculationAdapterDataBean bean) {
-     Session session = this.getSessionFactory().openSession() ;
+     Session session = HibernateUtils.getSessionFactory().openSession() ;
      org.hibernate.Transaction tx = session.beginTransaction() ;
      for (int i = 0 ; i < 10000 ; i++) {
         session.save("CirculationAdapterDataBean",bean);
