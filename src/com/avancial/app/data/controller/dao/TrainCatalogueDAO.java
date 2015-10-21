@@ -20,12 +20,12 @@ import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
+import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
-import com.avancial.test.InsertWithJDBC;
 
 public class TrainCatalogueDAO extends AbstractDao {
 

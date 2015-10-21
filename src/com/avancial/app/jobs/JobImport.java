@@ -26,6 +26,7 @@ import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.model.managedbean.ParamGetterManagedBean;
+import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.DeplacerFicher;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
@@ -36,7 +37,6 @@ import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
-import com.avancial.test.InsertWithJDBC;
 
 /**
  *
@@ -117,7 +117,7 @@ public class JobImport implements Job {
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
                if(circulation!=null) //  dao.saveSSIM(circulation);
-                  insertWithJDBC.insertRecordIntoTable(circulation);
+                  insertWithJDBC.insertIntoImportSSIMTable(circulation);
             }
          } 
          reader.closeReader();

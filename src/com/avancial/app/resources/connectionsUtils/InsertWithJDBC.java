@@ -1,53 +1,49 @@
-package com.avancial.test;
+package com.avancial.app.resources.connectionsUtils;
 
+import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+
 /**
  * 
- * @author ismael.yahiani
- * DAO insertion utilisant JDBC 
+ * @author ismael.yahiani DAO insertion utilisant JDBC
  */
-public class InsertWithJDBC {
-   
-   Logger logger = Logger.getLogger(InsertWithJDBC.class) ;
-   public static final String DB_DRIVER = "org.apache.log4j.jdbc.JDBCAppender";
-   public static final String DB_CONNECTION = "jdbc:mysql://caliban/tgv_air";
-   public static final String DB_USER = "dbad_tgvair";
-   public static final String DB_PASSWORD = "!tgvair-12";
- 
+public class InsertWithJDBC extends AConnectionJDBC {
+
+   Logger logger = Logger.getLogger(InsertWithJDBC.class);
    private Context context;
    private DataSource dataSource;
 
    public InsertWithJDBC() {
+      super();
    }
+
    /**
     * 
     * @param CirculationSSIMDataBean
-    * @throws SQLException 
-    * insertion de l'import fichier SSIM vers la base de données 'Table CirculationSSIM'
+    * @throws SQLException
+    *            insertion de l'import fichier SSIM vers la base de données
+    *            'Table CirculationSSIM' avec JDBC
     */
-   public  void insertRecordIntoTable(CirculationSSIMDataBean c) throws SQLException {
-      java.sql.Connection dbConnection = null;
-      java.sql.PreparedStatement preparedStatement = null;
+   public void insertIntoImportSSIMTable(CirculationSSIMDataBean c) throws SQLException {
+      Connection dbConnection = null;
+      PreparedStatement preparedStatement = null;
 
       String insertTableSQL = "INSERT INTO tgvair_import_ssim"
             + "(numeroTrain, originePointArret, destinationPointArret, GMTDepart,GMTArriver,dateDebutCirculation,dateFinCirculation,joursCirculation,rangTroncon,trancheFacultatif,restrictionTrafic,heureArriverCirculation,heureDepartCirculation) VALUES"
             + "(?,?,?,?,?,?,?,?,?,?,?,?,?)"; // dateDebutCirculation,dateFinCirculation,
 
       try {
+
          dbConnection = getDBConnection();
          preparedStatement = dbConnection.prepareStatement(insertTableSQL);
          preparedStatement.setString(1, c.getNumeroTrain());
@@ -65,61 +61,10 @@ public class InsertWithJDBC {
          preparedStatement.setString(13, c.getHeureDepartCirculation());
          preparedStatement.executeUpdate();
 
-         //System.out.println("Record is inserted into SSIMImport table!");
-
       } catch (SQLException e) {
-
-         System.out.println(e.getMessage());
-         this.logger.error("Erreur Insertion ImportSSIM"+e.getMessage());
+         this.logger.error("Erreur Insertion ImportSSIM" + e.getMessage());
       } finally {
-
-         if (preparedStatement != null) {
-            preparedStatement.close();
-         }
-
-         if (dbConnection != null) {
-            dbConnection.close();
-         }
-
-      }
-   } 
-   /**
-    * 
-    * @param CirculationAdapterDataBean
-    * @throws SQLException 
-    * insertion des Ajustement de circulation  dans la base de données 'table Circulation' 
-    */
-   public  void insertRecordIntoTable(CirculationAdapterDataBean c) throws SQLException {
-      java.sql.Connection dbConnection = null;
-      java.sql.PreparedStatement preparedStatement = null;
-
-      String insertTableSQL = "INSERT INTO tgvair_circulation"
-            + "(idTrainCatalogue, idTraitementImport, idTraitementExport, dateDebutCirculation,dateFinCirculation,heureDepart,heureArriver,regimeCirculation,dateCreationLigneTrain) VALUES"
-            + "(?,?,?,?,?,?,?,?,?)"; // dateDebutCirculation,dateFinCirculation,
-
-      try {
-         dbConnection = getDBConnection();
-         preparedStatement = dbConnection.prepareStatement(insertTableSQL);
-         preparedStatement.setInt(1, c.getTrainCatalogueDataBean().getIdTrainCatalogue());
-         preparedStatement.setLong(2, c.getTraitementImport().getIdTraitementImport());
-         preparedStatement.setInt(3, c.getTraitementExport().getIdTraitementExport());
-         preparedStatement.setDate(4,new Date(c.getDateDebutCirculation().getTime()));
-         preparedStatement.setDate(5, new Date(c.getDateFinCirculation().getTime()));
-          preparedStatement.setString(6, c.getHeureDepart());
-          preparedStatement.setString(7, c.getHeureArriver());
-         preparedStatement.setString(8, c.getRegimeCirculation());
-         preparedStatement.setDate(9,new Date(c.getDateCreationLigneTrain().getTime()));
-        
-         preparedStatement.executeUpdate();
-
-         //System.out.println("Record is inserted into SSIMImport table!");
-
-      } catch (SQLException e) {
-
-         System.out.println(e.getMessage());
-         this.logger.error("Erreur Insertion ImportSSIM"+e.getMessage());
-      } finally {
-
+         
          if (preparedStatement != null) {
             preparedStatement.close();
          }
@@ -131,20 +76,49 @@ public class InsertWithJDBC {
       }
    }
 
-   private  java.sql.Connection getDBConnection() {
+   /**
+    * 
+    * @param CirculationAdapterDataBean
+    * @throws SQLException
+    *            insertion des Ajustement de circulation dans la base de données
+    *            'table Circulation' avec JDBC
+    */
 
+   public void insertRecordIntoTable(CirculationAdapterDataBean c) throws SQLException {
       java.sql.Connection dbConnection = null;
-        
-         try {
-            InitialContext initContext = new InitialContext() ; 
-            Context cont = (Context) initContext.lookup("java:comp/env")  ; 
-            DataSource dataSource = (DataSource) cont.lookup("jdbc/socle"); 
-            dbConnection = dataSource.getConnection() ;
-         } catch (NamingException | SQLException e) {
-            this.logger.error("Erreur Instantiation JDBC pour ImportSSIM"+e.getMessage());    
-            e.printStackTrace();
-         } 
-               return dbConnection;
+      java.sql.PreparedStatement preparedStatement = null;
+
+      String insertTableSQL = "INSERT INTO tgvair_circulation"
+            + "(idTrainCatalogue, idTraitementImport, idTraitementExport, dateDebutCirculation,dateFinCirculation,heureDepart,heureArriver,regimeCirculation,dateCreationLigneTrain) VALUES"
+            + "(?,?,?,?,?,?,?,?,?)"; // dateDebutCirculation,dateFinCirculation,
+
+      try {
+         dbConnection = getDBConnection();
+
+         preparedStatement = dbConnection.prepareStatement(insertTableSQL);
+         preparedStatement.setInt(1, c.getTrainCatalogueDataBean().getIdTrainCatalogue());
+         preparedStatement.setLong(2, c.getTraitementImport().getIdTraitementImport());
+         preparedStatement.setInt(3, c.getTraitementExport().getIdTraitementExport());
+         preparedStatement.setDate(4, new Date(c.getDateDebutCirculation().getTime()));
+         preparedStatement.setDate(5, new Date(c.getDateFinCirculation().getTime()));
+         preparedStatement.setString(6, c.getHeureDepart());
+         preparedStatement.setString(7, c.getHeureArriver());
+         preparedStatement.setString(8, c.getRegimeCirculation());
+         preparedStatement.setDate(9, new Date(c.getDateCreationLigneTrain().getTime()));
+         preparedStatement.executeUpdate();
+
+      } catch (SQLException e) {
+         this.logger.error("Erreur Insertion ImportSSIM" + e.getMessage());
+      } finally {
+
+         if (preparedStatement != null) {
+            preparedStatement.close();
+         }
+
+         if (dbConnection != null) {
+            dbConnection.close();
+         }
+      }
    }
 
    public Context getContext() {

@@ -1,5 +1,5 @@
 
-package com.avancial.app.resources.utils;
+package com.avancial.app.resources.connectionsUtils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

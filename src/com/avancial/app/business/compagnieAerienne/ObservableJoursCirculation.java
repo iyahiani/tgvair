@@ -1,11 +1,8 @@
 package com.avancial.app.business.compagnieAerienne;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avancial.app.business.export.ExportPDTByCompagnyToSSIM7;
 import com.avancial.app.business.train.circulation.JourCirculation;
 
 public class ObservableJoursCirculation implements IObservableJoursCirculation {
@@ -26,7 +23,7 @@ public class ObservableJoursCirculation implements IObservableJoursCirculation {
       this.listObservers.remove(iObserver);
    }
    public List<IObserverJoursCirculation> getListObservers() {
-      return listObservers;
+      return this.listObservers;
    }
   
   

@@ -12,11 +12,6 @@ import com.avancial.app.business.train.Train;
 public class ObserverJoursCirculation implements IObserverJoursCirculation {
 
    private TrainToCompagnie      tc2c;
-   private Train                 trainCatalogue;
-   private Date                  dateExtraction;
-   private Date                  dateDebutService;
-   private Date                  dateFinService;
-
    private List<Date>            listDatesdebut     = new ArrayList<>();
    private List<Date>            listDatesFin       = new ArrayList<>();
 
@@ -24,10 +19,6 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
 
    public ObserverJoursCirculation(TrainToCompagnie tc2c, Train train, Date dateDebutService, Date dateFinService, Date dateExtraction) {
       this.tc2c = tc2c;
-      this.trainCatalogue = train;
-      this.dateDebutService = dateDebutService;
-      this.dateFinService = dateFinService;
-      this.dateExtraction = dateExtraction;
       this.listDatesdebut.add(tc2c.getDateDebutValidite());
       this.listDatesdebut.add(train.getDateDebutValidite());
       this.listDatesdebut.add(dateExtraction);
@@ -44,7 +35,7 @@ public class ObserverJoursCirculation implements IObserverJoursCirculation {
          if (this.tc2c.getListeJoursCirculation().containsKey(jourCirculation.getDateCircul())) {
             this.tc2c.getListeJoursCirculation().put(jourCirculation.getDateCircul(), jourCirculation);
             this.tc2c.calculeCirculationFromJoursCirculation();
-            // this.listCompagnieImpactees.add(tc2c.getCodeCompagnie()) ;
+           
 
          }
    }

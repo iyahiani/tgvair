@@ -1,24 +1,20 @@
 package com.avancial.app.business.compagnieAerienne;
 
-import java.util.List;
-
-import com.avancial.app.business.train.Train;
-
 public class CompagnieAerienne {
 
-   private String libelléCompagnie ; 
+   private String libelleCompagnie ; 
    private String codeCompagnie ;
-   private List<Train> trains ; 
+ 
    
    
-   public String getLibelléCompagnie() {
-      return libelléCompagnie;
+   public String getLibelleCompagnie() {
+      return this.libelleCompagnie;
    }
-   public void setLibelléCompagnie(String libelléCompagnie) {
-      this.libelléCompagnie = libelléCompagnie;
+   public void setLibelleCompagnie(String libelleCompagnie) {
+      this.libelleCompagnie = libelleCompagnie;
    }
    public String getCodeCompagnie() {
-      return codeCompagnie;
+      return this.codeCompagnie;
    }
    public void setCodeCompagnie(String codeCompagnie) {
       this.codeCompagnie = codeCompagnie;

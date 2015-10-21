@@ -21,6 +21,7 @@ import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
@@ -29,7 +30,6 @@ import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
 import com.avancial.socle.resources.constants.SOCLE_constants;
-import com.avancial.test.InsertWithJDBC;
 
 
 /**
@@ -116,7 +116,7 @@ public class LancementImportManuel {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               insertWithJDBC.insertRecordIntoTable(circulation); 
+               insertWithJDBC.insertIntoImportSSIMTable(circulation); 
               // dao.customSave(circulation);
                 /*
                       try {

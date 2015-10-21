@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+
 import com.avancial.app.business.compagnieAerienne.IObservableJoursCirculation;
 import com.avancial.app.business.compagnieAerienne.ObservableJoursCirculation;
 import com.avancial.app.business.export.ExportPDTByCompagnyToSSIM7;
@@ -39,6 +40,7 @@ import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
+import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
@@ -47,7 +49,6 @@ import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
 import com.avancial.socle.resources.constants.SOCLE_constants;
-import com.avancial.test.InsertWithJDBC;
 
 /**
  * Methodes pour le lancement les Imports et les Exports SSIM/SSIM7 depuis la fenetre
