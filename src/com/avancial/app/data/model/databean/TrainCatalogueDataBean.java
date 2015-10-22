@@ -19,9 +19,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicUpdate;
+
+import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 
 /**
  * 
@@ -29,6 +34,7 @@ import org.hibernate.annotations.Cascade;
  */
 @Entity
 @Table(name = "tgvair_train_catalogue")
+
 public class TrainCatalogueDataBean implements Serializable {
 
    private static final Long serialVersionID = 1L;
@@ -43,7 +49,8 @@ public class TrainCatalogueDataBean implements Serializable {
    
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "idPointArretDestination")
-   private PointArretDataBean idPointArretDestination ;
+  private PointArretDataBean idPointArretDestination ;
+ 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "idPointArretOrigine")
    private PointArretDataBean idPointArretOrigine ;
@@ -54,6 +61,11 @@ public class TrainCatalogueDataBean implements Serializable {
    private Date dateDebutValidite ; 
    private Date dateFinValidite ; 
    private String operatingFlight; 
+   
+
+   
+  
+   
    
    public int getIdTrainCatalogue() {
       return idTrainCatalogue;

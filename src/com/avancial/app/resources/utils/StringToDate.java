@@ -36,12 +36,20 @@ public class StringToDate {
       } 
 	  return chaine; 
 	}
+	
+	public static Date getDateFromString(String date, String format) throws ParseException {
+	   
+      SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.ENGLISH) ; 
+      Date d = sdf.parse(date);
+      return d;
+	}
 	/**
     * 
     * @param date
     * @return  date sous format jjMMMyy
+    * @throws ParseException 
     */
-	
+   
 	public static String toString(Date date) { 
 	   //DateFormat df = new SimpleDateFormat("ddMMMyy") ; 
 	   String format = "ddMMMyy" ; 

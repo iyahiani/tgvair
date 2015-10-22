@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.event.spi.PostUpdateEvent;
 
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
@@ -121,7 +122,17 @@ public class TrainCatalogueDAO extends AbstractDao {
       }
 
    }
-
+ 
+   public void onPostUpdate(PostUpdateEvent event)
+   {
+      if(event.getEntity() instanceof TrainCatalogueDataBean)
+      {   
+         TrainCatalogueDataBean client = (TrainCatalogueDataBean) event.getEntity();
+         System.out.println(client.getIdTrainCatalogue());
+      }
+   }
+   
+   
    public List<TrainCatalogueDataBean> getTrainToCompagnieByID(int idTrainCatalogue) {
 
       String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue =" + idTrainCatalogue;

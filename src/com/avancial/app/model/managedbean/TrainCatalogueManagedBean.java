@@ -1,13 +1,12 @@
 package com.avancial.app.model.managedbean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -17,12 +16,12 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.SelectableDataModel;
 
-import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
+import com.avancial.app.resources.connectionsUtils.SelectWithJDBC;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.resources.utils.StringToFormatedString;
 import com.avancial.app.traitements.TraitementExportDAO;
@@ -35,14 +34,14 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @ViewScoped
 public class TrainCatalogueManagedBean extends AManageBean implements SelectableDataModel<TrainCatalogueDataBean> {
 
-   private static final long serialVersionUID = 1L; 
-   private int idTrainCatalogue ;
+   private static final long serialVersionUID = 1L;
+   private int idTrainCatalogue;
    private String numeroTrainCatalogue;
    private String numeroTrainCatalogue1;
    private String numeroTrainCatalogue2;
    private PointArretDataBean idPointArretOrigine;
    private PointArretDataBean idPointArretDestination;
-   
+
    private Date heureDepartTrainCatalogue;
    private Date heureArriveeTrainCatalogue;
    private String regimeJoursTrainCatalogue;
@@ -52,46 +51,40 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    private List<TrainCatalogueDataBean> trainsCatalogue;
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean selectedTrainsCatalogue;
-   private List<String> listSelectedJoursCirculation; 
-   private List<TrainCatalogueDataBean> tempListTrainDataBean  ;
-   private TrainCatalogueDataBean tempTrainDataBean  ;
-    
-  @Inject 
-  private SessionManagedBean session ;
+   private List<String> listSelectedJoursCirculation;
+   
   
+
+   @Inject
+   private SessionManagedBean session;
+
    public TrainCatalogueManagedBean() {
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
-      this.idPointArretDestination = new PointArretDataBean(); 
-     // this.setTempListTrainDataBean(this.session.getTempListTrainDataBean()) ;
+      this.idPointArretDestination = new PointArretDataBean();
+      
+
       this.reload();
    }
 
-  @PostConstruct
-  public void init() {
-    this.setTempListTrainDataBean(this.session.getTempListTrainDataBean()) ;
-    
-  }
-  
    public void rowSelect(SelectEvent event) {
-      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject(); 
-     
+
+      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject();
+
    }
-   
-   public  TimeZone getTimeZone() {
-       
-      return this.session.getTimeZone() ;
+
+   public TimeZone getTimeZone() {
+
+      return this.session.getTimeZone();
    }
 
    /**
-   * recharger la liste des trains Catalogue 
-   */
+    * recharger la liste des trains Catalogue
+    */
    public void reload() {
       this.trainsCatalogue.clear();
       this.trainsCatalogue.addAll(new TrainCatalogueDAO().getAll());
    }
-
-  
 
    /**
     * supprime en cascade le train et ces circulations
@@ -131,44 +124,44 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       return null;
    }
 
-  
    public void saveState() {
-            /////////  
+      // ///////
    }
 
-  
    /**
     * modifer le train et ca cerculation dans les tables trainsCatalogue /
     * Circulation
     */
+   
    @Override
    public String update() throws ASocleException {
-     
-    //  this.tempTrainDataBean = new TrainCatalogueDAO().getTrainCatalogueByID(this.selectedTrainsCatalogue.getIdTrainCatalogue());
-      super.update();
+
+      TrainCatalogueDAO dao = new TrainCatalogueDAO();
+      CirculationDAO circulationDAO = new CirculationDAO() ; 
       
+      SelectWithJDBC jdbc = new  SelectWithJDBC() ;
+      TrainCatalogueDataBean tc = new TrainCatalogueDataBean() ;
+      try {
+        tc  = jdbc.getCirculsFromCirculTable(this.selectedTrainsCatalogue.getIdTrainCatalogue()) ;
+      } catch (SQLException e1) {
+      
+         e1.printStackTrace();
+      }
+      
+      System.out.println(circulationDAO.getLastCircul(tc.getIdTrainCatalogue()).get(0));
+      
+      super.update();
+
       if (null != this.selectedTrainsCatalogue) {
          this.selectedTrainsCatalogue.setNumeroTrainCatalogue(this.selectedTrainsCatalogue.getNumeroTrainCatalogue1()
                + (!this.selectedTrainsCatalogue.getNumeroTrainCatalogue2().isEmpty() ? "-" + this.selectedTrainsCatalogue.getNumeroTrainCatalogue2() : ""));
 
-         /*
-          * Todo : Modification de la date de fin de la validité
-          */
          
-         // Comparaison old date fin de validité avec la new date fin de validé
-         // si c'est > => On crée une new circulation avec la date old jusqu'a
-         // la date new avec les criteres du train originial
-         
-         
-        CirculationAdapterDataBean c = null;
-        new TrainCatalogueDAO().getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
-        
+         CirculationAdapterDataBean c = null;
+        // dao.getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
+
          for (TrainCatalogueDataBean t : this.trainsCatalogue) {
-
-           // System.out.println(this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue().toString());
-           // System.out.println(this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue().toString());
             if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
-
                if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
                   c = new CirculationAdapterDataBean();
                   c.setDateCreationLigneTrain(new Date());
@@ -184,8 +177,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
             }
          }
 
-         TrainCatalogueDAO dao = new TrainCatalogueDAO();
-
          try {
             if (c != null) {
                new CirculationDAO().save(c);
@@ -193,7 +184,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
             dao.update(this.selectedTrainsCatalogue);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
 
-          
             this.reload();
 
             RequestContext.getCurrentInstance().update(":tableTrains");
@@ -207,14 +197,11 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       return null;
    }
 
-
-
    @SuppressWarnings("static-method")
    public void recupererBeanOrigine(SelectEvent event) {
       event.getObject();
    }
-  
-   
+
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
@@ -236,8 +223,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       return "";
    }
 
-   
-
    public String getMaxDate() {
 
       if (this.selectedTrainsCatalogue != null) {
@@ -246,9 +231,7 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       return "";
    }
 
-   
-   
-   ////////////////  Getters And Setters 
+   // ////////////// Getters And Setters
    public String getNumeroTrainCatalogue1() {
       return this.numeroTrainCatalogue1;
    }
@@ -264,7 +247,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    public void setNumeroTrainCatalogue2(String numeroTrainCatalogue2) {
       this.numeroTrainCatalogue2 = numeroTrainCatalogue2;
    }
-
 
    public Date getHeureDepartTrainCatalogue() {
       return this.heureDepartTrainCatalogue;
@@ -363,11 +345,12 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public List<String> getListSelectedJoursCirculation() {
-       
-      if (null != this.selectedTrainsCatalogue) return  StringToFormatedString.getRegimeCirculFromSelectedTrain(this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue()) ;
+
+      if (null != this.selectedTrainsCatalogue)
+         return StringToFormatedString.getRegimeCirculFromSelectedTrain(this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue());
       return this.listSelectedJoursCirculation;
    }
-   
+
    public void setListSelectedJoursCirculation(List<String> listSelectedJoursCirculation) {
       this.listSelectedJoursCirculation = listSelectedJoursCirculation;
    }
@@ -388,19 +371,5 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.session = session;
    }
 
-   public List<TrainCatalogueDataBean> getTempListTrainDataBean() {
-      return this.tempListTrainDataBean;
-   }
-
-   public void setTempListTrainDataBean(List<TrainCatalogueDataBean> tempListTrainDataBean) {
-      this.tempListTrainDataBean = tempListTrainDataBean;
-   }
-
-   public TrainCatalogueDataBean getTempTrainDataBean() {
-      return this.tempTrainDataBean;
-   }
-
-   public void setTempTrainDataBean(TrainCatalogueDataBean tempTrainDataBean) {
-      this.tempTrainDataBean = tempTrainDataBean;
-   }
- }
+  
+}

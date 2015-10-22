@@ -14,4 +14,8 @@
 		<property name="connection.datasource">java:comp/env/jdbc/socle</property> 
 		
 	</session-factory>
-</hibernate-configuration>
+</hibernate-configuration> 
+
+
+
+<!-- <property name="hibernate.cache.use_second_level_cache">false</property> -->

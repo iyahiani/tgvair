@@ -78,7 +78,6 @@
 								<h:outputText value="#{trains.dateDebutValidite}">
 									<f:convertDateTime type="date" pattern="dd-MMM-yyyy"
 										timeZone="#{traincatalogue.timeZone}" />
-
 								</h:outputText>
 							</p:column>
 
@@ -260,7 +259,7 @@
 
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"
 			draggable="false" header="Modifier Train" closeOnEscape="true">
-			<p:messages globalOnly="false" id="message_upd2" autoUpdate="true"
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="false"
 				showDetail="true" />
 			<h:form>
 				<table>
@@ -351,7 +350,7 @@
 					actionListener="#{traincatalogue.update()}" 
 					style="background-color: white ;" 
 					oncomplete="if (#{traincatalogue.closeDialog}=true) PF('Modif').close();"  
-					ajax="false">      
+					>      
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Modif').close()" style="background-color: white ;"
 					value="Annuler" type="cancel"></p:commandButton>

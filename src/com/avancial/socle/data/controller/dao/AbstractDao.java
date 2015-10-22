@@ -38,7 +38,7 @@ public abstract class AbstractDao {
       this.entityManager = entityManager;
    } 
    public Session getSession() { 
-      //if(this.getEntityManager().unwrap(Session.class)==null) System.out.println("erreur cration session");
+     //if(this.getEntityManager().unwrap(Session.class)==null) System.out.println("erreur cration session");
       return this.getEntityManager().unwrap(Session.class);
    } 
   
