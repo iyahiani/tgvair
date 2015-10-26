@@ -8,7 +8,8 @@
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
 		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean</class>
 		 <class>com.avancial.socle.data.model.databean.UserDataBean</class>
-		 <class>com.avancial.app.data.model.databean.TrainCatalogueDataBean</class> 
+		 <class>com.avancial.app.data.model.databean.TrainCatalogueDataBean</class>
+		 <class>com.avancial.app.data.model.databean.CirculationSSIMDataBean</class> 
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
@@ -21,8 +22,9 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="connection.autocommit" value="false" />
+		
 			
 		</properties>
-		
+		 
 	</persistence-unit>
 </persistence>

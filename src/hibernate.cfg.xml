@@ -11,11 +11,20 @@
 		<property name="current_session_context_class">thread</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="hibernate.max_fetch_depth">3</property>
-		<property name="connection.datasource">java:comp/env/jdbc/socle</property> 
-		
-	</session-factory>
+		<property name="connection.datasource">java:comp/env/jdbc/socle</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+		<property name="hibernate.jdbc.batch_size">20</property> 
+	 	
+	</session-factory> 
+	
+	
+	
 </hibernate-configuration> 
 
 
 
-<!-- <property name="hibernate.cache.use_second_level_cache">false</property> -->
+<!-- 
+<property name="hibernate.cache.use_second_level_cache">false</property> 
+ <mapping class="com.avancial.app.data.model.databean.CirculationSSIMDataBean"/>
+    <mapping package="com.avancial.app.data.model.databean"/>
+-->
