@@ -171,14 +171,15 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       else
          liste.add(String.valueOf(this.varianceCirculation)); //
       liste.add("01");
-      liste.add("J");
+      liste.add("U");
       liste.add(StringToDate.toString(c.getDateDebut()) + StringToDate.toString(c.getDateFin()));// tc2c.getDateDebutValidite()--tc2c.getDateFinValidite()
       liste.add(c.getJoursCirculation());
       liste.add("");
       liste.add(tc2c.getPointArretOrigine().getCodeGDSPointArret());
       liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureDepart()));
       liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureDepart()));
-      liste.add(TimeZoneOffSet.getGMTDiff());// tc2c.getGMTDepart()
+      liste.add(TimeZoneOffSet.getGMTDiff());
+      // tc2c.getGMTDepart()
                // ajouter un test si CDG alors TN sinon "  "
       if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
          else liste.add("");// ajouter un test si CDG alors TN sinon "  "

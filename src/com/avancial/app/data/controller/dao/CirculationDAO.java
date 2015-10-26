@@ -118,6 +118,28 @@ public class CirculationDAO extends AbstractDao {
      requete.setParameter(2, sdf.format(date)) ;
      lastCircul.addAll(requete.getResultList()) ;
      return lastCircul  ;
+  } 
+  
+  public CirculationAdapterDataBean getLastPeriodeCircul(int idTrain){
+     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+     String sql = "select max(t.dateCreationLigneTrain) from CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = ? order by t.dateCreationLigneTrain DESC" ;
+     Query requete = this.getEntityManager().createQuery(sql);
+     requete.setParameter(1, idTrain) ; 
+     Date date = (Date)requete.getSingleResult() ;
+    
+     sql = "select max(t.dateFinCirculation) from CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = ? and t.dateCreationLigneTrain = ? order by t.dateCreationLigneTrain DESC" ; 
+     requete = this.getEntityManager().createQuery(sql);
+     requete.setParameter(1, idTrain) ;
+     requete.setParameter(2,date) ;
+     Date date2 = (Date)requete.getSingleResult() ; 
+     
+     sql = "from CirculationAdapterDataBean t where t.trainCatalogueDataBean.idTrainCatalogue = ? and t.dateCreationLigneTrain = ? and t.dateFinCirculation = ?" ; 
+     requete = this.getEntityManager().createQuery(sql);
+     requete.setParameter(1, idTrain) ;
+     requete.setParameter(2,date) ; 
+     requete.setParameter(3,date2) ;  
+     
+     return (CirculationAdapterDataBean)requete.getSingleResult() ;
   }
   
   @SuppressWarnings("unchecked")
@@ -154,20 +176,11 @@ public class CirculationDAO extends AbstractDao {
     return listCirculAdap ;
     
   }
-  public void customSave(CirculationAdapterDataBean bean) {
-     Session session = HibernateUtils.getSessionFactory().openSession() ;
-     org.hibernate.Transaction tx = session.beginTransaction() ;
-     for (int i = 0 ; i < 10000 ; i++) {
-        session.save("CirculationAdapterDataBean",bean);
-
-        if(i%100==0) {
-           session.flush(); 
-           session.clear();
-        }
-     } 
-     tx.commit();
-     session.close() ;
-  } 
+ 
+  
+  
+  
+   
   
   public void deleteAllNewCirculation() {
      Session session = getSession() ; 

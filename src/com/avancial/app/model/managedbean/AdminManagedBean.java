@@ -47,7 +47,7 @@ public class AdminManagedBean extends AManageBean {
     */
    public String lancerImport() {
        
-     //this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
+     this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
      this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
      this.logger.info("SUCCES Import SSIM");  
      
@@ -68,7 +68,7 @@ public class AdminManagedBean extends AManageBean {
    
    public String lancerExport() {
               
-      this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+      //this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
       this.lancementTraitementsManuelle.getExportManuel().traitementExport();
       this.logger.info("SUCCES Export SSIM 7");  
       

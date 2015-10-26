@@ -122,16 +122,6 @@ public class TrainCatalogueDAO extends AbstractDao {
       }
 
    }
- 
-   public void onPostUpdate(PostUpdateEvent event)
-   {
-      if(event.getEntity() instanceof TrainCatalogueDataBean)
-      {   
-         TrainCatalogueDataBean client = (TrainCatalogueDataBean) event.getEntity();
-         System.out.println(client.getIdTrainCatalogue());
-      }
-   }
-   
    
    public List<TrainCatalogueDataBean> getTrainToCompagnieByID(int idTrainCatalogue) {
 
@@ -186,7 +176,6 @@ public class TrainCatalogueDAO extends AbstractDao {
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
       String today ;
       today = sdf.format(Calendar.getInstance().getTime()) ; 
-      
       
       List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
       String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain()) ;

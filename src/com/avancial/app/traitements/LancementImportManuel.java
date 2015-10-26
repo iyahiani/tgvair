@@ -19,6 +19,7 @@ import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
@@ -60,7 +61,7 @@ public class LancementImportManuel {
          reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "SSIM", "Erreur Lecture SSIM"));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "SSIM", "Erreur Lecture SSIM"));
          this.logger.info("Import:" + e1.getMessage());
 
          e1.printStackTrace();
@@ -81,14 +82,15 @@ public class LancementImportManuel {
       String[] num = new String[listnumsHashed.size()];
       for (int i = 0; i < num.length; i++) {
          num[i] = listnumsHashed.get(i);
-
-      }
+      } 
+      
       IParser par = new ParserFixedLength(new FilterEncodage(new FiltreTrancheOptionnel(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))),
             APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
-      dao.getAll();
-      if(dao.getAll().size()>0) dao.deleteAll(0);
+      
+      if(dao.getAll().size()>0) dao.deleteAll(0); 
+      List< CirculationSSIMDataBean> circulationSSIMDataBeans = new ArrayList<>();
       try {
               
          while ((chaine = reader.readLine()) != null) {
@@ -105,36 +107,25 @@ public class LancementImportManuel {
                try {
                   circulation.setDateDebutCirculation(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
-
                } catch (ParseException e) {
                   this.logger.error("erreur ssim parse date deb/fin circulation ");
-                  FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur Import", "Erreur De lecture fichier SSIM"));
+                  FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur Import", "Erreur De lecture fichier SSIM"));
                   e.printStackTrace();
                }
-
+               
                circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(), APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               insertWithJDBC.insertIntoImportSSIMTable(circulation); 
-              // dao.customSave(circulation);
-                /*
-                      try {
-
-                         dao.save(circulation);
-                      } catch (ASocleException e) {
-                         this.logger.error("sauvegarde SSIM erreur" + e.getMessage());
-                         e.printStackTrace();
-                      }
-                  
-              */
+            insertWithJDBC.insertIntoImportSSIMTable(circulation); 
+            // circulationSSIMDataBeans.add(circulation ) ;
             }
          } 
-         
+         //  dao.customSave(circulationSSIMDataBeans); 
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Import SSIM"));
       } catch (Exception e) {
          this.logger.error(e.getMessage());
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "Echec Import SSIM"));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Traitement", "Echec Import SSIM"));
          e.printStackTrace();
       }
 
@@ -145,7 +136,7 @@ public class LancementImportManuel {
 
       } catch (Exception e1) {
         
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Import", "Erreur Import SSIM"));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Import", "Erreur Import SSIM"));
          this.logger.error(e1.getMessage());
          
       }

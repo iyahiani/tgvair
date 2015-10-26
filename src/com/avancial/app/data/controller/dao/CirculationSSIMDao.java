@@ -12,9 +12,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.jdbc.Work;
 
+import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.resources.connectionsUtils.HibernateUtils;
@@ -133,25 +135,25 @@ public class CirculationSSIMDao extends AbstractDao {
       }
    } 
     
-   
-   
-   public void customSave  (CirculationSSIMDataBean bean) {
+   public  void customSave(List<CirculationSSIMDataBean> beans) {
+      //AnnotationConfiguration configuration = HibernateUtils.getSFfromAnnotedBean() ;  
+      //SessionFactory sf = configuration.addAnnotatedClass(CirculationSSIMDataBean.class).addAnnotatedClass(CirculationSSIMDataBean.class).buildSessionFactory() ;
       
       Session session = HibernateUtils.getSessionFactory().openSession() ;
       org.hibernate.Transaction tx = session.beginTransaction() ;
-    
-         //CirculationSSIMDataBean c = (CirculationSSIMDataBean) session.get(bean.getClass(), 2L) ;
-         session.save(bean); //"CirculationSSIMDataBean",bean
-         
+      for (int j = 0 ; j < beans.size() ; j++) {
+      for (int i = 0 ; i < 100000 ; i++) {
+         session.save("CirculationSSIMDataBean",beans);
+         j=i; 
+         if(i%100==0) {
             session.flush(); 
             session.clear();
-         
-      
+         }
+      } 
       tx.commit();
-      session.close() ;
-      
- 
-   } 
+      session.close() ; 
+      }
+   }
    
   
 }

@@ -25,23 +25,16 @@ import org.hibernate.annotations.FetchMode;
 
 import com.avancial.app.business.train.Train;
 
-
-
-
-
-
-
-@Entity
+@Entity(name="CirculationSSIMDataBean")
 @Table(name = "tgvair_import_SSIM") 
 
 public class CirculationSSIMDataBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   
  
+   @Id 
+   @Column(name = "idCirculationSSIMtgvair") 
    
-  @Id 
-   @Column(name = "idCirculationSSIMtgvair")
    private  int idCirculation;
    private String numeroTrain;
    private String originePointArret;
@@ -56,13 +49,14 @@ public class CirculationSSIMDataBean implements Serializable {
    private int rangTroncon;
    private String trancheFacultatif;
    private String restrictionTrafic;
+
 // @GeneratedValue(strategy = GenerationType.AUTO) 
 // @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
    
    public CirculationSSIMDataBean() {
    }
 
-   
+     
    public int getIdCirculation() {
       return this.idCirculation;
    }
@@ -112,7 +106,6 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
    
-
    public int getRangTroncon() {
       return this.rangTroncon;
    }

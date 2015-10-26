@@ -148,18 +148,17 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
          e1.printStackTrace();
       }
       
-      System.out.println(circulationDAO.getLastCircul(tc.getIdTrainCatalogue()).get(0));
+     /* System.out.println(circulationDAO.getLastPeriodeCircul(tc.getIdTrainCatalogue()).
+            getDateFinCirculation()); */
       
       super.update();
 
       if (null != this.selectedTrainsCatalogue) {
          this.selectedTrainsCatalogue.setNumeroTrainCatalogue(this.selectedTrainsCatalogue.getNumeroTrainCatalogue1()
                + (!this.selectedTrainsCatalogue.getNumeroTrainCatalogue2().isEmpty() ? "-" + this.selectedTrainsCatalogue.getNumeroTrainCatalogue2() : ""));
-
-         
-         CirculationAdapterDataBean c = null;
+         CirculationAdapterDataBean c = null  ;
         // dao.getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
-
+         
          for (TrainCatalogueDataBean t : this.trainsCatalogue) {
             if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
                if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
