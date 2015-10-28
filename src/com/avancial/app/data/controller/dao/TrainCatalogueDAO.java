@@ -179,7 +179,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       
       List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
       String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain()) ;
-    
+      
       for (CirculationAdapterDataBean c : listCircAdapt) {
          
          if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain() 
@@ -222,10 +222,10 @@ public class TrainCatalogueDAO extends AbstractDao {
       
       for(TrainCatalogue tc : listTC) {
       List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
-      String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain()) ;
-    
+      String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain())                      ;
+      
       for (CirculationAdapterDataBean c : listCircAdapt) {
-         
+   
          if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain() 
                && lastDate.equalsIgnoreCase(today)
                ) 
@@ -253,8 +253,9 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
          try {
-           insertWithJDBC.insertRecordIntoTable(cirAdapterDataBean);
-         } catch (Exception e) {
+                   //insertWithJDBC.insertRecordIntoTable(cirAdapterDataBean); 
+            daoDelete.save(cirAdapterDataBean); 
+         } catch (Exception | ASocleException e) {
             this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();
          }
@@ -264,9 +265,6 @@ public class TrainCatalogueDAO extends AbstractDao {
       
    }
    }
-   
-   
-   
    
    
    public Session getSession() {

@@ -38,20 +38,20 @@ import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 public class TrainCatalogueDataBean implements Serializable {
 
    private static final Long serialVersionID = 1L;
-
+   
    @Id
    @GeneratedValue//(strategy = GenerationType.AUTO)
    private int idTrainCatalogue; 
-   
    private String numeroTrainCatalogue ;
    private String numeroTrainCatalogue1 ;
    private String numeroTrainCatalogue2 ;
    
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "idPointArretDestination")
+  @OneToOne (cascade=CascadeType.ALL)
+  @JoinColumn(name = "idPointArretDestination" ) 
+  
   private PointArretDataBean idPointArretDestination ;
  
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade=CascadeType.ALL) 
   @JoinColumn(name = "idPointArretOrigine")
    private PointArretDataBean idPointArretOrigine ;
    

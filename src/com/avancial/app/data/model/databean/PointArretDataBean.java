@@ -28,13 +28,13 @@ public class PointArretDataBean implements Serializable {
    @Column(unique=true, nullable=false) 
    private Integer idPointArret ; 
    
-   @Column(nullable=false, length=100) 
+   @Column(nullable=false, length=100 ) 
    private String codeResarailPointArret ;
    
    @Column(nullable=false, length=100) 
    private String codeGDSPointArret ;
    
-   @Column(nullable=false, length=100) 
+   @Column(nullable=false, length=100 ) 
    private String libellePointArret ;
    
    private Date lundiHeureOuverturePointsArret ;

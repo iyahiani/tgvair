@@ -102,8 +102,9 @@ public class TrainManagedBean extends AManageBean{
          TrainCatalogueDAO dao = new TrainCatalogueDAO();
          PointArretDAO pointArretDAO = new PointArretDAO();
          TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
-         bean.setIdPointArretDestination(pointArretDAO.getPointArretbyName(this.idPointArretDestination.getLibellePointArret()).get(0));
+         
          bean.setIdPointArretOrigine(pointArretDAO.getPointArretbyName(this.idPointArretOrigine.getLibellePointArret()).get(0)); // pointArretDAO.getPointArretbyName(this.originePointArret).get(0)
+         bean.setIdPointArretDestination(pointArretDAO.getPointArretbyName(this.idPointArretDestination.getLibellePointArret()).get(0));
          bean.setNumeroTrainCatalogue1(getNumeroTrainCatalogue1());
          bean.setNumeroTrainCatalogue2(getNumeroTrainCatalogue2());
          bean.setNumeroTrainCatalogue(getNumeroTrainCatalogue1() + (!getNumeroTrainCatalogue2().isEmpty() ? " - " + getNumeroTrainCatalogue2() : ""));

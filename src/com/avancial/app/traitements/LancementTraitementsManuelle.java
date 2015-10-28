@@ -1,6 +1,7 @@
 package com.avancial.app.traitements;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,7 +58,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  * @author ismael.yahiani
  * 
  */
-public class LancementTraitementsManuelle {
+public class LancementTraitementsManuelle implements Serializable {
 
    Logger logger = Logger.getLogger(LancementTraitementsManuelle.class);
    private LancementImportManuel importManuel ; 

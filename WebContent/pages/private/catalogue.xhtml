@@ -16,10 +16,7 @@
 				
 			}
 				</script>
-		
-
-
-		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+				<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 		<p:fieldset legend="#{msg.p_catalogue_legend}" styleClass="fieldSet">
 
@@ -287,21 +284,21 @@
 					<tr>
 						<td><h:outputText value="Origine"></h:outputText></td>
 						<td><p:inputText
-								value="#{traincatalogue.selectedTrainsCatalogue.idPointArretOrigine.libellePointArret}"
+								value="#{traincatalogue.origine}"  
 						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Destination"></h:outputText></td>
 						<td><p:inputText
-								value="#{traincatalogue.selectedTrainsCatalogue.idPointArretDestination.libellePointArret}"
+								value="#{traincatalogue.destination}" 
 						>
 							</p:inputText></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Heure Départ"></h:outputText></td>
 						<td><p:calendar id="HeureDep" pattern="HH:mm" timeOnly="true"  
-								value="#{traincatalogue.selectedTrainsCatalogue.heureDepartTrainCatalogue}"
+								value="#{traincatalogue.heureDepartTrainCatalogue}"
 								showOn="both">
 								<f:convertDateTime locale="fr" type="time" pattern="HH:mm"  timeZone="#{traincatalogue.timeZone}" />
 							</p:calendar></td>
@@ -310,7 +307,7 @@
 						<td><h:outputText value="Heure Arrivée"></h:outputText></td>
 						<td><p:calendar id="HeureArr" pattern="HH:mm" timeOnly="true"
 						 
-								value="#{traincatalogue.selectedTrainsCatalogue.heureArriveeTrainCatalogue}"
+								value="#{traincatalogue.heureArriveeTrainCatalogue}"
 								locale="fr" showOn="both">
 								<f:convertDateTime locale="fr" type="time" pattern="HH:mm" timeZone="#{traincatalogue.timeZone}" />
 							</p:calendar></td>
@@ -318,13 +315,13 @@
 					<tr>
 						<td><h:outputText value="Valide Du "></h:outputText></td>
 						<td><p:calendar showOn="both" locale="fr" 
-								value="#{traincatalogue.selectedTrainsCatalogue.dateDebutValidite}" />
+								value="#{traincatalogue.dateDebutValidite}" />
 						</td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Au : "></h:outputText></td>
 						<td><p:calendar showOn="both" locale="fr" 
-								value="#{traincatalogue.selectedTrainsCatalogue.dateFinValidite}" />
+								value="#{traincatalogue.dateFinValidite}" />
 						</td>
 					</tr>
 					<tr>

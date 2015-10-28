@@ -35,7 +35,7 @@ public class CirculationSSIMDataBean implements Serializable {
    @Id 
    @Column(name = "idCirculationSSIMtgvair") 
    
-   private  int idCirculation;
+   private  int idCirculationSSIMtgvair;
    private String numeroTrain;
    private String originePointArret;
    private String destinationPointArret;
@@ -49,7 +49,10 @@ public class CirculationSSIMDataBean implements Serializable {
    private int rangTroncon;
    private String trancheFacultatif;
    private String restrictionTrafic;
-
+  
+   ///   a enlever  
+ 
+   
 // @GeneratedValue(strategy = GenerationType.AUTO) 
 // @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
    
@@ -57,12 +60,12 @@ public class CirculationSSIMDataBean implements Serializable {
    }
 
      
-   public int getIdCirculation() {
-      return this.idCirculation;
+   public int getIdCirculationSSIMtgvair() {
+      return this.idCirculationSSIMtgvair;
    }
 
-   public void setIdCirculation(int idCirculation) {
-      this.idCirculation = idCirculation;
+   public void setIdCirculationSSIMtgvair(int idCirculation) {
+      this.idCirculationSSIMtgvair = idCirculation;
    }
 
    public String getHeureDepartCirculation() {
@@ -181,4 +184,6 @@ public class CirculationSSIMDataBean implements Serializable {
 
       return this.destinationPointArret + "--" + this.originePointArret ;
    }
-}
+
+
+  }

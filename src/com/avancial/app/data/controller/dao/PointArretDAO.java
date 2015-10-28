@@ -40,6 +40,13 @@ public class PointArretDAO extends AbstractDao{
       return requete.getResultList(); 
    } 
    
+   
+   public List<PointArretDataBean> getPointArretbyID(int id) {
+      String sql = "From PointArretDataBean as p WHERE p.idPointArret =?"; 
+      Query requete = this.getEntityManager().createQuery(sql); 
+      requete.setParameter(1, id) ;
+      return  requete.getResultList(); 
+   } 
 
    public void save(PointArretDataBean bean) throws ASocleException {
       try {

@@ -117,11 +117,11 @@ public class LancementImportManuel {
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-            insertWithJDBC.insertIntoImportSSIMTable(circulation); 
-            // circulationSSIMDataBeans.add(circulation ) ;
+        //       insertWithJDBC.insertIntoImportSSIMTable(circulation); 
+             circulationSSIMDataBeans.add(circulation ) ;
             }
          } 
-         //  dao.customSave(circulationSSIMDataBeans); 
+         dao.customSave(circulationSSIMDataBeans); 
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Import SSIM"));
       } catch (Exception e) {
          this.logger.error(e.getMessage());

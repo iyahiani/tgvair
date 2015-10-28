@@ -17,6 +17,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.CirculationDAO;
+import com.avancial.app.data.controller.dao.PointArretDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
@@ -41,7 +42,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    private String numeroTrainCatalogue2;
    private PointArretDataBean idPointArretOrigine;
    private PointArretDataBean idPointArretDestination;
-
+   private String origine;
+   private String destination;
    private Date heureDepartTrainCatalogue;
    private Date heureArriveeTrainCatalogue;
    private String regimeJoursTrainCatalogue;
@@ -52,8 +54,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    private List<TrainCatalogueDataBean> filtredTrainsCatalogue;
    private TrainCatalogueDataBean selectedTrainsCatalogue;
    private List<String> listSelectedJoursCirculation;
-   
-  
 
    @Inject
    private SessionManagedBean session;
@@ -62,7 +62,6 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
       this.idPointArretDestination = new PointArretDataBean();
-      
 
       this.reload();
    }
@@ -132,33 +131,46 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
     * modifer le train et ca cerculation dans les tables trainsCatalogue /
     * Circulation
     */
-   
+
    @Override
    public String update() throws ASocleException {
 
       TrainCatalogueDAO dao = new TrainCatalogueDAO();
-      CirculationDAO circulationDAO = new CirculationDAO() ; 
-      
-      SelectWithJDBC jdbc = new  SelectWithJDBC() ;
-      TrainCatalogueDataBean tc = new TrainCatalogueDataBean() ;
-      try {
-        tc  = jdbc.getCirculsFromCirculTable(this.selectedTrainsCatalogue.getIdTrainCatalogue()) ;
-      } catch (SQLException e1) {
-      
-         e1.printStackTrace();
-      }
-      
-     /* System.out.println(circulationDAO.getLastPeriodeCircul(tc.getIdTrainCatalogue()).
-            getDateFinCirculation()); */
-      
-      super.update();
+      TrainCatalogueDataBean bean = new TrainCatalogueDataBean();
+      PointArretDAO daoArretDAO = new PointArretDAO();
 
       if (null != this.selectedTrainsCatalogue) {
-         this.selectedTrainsCatalogue.setNumeroTrainCatalogue(this.selectedTrainsCatalogue.getNumeroTrainCatalogue1()
+         bean.setNumeroTrainCatalogue(this.selectedTrainsCatalogue.getNumeroTrainCatalogue1()
                + (!this.selectedTrainsCatalogue.getNumeroTrainCatalogue2().isEmpty() ? "-" + this.selectedTrainsCatalogue.getNumeroTrainCatalogue2() : ""));
-         CirculationAdapterDataBean c = null  ;
-        // dao.getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
-         
+         super.update();
+
+         bean.setIdTrainCatalogue(this.selectedTrainsCatalogue.getIdTrainCatalogue());
+         bean.setIdPointArretOrigine(daoArretDAO.getPointArretbyName(this.origine).get(0));
+         bean.setIdPointArretDestination(daoArretDAO.getPointArretbyName(this.destination).get(0));
+         bean.setNumeroTrainCatalogue(this.selectedTrainsCatalogue.getNumeroTrainCatalogue());
+         bean.setNumeroTrainCatalogue1(this.selectedTrainsCatalogue.getNumeroTrainCatalogue1());
+         bean.setNumeroTrainCatalogue2(this.selectedTrainsCatalogue.getNumeroTrainCatalogue2());
+         bean.setHeureDepartTrainCatalogue(this.heureDepartTrainCatalogue); // selectedTrainsCatalogue.getHeureDepartTrainCatalogue()
+         bean.setHeureArriveeTrainCatalogue(this.heureArriveeTrainCatalogue);
+         bean.setDateDebutValidite(this.dateDebutValidite);
+         bean.setDateFinValidite(this.dateFinValidite);
+         bean.setOperatingFlight(this.selectedTrainsCatalogue.getOperatingFlight());
+         bean.setRegimeJoursTrainCatalogue(this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue());
+
+         CirculationDAO circulationDAO = new CirculationDAO();
+/*
+         SelectWithJDBC jdbc = new SelectWithJDBC();
+         TrainCatalogueDataBean tc = new TrainCatalogueDataBean();
+         try {
+            tc = jdbc.getCirculsFromCirculTable(this.selectedTrainsCatalogue.getIdTrainCatalogue());
+         } catch (SQLException e1) {
+
+            e1.printStackTrace();
+         }
+*/
+         CirculationAdapterDataBean c = null;
+         dao.getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
+
          for (TrainCatalogueDataBean t : this.trainsCatalogue) {
             if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
                if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
@@ -176,15 +188,14 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
             }
          }
 
+         if (c != null) {
+            new CirculationDAO().save(c);
+         }
+
          try {
-            if (c != null) {
-               new CirculationDAO().save(c);
-            }
-            dao.update(this.selectedTrainsCatalogue);
+            dao.update(bean);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
-
             this.reload();
-
             RequestContext.getCurrentInstance().update(":tableTrains");
             this.closeDialog = true;
          } catch (ASocleException e) {
@@ -248,6 +259,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public Date getHeureDepartTrainCatalogue() {
+      if (this.selectedTrainsCatalogue != null)
+         return this.selectedTrainsCatalogue.getHeureDepartTrainCatalogue();
       return this.heureDepartTrainCatalogue;
    }
 
@@ -256,6 +269,9 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public Date getHeureArriveeTrainCatalogue() {
+
+      if (this.selectedTrainsCatalogue != null)
+         return this.selectedTrainsCatalogue.getHeureArriveeTrainCatalogue();
       return this.heureArriveeTrainCatalogue;
    }
 
@@ -272,6 +288,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public Date getDateDebutValidite() {
+      if (this.selectedTrainsCatalogue != null)
+         return this.selectedTrainsCatalogue.getDateDebutValidite();
       return this.dateDebutValidite;
    }
 
@@ -280,6 +298,8 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
    }
 
    public Date getDateFinValidite() {
+      if (this.selectedTrainsCatalogue != null)
+         return this.selectedTrainsCatalogue.getDateFinValidite();
       return this.dateFinValidite;
    }
 
@@ -370,5 +390,24 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.session = session;
    }
 
-  
+   public String getOrigine() {
+      if (this.selectedTrainsCatalogue != null)
+         return this.selectedTrainsCatalogue.getIdPointArretOrigine().getLibellePointArret();
+      return origine;
+   }
+
+   public void setOrigine(String origine) {
+      this.origine = origine;
+   }
+
+   public String getDestination() {
+      if (this.selectedTrainsCatalogue != null)
+         return this.selectedTrainsCatalogue.getIdPointArretDestination().getLibellePointArret();
+      return destination;
+   }
+
+   public void setDestination(String destination) {
+      this.destination = destination;
+   }
+
 }

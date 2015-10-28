@@ -94,7 +94,8 @@ public class LancementExportManuel {
                List<CirculationAdapterDataBean> liste = dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
                if (liste.size()>0) {
                TrainCatalogue train = TrainFactory.createTrainCatalogueFromBeans(liste);
-               TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
+               TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), 
+                     tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne());
                trainPortf.setQuota1er(tc2c.getQuotaPremiereTrainCatalogueToCompagnie());
                trainPortf.setQuota2eme(tc2c.getQuotaDeuxiemeTrainCatalogueToCompagnie());
@@ -109,7 +110,6 @@ public class LancementExportManuel {
                export.export(listCatalogue, new TraitementExportDataBean(), new Service());
                FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Export SSIM7"));
                this.logger.info("Export SSIM7 Terminé");
-
             } catch (ParseException e) {
                FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "Echec Export SSIM7"));
                this.logger.error("Echec Export SSIm7");

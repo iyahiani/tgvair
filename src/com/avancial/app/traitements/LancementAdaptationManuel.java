@@ -98,7 +98,6 @@ public class LancementAdaptationManuel {
       List<Circulation> circulations = new ArrayList<>();
       CirculationFactory circulationFactory = new CirculationFactory() ;
       int i = 0;
-      
       for (CirculationSSIMDataBean circulationBean : listCirculationSSIM) {
          Circulation circulation = circulationFactory.createCirculationFromSSIMBean(circulationBean);
          trainsSSIM.addNumeroTrain(circulationBean.getNumeroTrain());

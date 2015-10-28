@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mappping DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+   <class name="com.avancial.app.data.model.databean.CirculationSSIMDataBean" table="tgvair_import_SSIM">
+      <id name="idCirculationSSIMtgvair" type="int" column="idCirculationSSIMtgvair" > 
+      <generator class="identity"></generator>
+        
+      </id>
+      <property name="numeroTrain" column="numeroTrain" type="string"/>
+      <property name="originePointArret" column="originePointArret" type="string"/>
+      <property name="destinationPointArret" column="destinationPointArret" type="string"/>
+      <property name="heureDepartCirculation" column="heureDepartCirculation" type="string"/>
+      <property name="GMTDepart" column="GMTDepart" type="string"/>
+      <property name="heureArriverCirculation" column="heureArriverCirculation" type="string"/>
+      <property name="GMTArriver" column="GMTArriver" type="string"/>
+      <property name="dateDebutCirculation" column="dateDebutCirculation" type="date"/>
+      <property name="dateFinCirculation" column="dateFinCirculation" type="date"/>
+      <property name="joursCirculation" column="joursCirculation" type="string"/>
+      <property name="rangTroncon" column="rangTroncon" type="int"/>
+      <property name="trancheFacultatif" column="trancheFacultatif" type="string"/>
+      <property name="restrictionTrafic" column="restrictionTrafic" type="string"/>
+  
+  </class>
+</hibernate-mapping>

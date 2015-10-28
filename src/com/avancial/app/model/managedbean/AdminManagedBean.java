@@ -48,16 +48,14 @@ public class AdminManagedBean extends AManageBean {
    public String lancerImport() {
        
      this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
-     this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+    // this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
      this.logger.info("SUCCES Import SSIM");  
      
       return null;
    }
 
    public void valueChanged(ValueChangeEvent event) {
-       
       String a =  (String) event.getNewValue(); 
-      
    }
    
 /**
@@ -68,10 +66,9 @@ public class AdminManagedBean extends AManageBean {
    
    public String lancerExport() {
               
-      //this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
-      this.lancementTraitementsManuelle.getExportManuel().traitementExport();
-      this.logger.info("SUCCES Export SSIM 7");  
-      
+     this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+     this.lancementTraitementsManuelle.getExportManuel().traitementExport();
+     this.logger.info("SUCCES Export SSIM 7");  
       return null;
     
    }
