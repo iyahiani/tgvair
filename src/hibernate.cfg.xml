@@ -14,10 +14,8 @@
 		<property name="connection.datasource">java:comp/env/jdbc/socle</property> 
 		 <property name="hibernate.cache.use_second_level_cache">false</property>
         <property name="hibernate.jdbc.batch_size">20</property>
-		<mapping resource="com/avancial/app/data/model/databean/mapping/circulationSSIM.hbm.xml"/> 
+		<mapping resource="com/avancial/app/model/databean/mapping/circulationSSIM.hbm.xml"/> 
 	</session-factory> 
-	
-	
 	
 </hibernate-configuration> 
 
