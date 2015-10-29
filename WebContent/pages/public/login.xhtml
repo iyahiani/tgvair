@@ -11,7 +11,7 @@
 			<title>#{msg.p_login_titre}</title>
 		</h:head>
 		<h:body>
-		<div class="container" style="margin: 20px;"> <!--  border-bottom:solid white 20px;" -->
+		<div class="container" style="margin: 20px;" > <!--  border-bottom:solid white 20px;" -->
 			
 			<div class="well" id="div">
 			<p:panel style="width:60%;margin:absolute auto;border:none;align:right;"  id="panel1" >
@@ -21,7 +21,7 @@
 			</p:panel>
 			</div>
 			
-			<h:form class="form-horizontal" id="formulaire"  >
+			<h:form class="form-horizontal" id="formulaire" rendered="#{!ihmManagedBean.isLogged()}" >
 				<p:panel id="panel2"
 				 style="width:400px;margin: 5px auto; border-style:ridge; border-width:5px; border-color: #CC4040;  border-radius: 25px;" >		
 				<div class="well" id="div2">

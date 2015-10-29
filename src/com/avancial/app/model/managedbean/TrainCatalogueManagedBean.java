@@ -158,41 +158,26 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
          bean.setRegimeJoursTrainCatalogue(this.selectedTrainsCatalogue.getRegimeJoursTrainCatalogue());
 
          CirculationDAO circulationDAO = new CirculationDAO();
-/*
-         SelectWithJDBC jdbc = new SelectWithJDBC();
-         TrainCatalogueDataBean tc = new TrainCatalogueDataBean();
-         try {
-            tc = jdbc.getCirculsFromCirculTable(this.selectedTrainsCatalogue.getIdTrainCatalogue());
-         } catch (SQLException e1) {
 
-            e1.printStackTrace();
-         }
-*/
          CirculationAdapterDataBean c = null;
-         dao.getTrainCatByID(this.selectedTrainsCatalogue.getIdTrainCatalogue()).get(0);
+         if (this.selectedTrainsCatalogue.getDateFinValidite().before(bean.getDateFinValidite())) {
 
-         for (TrainCatalogueDataBean t : this.trainsCatalogue) {
-            if (this.selectedTrainsCatalogue.getIdTrainCatalogue() == t.getIdTrainCatalogue()) {
-               if (this.selectedTrainsCatalogue.getDateFinValidite().after(t.getDateFinValidite())) {
-                  c = new CirculationAdapterDataBean();
-                  c.setDateCreationLigneTrain(new Date());
-                  c.setDateDebutCirculation(t.getDateFinValidite());
-                  c.setDateFinCirculation(this.selectedTrainsCatalogue.getDateFinValidite());
-                  c.setHeureDepart(StringToDate.toFormatedString(t.getHeureDepartTrainCatalogue()));
-                  c.setHeureArriver(StringToDate.toFormatedString(t.getHeureArriveeTrainCatalogue()));
-                  c.setRegimeCirculation(t.getRegimeJoursTrainCatalogue());
-                  c.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
-                  c.setTraitementExport(new TraitementExportDAO().getLastID());
-                  break;
-               }
-            }
-         }
-
-         if (c != null) {
-            new CirculationDAO().save(c);
+            c = new CirculationAdapterDataBean();
+            c.setTrainCatalogueDataBean(this.selectedTrainsCatalogue);
+            c.setDateCreationLigneTrain(circulationDAO.getLastPeriodeCircul(this.selectedTrainsCatalogue.getIdTrainCatalogue()).getDateCreationLigneTrain());
+            c.setDateDebutCirculation(this.selectedTrainsCatalogue.getDateFinValidite());
+            c.setDateFinCirculation(bean.getDateFinValidite());
+            c.setHeureDepart(StringToDate.toFormatedString(bean.getHeureDepartTrainCatalogue()));
+            c.setHeureArriver(StringToDate.toFormatedString(bean.getHeureArriveeTrainCatalogue()));
+            c.setRegimeCirculation(bean.getRegimeJoursTrainCatalogue());
+            c.setTraitementImport(new TraitementImportDAO().getLastID().get(0));
+            c.setTraitementExport(new TraitementExportDAO().getLastID());
          }
 
          try {
+            if (c != null) {
+               new CirculationDAO().save(c);
+            }
             dao.update(bean);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Train modifié"));
             this.reload();

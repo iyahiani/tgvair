@@ -54,8 +54,8 @@ public class LancementImportManuel {
       List<String> listnums = new ArrayList<>();
       List<String> listnumsHashed = new ArrayList<>();
       this.logger.info("Import started");
-      IReader reader = null;
-      InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
+      ReaderSSIM reader = null;
+    //  InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
          
          reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
@@ -122,6 +122,7 @@ public class LancementImportManuel {
             }
          } 
          dao.customSave(circulationSSIMDataBeans); 
+         reader.closeReader(); 
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Import SSIM"));
       } catch (Exception e) {
          this.logger.error(e.getMessage());

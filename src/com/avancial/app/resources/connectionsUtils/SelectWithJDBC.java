@@ -16,7 +16,11 @@ import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 import com.mysql.jdbc.Statement;
-
+/**
+ * 
+ * @author ismael.yahiani
+ * JDBC Requetes SQL
+ */
 public class SelectWithJDBC extends AConnectionJDBC { 
 
    Logger logger = Logger.getLogger(SelectWithJDBC.class);

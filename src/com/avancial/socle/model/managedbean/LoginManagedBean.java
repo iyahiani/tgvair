@@ -34,7 +34,6 @@ public class LoginManagedBean implements Serializable {
    private static final long serialVersionUID = 1L;
    private String login;
    private String password;
-
    @Inject
    private IhmManagedBean ihmManagedBean;
    @Inject
@@ -71,6 +70,7 @@ public class LoginManagedBean implements Serializable {
       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
       HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
       String url = this.ihmManagedBean.getOriginalURL();
+      String redirectURL =null ;
       try {
          request.login(this.login, this.password);
          UserDataBean user = this.utilisateurDao.getUserByLogin(this.login);
@@ -81,8 +81,11 @@ public class LoginManagedBean implements Serializable {
 
             this.ihmManagedBean.setOriginalURL(null);
           //  log.info("utilisateur connecté"+this.login);
-         }
-         externalContext.redirect(url);
+         } 
+          
+         
+         externalContext.redirect(url); 
+         
       } catch (ServletException e) {
          ContextController.addErrorMessage("login_connexion_erreur");
       }

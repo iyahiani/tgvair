@@ -51,7 +51,7 @@ public class JobImport implements Job {
 
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
-      InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;
+      //InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
@@ -91,7 +91,8 @@ public class JobImport implements Job {
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
       List<CirculationSSIMDataBean> list = dao.getAll();
-      dao.deleteAll(0);
+      if(dao.getAll().size()>0) dao.deleteAll(0); 
+      List< CirculationSSIMDataBean> circulationSSIMDataBeans = new ArrayList<>();
       try {
          while ((chaine = reader.readLine()) != null) {
             par.parse(chaine);
@@ -117,9 +118,11 @@ public class JobImport implements Job {
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
                if(circulation!=null) //  dao.saveSSIM(circulation);
-                  insertWithJDBC.insertIntoImportSSIMTable(circulation);
+                 // insertWithJDBC.insertIntoImportSSIMTable(circulation); 
+                  circulationSSIMDataBeans.add(circulation) ;
             }
          } 
+         dao.customSave(circulationSSIMDataBeans); 
          reader.closeReader();
       } catch (Exception e) {
          this.logger.error("Job Import"+e.getMessage());

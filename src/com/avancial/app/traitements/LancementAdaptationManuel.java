@@ -42,10 +42,8 @@ public class LancementAdaptationManuel {
    public void traitementAdaptation() {
 
       // / update table circulation adapter avec la table des TrainsCatalogue
-      Service services = new Service()   ;
-      FacesContext.getCurrentInstance()
-      .addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajustement", "Ajustement Des Trains Lancé"));
       
+      Service services = new Service()   ;
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
       for (TrainCatalogueDataBean tc : listTrainsCat) {
          new TrainCatalogueDAO().saveCirculation(tc);

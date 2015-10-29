@@ -171,7 +171,7 @@ public class TrainCatalogueDAO extends AbstractDao {
    }
  
    public void updateCirculation(TrainCatalogue tc) {
-      InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
+     // InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
       CirculationDAO daoDelete = new CirculationDAO();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
       String today ;
@@ -204,8 +204,8 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
          try {
-           insertWithJDBC.insertRecordIntoTable(cirAdapterDataBean);
-         } catch (Exception e) {
+           daoDelete.save(cirAdapterDataBean);
+         } catch (Exception | ASocleException e) {
             this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();
          }
@@ -214,7 +214,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       } 
    }
    public void updateCirculation(List<TrainCatalogue> listTC) {
-      InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
+      //InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
       CirculationDAO daoDelete = new CirculationDAO();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
       String today ;
@@ -235,9 +235,8 @@ public class TrainCatalogueDAO extends AbstractDao {
                e.printStackTrace()           ;
             }
       }  
-     
        
-      if (tc.getListeCirculations().size()==0) {
+      if (tc.getListeCirculations().size()==0 ) {
          this.log.info("Le Train"+new TrainCatalogueDAO().getTrainCatalogueByID(tc.getIdTrain()).getNumeroTrainCatalogue()+" à été supprimé");
       }
       
@@ -259,7 +258,6 @@ public class TrainCatalogueDAO extends AbstractDao {
             this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();
          }
-         
         
       } 
       
