@@ -22,10 +22,9 @@ public class TraitementExportDAO  extends AbstractDao{
          @SuppressWarnings("unused")
          SocleExceptionManager manager = new SocleExceptionManager(e);
          throw SocleExceptionManager.getException();
-
       }
    }
-
+   
    @Override
    public List<TraitementExportDataBean> getAll() {
       
@@ -36,15 +35,14 @@ public class TraitementExportDAO  extends AbstractDao{
    public TraitementExportDataBean getLastID(){
       
       String sql = "from TraitementExportDataBean order by idTraitementExport DESC";
-      Query requete = this.getEntityManager().createQuery(sql).setMaxResults(1);
-      return (TraitementExportDataBean)requete.getResultList().get(0);
+      Query requete = this.getEntityManager().createQuery(sql).setMaxResults(1)    ;
+      return (TraitementExportDataBean)requete.getResultList().get(0)              ;
    }  
    
    public void saveExport(TraitementExportDataBean export ) {
       try {
-         save(export);
+         this.save(export);
       } catch (ASocleException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
       }
    }

@@ -262,7 +262,7 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 .calendarColor a {
 	background-color: Green !important;
 	background-image: none !important;
-	color: White !important;
+	color: gray !important;
 	font-weight: bold !important;
 	font-size: 12pt;
 }
@@ -318,7 +318,7 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 }
 
 .train_not_circule {
-	background-color: rgb(229, 135, 156);
+	background-color: rgb(255, 255, 255);
 	color: black;
 }
 
@@ -326,6 +326,14 @@ ui-datatable .ui-paginator, .ui-datatable .ui-paginator {
 	background-color: orange;
 	color: black;
 }
+.fc-day-content{
+	background-color: rgb(218,218,218);
+}
+
+.fc-border-separate{
+	border-bottom-style: ridge;
+}
+
 
 @font-face {
 	font-family: 'perfo';

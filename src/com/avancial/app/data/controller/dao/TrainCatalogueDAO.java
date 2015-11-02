@@ -210,7 +210,6 @@ public class TrainCatalogueDAO extends AbstractDao {
             e.printStackTrace();
          }
          
-        
       } 
    }
    public void updateCirculation(List<TrainCatalogue> listTC) {
@@ -252,18 +251,15 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
          try {
-                   //insertWithJDBC.insertRecordIntoTable(cirAdapterDataBean); 
             daoDelete.save(cirAdapterDataBean); 
          } catch (Exception | ASocleException e) {
             this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();
          }
-        
       } 
       
    }
    }
-   
    
    public Session getSession() {
       return this.getEntityManager().unwrap(Session.class);

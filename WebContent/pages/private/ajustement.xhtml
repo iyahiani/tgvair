@@ -7,17 +7,17 @@
 	>
 
 	<ui:define name="contenu">
-		 <p:dialog id="dlg" header="Info Couleur" widgetVar="dlg" modal="true" dynamic="true" closable="true" closeOnEscape="true">
+		 <p:dialog id="dlg" header="Info Couleur" widgetVar="dlg" modal="true" dynamic="true" closable="true" >
 		      <p:graphicImage name="/icon/Image1.png" />
 		 </p:dialog>
 		
 		<p:ajaxStatus onstart="PF('statusDialog').show()" 
             onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
             closable="false" resizable="false" showHeader="false">
             <p:graphicImage name="/private/image/enregistrement.gif" />
         </p:dialog>
-            <p:messages id="idPageMessages" autoUpdate="true" closable="true" redisplay="false"
+            <p:messages id="idPageMessages" autoUpdate="true" closable="true" redisplay="false" 
                 showDetail="true"  globalOnly="false" />
 	          	<p:fieldset legend="#{msg.p_header_ajustement_legend}"
 			styleClass="fieldSet">

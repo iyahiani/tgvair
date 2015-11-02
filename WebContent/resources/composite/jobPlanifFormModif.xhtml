@@ -8,96 +8,94 @@
 	xmlns:cc="http://java.sun.com/jsf/composite"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-
-
 <cc:interface></cc:interface>
 <cc:implementation>
 	<table>
-
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_type_planification}"></h:outputText></td>
-			<td><h:outputText value=" : "></h:outputText> 
-			<p:selectOneMenu value="#{jobPlanifManagedBean.jobTypeSelected}"
-					id="selectJobPlanifType" >
-					<f:selectItems value="#{jobPlanifManagedBean.listePlanifType}" 
+			<td><h:outputText value=" : "></h:outputText> <p:selectOneMenu
+					value="#{jobPlanifManagedBean.jobTypeSelected}"
+					id="selectJobPlanifType"
+					>
+					<f:selectItems value="#{jobPlanifManagedBean.listePlanifType}"
 						var="bean" itemLabel="#{bean.libelleJobPlanifType}"></f:selectItems>
 				</p:selectOneMenu></td>
 		</tr>
-
-	<tr>
+		<tr>
 			<td><h:outputText value="#{msg.p_dialog_job}"></h:outputText></td>
-			<td><h:outputText value=" : "></h:outputText> 
-			<p:selectOneMenu value="#{jobPlanifManagedBean.jobSelected}"
-					id="selectJob" >
-					<f:selectItems value="#{jobPlanifManagedBean.listeJob}" 
-						var="bean" itemLabel="#{bean.libelleJob}"></f:selectItems>
+			<td><h:outputText value=" : "></h:outputText> <p:selectOneMenu
+					value="#{jobPlanifManagedBean.jobSelected}" id="selectJob">
+					<f:selectItems value="#{jobPlanifManagedBean.listeJob}" var="bean"
+						itemLabel="#{bean.libelleJob}"></f:selectItems>
 				</p:selectOneMenu></td>
 		</tr>
-
-
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.libelleJobPlanif}" required="true"
+					value="#{jobPlanifManagedBean.selectedItem.libelleJobPlanif}"
+					required="true"
 					requiredMessage="#{msg.p_dialog_msg_requis_libelle}"
 					placeholder="#{msg.p_dialog_place_holder_libelle}"></p:inputText></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_nom_technique}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.nomTechniqueJobPlanif}" required="true"
+					value="#{jobPlanifManagedBean.selectedItem.nomTechniqueJobPlanif}"
+					required="true"
 					requiredMessage="#{msg.p_dialog_msg_requis_nomTechnique}"
 					placeholder="#{msg.p_dialog_place_holder_nom_technique}"></p:inputText></td>
 		</tr>
-		
-		
+
+
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_secondes}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.secondesJobPlanif}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_secondes}"></p:inputText></td>
+					value="#{jobPlanifManagedBean.selectedItem.secondesJobPlanif}"
+					required="true" placeholder="#{msg.p_dialog_place_holder_secondes}"></p:inputText></td>
 		</tr>
-		
-			<tr>
+
+		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_minutes}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.minutesJobPlanif}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_minutes}"></p:inputText></td>
+					value="#{jobPlanifManagedBean.selectedItem.minutesJobPlanif}"
+					required="true" placeholder="#{msg.p_dialog_place_holder_minutes}"></p:inputText></td>
 		</tr>
-		
-			<tr>
+
+		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_heures}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.heuresJobPlanif}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_heures}"></p:inputText></td>
+					value="#{jobPlanifManagedBean.selectedItem.heuresJobPlanif}"
+					required="true" placeholder="#{msg.p_dialog_place_holder_heures}"></p:inputText></td>
 		</tr>
-		
-		
+
+
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_jour_mois}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.jourMoisJobPlanif}" required="true"
+					value="#{jobPlanifManagedBean.selectedItem.jourMoisJobPlanif}"
+					required="true"
 					placeholder="#{msg.p_dialog_place_holder_jour_mois}"></p:inputText></td>
 		</tr>
-			<tr>
+		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_mois}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.moisJobPlanif}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_mois}"></p:inputText></td>
+					value="#{jobPlanifManagedBean.selectedItem.moisJobPlanif}"
+					required="true" placeholder="#{msg.p_dialog_place_holder_mois}"></p:inputText></td>
 		</tr>
-<tr>
 		<tr>
-			<td><h:outputText value="#{msg.p_dialog_libelle_jour_semaine}"></h:outputText></td>
-			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.jourSemaineJobPlanif}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_jour_semaine}"></p:inputText></td>
-		</tr>
-	
+			<tr>
+				<td><h:outputText value="#{msg.p_dialog_libelle_jour_semaine}"></h:outputText></td>
+				<td><h:outputText value=" : "></h:outputText> <p:inputText
+						value="#{jobPlanifManagedBean.selectedItem.jourSemaineJobPlanif}"
+						required="true"
+						placeholder="#{msg.p_dialog_place_holder_jour_semaine}"></p:inputText></td>
+			</tr>
+
 
 			<td><h:outputText value="#{msg.p_dialog_libelle_annee}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.anneeJobPlanif}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_annee}"></p:inputText></td>
+					value="#{jobPlanifManagedBean.selectedItem.anneeJobPlanif}"
+					required="true" placeholder="#{msg.p_dialog_place_holder_annee}"></p:inputText></td>
 		</tr>
 
 

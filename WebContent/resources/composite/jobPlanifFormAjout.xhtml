@@ -17,7 +17,8 @@
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_type_planification}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> 
-			<p:selectOneMenu value="#{jobPlanifManagedBean.jobTypeSelected}"
+			<p:selectOneMenu value="#{jobPlanifManagedBean.jobTypeSelected}" 
+			
 					id="selectJobPlanifType" >
 					<f:selectItems value="#{jobPlanifManagedBean.listePlanifType}" 
 						var="bean" itemLabel="#{bean.libelleJobPlanifType}"></f:selectItems>

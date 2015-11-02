@@ -16,7 +16,7 @@
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
 		<div>
-			<h:form>
+			<h:form id="form_admin">
 				<p:fieldset legend="#{msg.p_titre_legend}" styleClass="fieldSet">
 					<div class="ui-grid-responsive">
 						<p:panelGrid style="margin:20px;" columns="3">
@@ -43,30 +43,99 @@
 						</p:panelGrid>
 					</div>
 				</p:fieldset>
-				<p:fieldset legend="#{msg.p_admin_service_legend}"> 
-				
-					<p:outputLabel value="#{msg.p_admin_service_Debut}" style="padding-left: 10px;"></p:outputLabel>
-					<p:calendar title="Date Debut Service" styleClass="dateTimeStyle" style="padding-left: 10px;"
-						locale="fr" value="#{admin.dateDebut}" pattern="dd/MM/yyyy"
-						timeZone="#{traincatalogue.timeZone}">
-					</p:calendar>
 
-					<p:outputLabel value="#{msg.p_admin_service_Fin}" style="padding-left: 10px;"></p:outputLabel>
-					<p:calendar title="Date Fin Service" styleClass="dateTimeStyle" 
-					style="padding-left: 10px;padding-right: 10px; "
-						locale="fr" value="#{admin.dateFin}" pattern="dd/MM/yyyy"
-						timeZone="#{traincatalogue.timeZone}">
-					</p:calendar> 
-				
-					<p:commandButton title="#{msg.p_admin_service_Bouton}" value="#{msg.p_admin_service_Bouton}"
-					 type="submit"  style="padding-left: 10px;" actionListener="#{admin.creerService()}">
+				<p:fieldset legend="#{msg.p_admin_service_legend}">
+
+
+					<p:dataTable value="#{admin.listServices}" rows="1"
+						scrollable="true" paginatorPosition="top" id="tableService"
+						var="service" selectionMode="single"
+						rowKey="#{service.idServive_tgvAir}"
+						selection="#{admin.selectedService}" emptyMessage="Pas de Service"
+						style="width : 400px ; margin-left : 400px">
+
+						<p:ajax event="rowSelect" listener="#{admin.rowSelect}" />
+						<p:column headerText="Debut Service">
+							<h:outputText value="#{service.dateDebutService_tgvAir}">
+								<f:convertDateTime type="date" pattern="dd-MMM-yyyy"
+									timeZone="#{traincatalogue.timeZone}" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Fin Service">
+							<h:outputText value="#{service.datefinService_tgvAir}">
+								<f:convertDateTime type="date" pattern="dd-MMM-yyyy"
+									timeZone="#{traincatalogue.timeZone}" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Mise à Jour">
+							<p:commandLink update=":modif" id="update_service"
+								oncomplete="PF('Modif').show()">
+								<f:setPropertyActionListener value="#{service}"
+									target="#{admin.selectedService}" />
+								<h:graphicImage name="private/image/edit.png"
+									styleClass="actionButtons">
+									<p:tooltip for="update_service"
+										value=" Modifier la date du Service" />
+								</h:graphicImage>
+							</p:commandLink>
+
+						</p:column>
+                        
+					</p:dataTable> 
 					
-					</p:commandButton> 
 					
 				</p:fieldset>
+                    
 
 			</h:form>
 		</div>
+
+
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			draggable="false" header="Modifier Service" closeOnEscape="true">
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="false"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><p:outputLabel value="#{msg.p_admin_service_Debut}"
+								style="padding-left: 10px;">
+								</p:outputLabel>
+						</td>
+					    <td>
+					     	<p:calendar title="Date Debut Service"
+								styleClass="dateTimeStyle" style="padding-left: 10px;"
+								locale="fr" value="#{admin.selectedService.dateDebutService_tgvAir}" pattern="dd/MM/yyyy"
+								timeZone="#{traincatalogue.timeZone}">
+							</p:calendar>
+                        </td>
+					</tr>
+					<tr>
+						<td><p:outputLabel value="#{msg.p_admin_service_Fin}"
+								style="padding-left: 10px;"></p:outputLabel></td>
+						<td><p:calendar title="Date Fin Service"
+								styleClass="dateTimeStyle"
+								style="padding-left: 10px;padding-right: 10px; " locale="fr"
+								value="#{admin.selectedService.datefinService_tgvAir}" pattern="dd/MM/yyyy"
+								timeZone="#{traincatalogue.timeZone}">
+							</p:calendar> 
+							</td>
+					</tr>
+
+				</table>
+				
+				    <p:commandButton value="Modifier" type="submit" style="background-color: white ;"
+                    actionListener="#{admin.update()}"
+                    update=":form_admin"
+                    oncomplete="if(#{admin.closeDialog}=true) PF('modif').close()">
+                </p:commandButton>
+                <p:commandButton immediate="true" onclick="PF('modif').close()" style="background-color: white ;"
+                    value="annuler" type="cancel">
+                    </p:commandButton>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 <!-- <p:ajax event="change" update="@this" /> -->

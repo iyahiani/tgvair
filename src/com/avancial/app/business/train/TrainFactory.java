@@ -18,6 +18,7 @@ import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.app.resources.utils.GetTrainsNums;
 import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.app.resources.utils.TimeZoneOffSet;
 
 /**
  * 
@@ -181,7 +182,39 @@ public class TrainFactory implements ITrainFactory {
       train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getNumeroTrainCatalogue()));
       train.setNumeroUMTrain(bean.getNumeroTrainCatalogue());
       train.getListeCirculations().clear();
+      
+      train.setOoperatingFlight(bean.getOperatingFlight()); 
+      train.setIdTrain(bean.getIdTrainCatalogue()); 
+      train.setDateDebutValidite(bean.getDateDebutValidite());
+      train.setDateFinValidite(bean.getDateFinValidite()); 
+      train.setIdTrainCatalogue(bean.getIdTrainCatalogue()); 
+      train.setPointArretDestination(bean.getIdPointArretDestination());
+      train.setPointArretOrigine(bean.getIdPointArretOrigine());
+      train.setHeureDepart(bean.getHeureDepartTrainCatalogue()); 
+      train.setHeureArriver(bean.getHeureArriveeTrainCatalogue());
+      
+      return train ;
+   } 
    
+public static TrainCatalogue createTrainCatalogueFromDataBean(TrainCatalogueDataBean bean) {
+      
+      Circulation circulation = new Circulation();  
+      circulation.setDateDebut(bean.getDateDebutValidite());
+      circulation.setDateFin(bean.getDateFinValidite());
+      circulation.setOrigine(bean.getIdPointArretOrigine().getCodeResarailPointArret());
+      circulation.setDestination(bean.getIdPointArretDestination().getCodeResarailPointArret());
+      circulation.setHeureDepart(Integer.valueOf(StringToDate.toFormatedString(bean.getHeureDepartTrainCatalogue())));
+      circulation.setHeureArrivee(Integer.valueOf(StringToDate.toFormatedString(bean.getHeureArriveeTrainCatalogue()))); 
+      circulation.setJoursCirculation(bean.getRegimeJoursTrainCatalogue()); 
+      circulation.setGMTDepart(TimeZoneOffSet.getGMTDiff()); 
+      circulation.setGMTArrivee(TimeZoneOffSet.getGMTDiff());
+      
+      TrainCatalogue train = new TrainCatalogue() ; 
+      train.addCirculation(circulation);
+      train.setListeNumeros(GetTrainsNums.getTrainsNums(bean.getNumeroTrainCatalogue()));
+      train.setNumeroUMTrain(bean.getNumeroTrainCatalogue());
+      //train.getListeCirculations().clear();
+      
       train.setOoperatingFlight(bean.getOperatingFlight()); 
       train.setIdTrain(bean.getIdTrainCatalogue()); 
       train.setDateDebutValidite(bean.getDateDebutValidite());

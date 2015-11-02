@@ -65,7 +65,7 @@ public class JobImport implements Job {
       } catch (IOException e1) {
 
         
-         this.logger.info("Import:" + e1.getMessage());
+         this.logger.error("Import:" + e1.getMessage());
            
          e1.printStackTrace();
 
@@ -154,7 +154,6 @@ public class JobImport implements Job {
          this.logger.error("erreur d'archivage du fichier SSIM");
          e.printStackTrace();
       }
-
    }
 
    /**

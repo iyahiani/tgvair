@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -78,21 +79,18 @@ public class JobPlanifManagedBean extends AManageBean {
       this.listeJob = new ArrayList<>();
 
       JobPlanifTypeDao dao = new JobPlanifTypeDao();
-
       for (JobPlanifTypeDataBean bean : dao.getAll()) {
          SelectItem item = new SelectItem(bean.getIdJobPlanifType(), bean.getLibelleJobPlanifType());
          this.listePlanifType.add(item);
       }
-
+      
       JobDao jobDao = new JobDao();
 
       for (JobDataBean bean : jobDao.getAll()) {
          SelectItem item = new SelectItem(bean.getIdJob(), bean.getLibelleJob());
          this.listeJob.add(item);
       }
-
       this.reload();
-
    }
 
    public void reload() {
@@ -152,6 +150,10 @@ public class JobPlanifManagedBean extends AManageBean {
       return null;
    }
 
+   public void valueChanged(ValueChangeEvent event) {
+      this.jobTypeSelected = (String) event.getNewValue() ; 
+      
+   }
    @Override
    public String update() throws ASocleException {
       super.update();

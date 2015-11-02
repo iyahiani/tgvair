@@ -231,7 +231,8 @@
 									pattern="dd/MM/yyyy">
 								</p:calendar>				
 								<h:panelGrid columns="2">
-                                <p:commandButton icon="ui-icon-cancel" type="reset" title="reset" style="background: rgb(255,77,77); border-radius: 25px;">      <!-- styleClass="ui-icon" -->
+                                <p:commandButton icon="ui-icon-cancel" type="reset" 
+                                title="reset" style="background: rgb(255,77,77); border-radius: 25px;">      <!-- styleClass="ui-icon" -->
                                 </p:commandButton>
                                 <p:commandButton icon="ui-icon-check" type="submit"  style="background: rgb(25, 209, 25); border-radius: 25px;"
                                 oncomplete="if (#{traintocompagnie.closeDialog}=true) reset();" title="ajouter" 
@@ -410,7 +411,8 @@
 					oncomplete="if(#{traintocompagnie.closeDialog}=true) PF('modifT2C').close()">
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('modifT2C').close()" style="background-color: white ;"
-					value="annuler" type="cancel"></p:commandButton>
+					value="annuler" type="cancel">
+					</p:commandButton>
 			</h:form>
 		</p:dialog>
 	</ui:define>

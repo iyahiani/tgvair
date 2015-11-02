@@ -47,6 +47,7 @@ public class JobAdaptation implements Job {
       }
       
       ///////////////////////////////////////////////////////////////
+     
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<TrainCatalogue> listCatalogue = new ArrayList<>();
       List<CirculationSSIMDataBean> listCirculationSSIM = new CirculationSSIMDao().getAll();

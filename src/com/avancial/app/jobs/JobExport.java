@@ -35,7 +35,6 @@ import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
- * 
  * @author ismael.yahiani Job d'export du fichier SSIM7
  */
 
@@ -44,42 +43,50 @@ public class JobExport implements Job {
    Logger log = Logger.getLogger(JobExport.class) ;
    public void execute(JobExecutionContext context) throws JobExecutionException {
       log.info("Job Export Started");
+      
       List<TrainCatalogueToCompagnieDataBean> listTC2C = new TrainCatalogueToCompagnieDAO().getAll();
       List<CompagnieAerienneDataBean> listeCompagnie = new CompagnieAerienneDao().getAll();
+      //FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Export", "Traitement Export SSIM 7 lancé"));
+      Calendar lastCircule = Calendar.getInstance();
+      lastCircule.setTime(new CirculationDAO().getLastDateCreation().getDateCreationLigneTrain());
 
       TrainCatalogueToCompagnieDAO catalogueToCompagnieDAO = new TrainCatalogueToCompagnieDAO();
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       TrainCatalogueDataBean tc = null;
 
       for (CompagnieAerienneDataBean compagnie : listeCompagnie) {
-         listTC2C = catalogueToCompagnieDAO.getTrainCatalogueByIdCompagnie(compagnie.getIdCompagnieAeriennne()); 
-         boolean compare = false ;
-         
+         listTC2C = catalogueToCompagnieDAO.getTrainCatalogueByIdCompagnie(compagnie.getIdCompagnieAeriennne());
+         boolean compare = false    ;
+
          for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
             tc = catalogueDAO.getTrainCatalogueByID(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue());
-            List<TrainCatalogue> listeTrainCatalogue = TrainFactory.get2DerniersTC(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue(), Calendar.getInstance().getTime());
-               if (listeTrainCatalogue.size()>1) { 
-                  TrainCatalogue trainPortef1=listeTrainCatalogue.get(0).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
-                  TrainCatalogue trainPortef2= listeTrainCatalogue.get(1).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
-                  if (!trainPortef1.compare(trainPortef2)) {
-                     compare = true ;break ;
-                     }
-         }
-               
-               if (listeTrainCatalogue.size()==1) { 
-                 Calendar c = Calendar.getInstance() ; 
-                  // Regarder si ce train date d'aujourd'hui ou si c'est un ancien train :Si nouveau Export / Sinon ne pas exporter  
-                 try {
-                    if( StringToDate.toStringByFormat(new CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0).getDateCreationLigneTrain(),"dateBySlashSansHeure").equals(StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"))) {
-                     compare = true  ;break ;
-                    }
-                 } catch (Exception e) {
-                     // TODO Auto-generated catch block
-                     e.printStackTrace();
-                 }
+
+            List<TrainCatalogue> listeTrainCatalogue = TrainFactory.get2DerniersTC(tc2c.getTrainCatalogueDataBean().getIdTrainCatalogue(), lastCircule.getTime());// Calendar.getInstance().getTime()
+            if (listeTrainCatalogue.size() > 1) {
+               TrainCatalogue trainPortef1 = listeTrainCatalogue.get(0).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(),
+                     tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
+               TrainCatalogue trainPortef2 = listeTrainCatalogue.get(1).getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(),
+                     tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
+               if (!trainPortef1.compare(trainPortef2)) {
+                  compare = true;
+                  break;
                }
-      } 
-         
+            }
+            
+             if (listeTrainCatalogue.size()==1) {
+                Calendar c = Calendar.getInstance() ; // Regarder si ce train date
+           // d'aujourd'hui ou si c'est un ancien train :Si nouveau Export /
+             // Sinon ne pas exporter 
+                try {
+                   if( StringToDate.toStringByFormat(new
+             CirculationDAO().getCirculationByIdTrain(listeTrainCatalogue.get(0).getIdTrain()).get(0)
+             .getDateCreationLigneTrain(),"dateBySlashSansHeure").equals
+              (StringToDate.toStringByFormat(c.getTime(),"dateBySlashSansHeure"
+          ))) { compare = true ;break ; } } catch (Exception e) {
+           
+              e.printStackTrace(); } }
+           
+         }
          if (compare) {
             List<TrainCatalogue> listCatalogue = new ArrayList<>();
             for (TrainCatalogueToCompagnieDataBean tc2c : listTC2C) {
@@ -90,9 +97,8 @@ public class JobExport implements Job {
                List<CirculationAdapterDataBean> liste = dao.getCirculationByIdTrain(tc.getIdTrainCatalogue());
                if (liste.size()>0) {
                TrainCatalogue train = TrainFactory.createTrainCatalogueFromBeans(liste);
-             
-            
-               TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
+               TrainCatalogue trainPortf = train.getTrainFromPortefeuille(tc2c.getDateDebutValiditeTrainCatalogueToCompagnie(), 
+                     tc2c.getDateFinValiditeTrainCatalogueToCompagnie());
                trainPortf.setCodeCompagnie(tc2c.getCompagnieAerienneDataBean().getCodeCompagnieAerienne());
                trainPortf.setQuota1er(tc2c.getQuotaPremiereTrainCatalogueToCompagnie());
                trainPortf.setQuota2eme(tc2c.getQuotaDeuxiemeTrainCatalogueToCompagnie());
@@ -104,17 +110,19 @@ public class JobExport implements Job {
             }
             ExportPDTByCompagnyToSSIM7 export = new ExportPDTByCompagnyToSSIM7();
             try {
-               export.export(listCatalogue, new TraitementExportDataBean(), new Service());
-              // FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Export SSIM7"));
-               this.log.info("JOB Export SSIM7 Terminé");
-
+               export.export(listCatalogue, new TraitementExportDataBean(), new Service()); 
+               
+               if(FacesContext.getCurrentInstance()!=null ) FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Export SSIM7"));
+               this.log.info("Export SSIM7 Terminé");
             } catch (ParseException e) {
-              // FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "Echec Export SSIM7"));
-               this.log.error("Echec JOB Export SSIm7");
+              
+               if(FacesContext.getCurrentInstance()!=null )  FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "Echec Export SSIM7"));
+               this.log.error("Echec Export SSIm7");
                e.printStackTrace();
             }
          }
-   }
+
+      }
 }
 }
 

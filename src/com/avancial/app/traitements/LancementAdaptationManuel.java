@@ -36,7 +36,6 @@ public class LancementAdaptationManuel {
    Logger logger = Logger.getLogger(LancementAdaptationManuel.class);
    
    public LancementAdaptationManuel() {
-   
    }  
    
    public void traitementAdaptation() {
@@ -44,11 +43,11 @@ public class LancementAdaptationManuel {
       // / update table circulation adapter avec la table des TrainsCatalogue
       
       Service services = new Service()   ;
+      
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
       for (TrainCatalogueDataBean tc : listTrainsCat) {
          new TrainCatalogueDAO().saveCirculation(tc);
       }
-
       // /////////////////////////////////////////////////////////////
       List<TrainCatalogue> listTrains = new ArrayList<>();
       List<TrainCatalogue> listTrainsAdapt = new ArrayList<>();
@@ -64,14 +63,23 @@ public class LancementAdaptationManuel {
       listCirculAdapter.clear();
       listCirculAdapter.addAll(new CirculationDAO().getAll()) ;
       TrainFactory factory = new TrainFactory();
+      
       // re-construire les circulations du trains à partir de la table des
       // circulation adaptés
-
+         
+      for (TrainCatalogueDataBean bean : listTrainsCat) {
+         TrainCatalogue tc = factory.createTrainCatalogueFromDataBean(bean) ; 
+         tc.remplirJoursCirculations(); 
+         listTrains.add(tc) ;
+      }
+      
+      
+      /*
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue();
       Circulation circulTemp = new Circulation();
       circulTemp.createCirculationFromBean(listCirculAdapter.get(0));
       TrainCatalogue train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(0));
-      
+      listTrains.clear();
       train.addCirculation(circulTemp);
 
       for (int i = 1; i < listCirculAdapter.size(); i++) {
@@ -89,6 +97,7 @@ public class LancementAdaptationManuel {
          if (i == listCirculAdapter.size() - 1)
             listTrains.add(train);
       }
+      */
       
       // //////////////////////////// recuperer les circulations de la ssim
       
@@ -119,16 +128,19 @@ public class LancementAdaptationManuel {
        
       for (TrainCatalogue traincat : listTrains) {
 
+         if (traincat.getIdTrain()==40)             
+         System.out.println(traincat.getIdTrain());
+         
          IObservableJoursCirculation iObs = new ObservableJoursCirculation();
          Train trainSSIMRestreint = trainsSSIM.getTrainSSIMRestreint(traincat);
          if (trainSSIMRestreint.getListeCirculations().size() > 0) {
          trainSSIMRestreint.remplirJoursCirculations();
-         trainSSIMRestreint.calculeCirculationFromJoursCirculation();
+       //  trainSSIMRestreint.calculeCirculationFromJoursCirculation();
             if (!traincat.compare(trainSSIMRestreint)) {
- 
-               traincat.remplirJoursCirculations();
-               traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);
-              
+
+               traincat.remplirJoursCirculations(); 
+               
+               traincat.adapt(trainSSIMRestreint, dateDebutSSIM, dateFinSSIM, iObs);              
                traincat.adaptGuichet(listPointsArret);
                traincat.calculeCirculationFromJoursCirculation();
                // //////////////////   Updater les circulations
