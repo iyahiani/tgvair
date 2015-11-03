@@ -128,7 +128,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       String sql = " FROM TrainCatalogueToCompagnieDataBean as t WHERE t.trainCatalogueDataBean.idTrainCatalogue =" + idTrainCatalogue;
       Query requete = this.getEntityManager().createQuery(sql);
 
-      return requete.getResultList();
+      return  requete.getResultList();
 
    }
    public TrainCatalogueDataBean getTrainCatalogueByID(int id) {
@@ -213,7 +213,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       } 
    }
    public void updateCirculation(List<TrainCatalogue> listTC) {
-      //InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;  
+  
       CirculationDAO daoDelete = new CirculationDAO();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ; 
       String today ;
@@ -251,7 +251,8 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setRegimeCirculation(c.getJoursCirculation())              ; 
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
          try {
-            daoDelete.save(cirAdapterDataBean); 
+               daoDelete.save(cirAdapterDataBean); 
+               
          } catch (Exception | ASocleException e) {
             this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();

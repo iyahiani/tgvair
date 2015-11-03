@@ -9,7 +9,6 @@
 	<ui:define name="title">#{msg.p_jobPlanif_titre}</ui:define>
 	<ui:define name="contenu">
 
-
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
 			onsuccess="PF('statusDialog').hide()" />
 
@@ -22,11 +21,12 @@
 		</p:dialog>
 
 
-		<p:dialog widgetVar="Ajout" resizable="false"
+		<p:dialog widgetVar="Ajout" resizable="false" modal="true" closeOnEscape="true" 
 			header="#{msg.p_dialog_ajout_title_jobPlanif}" id="ajout">
 			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
 				showDetail="true" />
-			<h:form>
+			
+			<h:form id="formAjoutJob">
 				<socle:jobPlanifForm />
 				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
 					type="submit" actionListener="#{jobPlanifManagedBean.add}"
@@ -35,18 +35,14 @@
 				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
 					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
 			</h:form>
+			
 		</p:dialog>
-
-
-
-		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+		<p:dialog id="modif" widgetVar="Modif" resizable="false" modal="true"
 			header="#{msg.p_dialog_modif_title_jobPlanif}" >
 			<p:messages globalOnly="false" id="message_upd" autoUpdate="true" 
 				showDetail="true" />
-			<h:form>
-
+			<h:form >
 				<socle:jobPlanifForm />
-
 				<br />
 				<br />
 				<p:commandButton value="#{msg.p_dialog_bouton_modifier_libelle}"
