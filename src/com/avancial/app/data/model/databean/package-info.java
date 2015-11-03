@@ -3,7 +3,7 @@
  */
 /**
  * @author ismael.yahiani
- * Objets DAO de l'application TGVAIR
+ * Objets DataBean pour Hibernate de l'application TGVAIR
  *  
  */
 package com.avancial.app.data.model.databean;
