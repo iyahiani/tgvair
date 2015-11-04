@@ -225,9 +225,7 @@ public class TrainCatalogueDAO extends AbstractDao {
       
       for (CirculationAdapterDataBean c : listCircAdapt) {
    
-         if (c.getTrainCatalogueDataBean().getIdTrainCatalogue() == tc.getIdTrain() 
-               && lastDate.equalsIgnoreCase(today)
-               ) 
+         if (lastDate.equalsIgnoreCase(today)) 
             try {
                daoDelete.delete(c);
             } catch (ASocleException e) {

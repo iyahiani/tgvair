@@ -3,6 +3,8 @@
  */
 package com.avancial.app.init;
 
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +12,13 @@ import javax.servlet.http.HttpServlet;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
+import org.quartz.Trigger.TriggerState;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -23,9 +28,9 @@ import com.avancial.app.jobs.JobImport;
 
 /**
  *@author ismael.yahiani
- *
+ *  utilitaire de test des Job 
  */
-//@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/initAPP")
 public class SocleInit extends HttpServlet {
 //   Logger                    log              = Logger.getLogger(SocleInit.class);
    /**
@@ -42,7 +47,7 @@ public class SocleInit extends HttpServlet {
    public void init() throws ServletException {
       super.init();
       System.out.println("**********************************************");
-      System.out.println("********  Application initialization  ********");
+      System.out.println("********  Job Tests Lunch  ********");
       System.out.println("**********************************************"); 
     //  this.log.info("Quartz APP initialisé");
       try {
@@ -59,21 +64,22 @@ public class SocleInit extends HttpServlet {
     */ 
    
    private void quartzInit() throws SchedulerException {
-      SchedulerFactory sf = new StdSchedulerFactory();
-     Scheduler sched = sf.getScheduler();
-      // define the job and tie it to our HelloJob class
-      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
-      // Trigger the job to run on the next round minute
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("* 0/10 * * * ?")).build();    
-      sched.start()                    ;
-      sched.scheduleJob(job , trigger)  ; 
-      try {
-         Thread.sleep(600L);
-      } catch (InterruptedException e) {
-        
-         e.printStackTrace();
+      JobDetail job = JobBuilder.newJob(JobAdaptation.class)
+            .withIdentity("JobAdaptation", "group1").build(); 
+      Trigger trigger  = TriggerBuilder.newTrigger().withIdentity("JobAdaptation", "group1").withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatMinutelyForTotalCount(2)).build(); 
+      Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+      if(!scheduler.checkExists(job.getKey())) {
+      scheduler.start();
+      scheduler.scheduleJob(job, trigger);
       }
-      sched.shutdown(true);
-   
-   }
+      
+      
+      
+      List<? extends Trigger> triggers = scheduler.getTriggersOfJob(job.getKey());
+      for (Trigger trig : triggers) {
+          TriggerState triggerState = scheduler.getTriggerState(trig.getKey());
+            System.out.println(triggerState.name()); 
+      }
+      
+   } 
 }

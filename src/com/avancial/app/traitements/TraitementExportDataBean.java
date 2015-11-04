@@ -29,10 +29,7 @@ public class TraitementExportDataBean implements Serializable{
    
    public TraitementExportDataBean() {
       
-      Calendar calendar = Calendar.getInstance() ;
-      this.dateExtraction = calendar.getTime(); 
-      this.heureCreation =String.valueOf( calendar.getTime().getHours() ).concat(String.valueOf(calendar.getTime().getMinutes()));
-   }
+       }
 
    public int getIdTraitementExport() {
       return idTraitementExport;

@@ -135,6 +135,8 @@ public class JobAdaptation implements Job {
             }
       }
       // //////////////////Updater les circulations 
+      
+      
       new TrainCatalogueDAO().updateCirculation(listCatalogue); 
    }
 }

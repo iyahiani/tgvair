@@ -30,5 +30,4 @@ public class Log4jListener implements ServletContextListener {
       PropertyConfigurator.configure(fullPath);
       System.out.println("Log4j Configuré"); 
    }
-
 }

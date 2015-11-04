@@ -14,8 +14,6 @@
 </cc:interface>
 
 <cc:implementation>
-
-
 	<table>
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_type_planification}"></h:outputText></td>
@@ -76,7 +74,9 @@
 				</h:outputText> <p:inputText
 					rendered="#{jobPlanifManagedBean.isCrone() or jobPlanifManagedBean.isDaily()}"
 					value="#{jobPlanifManagedBean.secondes}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_secondes}">
+					placeholder="#{msg.p_dialog_place_holder_secondes}" 
+					title="Secondes : 0 - 59"
+					>
 				</p:inputText></td>
 		</tr>
 		<tr>
@@ -86,7 +86,9 @@
 					rendered="#{jobPlanifManagedBean.isCrone() or jobPlanifManagedBean.isDaily()}"></h:outputText>
 				<p:inputText value="#{jobPlanifManagedBean.minutes}" required="true"
 					rendered="#{jobPlanifManagedBean.isCrone() or jobPlanifManagedBean.isDaily()}"
-					placeholder="#{msg.p_dialog_place_holder_minutes}"></p:inputText></td>
+					placeholder="#{msg.p_dialog_place_holder_minutes}"
+					title="Minutes : 0,..,59 ou * "
+					></p:inputText></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_heures}"
@@ -95,7 +97,9 @@
 					rendered="#{jobPlanifManagedBean.isCrone() or jobPlanifManagedBean.isDaily()}"></h:outputText>
 				<p:inputText value="#{jobPlanifManagedBean.heures}" required="true"
 					rendered="#{jobPlanifManagedBean.isCrone() or jobPlanifManagedBean.isDaily()}"
-					placeholder="#{msg.p_dialog_place_holder_heures}"></p:inputText></td>
+					placeholder="#{msg.p_dialog_place_holder_heures}"
+					title="Heures : 0,..,23 ou *"
+					></p:inputText></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_jour_mois}"
@@ -104,7 +108,9 @@
 					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
 					rendered="#{jobPlanifManagedBean.isCrone()}"
 					value="#{jobPlanifManagedBean.jourMois}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_jour_mois}"></p:inputText></td>
+					placeholder="#{msg.p_dialog_place_holder_jour_mois}" 
+					title="Jours Mois : 1,..,31 ou *"
+					></p:inputText></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_mois}"
@@ -113,7 +119,9 @@
 					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
 					value="#{jobPlanifManagedBean.mois}" required="true"
 					rendered="#{jobPlanifManagedBean.isCrone()}"
-					placeholder="#{msg.p_dialog_place_holder_mois}"></p:inputText></td>
+					placeholder="#{msg.p_dialog_place_holder_mois}" 
+					title="Mois MM : 1,..,12 ou *"
+					></p:inputText></td>
 		</tr>
 		<tr>
 			<tr>
@@ -123,7 +131,9 @@
 						rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
 						rendered="#{jobPlanifManagedBean.isCrone()}"
 						value="#{jobPlanifManagedBean.jourSemaine}" required="true"
-						placeholder="#{msg.p_dialog_place_holder_jour_semaine}"></p:inputText></td>
+						placeholder="#{msg.p_dialog_place_holder_jour_semaine}" 
+						title="Jours Semaine : 1,..,7 ou *" 
+						></p:inputText></td>
 			</tr>
 
 
@@ -133,7 +143,9 @@
 					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
 					rendered="#{jobPlanifManagedBean.isCrone()}"
 					value="#{jobPlanifManagedBean.annee}" required="true"
-					placeholder="#{msg.p_dialog_place_holder_annee}"></p:inputText></td>
+					placeholder="#{msg.p_dialog_place_holder_annee}" 
+					title="Année AAAA"
+					></p:inputText></td>
 		</tr>
 
 	</table>

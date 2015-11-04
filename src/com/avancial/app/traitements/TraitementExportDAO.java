@@ -1,5 +1,6 @@
 package com.avancial.app.traitements;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -40,7 +41,11 @@ public class TraitementExportDAO  extends AbstractDao{
    }  
    
    public void saveExport(TraitementExportDataBean export ) {
-      try {
+      try { 
+         
+         Calendar calendar = Calendar.getInstance() ;
+         export.setDateExtraction(calendar.getTime()); 
+         export.setHeureCreation(String.valueOf( calendar.getTime().getHours() ).concat(String.valueOf(calendar.getTime().getMinutes())));
          this.save(export);
       } catch (ASocleException e) {
          e.printStackTrace();

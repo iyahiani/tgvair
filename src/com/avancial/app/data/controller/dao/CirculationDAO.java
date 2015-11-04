@@ -58,11 +58,10 @@ public class CirculationDAO extends AbstractDao {
          this.getEntityManager().getTransaction().commit(); 
         
       } catch (Exception e) {
-         log.info("Echec suppression circulations adaptées");
+         log.info("Echec suppression circulations adaptées du train"+bean.getTrainCatalogueDataBean().getIdTrainCatalogue());
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException();
       }
-
    }
 
    public void update(CirculationAdapterDataBean bean) throws ASocleException {
