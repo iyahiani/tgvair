@@ -46,12 +46,12 @@ public class JobImport implements Job {
 
    @Inject
    ParamGetterManagedBean paramGetter;
-   Logger                 logger       = Logger.getLogger(JobImport.class);
-   Date                   dateCourante = new Date();
+   Logger logger = Logger.getLogger(JobImport.class);
+   Date dateCourante = new Date();
 
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
-      //InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;
+      // InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
@@ -64,9 +64,8 @@ public class JobImport implements Job {
 
       } catch (IOException e1) {
 
-        
          this.logger.error("Import:" + e1.getMessage());
-           
+
          e1.printStackTrace();
 
       }
@@ -78,7 +77,6 @@ public class JobImport implements Job {
       for (String s : listnums) {
          listnumsHashed.addAll(GetTrainsNums.getTrainsNums(s));
       }
-
       // ////////////////////////////// RECHARGER LE TABLEAU DES NUMERO AVEC LA
       // LIST
 
@@ -87,13 +85,22 @@ public class JobImport implements Job {
          num[i] = listnumsHashed.get(i);
 
       }
-      IParser par = new ParserFixedLength(new FilterEncodage(new FiltreTrancheOptionnel(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))), APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
+      IParser par = new ParserFixedLength(new FilterEncodage(new FiltreTrancheOptionnel(new FilterSSIMTypeEnr(new FiltreSSIMCompagnieTrain(new FiltreCatalogue(null, num))))),
+            APP_enumParserSSIM.getNames(), APP_enumParserSSIM.getBegins(), APP_enumParserSSIM.getEnds());
       String chaine = "";
       CirculationSSIMDao dao = new CirculationSSIMDao();
       List<CirculationSSIMDataBean> list = dao.getAll();
-      if(dao.getAll().size()>0) dao.deleteAll(0); 
-      List< CirculationSSIMDataBean> circulationSSIMDataBeans = new ArrayList<>();
+    
+      // supprimer le dernier Import 
+      if (dao.getAll().size() > 0 && reader != null)
+         dao.deleteAll(0);
+      
+      List<CirculationSSIMDataBean> circulationSSIMDataBeans = new ArrayList<>();
+     
+      
+      
       try {
+         
          while ((chaine = reader.readLine()) != null) {
             par.parse(chaine);
             if (!par.getParsedResult().isEmpty()) {
@@ -109,35 +116,35 @@ public class JobImport implements Job {
                   circulation.setDateDebutCirculation(StringToDate.toDate(par.getParsedResult().get(APP_enumParserSSIM.POSITION_PERIODE_CIRCULATION_DEBUT.name())));
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
                } catch (ParseException e) {
-                  e.printStackTrace() ;
-                  this.logger.error("Job Import"+e.getMessage());
+                  e.printStackTrace();
+                  this.logger.error("Job Import" + e.getMessage());
                }
-               
+
                circulation.setTrancheFacultatif(chaine.substring(APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionDebut(), APP_enumParserSSIM.POSITION_TRANCHE_FACULTATIF.getPositionFin()));
                circulation.setRestrictionTrafic(chaine.substring(APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionDebut(), APP_enumParserSSIM.POSITION_RESTRICTION_TRAFIC.getPositionFin()));
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
-               if(circulation!=null) //  dao.saveSSIM(circulation);
-                 // insertWithJDBC.insertIntoImportSSIMTable(circulation); 
-                  circulationSSIMDataBeans.add(circulation) ;
+               if (circulation != null) // dao.saveSSIM(circulation);
+                  // insertWithJDBC.insertIntoImportSSIMTable(circulation);
+                  circulationSSIMDataBeans.add(circulation);
             }
-         } 
-         dao.customSave(circulationSSIMDataBeans); 
+         }
+         dao.customSave(circulationSSIMDataBeans);
          reader.closeReader();
       } catch (Exception e) {
-         this.logger.error("Job Import"+e.getMessage());
+         this.logger.error("Job Import" + e.getMessage());
          e.printStackTrace();
-      } 
-      
+      }
+
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
          bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
          bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin"));
-         
+
       } catch (Exception e1) {
-        
+
          e1.printStackTrace();
-         this.logger.error("Job Import"+e1.getMessage());
+         this.logger.error("Job Import" + e1.getMessage());
       }
 
       TraitementImportDAO daoImport = new TraitementImportDAO();
@@ -145,7 +152,6 @@ public class JobImport implements Job {
       daoImport.saveTraitementSSIM(bean);
 
       this.logger.info("Import Terminé");
-
 
       try {
          archiveSSIM();
@@ -161,12 +167,18 @@ public class JobImport implements Job {
     * 
     * @throws Exception
     */
-     private  void archiveSSIM() throws Exception {
+   private void archiveSSIM() {
       File source = new File(APP_TgvAir.CHEMIN_SSIM.toString());
-      File dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
+      File dest;
+      try {
+         dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
+         DeplacerFicher.copierFile(source, dest);
+         source.delete();
+      } catch (Exception e) {
 
-      DeplacerFicher.copierFile(source, dest);
-      source.delete();
+         e.printStackTrace();
+      }
+
    }
 
 }

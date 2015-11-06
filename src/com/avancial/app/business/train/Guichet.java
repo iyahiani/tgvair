@@ -12,8 +12,8 @@ public class Guichet {
   
    public Guichet() {
    
+      
    }
-   
    
    public String getJour() {
       return jour;

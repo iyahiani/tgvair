@@ -62,14 +62,12 @@ public class TrainCatalogueManagedBean extends AManageBean implements Selectable
       this.trainsCatalogue = new ArrayList<>();
       this.idPointArretOrigine = new PointArretDataBean();
       this.idPointArretDestination = new PointArretDataBean();
-
       this.reload();
    }
 
    public void rowSelect(SelectEvent event) {
-
-      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject();
-
+   
+      this.selectedTrainsCatalogue = (TrainCatalogueDataBean) event.getObject(); 
    }
 
    public TimeZone getTimeZone() {

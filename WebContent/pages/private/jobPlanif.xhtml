@@ -6,16 +6,21 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:socle="http://java.sun.com/jsf/composite/composite">
 
-	<ui:define name="title">#{msg.p_jobPlanif_titre}</ui:define>
+	<ui:define name="title">#{msg.p_jobPlanif_titre}
+	
+	</ui:define>
+	
+	
 	<ui:define name="contenu">
 
-
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" /> 
+			
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
-		<p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
+
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-			closable="false" resizable="false" showHeader="false">
+			closable="false" resizable="false" showHeader="false"> 
 			<p:graphicImage name="/private/image/enregistrement.gif" />
 		</p:dialog>
 
@@ -70,11 +75,10 @@
 			id="dataTable" rowIndexVar="index" paginator="true"
 			selectionMode="single"
 			selection="#{jobPlanifManagedBean.selectedItem}"
-			rowKey="#{item.idJobPlanif}"> 
+			rowKey="#{item.idJobPlanif}">
 			<p:ajax event="rowSelect"
-                                listener="#{jobPlanifManagedBean.rowSelect}"
-                                />
-    
+				listener="#{jobPlanifManagedBean.rowSelect}" />
+
 			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
 				<h:outputText value="#{item.idJobPlanif}"></h:outputText>
 			</p:column>

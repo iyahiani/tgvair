@@ -103,9 +103,12 @@
 									actionListener="#{traincatalogue.delete()}"  oncomplete="#{traincatalogue.reload()}">
 									
 									<p:ajax update=":tableTrains:tableTrains" delay="1" 
-                                              listener="#{traincatalogue.reload()}"></p:ajax>
+                                              listener="#{traincatalogue.reload()}">
+                                              </p:ajax> 
+                                              
 									<f:setPropertyActionListener value="#{trains}"
-										target="#{traincatalogue.selectedTrainsCatalogue}" />
+										target="#{traincatalogue.selectedTrainsCatalogue}" /> 
+										
 									<h:graphicImage id="img_delete"
 										name="private/image/corbeille2.png" styleClass="actionButtons">
 									</h:graphicImage>
