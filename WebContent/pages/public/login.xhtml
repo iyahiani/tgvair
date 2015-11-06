@@ -15,7 +15,8 @@
 			
 			<div class="well" id="div">
 			<p:panel style="width:60%;margin:absolute auto;border:none;align:right;"  id="panel1" >
-			 <h:graphicImage  id="grphiqueBalise" name="icon/bondeau tgvair.png" rendered="#{!ihmManagedBean.isLogged()}"  style="margin-left:270px;width:100%;padding:20px;"
+			 <h:graphicImage  id="grphiqueBalise" name="icon/bondeau tgvair.png" 
+			 rendered="#{!ihmManagedBean.isLogged()}"  style="margin-left:270px;width:100%;padding:20px;"
 			 > 
 			 </h:graphicImage>  
 			</p:panel>
@@ -40,9 +41,9 @@
 						</p:commandButton>
 						<p:commandButton id="cancel" value="#{msg.libelle_annuler}" ajax="false"
 							action="#{login.cancel}" />
-						<p:commandButton id="Mdp" value="#{msg.p_login_mdpoublie}" ajax="false"
-							action="#{menu.goMdpOublie}" > 
-						</p:commandButton> 
+					<p:commandButton id="Mdp" value="#{msg.p_login_mdpoublie}" ajax="false" disabled="true"
+							action="#{menu.goMdpOublie}" >   
+						</p:commandButton>  
 						
 				</h:panelGrid>
 					

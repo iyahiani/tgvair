@@ -9,45 +9,47 @@
 	<ui:define name="title">#{msg.p_jobPlanif_titre}</ui:define>
 	<ui:define name="contenu">
 
-		<p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
 
 		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
 			redisplay="false" showDetail="true" globalOnly="false" />
-
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage name="/private/image/enregistrement.gif" />
 		</p:dialog>
 
 
-		<p:dialog widgetVar="Ajout" resizable="false" modal="true" closeOnEscape="true" 
-			header="#{msg.p_dialog_ajout_title_jobPlanif}" id="ajout">
+		<p:dialog widgetVar="Ajout" resizable="false" modal="true"
+			closeOnEscape="true" header="#{msg.p_dialog_ajout_title_jobPlanif}"
+			id="ajout">
 			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
 				showDetail="true" />
-			
+
 			<h:form id="formAjoutJob">
+
 				<socle:jobPlanifForm />
 				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
 					type="submit" actionListener="#{jobPlanifManagedBean.add}"
 					onsuccess="if (#{jobPlanifManagedBean.closeDialog}=true) PF('Ajout').close()"
-					update=":dataTable" action="#{jobPlanifManagedBean.reload()}" />
+					update=":dataTable" action="#{jobPlanifManagedBean.reload()}">
+				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
 					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
 			</h:form>
-			
+
 		</p:dialog>
 		<p:dialog id="modif" widgetVar="Modif" resizable="false" modal="true"
-			header="#{msg.p_dialog_modif_title_jobPlanif}" >
-			<p:messages globalOnly="false" id="message_upd" autoUpdate="true" 
+			header="#{msg.p_dialog_modif_title_jobPlanif}">
+			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
 				showDetail="true" />
-			<h:form >
-				<socle:jobPlanifForm />
+			<h:form id="formModifJob">
+				<socle:jobPlanifFormModif />
 				<br />
 				<br />
 				<p:commandButton value="#{msg.p_dialog_bouton_modifier_libelle}"
 					type="submit" actionListener="#{jobPlanifManagedBean.update}"
-					update=":idPageMessages"
+					update=":idPageMessages" ajax="true"
 					oncomplete="if (#{jobPlanifManagedBean.closeDialog}=true) PF('Modif').close()"></p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Modif').close()"
 					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel"></p:commandButton>
@@ -68,8 +70,11 @@
 			id="dataTable" rowIndexVar="index" paginator="true"
 			selectionMode="single"
 			selection="#{jobPlanifManagedBean.selectedItem}"
-			rowKey="#{item.idJobPlanif}">
-
+			rowKey="#{item.idJobPlanif}"> 
+			<p:ajax event="rowSelect"
+                                listener="#{jobPlanifManagedBean.rowSelect}"
+                                />
+    
 			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
 				<h:outputText value="#{item.idJobPlanif}"></h:outputText>
 			</p:column>
@@ -90,20 +95,20 @@
 						<p:tooltip for="update_item"
 							value="#{msg.p_bouton_modifier_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
 					</h:graphicImage>
-				</p:commandLink> 
-				
+				</p:commandLink>
+
 				<p:commandLink id="delete_role" update="dataTable :idPageMessages"
-                    action="#{jobPlanifManagedBean.delete}"
-                    onsuccess="#{jobPlanifManagedBean.reload()}"
-                    onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif}) ?')) return false">
-                    <f:setPropertyActionListener value="#{item}"
-                        target="#{jobPlanifManagedBean.selectedItem}" />
-                    <h:graphicImage id="img_delete"
-                        name="private/image/corbeille2.png" styleClass="actionButtons">
-                    </h:graphicImage>
-                    <p:tooltip id="toolTip" for="delete_role"
-                        value="#{msg.p_bouton_supprimer_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
-                </p:commandLink>
+					action="#{jobPlanifManagedBean.delete}"
+					onsuccess="#{jobPlanifManagedBean.reload()}"
+					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif}) ?')) return false">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{jobPlanifManagedBean.selectedItem}" />
+					<h:graphicImage id="img_delete" name="private/image/corbeille2.png"
+						styleClass="actionButtons">
+					</h:graphicImage>
+					<p:tooltip id="toolTip" for="delete_role"
+						value="#{msg.p_bouton_supprimer_tip_jobPlanif} #{item.nomTechniqueJobPlanif} (#{item.libelleJobPlanif})" />
+				</p:commandLink>
 
 			</p:column>
 		</p:dataTable>

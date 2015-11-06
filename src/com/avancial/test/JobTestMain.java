@@ -6,32 +6,25 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.avancial.app.jobs.JobAdaptation;
 import com.avancial.app.jobs.JobExport;
 
 public class JobTestMain {
 
    public static void main(String[] args) throws SchedulerException {
 
-      SchedulerFactory sf = new StdSchedulerFactory();
-      Scheduler sched = sf.getScheduler();
-      // define the job and tie it to our HelloJob class
-      JobDetail job = JobBuilder.newJob(JobExport.class).withIdentity("JOB", "JOB ").build();// JobImport // JobAdaptation // JobExport
-      // Trigger the job to run on the next round minute
-      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JOB ", "JOB ").withSchedule(CronScheduleBuilder.cronSchedule("0 0/5 * * * ?")).build();
-            
-      sched.start()                    ;
-      sched.scheduleJob(job , trigger)  ; 
-      try {
-         Thread.sleep(600L);
-      } catch (InterruptedException e) {
-        
-         e.printStackTrace();
-      }
-      // sched.shutdown(true);
+      JobDetail job = JobBuilder.newJob(JobAdaptation.class).withIdentity("JobAdaptation", "group1").build();
+      Trigger trigger = TriggerBuilder.newTrigger().withIdentity("JobAdaptation", "group1")
+            .withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatMinutelyForTotalCount(1)).build();
+      Scheduler scheduler = new StdSchedulerFactory().getScheduler()             ;
+     
+         scheduler.start();
+         scheduler.scheduleJob(job, trigger); 
    
    }
   

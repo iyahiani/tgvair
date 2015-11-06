@@ -223,15 +223,18 @@ public class TrainCatalogueDAO extends AbstractDao {
       List<CirculationAdapterDataBean> listCircAdapt = new CirculationDAO().getLastCircul(tc.getIdTrain());
       String lastDate = sdf.format(listCircAdapt.get(0).getDateCreationLigneTrain())                      ;
       
-      for (CirculationAdapterDataBean c : listCircAdapt) {
+    /*  for (CirculationAdapterDataBean c : listCircAdapt) {
    
          if (lastDate.equalsIgnoreCase(today)) 
             try {
+               
                daoDelete.delete(c);
             } catch (ASocleException e) {
                e.printStackTrace()           ;
             }
-      }  
+      } */  
+      
+      daoDelete.deleteAllNewCirculation();
        
       if (tc.getListeCirculations().size()==0 ) {
          this.log.info("Le Train"+new TrainCatalogueDAO().getTrainCatalogueByID(tc.getIdTrain()).getNumeroTrainCatalogue()+" à été supprimé");
@@ -250,13 +253,11 @@ public class TrainCatalogueDAO extends AbstractDao {
          cirAdapterDataBean.setDateCreationLigneTrain(Calendar.getInstance().getTime());
          try {
                daoDelete.save(cirAdapterDataBean); 
-               
          } catch (Exception | ASocleException e) {
             this.log.error("erreur lors de sauvegarde des Adaptations"+e.getMessage());
             e.printStackTrace();
          }
       } 
-      
    }
    }
    

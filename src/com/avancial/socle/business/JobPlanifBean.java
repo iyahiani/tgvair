@@ -23,11 +23,12 @@ public class JobPlanifBean {
    @Inject
    private JobPlanifDataBean jobPlanifDataBean;
    @Inject
-   private JobDataBean       job;
+   private JobDataBean job;
 
    /**
-    * ² Constructeur
+    * Constructeur
     */
+
    public JobPlanifBean(JobPlanifDataBean jobPlanifDataBean) {
       this.jobPlanifDataBean = jobPlanifDataBean;
    }
@@ -35,6 +36,7 @@ public class JobPlanifBean {
    /**
     * Constructeur
     */
+
    public JobPlanifBean() {
       super();
       this.jobPlanifDataBean = new JobPlanifDataBean();
@@ -58,12 +60,15 @@ public class JobPlanifBean {
     * @throws ASocleException
     * 
     */
-   public void save(long jobId, long jobPlanifTypeId) throws ASocleException {
-      JobPlanifTypeDao planifDao = new JobPlanifTypeDao();
-      JobDao jobDao = new JobDao();
-
-      this.getJobPlanif().setJobPlanifTypeDataBean(planifDao.getJobPlanifTypeById(jobPlanifTypeId));
-      this.getJobPlanif().setJob(jobDao.getJobById(jobId));
+   public void save() throws ASocleException {
+      /*
+       * JobPlanifTypeDao planifDao = new JobPlanifTypeDao(); JobDao jobDao =
+       * new JobDao();
+       * 
+       * this.getJobPlanif().setJobPlanifTypeDataBean(planifDao.getJobPlanifTypeById
+       * (jobPlanifTypeId));
+       * this.getJobPlanif().setJob(jobDao.getJobById(jobId));
+       */
 
       JobPlanifDao dao = new JobPlanifDao();
 
@@ -102,13 +107,13 @@ public class JobPlanifBean {
 
    public String getCron() {
       StringBuilder sb = new StringBuilder();
-      sb.append(this.getSecondesJobPlanif() + " ");
-      sb.append(this.getMinutesJobPlanif() + " ");
-      sb.append(this.getHeuresJobPlanif() + " ");
-      sb.append(this.getJourSemaineJobPlanif() + " ");
-      sb.append(this.getJourMoisJobPlanif() + " ");
-      sb.append(this.getMoisJobPlanif() + " ");
-      sb.append(this.getAnneeJobPlanif() + " ");
+      sb.append(this.getSecondesJobPlanif() +" ");
+      sb.append(this.getMinutesJobPlanif()+" ");
+      sb.append(this.getHeuresJobPlanif()+" ");
+      sb.append(this.getJourSemaineJobPlanif()+" ");
+      sb.append(this.getJourMoisJobPlanif()+" ");
+      sb.append(this.getMoisJobPlanif()+" ");
+      sb.append(this.getAnneeJobPlanif()+" ");
 
       return sb.toString();
    }

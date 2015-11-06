@@ -9,21 +9,21 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 import org.quartz.CronScheduleBuilder;
+import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
@@ -37,7 +37,6 @@ import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifTypeDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
-import com.avancial.socle.jobs.JobTest;
 import com.avancial.socle.resources.MessageController;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
@@ -53,7 +52,8 @@ public class JobPlanifManagedBean extends AManageBean {
     */
    private static final long serialVersionUID = 1L;
    private List<JobPlanifBean> selectedItems;
-   @Inject
+ 
+  // @Inject
    private JobPlanifBean selectedItem;
 
    private String libelle;
@@ -70,11 +70,10 @@ public class JobPlanifManagedBean extends AManageBean {
    private String jobTypeSelected;
 
    private List<SelectItem> listeJob;
-   private String jobSelected;
-
-   private boolean isCrone;
-   private boolean isDaily;
-   private boolean isNow;
+   private String jobSelected ;
+   private boolean isCrone    ;
+   private boolean isDaily    ;
+   private boolean isNow      ;
 
    /**
     * Constructeur
@@ -97,19 +96,18 @@ public class JobPlanifManagedBean extends AManageBean {
             this.isNow = true;
          }
       } else {
-         this.isCrone = false;
-         this.isDaily = false;
-         this.isNow = false;
+         this.isCrone = true;
+         this.isDaily = true;
+         this.isNow = true;
       }
       // RequestContext.getCurrentInstance().update(":formAjoutJob");
    }
 
    @PostConstruct
    public void init() {
-      this.isCrone = false;
-      this.isDaily = false;
-      this.isNow = false;
-
+      this.isCrone = true;
+      this.isDaily = true;
+      this.isNow = true;
    }
 
    public JobPlanifManagedBean() {
@@ -148,124 +146,111 @@ public class JobPlanifManagedBean extends AManageBean {
     */
    @Override
    public String add() throws ASocleException {
-
-      if (this.jobTypeSelected.equalsIgnoreCase("1"))
-         addCroneJob();
-      if (this.jobTypeSelected.equalsIgnoreCase("2"))
-         addDailyJob();
-      if (this.jobTypeSelected.equalsIgnoreCase("3"))
-         addNowJob();
-
-      return null;
-   }
-
-   private void addNowJob() {
-
-   }
-
-   private void addDailyJob() {
-      JobPlanifBean bean = new JobPlanifBean();
-      bean.setLibelleJobPlanif(this.libelle);
-      bean.setMinutesJobPlanif(this.minutes);
-      bean.setMoisJobPlanif(this.mois);
-      bean.setNomTechniqueJobPlanif(this.nomTechnique);
-      bean.setSecondesJobPlanif(this.secondes);
-      bean.setHeuresJobPlanif(this.heures);
+      JobPlanifBean bean = this.creerJobPlanifBean();
+      //// Si le type du Job est de type NOW : on ne l'enregistre pas, on l'execute une fois  
+      
+      if(!bean.getJobPlanif().getJobPlanifTypeDataBean().getLibelleJobPlanifType().equalsIgnoreCase("now")) {
       try {
-         bean.save(Long.valueOf(this.jobSelected), Long.valueOf(this.jobTypeSelected));
+         bean.save();
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(),
                new FacesMessage(FacesMessage.SEVERITY_INFO, "", MessageController.getTraduction("p_message_add_ok")));
          RequestContext.getCurrentInstance().update(":dataTable");
-         this.closeDialog = true;
-         SchedulerFactory sf = new StdSchedulerFactory();
-         try {
-            Scheduler sched = sf.getScheduler(); 
-           // JobDetail job = JobBuilder.newJob(this.jobSelected.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
-         
-         } catch (SchedulerException e) {
+         this.closeDialog = true; 
+      }  catch (ASocleException e) {
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
             e.printStackTrace();
          }
-      } catch (ASocleException e) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
-         e.printStackTrace();
-      }
-
-   }
-
-   private String addCroneJob() throws ASocleException {
-      super.add();
-
-      JobPlanifBean bean = new JobPlanifBean();
-
-      bean.setLibelleJobPlanif(this.libelle);
-      bean.setAnneeJobPlanif(this.annee);
-      bean.setHeuresJobPlanif(this.heures);
-      bean.setJourMoisJobPlanif(this.jourMois);
-      bean.setJourSemaineJobPlanif(this.jourSemaine);
-      bean.setLibelleJobPlanif(this.libelle);
-      bean.setMinutesJobPlanif(this.minutes);
-      bean.setMoisJobPlanif(this.mois);
-      bean.setNomTechniqueJobPlanif(this.nomTechnique);
-      bean.setSecondesJobPlanif(this.secondes);
-      try {
-         bean.save(Long.valueOf(this.jobSelected), Long.valueOf(this.jobTypeSelected));
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(),
-               new FacesMessage(FacesMessage.SEVERITY_INFO, "", MessageController.getTraduction("p_message_add_ok")));
-         RequestContext.getCurrentInstance().update(":dataTable");
-         this.closeDialog = true;
+      } 
+      else {
          SchedulerFactory sf = new StdSchedulerFactory();
          try {
+            Job newjob = (Job) Class.forName(bean.getJobPlanif().getJob().getClasseJob()).newInstance();
             Scheduler sched = sf.getScheduler();
-            JobDetail job = JobBuilder.newJob(JobTest.class).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
-            sched.scheduleJob(job, trigger);
-         } catch (SchedulerException e) {
+            JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
+            ////
+            System.out.println(sched.getContext().isEmpty()); 
+            /////
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatHourlyForTotalCount(1)).build();
+            sched.scheduleJob(job, trigger); 
+            sched.start(); 
+            Thread.sleep(600L); 
+            sched.shutdown(true); 
+          } catch (SchedulerException | InstantiationException | IllegalAccessException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
          }
-      } catch (ASocleException e) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
-         e.printStackTrace();
-      }
+      } 
+      
+
       return null;
    }
 
+    
+   private JobPlanifBean creerJobPlanifBean() {
+      JobPlanifBean bean = new JobPlanifBean() ;
+      bean.setLibelleJobPlanif(this.libelle);
+      bean.setMinutesJobPlanif(this.minutes != null ? this.minutes :"*" )             ;
+      bean.setMoisJobPlanif(this.mois != null ? this.mois : "*")                   ;
+      bean.setNomTechniqueJobPlanif(this.nomTechnique)   ;
+      bean.setSecondesJobPlanif(this.secondes !=null ? this.secondes : "*")           ;
+      bean.setHeuresJobPlanif(this.heures != null ? this.heures :"*")               ;
+      bean.setJourMoisJobPlanif(this.jourMois != null ? this.jourMois : "*"); 
+      bean.setJourSemaineJobPlanif(this.jourSemaine != null ? this.jourSemaine : "?");
+      bean.setAnneeJobPlanif(this.annee != null ? this.annee : "*"); 
+      
+      JobPlanifTypeDao planifDao = new JobPlanifTypeDao();
+      JobDao jobDao = new JobDao()                       ;
+      bean.getJobPlanif().setJobPlanifTypeDataBean(planifDao.getJobPlanifTypeById(Long.valueOf(this.jobTypeSelected)));
+      bean.getJobPlanif().setJob(jobDao.getJobById(Long.valueOf(this.jobSelected)));
+      return bean;
+   }  
+   
+   public JobPlanifBean creerBeanAModifier() {
+      JobPlanifBean bean = new JobPlanifBean() ;
+      bean.setLibelleJobPlanif(this.selectedItem.getLibelleJobPlanif());
+      bean.setMinutesJobPlanif(this.selectedItem.getMinutesJobPlanif())             ;
+      bean.setMoisJobPlanif(this.selectedItem.getJourMoisJobPlanif())                   ;
+      bean.setNomTechniqueJobPlanif(this.selectedItem.getNomTechniqueJobPlanif())   ;
+      bean.setSecondesJobPlanif(this.selectedItem.getSecondesJobPlanif())           ;
+      bean.setHeuresJobPlanif(this.selectedItem.getHeuresJobPlanif())               ;
+      JobPlanifTypeDao planifDao = new JobPlanifTypeDao();
+      JobDao jobDao = new JobDao()                       ;
+      bean.getJobPlanif().setJobPlanifTypeDataBean(planifDao.getJobPlanifTypeById(Long.valueOf(this.jobTypeSelected)));
+      bean.getJobPlanif().setJob(jobDao.getJobById(Long.valueOf(this.jobSelected)));
+      return bean;
+   }
+   
    @Override
    public String update() throws ASocleException {
-      super.update();
-      if (null != this.selectedItem) {
-         JobPlanifDao dao = new JobPlanifDao();
+      super.update(); 
+      if (null != this.jobTypeSelected) { 
+      JobPlanifBean bean = this.creerBeanAModifier() ;
+         JobPlanifDao dao = new JobPlanifDao(); 
          try {
-            dao.update(this.selectedItem.getJobPlanif());
-
+            dao.update(bean.getJobPlanif());
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(),
                   new FacesMessage(FacesMessage.SEVERITY_INFO, "", MessageController.getTraduction("p_message_update_ok")));
-            this.closeDialog = true;
-            // RequestContext.getCurrentInstance().update(":dataTable");
-            SchedulerFactory sf = new StdSchedulerFactory();
-            Scheduler sched = sf.getScheduler();
+            this.closeDialog = true                         ;
+            SchedulerFactory sf = new StdSchedulerFactory() ;
+            Scheduler sched = sf.getScheduler()             ;
             Trigger oldTrigger = sched.getTrigger(TriggerKey.triggerKey(this.selectedItem.getLibelleJobPlanif(), "group1"));
-            // obtain a builder that would produce the trigger
             TriggerBuilder tb = oldTrigger.getTriggerBuilder();
-            // update the schedule associated with the builder, and build the
-            // new trigger
-            // (other builder methods could be called, to change the trigger in
-            // any
-            // desired way)
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(this.selectedItem.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(this.selectedItem.getCron()))
                   .build();
             sched.rescheduleJob(oldTrigger.getKey(), trigger);
 
-         } catch (ASocleException e) {
+         } catch (ASocleException | SchedulerException e) {
             e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
-         } catch (SchedulerException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur Modification Job", e.getMessage()));
+         } 
       }
       return null;
-   }
+   } 
+   
+   public void rowSelect(SelectEvent event) {
 
+      this.selectedItem = (JobPlanifBean) event.getObject();
+
+   }
    @Override
    public String delete() throws ASocleException {
       super.delete();
@@ -292,6 +277,7 @@ public class JobPlanifManagedBean extends AManageBean {
       return null;
    }
 
+   ///////////////////////////////////////////   GETTERS AND SETTERS 
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }

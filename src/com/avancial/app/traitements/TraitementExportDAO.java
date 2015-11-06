@@ -11,6 +11,7 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
 
 public class TraitementExportDAO  extends AbstractDao{
 
+   
    public void save(TraitementExportDataBean bean) throws ASocleException {
       try {
 
@@ -40,9 +41,9 @@ public class TraitementExportDAO  extends AbstractDao{
       return (TraitementExportDataBean)requete.getResultList().get(0)              ;
    }  
    
-   public void saveExport(TraitementExportDataBean export ) {
+   public void saveExport() {
       try { 
-         
+         TraitementExportDataBean export =   new TraitementExportDataBean() ;
          Calendar calendar = Calendar.getInstance() ;
          export.setDateExtraction(calendar.getTime()); 
          export.setHeureCreation(String.valueOf( calendar.getTime().getHours() ).concat(String.valueOf(calendar.getTime().getMinutes())));

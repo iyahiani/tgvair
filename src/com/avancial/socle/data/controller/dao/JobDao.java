@@ -34,6 +34,12 @@ public class JobDao extends AbstractDao {
       Query requete = this.getEntityManager().createQuery(sql).setParameter("id", id);
       return (JobDataBean) requete.getSingleResult();
    }
+   
+   public JobDataBean getJobByName(String name) {
+      String sql = "From JobDataBean where libelleJob =:name";
+      Query requete = this.getEntityManager().createQuery(sql).setParameter("name", name);
+      return (JobDataBean) requete.getSingleResult();
+   }
 
    public void save(JobDataBean bean) throws ASocleException {
       try {

@@ -176,9 +176,6 @@ public class CirculationDAO extends AbstractDao {
     
   }
  
-  
-  
-  
    
   
   public void deleteAllNewCirculation() {

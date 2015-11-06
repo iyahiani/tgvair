@@ -29,15 +29,19 @@ import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.app.traitements.TraitementsImportDataBean;
 
 public class JobAdaptation implements Job {
-    
+     
+   private boolean isLock =false ;
    
-   
-   public void execute(JobExecutionContext context) throws JobExecutionException {
+   public void execute(JobExecutionContext context) throws JobExecutionException { 
+      
       Logger log = Logger.getLogger(JobAdaptation.class); 
       log.info("Job Adaptation Lancé");
       ////////////    Archiver la date de l'export 
       
-     new TraitementExportDAO().saveExport(new TraitementExportDataBean());
+     /*if (!this.isLock) {
+        this.isLock = true ;*/
+        new TraitementExportDAO().saveExport();
+  //   }
      
       // / update table circulation adapter avec la table des TrainsCatalogue
 
@@ -59,13 +63,13 @@ public class JobAdaptation implements Job {
       listCirculAdapter = new CirculationDAO().getAll();
       TrainFactory factory = new TrainFactory();
       // re-construire les circulations du traions à partir de la table des circulation   
-                
+      
       int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue() ; 
       Circulation circulTemp = new Circulation() ;
       circulTemp.createCirculationFromBean(listCirculAdapter.get(0)) ;
       TrainCatalogue train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(0)); 
       train.addCirculation(circulTemp);
-     
+
       for (int i = 1 ; i < listCirculAdapter.size() ; i ++ ) {
          circulTemp = new Circulation() ;
          circulTemp.createCirculationFromBean(listCirculAdapter.get(i)) ;
@@ -80,8 +84,7 @@ public class JobAdaptation implements Job {
          } 
          if(i==listCirculAdapter.size()-1) listTrains.add(train);
       }
-      
-      
+     
       // //////////////////////////// recuperer les circulations de la ssim
       List<Circulation> circulations = new ArrayList<>();
       Train trainsSSIM = new Train();
@@ -108,7 +111,7 @@ public class JobAdaptation implements Job {
       trainsSSIM.remplirJoursCirculations();
       // //////////////////////////////// recuperer la trains restreints et
       // lancer l'adaptation
-
+      
       TraitementImportDAO dao = new TraitementImportDAO()   ;
       List<TraitementsImportDataBean> listTraitements = dao.getLastID();
       Date dateDebutSSIM = listTraitements.get(0).getDateDebutSSIM();
@@ -131,12 +134,16 @@ public class JobAdaptation implements Job {
                traincat.adaptGuichet(listPointsArret);
                traincat.calculeCirculationFromJoursCirculation();
                listCatalogue.add(traincat);
-              
             }
       }
       // //////////////////Updater les circulations 
-      
-      
       new TrainCatalogueDAO().updateCirculation(listCatalogue); 
+   }
+
+   public boolean isLock() {
+      return this.isLock;
+   }
+   public void setLock(boolean isLock) {
+      this.isLock = isLock;
    }
 }

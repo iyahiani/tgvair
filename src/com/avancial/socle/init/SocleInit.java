@@ -28,7 +28,6 @@ import com.avancial.socle.business.JobPlanifBean;
 import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
-
 /**
  * @author bruno.legloahec
  *
@@ -82,9 +81,11 @@ public class SocleInit extends HttpServlet {
          Job newjob = null;
          JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean);
          try {
+            
             newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
             Scheduler sched = sf.getScheduler();
             JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
+            
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
             sched.scheduleJob(job, trigger);
          } 
