@@ -2,6 +2,7 @@ package com.avancial.app.model.managedbean;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import org.primefaces.model.DefaultScheduleModel;
 
 public class CustomerSchedule implements Serializable {

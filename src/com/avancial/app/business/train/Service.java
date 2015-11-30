@@ -1,6 +1,5 @@
 package com.avancial.app.business.train;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import com.avancial.app.data.controller.dao.ServiceDAO;

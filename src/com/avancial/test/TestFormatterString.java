@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
 public class TestFormatterString {
 
    @Test 

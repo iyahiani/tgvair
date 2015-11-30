@@ -1,7 +1,5 @@
 package com.avancial.app.model.managedbean;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -11,12 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
-
-
-
-
-import javax.persistence.criteria.Expression;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;

@@ -1,6 +1,5 @@
 package com.avancial.app.model.managedbean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +21,6 @@ import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.resources.connectionsUtils.SelectWithJDBC;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.resources.utils.StringToFormatedString;
 import com.avancial.app.traitements.TraitementExportDAO;

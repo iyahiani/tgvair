@@ -1,6 +1,5 @@
 package com.avancial.app.data.model.databean;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 

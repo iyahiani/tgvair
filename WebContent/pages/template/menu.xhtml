@@ -41,20 +41,20 @@
 				action="#{menu.goPointArret}" 
 				title="Gestion Points Arret" rendered="#{ihmManagedBean.isLogged()}" />
 			
-			<p:menuitem value="#{msg.p_role_menu}" action="#{menu.goRole}"
+			<p:menuitem value="#{msg.p_role_menu}" action="#{menu.goRole}" title="Gestion des Roles Utilisateurs"
 				rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}" />
 			
-			<p:menuitem value="#{msg.p_job_menu}" action="#{menu.goJob}"
+			<p:menuitem value="#{msg.p_job_menu}" action="#{menu.goJob}" title="Création/Modification des Jobs"
 				 rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}" /> 
 			
-			<p:menuitem value="#{msg.p_jobPlanif_menu}"  action="#{menu.goJobPlanif}" 
+			<p:menuitem value="#{msg.p_jobPlanif_menu}"  action="#{menu.goJobPlanif}" title="Planification Des Jobs"
 			 rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobPlanif')}" />
 			 
 			
-			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}"
+			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}" title="Gestion Des Utilisateurs"
 				 rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageUtilisateurs')}" />
 		    
-		    <p:menuitem value="#{msg.p_titre_page_admin}" action="#{menu.goAdministration}"
+		    <p:menuitem value="#{msg.p_titre_page_admin}" action="#{menu.goAdministration}" 
                 rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageAdministration')}" />
 		   
 		     <p:menuitem value="#{msg.p_logs_log}" action="#{menu.goJournalLog}"

@@ -3,18 +3,28 @@ package com.avancial.socle.model.managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+
+import com.avancial.app.data.controller.dao.ServiceDAO;
+import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
+import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.resources.constants.EKeys;
 import com.avancial.socle.resources.constants.ERegexUser;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * 
@@ -29,7 +39,8 @@ public class UserManagedBean implements Serializable {
 	private String commentaire;
 	private String email;
 	private String fax;
-	private String login;
+	private String login; 
+	private String password;
 	private String nom;
 	private String numero;
 	private String prenom;
@@ -38,21 +49,66 @@ public class UserManagedBean implements Serializable {
 	private UserDataBean selectedUser;
 	private String telephone;
 	private List<UserDataBean> users;
-	private String ville;
+	private String ville; 
+	@Inject 
+	private IhmManagedBean ihmManagedBean ; 
+	 private List<UserDataBean> filtredUser;
+	
 
 	public UserManagedBean() {
 		this.users = new ArrayList<>();
 		this.users.addAll(new UserDao().getAll());
 	}
+	
+	 @PostConstruct 
+	   public void init() {
+	     
+	      this.users= new UserDao().getAll() ;
+	   }
 
+	  public void selectedUser(SelectEvent event) {
+
+	      this.selectedUser = (UserDataBean) event.getObject(); 
+	      
+	   } 
 	public void addRule(String detail) {
 		FacesContext.getCurrentInstance().addMessage("growlUser", new FacesMessage(FacesMessage.SEVERITY_INFO, "Information", detail));
 	}
 
 	public void addUser(ActionEvent event) {
 		System.out.println("Ajout user!!");
+	} 
+	
+	public void add() {
+	   UserDataBean user = new UserDataBean() ; 
+	   UserDao dao = new UserDao() ; 
+	   user.setNomUser(this.nom);
+	   user.setPrenomUser(this.prenom); 
+	   user.setLoginUser(this.login); 
+	   user.setPasswordUser(this.password); 
+	   user.setDateCreateUser(new Date());
+	   user.setDateUpdateUser(new Date());
+	   user.setUserCreateUser(this.ihmManagedBean.getCurrentUser());
+	   user.setUserUpdateUser(this.ihmManagedBean.getCurrentUser()); 
+	   user.setRobotUser(false); 
+	   user.setTomcatRoleUser("user"); 
+	   try {
+         dao.save(user);
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Utilisateur Créer."));
+         RequestContext.getCurrentInstance().update(":formTableUsers");
+         
+      } catch (ASocleException e) {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "erreur création Utilisateur"));
+         
+      }
 	}
-
+   
+	public void reload() { 
+	   
+	   this.users.clear();
+	   this.users = new UserDao().getAll();
+	}
+	
 	public void cancelUser() {
 		this.codePostal = null;
 		this.commentaire = null;
@@ -187,4 +243,36 @@ public class UserManagedBean implements Serializable {
 	public void updateUser(UserDataBean user) {
 		this.selectedUser = user;
 	}
+
+   public void setSelectedUser(UserDataBean selectedUser) {
+      this.selectedUser = selectedUser;
+   }
+
+   public void setUsers(List<UserDataBean> users) {
+      this.users = users;
+   }
+
+   public List<UserDataBean> getFiltredUser() {
+      return filtredUser;
+   }
+
+   public void setFiltredUser(List<UserDataBean> filtredUser) {
+      this.filtredUser = filtredUser;
+   }
+
+   public String getPassword() {
+      return password;
+   }
+
+   public void setPassword(String password) {
+      this.password = password;
+   }
+
+   public IhmManagedBean getIhmManagedBean() {
+      return ihmManagedBean;
+   }
+
+   public void setIhmManagedBean(IhmManagedBean ihmManagedBean) {
+      this.ihmManagedBean = ihmManagedBean;
+   }
 }

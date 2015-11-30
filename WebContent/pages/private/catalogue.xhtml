@@ -184,6 +184,7 @@
 										value=" Modifier le Train de la compagnie #{compagnie.codeCompagnieAerienne}" />
 								</h:graphicImage>
 							</p:commandLink>
+							
 							<p:commandLink id="delete_T2C"
 								onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
 								action="#{traintocompagnie.delete}" ajax="true" oncomplete="#{traintocompagnie.reload()}"  >
@@ -356,7 +357,8 @@
 				<p:commandButton immediate="true" onclick="PF('Modif').close()" style="background-color: white ;"
 					value="Annuler" type="cancel"></p:commandButton>
 			</h:form>
-		</p:dialog>
+		</p:dialog> 
+		
 		<p:dialog id="modifT2C" widgetVar="modifT2C" resizable="false"
 			draggable="false" header="Modifier Train">
 			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"

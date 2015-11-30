@@ -1,4 +1,4 @@
-package com.avancial.app.resources.utils;
+package com.avancial.socle.utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;

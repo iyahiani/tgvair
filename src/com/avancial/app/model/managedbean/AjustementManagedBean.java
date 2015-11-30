@@ -5,49 +5,29 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Timer;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
-import org.primefaces.component.schedule.Schedule;
-import org.primefaces.component.schedule.ScheduleRenderer;
 import org.primefaces.event.CloseEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
 
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.TrainFactory;
-import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
-import com.avancial.app.data.model.databean.PointArretDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
-import com.avancial.test.TrainCatalogueFactoryTest;
-import com.avancial.test.TrainFactoryTest;
 
 /**
  * 

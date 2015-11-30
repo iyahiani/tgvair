@@ -1,15 +1,210 @@
 <ui:composition template="/pages/template/layout.xhtml"
-				xmlns="http://www.w3.org/1999/xhtml"
-				xmlns:f="http://java.sun.com/jsf/core"
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:p="http://primefaces.org/ui"
-				xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<ui:define name="title">#{msg.p_user_titre}</ui:define>
 	<ui:define name="contenu">
-		<p:dataTable var="user" value="#{userManagedBean.users}">
-			<p:column headerText="#{msg.p_user_role_colonne_id_header}">
-				<h:outputText value="#{user.idUser}"/>
-			</p:column>
-		</p:dataTable>
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
+
+
+
+		<p:commandLink oncomplete="PF('Ajout').show()"
+			actionListener="#{jobManagedBean.initProperties}">
+			<h:graphicImage id="add_job" name="private/image/plusVert.png">
+				<p:tooltip for="add_job" value="#{msg.p_user_header_ajout}" />
+			</h:graphicImage>
+
+		</p:commandLink>
+
+
+
+		<p:dialog widgetVar="Ajout" resizable="false"
+			header="#{msg.p_user_header_ajout}" id="ajout">
+			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="#{msg.p_user_nom}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.nom}" required="true"
+								placeholder="#{msg.p_user_nom}"></p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_prenom}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.prenom}" required="true"
+								placeholder="#{msg.p_user_prenom}"></p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_login}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.login}" required="true"
+								placeholder="#{msg.p_user_login}"></p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_password}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.password}" required="true"
+								placeholder="#{msg.p_user_password}"></p:inputText></td>
+					</tr>
+				</table>
+				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
+					type="submit" actionListener="#{userIhm.add}"
+					onsuccess="if (#{roleManagedBean.closeDialog}=true) PF('Ajout').close()"
+					update=":formTableUsers" action="#{userIhm.reload()}" />
+				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
+					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			draggable="false" header="Modifier Train" closeOnEscape="true">
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="false"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="idUser"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.idUser}"
+								disabled="true">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Nom :"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.nomUser}">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Prénom"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.prenomUser}">
+							</p:inputText></td>
+					</tr>
+					
+					<tr>
+						<td><h:outputText value="Login"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.loginUser}">
+							</p:inputText></td>
+					</tr> 
+					
+					<tr>
+						<td><h:outputText value="Mot De Passe"></h:outputText></td>
+						<td><p:inputText 
+								value="#{userIhm.selectedUser.passwordUser}">
+							</p:inputText></td> 
+							
+					</tr> 
+					<tr>
+                        <td><h:outputText value="Ajouter Role"></h:outputText></td>
+                        <td><h:selectOneMenu effect="fold" editable="true" 
+                                    value="#{userIhm.selectedItem}"  
+                                    style="width: auto;"> 
+                                    <f:selectItem itemLabel="Selectionnez Un Role" itemValue="#{null}"/>
+                                    <f:selectItems value="#{userIhm.users2roleItems}" />  
+                                </h:selectOneMenu></td>      
+                    </tr>
+                
+				</table>
+				<br />
+				<br />
+				<p:commandButton value="Modifer" type="submit"
+					actionListener="#{userIhm.update()}"
+					style="background-color: white ; margin-left : 40 px ;"
+					oncomplete="if (#{userIhm.closeDialog}=true) PF('Modif').close();"
+				    action="#{userIhm.reload()}">
+				</p:commandButton>
+				<p:commandButton immediate="true" onclick="PF('Modif').close()"
+					style="background-color: white ; margin-left : 40 px ;"
+					value="Annuler" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
+
+
+
+		<p:fieldset legend="#{msg.p_user_fieldName}">
+			<h:form id="formTableUsers">
+				<p:dataTable value="#{userIhm.users}" rows="10" scrollable="true"
+					paginatorPosition="top" id="tableUser" var="user"
+					selectionMode="single" selection="#{userIhm.selectedUser}"
+					rowKey="#{user.idUser}" filteredValue="#{userIhm.filtredUser}"
+					emptyMessage="Pas d'Utilisateur" rowsPerPageTemplate="5,10,15"
+					paginator="true">
+					<p:ajax event="rowSelect" listener="#{userIhm.selectedUser}" />
+					<p:column headerText="ID Utilisateur">
+						<h:outputText value="#{user.idUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_nom}" filterBy="#{user.nomUser}"
+						filterMatchMode="contains">
+						<h:outputText value="#{user.nomUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_prenom}"
+						filterBy="#{user.prenomUser}" filterMatchMode="contains">
+						<h:outputText value="#{user.prenomUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_login}">
+						<h:outputText value="#{user.loginUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_password}">
+						<h:outputText value="#{user.passwordUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Modifier Utilisateur" width="50">
+
+						<p:commandLink update=":modif" id="update_user"
+							oncomplete="PF('Modif').show();">
+							<f:setPropertyActionListener value="#{user}"
+								target="#{userIhm.selectedUser}" />
+							<h:graphicImage name="private/image/edit.png"
+								styleClass="actionButtons">
+								<p:tooltip for="update_user"
+									value=" Modifier l'utilisateur #{user.nomUser} #{user.prenomUser}" />
+							</h:graphicImage>
+						</p:commandLink>
+						<p:commandLink id="delete_user"
+                                onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
+                                action="#{userIhm.delete}"   >
+                                    
+                                <p:ajax update=":formTableUsers" delay="1" 
+                                listener="#{userIhm.reload()}"></p:ajax>
+                                <f:setPropertyActionListener value="#{user}"
+                                    target="#{userIhm.selectedUser}" />
+                                <h:graphicImage id="img_delete"
+                                    name="private/image/corbeille2.png" styleClass="actionButtons">
+                                </h:graphicImage>
+                                <p:tooltip id="toolTip" for="delete_user"
+                                    value="supprimer l'utilisateur #{user.nomUser} #{user.prenomUser} " />
+                            </p:commandLink>
+
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
 	</ui:define>
 </ui:composition>

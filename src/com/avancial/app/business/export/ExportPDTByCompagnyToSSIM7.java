@@ -35,6 +35,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    private DateFormat df;
    private IWriter    writer;
    private int        numFichier;
+   private File file ;
    
    /**
     * 
@@ -55,7 +56,6 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
     * @author ismael.yahiani
     * @param tc2c
     * @throws ParseException 
-    * 
     * exporter la liste des trains relatifs a la compagnie sous le format SSIM 7 
     * 
     */
@@ -64,8 +64,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       
       Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class); 
       String compagnieName = listCatalogue.get(0).getCodeCompagnie() ; 
-      File file = new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt");
-      this.writer = new WriterTxt(APP_TgvAir.CHEMIN_SSIM7.toString() + file);
+      this.file = new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt");
+      this.writer = new WriterTxt(APP_TgvAir.CHEMIN_SSIM7_DEV.toString()+ this.file);//APP_TgvAir.CHEMIN_SSIM7_REC.toString()
       this.cpt = 0;
       try {
          int[] beginsType1 = { 0, 1, 35, 191, 194, 200 };
@@ -115,9 +115,9 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          }
 
          this.writer.setFormaterStrategy(formater5);
-         this.writer.write(this.getEnrgType5());
+         this.writer.write(this.getEnrgType5()); 
          this.writer.close();
-
+         //this.file.renameTo(new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt")) ;
       } catch (IOException e) {
          log.error(e.getMessage());
       }
@@ -247,10 +247,18 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
    }
 
    public int getNumFichier() {
-      return numFichier;
+      return this.numFichier;
    }
 
    public void setNumFichier(int numFichier) {
       this.numFichier = numFichier;
+   }
+
+   public File getFile() {
+      return this.file;
+   }
+
+   public void setFile(File file) {
+      this.file = file;
    }
 }

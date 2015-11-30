@@ -1,16 +1,12 @@
 package com.avancial.app.data.controller.dao;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.ServiceDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;

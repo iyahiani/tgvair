@@ -12,8 +12,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
-
 import com.avancial.socle.data.model.databean.User2RoleDataBean;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.resources.ContextController;
@@ -87,6 +85,7 @@ public class IhmManagedBean implements Serializable {
     * 
     * @return the currentUser
     */
+   
    public UserDataBean getCurrentUser() {
       return this.currentUser;
    }
@@ -96,6 +95,7 @@ public class IhmManagedBean implements Serializable {
     * 
     * @param currentUser
     */
+   
    public void setCurrentUser(UserDataBean currentUser) {
       this.currentUser = currentUser;
    }
@@ -105,6 +105,7 @@ public class IhmManagedBean implements Serializable {
     * 
     * @return the originalURL
     */
+   
    public String getOriginalURL() {
       return this.originalURL;
    }

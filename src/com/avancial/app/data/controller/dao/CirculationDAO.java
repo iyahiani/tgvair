@@ -11,9 +11,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
-import com.avancial.app.data.model.databean.PointArretDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.resources.connectionsUtils.HibernateUtils;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;

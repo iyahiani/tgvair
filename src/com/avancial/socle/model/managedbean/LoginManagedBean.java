@@ -2,6 +2,8 @@ package com.avancial.socle.model.managedbean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -13,8 +15,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
-
+import com.avancial.app.resources.utils.CalculeJoursFeriers;
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.resources.ContextController;
@@ -111,12 +112,21 @@ public class LoginManagedBean implements Serializable {
       }
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
-
+   
+   public String motDePasseOublier() { 
+      
+      if (CalculeJoursFeriers.listJoursFeriers(Calendar.getInstance()).contains(Calendar.getInstance())) 
+         return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString(); 
+      return SOCLE_constants.NAVIGATION_INFO_MOT_DE_PASSE.toString() ; 
+      
+   }
+   
    /**
     * Gère le bouton annuler pour retourner à la page d'accueil
     * 
-    * @return l'url de la page d'accueil
-    */
+    * @return l'url de la page d'accueil 
+    */ 
+   
    public static String cancel() {
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
@@ -126,6 +136,7 @@ public class LoginManagedBean implements Serializable {
     * 
     * @return the password
     */
+   
    public String getPassword() {
       return this.password;
    }

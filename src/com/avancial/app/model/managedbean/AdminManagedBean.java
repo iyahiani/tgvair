@@ -1,13 +1,10 @@
 package com.avancial.app.model.managedbean;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -19,11 +16,11 @@ import org.quartz.SchedulerFactory;
 
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
 import com.avancial.app.data.controller.dao.ServiceDAO;
-import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.ServiceDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.traitements.LancementTraitementsManuelle;
+import com.avancial.socle.data.controller.dao.UserDao;
+import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -45,23 +42,21 @@ public class AdminManagedBean extends AManageBean {
    private String compagnie ;  
    private List<ServiceDataBean> listServices ; 
    private ServiceDataBean selectedService ;
-   private  LancementTraitementsManuelle lancementTraitementsManuelle ;
+  
+   private  LancementTraitementsManuelle lancementTraitementsManuelle ; 
+   
    Logger logger = Logger.getLogger(AdminManagedBean.class) ;
    
    public AdminManagedBean() { 
   
     this.lancementTraitementsManuelle  = new LancementTraitementsManuelle() ;
    }
-  
  
-
-   /*   public void valueChanged(ValueChangeEvent event) {
-      String a =  (String) event.getNewValue(); 
-   } */
    
    @PostConstruct 
    public void init() {
       this.listServices = new ServiceDAO().getAll() ;
+   
    }
    
    public void rowSelect(SelectEvent event) {
@@ -69,6 +64,9 @@ public class AdminManagedBean extends AManageBean {
       this.selectedService = (ServiceDataBean) event.getObject(); 
       
    } 
+ 
+ 
+
    
    public void reload() {
       this.listServices = new ServiceDAO().getAll() ;
@@ -101,8 +99,8 @@ public class AdminManagedBean extends AManageBean {
    public String lancerImport() {
       
       this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
-      this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
-      this.logger.info("SUCCES Import SSIM");  
+      //this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+     // this.logger.info("SUCCES Import SSIM");  
       
        return null;
     }
@@ -116,7 +114,7 @@ public class AdminManagedBean extends AManageBean {
 */
    public String lancerExport() {
       
-     // this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+    
      this.lancementTraitementsManuelle.getExportManuel().traitementExport();
      this.logger.info("SUCCES Export SSIM 7");  
       return null;
@@ -205,8 +203,6 @@ public class AdminManagedBean extends AManageBean {
    }
    public void setSelectedService(ServiceDataBean selectedService) {
       this.selectedService = selectedService;
-   }
-
-  
+   }  
 
 }

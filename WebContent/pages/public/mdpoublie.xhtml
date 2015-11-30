@@ -12,20 +12,17 @@
 		</h:head>
 		<h:body>
 			<h:form>
-				<p:panel header="#{msg.p_mdpoublie_titre}" style="width:400px;margin: 0 auto;">
+				<p:panel header="#{msg.p_login_mdpoublie}" style="width:400px;margin: 0 auto;">
 					<h:panelGrid columns="2" id="grid">
 
-						<h:outputText value="#{msg.p_mdpoublie_mail}" />
+						<h:outputText value="Login" />
 						<p:inputText id="mail" value="" />
-						
-
-					</h:panelGrid>
+											</h:panelGrid>
 					<f:facet name="footer">
 						<p:commandButton id="submit" value="#{msg.libelle_valider}" ajax="false"
-							action="" />
+							action="#{login.cancel}" />
 							<p:commandButton id="cancel" value="#{msg.libelle_annuler}" ajax="false"
 							action="#{login.cancel}"   />
-							
 					</f:facet>
 				</p:panel>
 			</h:form>

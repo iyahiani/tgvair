@@ -18,10 +18,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.SelectableDataModel;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;
-import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
-import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;

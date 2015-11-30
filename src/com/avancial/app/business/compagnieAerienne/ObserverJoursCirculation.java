@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.avancial.app.resources.utils.MaxMinDates;
+import com.avancial.app.business.train.Train;
 //import javassist.bytecode.Mnemonic;
 import com.avancial.app.business.train.circulation.JourCirculation;
-import com.avancial.app.business.train.Train;
+import com.avancial.app.resources.utils.MaxMinDates;
 
 public class ObserverJoursCirculation implements IObserverJoursCirculation {
 

@@ -6,7 +6,6 @@ import com.avancial.app.business.compagnieAerienne.TrainToCompagnie;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueAdapterDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 
 public interface ITrainFactory {

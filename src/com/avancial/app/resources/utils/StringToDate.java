@@ -1,6 +1,5 @@
 package com.avancial.app.resources.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

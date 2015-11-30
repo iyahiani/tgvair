@@ -19,17 +19,14 @@ import com.avancial.app.business.parser.FiltreTrancheOptionnel;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.data.controller.dao.CirculationSSIMDao;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
-import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
 import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
-import com.avancial.reader.IReader;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 
@@ -58,7 +55,7 @@ public class LancementImportManuel {
     //  InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
          
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM_PROD.toString());
 
       } catch (IOException e1) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "SSIM", "Erreur Lecture SSIM"));
@@ -66,7 +63,9 @@ public class LancementImportManuel {
 
          e1.printStackTrace();
 
-      }
+      } 
+      
+      if(reader !=null) {
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
          listnums.add(tc.getNumeroTrainCatalogue());
       }
@@ -109,7 +108,7 @@ public class LancementImportManuel {
                   circulation.setDateFinCirculation(StringToDate.toDate(par.getParsedResult().get("POSITION_PERIODE_CIRCULATION_FIN")));
                } catch (ParseException e) {
                   this.logger.error("erreur ssim parse date deb/fin circulation ");
-                  FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur Import", "Erreur De lecture fichier SSIM"));
+                  
                   e.printStackTrace();
                }
                
@@ -121,32 +120,35 @@ public class LancementImportManuel {
              circulationSSIMDataBeans.add(circulation ) ;
             }
          } 
-         dao.customSave(circulationSSIMDataBeans); 
-         reader.closeReader(); 
+         dao.customSave(circulationSSIMDataBeans)  ; 
+         reader.closeReader()                      ; 
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Import SSIM"));
       } catch (Exception e) {
          this.logger.error(e.getMessage());
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Traitement", "Echec Import SSIM"));
          e.printStackTrace();
       }
-
+      
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
          bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
          bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin"));
-
       } catch (Exception e1) {
         
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Import", "Erreur Import SSIM"));
          this.logger.error(e1.getMessage());
-         
       }
 
       TraitementImportDAO daoImport = new TraitementImportDAO();
 
       daoImport.saveTraitementSSIM(bean);
-      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Import", "Traitement Import SSIM Terminé"));
+      
       this.logger.info("Import Terminé");
+      new LancementTraitementsManuelle().getAdaptationManuel().traitementAdaptation();
+      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Import", "Traitement Import SSIM Terminé"));
+   } else {
+      this.logger.warn("fichier SSIM introuvable"); 
    }
+   } 
    
 } 

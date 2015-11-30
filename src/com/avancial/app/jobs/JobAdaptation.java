@@ -24,7 +24,6 @@ import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.traitements.TraitementExportDAO;
-import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.app.traitements.TraitementsImportDataBean;
 

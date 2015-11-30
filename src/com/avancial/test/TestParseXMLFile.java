@@ -11,8 +11,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.junit.Test;
 
-import com.avancial.app.business.train.Guichet;
-
 
 public class TestParseXMLFile {
 

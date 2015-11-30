@@ -41,7 +41,7 @@ public class LancementAdaptationManuel {
    public void traitementAdaptation() {
 
       // / update table circulation adapter avec la table des TrainsCatalogue
-      
+      this.logger.info("Ajustement Lancé");
       Service services = new Service()   ;
       
       List<TrainCatalogueDataBean> listTrainsCat = new TrainCatalogueDAO().getAll();
@@ -74,31 +74,7 @@ public class LancementAdaptationManuel {
       }
       
       
-      /*
-      int idTrainCatalogue = listCirculAdapter.get(0).getTrainCatalogueDataBean().getIdTrainCatalogue();
-      Circulation circulTemp = new Circulation();
-      circulTemp.createCirculationFromBean(listCirculAdapter.get(0));
-      TrainCatalogue train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(0));
-      listTrains.clear();
-      train.addCirculation(circulTemp);
-
-      for (int i = 1; i < listCirculAdapter.size(); i++) {
-         circulTemp = new Circulation();
-         circulTemp.createCirculationFromBean(listCirculAdapter.get(i));
-         if (idTrainCatalogue == listCirculAdapter.get(i).getTrainCatalogueDataBean().getIdTrainCatalogue()) {
-
-            train.addCirculation(circulTemp);
-         } else {
-            listTrains.add(train);
-            train = factory.createTrainCatalgueFromBean(listCirculAdapter.get(i));
-            train.addCirculation(circulTemp);
-            idTrainCatalogue = listCirculAdapter.get(i).getTrainCatalogueDataBean().getIdTrainCatalogue();
-         }
-         if (i == listCirculAdapter.size() - 1)
-            listTrains.add(train);
-      }
-      */
-      
+     
       // //////////////////////////// recuperer les circulations de la ssim
       
       Train trainsSSIM = new Train(); 
@@ -151,6 +127,7 @@ public class LancementAdaptationManuel {
       } 
       
       new TrainCatalogueDAO().updateCirculation(listTrainsAdapt);
-      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Ajustement des Trains"));
+      //FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Traitement", "SUCCES Ajustement des Trains")); 
+      this.logger.info("Ajustement Terminé avec succés");
    }
 }

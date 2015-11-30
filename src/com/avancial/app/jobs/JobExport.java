@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -21,16 +19,13 @@ import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.TrainFactory;
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.CompagnieAerienneDao;
-import com.avancial.app.data.controller.dao.ExportSSIMDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueToCompagnieDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
-import com.avancial.app.data.model.databean.ExportSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.app.resources.utils.StringToDate;
-import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementExportDataBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 

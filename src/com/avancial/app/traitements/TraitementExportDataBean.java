@@ -1,14 +1,14 @@
 package com.avancial.app.traitements;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.avancial.app.resources.utils.HeureFormattage;
 
 
 @Entity 
@@ -28,11 +28,12 @@ public class TraitementExportDataBean implements Serializable{
    private String heureCreation ;  
    
    public TraitementExportDataBean() {
-      
+      this.dateExtraction = new Date() ; 
+      this.heureCreation = HeureFormattage.heureToString(this.dateExtraction.getHours()).concat(HeureFormattage.heureToString(this.dateExtraction.getMinutes()));
        }
 
    public int getIdTraitementExport() {
-      return idTraitementExport;
+      return this.idTraitementExport;
    }
 
    public void setIdTraitementExport(int idTraitementExport) {
@@ -40,7 +41,7 @@ public class TraitementExportDataBean implements Serializable{
    }
 
    public Date getDateExtraction() {
-      return dateExtraction;
+      return this.dateExtraction;
    }
 
    public void setDateExtraction(Date dateExtraction) {
@@ -48,7 +49,7 @@ public class TraitementExportDataBean implements Serializable{
    }
 
    public String getHeureCreation() {
-      return heureCreation;
+      return this.heureCreation;
    }
 
    public void setHeureCreation(String heureCreation) {

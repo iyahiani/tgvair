@@ -4,7 +4,6 @@
 package com.avancial.app.init;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 import org.quartz.JobBuilder;

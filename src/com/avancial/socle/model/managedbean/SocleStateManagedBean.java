@@ -4,6 +4,7 @@
 package com.avancial.socle.model.managedbean;
 
 import java.io.Serializable;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.Query;

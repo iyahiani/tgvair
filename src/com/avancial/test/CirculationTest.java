@@ -10,12 +10,13 @@ import com.avancial.app.business.parser.FilterSSIMTypeEnr;
 import com.avancial.app.business.parser.ParserSSIM;
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.business.train.TGVAIRFactory;
+import com.avancial.app.resources.utils.HeureFormattage;
 import com.avancial.parser.IParser;
 import com.avancial.reader.IReader;
 
 public class CirculationTest {
 
-   @Test
+  // @Test
    public void circulTest() throws IOException, ParseException {
       IReader reader = new ReaderSSIM("D:/Users/ismael.yahiani/Documents/SN5209.txt");
       String ligneSSIM;
@@ -26,6 +27,12 @@ public class CirculationTest {
          String ligneParser = par.parse(ligneSSIM);
          if (ligneParser.length() > 0)
             System.out.println(circul.getCirculation(ligneParser));
-      }
+      } 
+   } 
+   
+   @Test 
+   public void testFormatageHeure() {
+      int xw = 1 ; 
+      System.out.println(HeureFormattage.heureToString(xw)); 
    }
 }

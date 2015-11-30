@@ -7,7 +7,7 @@ import java.util.Date;
 public class HeureFormattage {
 
    public static String heureToString(int heure) {     
-      if(heure<1000) 
+      if(heure<10) 
     	  return "0".concat(String.valueOf(heure)); 
       
       return String.valueOf(heure) ;
@@ -29,5 +29,8 @@ public class HeureFormattage {
 		}			
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		return dateFormat.parse(newHeure);
-	}
+	} 
+   
+   
+   
 }

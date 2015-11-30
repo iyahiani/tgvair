@@ -1,29 +1,16 @@
 package com.avancial.app.data.controller.dao;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.persistence.Query;
-import javax.transaction.Transaction;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.jdbc.Work;
 
-import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
-import com.avancial.app.data.model.databean.PointArretDataBean;
 import com.avancial.app.resources.connectionsUtils.HibernateUtils;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
-import com.mysql.jdbc.PreparedStatement;
 
 /**
  * 

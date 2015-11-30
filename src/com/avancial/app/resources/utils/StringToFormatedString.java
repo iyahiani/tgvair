@@ -55,23 +55,24 @@ public class StringToFormatedString {
      * 
      * @param s
      * @return String  
-     * 
      * formatter le marketingFilght de AFXXXX vers AF XXXX 
-     */
+     */ 
+   
    public static String formaterMatketingFlight(String s) {
       
       StringBuilder sb = new StringBuilder() ;
       sb.append(s); 
       sb.insert(2, " ") ;
-      
       return sb.toString() ;
-   }
+   } 
+   
    /**
     * 
     * @param Int compteur 
     * @return le String de compteur en format 
     * exemple : compteur = 1   string = 000001 / int = 10  string = 000010   
-    */
+    */ 
+   
    public static String formatterCompteurSSIM7(int compteur) {
       String temp = ""; 
       if (String.valueOf(compteur).length() == 1)
@@ -87,5 +88,7 @@ public class StringToFormatedString {
       if (String.valueOf(compteur).length() == 6)
          temp =   String.valueOf(compteur) ;
       return temp ;
-   }
+   } 
+   
+   
 }

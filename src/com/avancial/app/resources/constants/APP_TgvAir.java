@@ -10,8 +10,12 @@ public enum APP_TgvAir {
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"),
 
    NAVIGATION_ADMINISTRATION("/pages/private/Administration?faces-redirect=true"),
-   CHEMIN_SSIM("\\\\reha\\TGVAir_REC\\ssim\\SSIM.txt"),
-   CHEMIN_SSIM7("\\\\reha\\TGVAir_REC\\ssim7\\"),
+   CHEMIN_SSIM_REC("\\\\dione\\nas75_TgvAir_Recette\\SSIM.txt"),
+   CHEMIN_SSIM("d:\\SSIM.txt "), //SSIM.txt 
+   CHEMIN_SSIM_PROD("\\\\dione\\nas75_TgvAir_Prod\\SSIM.txt"), 
+   CHEMIN_SSIM7_DEV("d:\\"),
+   CHEMIN_SSIM7_REC("\\\\reha\\TGVAir_REC\\ssim7\\"),
+   CHEMIN_SSIM7_PROD("\\\\dione\\nas75_TgvAir_Prod\\SSIM.txt"),
    CHEMIN_SSIMARCHIVE("\\\\reha\\TGVAir_REC\\archives\\"),
    CHEMIN_APP_PROPERTIES("/classes/com/avancial/app/resources/app.properties") 
    ;

@@ -1,7 +1,5 @@
 package com.avancial.app.model.managedbean;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,9 +10,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.primefaces.context.RequestContext;
 
 import com.avancial.app.data.controller.dao.PointArretDAO;

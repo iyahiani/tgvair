@@ -1,20 +1,14 @@
 package com.avancial.app.resources.utils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.jboss.weld.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 @Named("calendar") 

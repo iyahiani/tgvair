@@ -1,6 +1,5 @@
 package com.avancial.writer;
 
-import java.util.ArrayList;
 
 public class FormaterRightSpace implements IFormaterFixedLength {
 

@@ -4,8 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.avancial.socle.data.controller.dao.AbstractEntityManager;
-
 public  class AEntityManager {
 
 	  private static AEntityManager instance;

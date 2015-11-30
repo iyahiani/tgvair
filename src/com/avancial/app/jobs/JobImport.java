@@ -26,17 +26,16 @@ import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.model.managedbean.ParamGetterManagedBean;
-import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.DeplacerFicher;
 import com.avancial.app.resources.utils.GetPeriodeSSIM;
 import com.avancial.app.resources.utils.GetTrainsNums;
 import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.app.traitements.LancementTraitementsManuelle;
 import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.app.traitements.TraitementsImportDataBean;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
-import com.avancial.reader.IReader;
 
 /**
  *
@@ -60,7 +59,7 @@ public class JobImport implements Job {
       ReaderSSIM reader = null;
       try {
          // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM_PROD.toString()); //APP_TgvAir.CHEMIN_SSIM.toString()
 
       } catch (IOException e1) {
 
@@ -68,7 +67,9 @@ public class JobImport implements Job {
 
          e1.printStackTrace();
 
-      }
+      } 
+      
+      if (reader!=null) {
       for (TrainCatalogueDataBean tc : listTrainsCatalogue) {
          listnums.add(tc.getNumeroTrainCatalogue());
       }
@@ -154,12 +155,15 @@ public class JobImport implements Job {
       this.logger.info("Import Terminé");
 
       try {
-         archiveSSIM();
-         this.logger.info("Archivage Terminé");
+         archiveSSIM(); 
+         this.logger.info("Archivage Terminé"); 
+         new LancementTraitementsManuelle().getAdaptationManuel().traitementAdaptation();
       } catch (Exception e) {
          this.logger.error("erreur d'archivage du fichier SSIM");
          e.printStackTrace();
       }
+      }  
+      else this.logger.warn("Fichier SSIM Introuvable");
    }
 
    /**

@@ -1,11 +1,7 @@
 package com.avancial.app.data.controller.dao;
 
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -14,14 +10,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.event.spi.PostUpdateEvent;
 
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
-import com.avancial.app.resources.connectionsUtils.InsertWithJDBC;
 import com.avancial.app.traitements.TraitementExportDAO;
 import com.avancial.app.traitements.TraitementImportDAO;
 import com.avancial.socle.data.controller.dao.AbstractDao;

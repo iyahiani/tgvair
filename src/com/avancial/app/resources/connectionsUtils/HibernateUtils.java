@@ -6,8 +6,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
-import com.avancial.app.data.model.databean.CirculationSSIMDataBean;
-
 public class HibernateUtils {
  
    

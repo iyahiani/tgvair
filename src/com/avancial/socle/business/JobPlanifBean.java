@@ -8,9 +8,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import com.avancial.socle.data.controller.dao.JobDao;
 import com.avancial.socle.data.controller.dao.JobPlanifDao;
-import com.avancial.socle.data.controller.dao.JobPlanifTypeDao;
 import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.exceptions.ASocleException;
