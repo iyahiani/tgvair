@@ -166,7 +166,8 @@ public class RoleManagedBean extends AManageBean {
     * 
     * @param selectedItem
     *           the roleSelected to set
-    */
+    */ 
+   
    public void setSelectedItem(RoleDataBean selectedItem) {
       if (null != selectedItem) {
          this.selectedItem = selectedItem;

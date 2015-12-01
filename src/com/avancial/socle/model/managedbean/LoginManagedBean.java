@@ -15,11 +15,11 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import com.avancial.app.resources.utils.CalculeJoursFeriers;
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.resources.ContextController;
 import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.utils.CalculeJoursFeriers;
 
 /**
  * Managed bean de gestion du login
@@ -115,10 +115,10 @@ public class LoginManagedBean implements Serializable {
    
    public String motDePasseOublier() { 
       
-      if (CalculeJoursFeriers.listJoursFeriers(Calendar.getInstance()).contains(Calendar.getInstance())) 
+      Calendar jour =Calendar.getInstance() ;
+      if (CalculeJoursFeriers.listJoursFeriers(jour).contains(jour)) 
          return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString(); 
       return SOCLE_constants.NAVIGATION_INFO_MOT_DE_PASSE.toString() ; 
-      
    }
    
    /**

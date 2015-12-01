@@ -63,13 +63,21 @@
     /*border-width: 1px 0 0;*/
     margin: 0.5em 0 0;
     padding: 0.5em 1em;
-    text-align: center; 
+    text-align: center;  
    
 }
 .ui-panel .ui-panel-titlebar {
     padding: 0.5em 1em 0.3em; 
     background: #ffffff; 
-    
+    border-style: none;  
+   border: 0px; 
+   border-radius: 25px;
+   
+} 
+
+.ui-panel .ui-panel-titlebar {
+    padding: 0.5em 1em 0.3em;
+    text-align: center ;
 }
 
 

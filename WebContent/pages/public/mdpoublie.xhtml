@@ -4,29 +4,55 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
+
 <ui:composition template="/pages/template/layout.xhtml">
 	<ui:define name="contenu">
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
 		<h:head>
 			<title></title>
 		</h:head>
 		<h:body>
 			<h:form>
-				<p:panel header="#{msg.p_login_mdpoublie}" style="width:400px;margin: 0 auto;">
+				<p:panel header="#{msg.p_login_mdpoublie} "
+					style="width:500px;margin: 5px auto; margin-top : 200px;border-style:ridge; 
+				 border-width:5px; border-color: #CC4040;  
+				 border-radius: 25px;"
+					rendered="#{password.correct and !(ihmManagedBean.isLogged())}">
 					<h:panelGrid columns="2" id="grid">
 
-						<h:outputText value="Login" />
-						<p:inputText id="mail" value="" />
-											</h:panelGrid>
-					<f:facet name="footer">
-						<p:commandButton id="submit" value="#{msg.libelle_valider}" ajax="false"
-							action="#{login.cancel}" />
-							<p:commandButton id="cancel" value="#{msg.libelle_annuler}" ajax="false"
-							action="#{login.cancel}"   />
-					</f:facet>
+						<h:outputText value="Login :      " />
+						<p:inputText id="login" value="#{password.login}"
+							placeholder="Veuillez saisir votre Login" />
+						<h:outputText value="Votre Nouveau Mot De Passe :     " />
+						<p:password id="newPass" value="#{password.password}" weakLabel="moyen"
+                    goodLabel="bon" strongLabel="Excellent"  match="confirmPass" 
+                    validatorMessage="Mot de passe Incorrecte"  
+							feedback="true" inline="false" 
+							placeholder="Votre Nouveau Mot De Passe" />
+						<h:outputText value="Confirmer Votre Mot De Passe :      " />
+						<p:password id="confirmPass" value="#{password.password}"  weakLabel="moyen"
+                        goodLabel="bon" strongLabel="Excellent" required="true" requiredMessage="confirmer votre mot de passe"
+							feedback="true" inline="false" 
+							
+							placeholder="Veuillez Confimer votre Mot De Passe" />
+					</h:panelGrid>
+					<br />
+
+
+					<p:separator />
+					<p:commandButton id="submit" value="#{msg.libelle_valider}" update="grid"
+						style="margin-left : 150px;"
+						actionListener="#{password.validerLogin()}" />
+					<p:commandButton id="cancel" type="reset" ajax="false"
+						value="Annuler" />
+
 				</p:panel>
 			</h:form>
 		</h:body>
 	</ui:define>
 </ui:composition>
 </html>
+
+
+

@@ -51,6 +51,7 @@ public class JobImport implements Job {
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
       // InsertWithJDBC insertWithJDBC = new InsertWithJDBC() ;
+       
       TrainCatalogueDAO catalogueDAO = new TrainCatalogueDAO();
       List<TrainCatalogueDataBean> listTrainsCatalogue = catalogueDAO.getAll();
       List<String> listnums = new ArrayList<>();
@@ -59,7 +60,7 @@ public class JobImport implements Job {
       ReaderSSIM reader = null;
       try {
          // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM_PROD.toString()); //APP_TgvAir.CHEMIN_SSIM.toString()
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()); //APP_TgvAir.CHEMIN_SSIM.toString()
 
       } catch (IOException e1) {
 
@@ -175,7 +176,7 @@ public class JobImport implements Job {
       File source = new File(APP_TgvAir.CHEMIN_SSIM.toString());
       File dest;
       try {
-         dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
+         dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE_REC.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
          DeplacerFicher.copierFile(source, dest);
          source.delete();
       } catch (Exception e) {

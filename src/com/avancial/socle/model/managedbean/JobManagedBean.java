@@ -72,7 +72,7 @@ public class JobManagedBean extends AManageBean {
 
       try {
          bean.save();
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le rôle a été créé."));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Job a été créé."));
          RequestContext.getCurrentInstance().update(":dataTable");
          this.closeDialog = true;
       } catch (ASocleException e) {

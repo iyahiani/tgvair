@@ -50,7 +50,7 @@
                 </table>
                 <p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
                     type="submit" actionListener="#{jobManagedBean.add}"
-                    onsuccess="if (#{roleManagedBean.closeDialog}=true) PF('Ajout').close()"
+                    onsuccess="if (#{jobManagedBean.closeDialog}=true) PF('Ajout').close()"
                     update=":dataTable" action="#{jobManagedBean.reload()}" />
                 <p:commandButton immediate="true" onclick="PF('Ajout').close()"
                     value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />

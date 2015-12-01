@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.avancial.app.resources.utils.CalculeJoursFeriers;
+import com.avancial.socle.utils.CalculeJoursFeriers;
 
 public class TestJoursFeries {
 

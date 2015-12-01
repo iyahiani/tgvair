@@ -15,8 +15,11 @@ public enum APP_TgvAir {
    CHEMIN_SSIM_PROD("\\\\dione\\nas75_TgvAir_Prod\\SSIM.txt"), 
    CHEMIN_SSIM7_DEV("d:\\"),
    CHEMIN_SSIM7_REC("\\\\reha\\TGVAir_REC\\ssim7\\"),
+   
    CHEMIN_SSIM7_PROD("\\\\dione\\nas75_TgvAir_Prod\\SSIM.txt"),
-   CHEMIN_SSIMARCHIVE("\\\\reha\\TGVAir_REC\\archives\\"),
+   CHEMIN_SSIMARCHIVE_REC("\\\\dione\\nas75_TgvAir_Recette\\Archive\\"),
+   CHEMIN_SSIMARCHIVE_PROD("\\\\dione\\nas75_TgvAir_Prod\\Archive\\"),
+   
    CHEMIN_APP_PROPERTIES("/classes/com/avancial/app/resources/app.properties") 
    ;
 

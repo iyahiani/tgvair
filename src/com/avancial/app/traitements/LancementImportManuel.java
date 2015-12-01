@@ -35,6 +35,7 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  * @author ismael.yahiani
  *  implemente la methode de lancement de l'import manuellement 
  */
+
 public class LancementImportManuel {
 
    Logger logger = Logger.getLogger(LancementImportManuel.class);
@@ -42,6 +43,7 @@ public class LancementImportManuel {
    
    public LancementImportManuel() {
    
+      
    } 
    
    public void traitementImportSSIM() {
@@ -55,7 +57,7 @@ public class LancementImportManuel {
     //  InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
          
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM_PROD.toString());
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "SSIM", "Erreur Lecture SSIM"));

@@ -75,10 +75,12 @@ public class CalculeJoursFeriers {
       final Calendar lundiPentecote = (Calendar) lundiDePaque.clone();
       lundiPentecote.add(Calendar.DATE, 49);
       joursFeries.add(lundiPentecote);
+     
       
       return joursFeries ;
       
-      
-   }
+   } 
+  
+  
    
 }

@@ -11,8 +11,8 @@ import org.junit.Test;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.resources.utils.CalculeJoursFeriers;
 import com.avancial.app.resources.utils.TimeZoneOffSet;
+import com.avancial.socle.utils.CalculeJoursFeriers;
 
 public class TrainFromBean  {
 
@@ -59,7 +59,7 @@ public class TrainFromBean  {
 
 
 
-// @Test 
+ @Test 
 
 public void testCalendar() {
    
@@ -69,7 +69,7 @@ public void testCalendar() {
       
    }
 }
-   @Test
+//   @Test
    public void testOffset() {
      System.out.println(TimeZoneOffSet.getGMTDiff()); 
    }
