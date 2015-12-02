@@ -3,7 +3,9 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	>
 	
 	<hr id="piedhr" />
 	<div id="Pied">
@@ -12,7 +14,8 @@
 		<h:outputText value="#{paramGetterBean.getParam('socle','version').value}"></h:outputText>
 		<h:outputText value=" --- "></h:outputText>
 		<h:outputText value="#{msg.libelle_version_app}"></h:outputText>
-		<h:outputText value="#{paramGetterBean.getParam('app','version').value}"></h:outputText>
+		<h:outputText value="#{paramGetterBean.getParam('app','version').value}"></h:outputText> 
+		 <p:clock  pattern="HH:mm:ss" mode="client"></p:clock>
 	</div>
 
 </ui:composition>

@@ -57,9 +57,6 @@ public class LoginManagedBean implements Serializable {
       }
    }  
    
-   
-   
-
    /**
     * Execute la connexion
     * 
@@ -84,7 +81,6 @@ public class LoginManagedBean implements Serializable {
           //  log.info("utilisateur connecté"+this.login);
          } 
           
-         
          externalContext.redirect(url); 
          
       } catch (ServletException e) {
@@ -98,6 +94,7 @@ public class LoginManagedBean implements Serializable {
     * 
     * @return l'url de la page d'accueil
     */
+  
    public String logout() {
       try {
          HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -110,11 +107,11 @@ public class LoginManagedBean implements Serializable {
       } catch (ServletException e) {
          e.printStackTrace();
       }
+      
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
    
-   public String motDePasseOublier() { 
-      
+   public String motDePasseOublier() {  
       Calendar jour =Calendar.getInstance() ;
       if (CalculeJoursFeriers.listJoursFeriers(jour).contains(jour)) 
          return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString(); 
@@ -143,9 +140,10 @@ public class LoginManagedBean implements Serializable {
 
    /**
     * setter the password
-    * 
     * @param password
+    * 
     */
+   
    public void setPassword(String password) {
       this.password = password;
    }
@@ -155,15 +153,17 @@ public class LoginManagedBean implements Serializable {
     * 
     * @return the login
     */
+   
    public String getLogin() {
       return this.login;
    }
-
+   
    /**
     * setter the login
     * 
     * @param login
     */
+   
    public void setLogin(String login) {
       this.login = login;
    }

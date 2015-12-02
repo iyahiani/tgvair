@@ -15,12 +15,18 @@
 		rgba(255, 0, 255, 1)) repeat scroll 0 0 !important;**/
 	background:#86c6db;
 }
-
+.ui-clock{
+	background: none !important; 
+	border-style: none !important;
+}
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     color: #000000;
     font-weight: normal; 
     /**text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);**/
 }
+
+
+
 .blueROW{
 	 background-color:rgb(150,213,236);
    background-image:none;
