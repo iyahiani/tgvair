@@ -33,12 +33,12 @@
 							rendered="#{!socleStateManagedBean.dataBaseConnected}" /> <p:tooltip
 							styleClass="message_important " value="#{msg.connexion_bdd_ko}"
 							for="img" showEffect="clip" hideEffect="explode" /> 
-							
 							<p:commandButton
 							type="submit" id="bouttonConnexion"
 							value="#{msg.libelle_connexion}"
 							action="#{ihmManagedBean.goLogin}"
-							rendered="#{!ihmManagedBean.isLogged()}" update="formHeader" styleClass="ui-button"
+							rendered="#{!ihmManagedBean.isLogged()}" 
+							update="formHeader" styleClass="ui-button"
 							disabled="#{!socleStateManagedBean.dataBaseConnected}" /></td>
 				</tr>
 			</table>

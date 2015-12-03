@@ -21,8 +21,6 @@ public class JobArchivage implements Job {
       List<Date> list = new ArrayList<>() ;   
       List<File> listFichi= Arrays.asList(listFichier) ; 
       
-      
-      
       for (File file : listFichier) {
          if (file.isFile()) list.add(new Date(file.lastModified()));
       }

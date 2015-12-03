@@ -127,7 +127,7 @@ public class JobImport implements Job {
                circulation.setRangTroncon(Integer.valueOf(chaine.substring(APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionDebut(), APP_enumParserSSIM.POSITION_RANG_TRANCON.getPositionFin())));
                circulation.setNumeroTrain(par.getParsedResult().get("POSITION_NUM_TRAIN"));
                if (circulation != null) // dao.saveSSIM(circulation);
-                  // insertWithJDBC.insertIntoImportSSIMTable(circulation);
+                  
                   circulationSSIMDataBeans.add(circulation);
             }
          }
@@ -164,7 +164,7 @@ public class JobImport implements Job {
          e.printStackTrace();
       }
       }  
-      else this.logger.warn("Fichier SSIM Introuvable");
+         else this.logger.warn("Fichier SSIM Introuvable");
    }
 
    /**
@@ -172,11 +172,12 @@ public class JobImport implements Job {
     * 
     * @throws Exception
     */
+   
    private void archiveSSIM() {
       File source = new File(APP_TgvAir.CHEMIN_SSIM.toString());
       File dest;
       try {
-         dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE_REC.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
+         dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE_PROD.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
          DeplacerFicher.copierFile(source, dest);
          source.delete();
       } catch (Exception e) {

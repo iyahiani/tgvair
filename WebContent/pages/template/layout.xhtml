@@ -7,7 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	lang="#{ihmManagedBean.language}">
 	
-<f:view locale="#{ihmManagedBean.locale}">
+<f:view locale="#{ihmManagedBean.locale}" >
 	<h:head>
 		<title><ui:insert name="title">#{msg.nom_application}</ui:insert>
 		</title>
@@ -17,17 +17,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 		</f:facet>
 		<h:outputStylesheet library="css" name="style.css" />
-		
 		<h:outputScript name="js/fr.js" />
-        
 	</h:head>
 	
 	<h:body style="height=100%">
 		<ui:include src="/pages/template/header.xhtml" />
 		<table id="table_contenu"   >
-			<tr>
+			<tr> 
 				<td id="col_menu" ><ui:include src="/pages/template/menu.xhtml"  /></td>
-				<td id="col_contenu"><ui:insert name="contenu" /></td> 
+				<td id="col_contenu"><ui:insert name="contenu" /></td>  
 			</tr>
 		</table>
 		

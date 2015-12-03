@@ -87,7 +87,8 @@ public class SocleInit extends HttpServlet {
             JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
             
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
-            sched.scheduleJob(job, trigger);
+            sched.scheduleJob(job, trigger); 
+            
          } 
          catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
