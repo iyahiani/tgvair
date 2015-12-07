@@ -113,10 +113,9 @@ public class AdminManagedBean extends AManageBean {
 * @return null
 */
    public String lancerExport() {
-      
-    
+        
      this.lancementTraitementsManuelle.getExportManuel().traitementExport();
-     this.logger.info("SUCCES Export SSIM 7");  
+     
       return null;
    }
    

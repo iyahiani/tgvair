@@ -59,8 +59,8 @@ public class JobImport implements Job {
       this.logger.info("Import started");
       ReaderSSIM reader = null;
       try {
-         // reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()) ;
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()); //APP_TgvAir.CHEMIN_SSIM.toString()
+        
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString()); 
 
       } catch (IOException e1) {
 
@@ -174,7 +174,7 @@ public class JobImport implements Job {
     */
    
    private void archiveSSIM() {
-      File source = new File(APP_TgvAir.CHEMIN_SSIM.toString());
+      File source = new File(APP_TgvAir.CHEMIN_SSIM7_PROD.toString());
       File dest;
       try {
          dest = new File(APP_TgvAir.CHEMIN_SSIMARCHIVE_PROD.toString() + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");

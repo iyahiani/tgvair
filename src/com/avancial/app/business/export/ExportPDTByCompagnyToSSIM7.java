@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.business.train.Service;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
+import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.app.resources.utils.FormatterInteger2String;
 import com.avancial.app.resources.utils.StringToDate;
@@ -29,6 +30,7 @@ import com.avancial.writer.WriterTxt;
 
 public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
 
+   Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class) ;
    private int        cpt;
    private int        varianceCirculation;
    private Date       dateCourante;
@@ -65,14 +67,16 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class); 
       String compagnieName = listCatalogue.get(0).getCodeCompagnie() ; 
       this.file = new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt");
-      this.writer = new WriterTxt(APP_TgvAir.CHEMIN_SSIM7_DEV.toString()+ this.file);//APP_TgvAir.CHEMIN_SSIM7_REC.toString()
+      try {
+         this.writer = new WriterTxt(APP_TgvAir.CHEMIN_SSIM7_PROD.toString()+ this.file);
+      } catch (IOException e1) {
+         
+         this.log.error("Erreur d'écriture Fichier SSIM"+e1.getMessage());
+      }
       this.cpt = 0;
       try {
          int[] beginsType1 = { 0, 1, 35, 191, 194, 200 };
          int[] lengthsType1 = { 1, 34, 156, 3, 6, 1 };
-         int[] beginsCompteurType1 = { 194 };
-         int[] lengthsCompteurType1 = { 6 };
-
          int[] beginsType2 = { 0, 1, 2, 5, 10, 14, 28, 35, 71, 72, 190, 194, 200 };
          int[] lengthsType2 = { 1, 1, 3, 5, 4, 14, 7, 36, 1, 118, 4, 6, 1 };
 
@@ -117,7 +121,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          this.writer.setFormaterStrategy(formater5);
          this.writer.write(this.getEnrgType5()); 
          this.writer.close();
-         //this.file.renameTo(new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt")) ;
+        
       } catch (IOException e) {
          log.error(e.getMessage());
       }

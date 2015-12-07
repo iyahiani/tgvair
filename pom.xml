@@ -4,7 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>avancial.fr</groupId>
-	<artifactId>TGVAir</artifactId>
+	<artifactId>tgvair</artifactId>
 	<version>1.0</version>
 	<distributionManagement>
 		<snapshotRepository>

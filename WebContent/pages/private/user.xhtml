@@ -76,51 +76,49 @@
 		</p:dialog>
 
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"
-			draggable="false" header="Modifier Train" closeOnEscape="true">
+			draggable="false" header="#{msg.p_user_modif_dialogue_header}"
+			closeOnEscape="true">
 			<p:messages globalOnly="false" id="message_upd2" autoUpdate="false"
 				showDetail="true" />
 			<h:form>
 				<table>
 					<tr>
-						<td><h:outputText value="idUser"></h:outputText></td>
+						<td><h:outputText value="#{msg.p_user_id_column}"></h:outputText></td>
 						<td><p:inputText value="#{userIhm.selectedUser.idUser}"
 								disabled="true">
 							</p:inputText></td>
 					</tr>
 					<tr>
-						<td><h:outputText value="Nom :"></h:outputText></td>
+						<td><h:outputText value="#{msg.p_user_nom} :"></h:outputText></td>
 						<td><p:inputText value="#{userIhm.selectedUser.nomUser}">
 							</p:inputText></td>
 					</tr>
 					<tr>
-						<td><h:outputText value="Prénom"></h:outputText></td>
+						<td><h:outputText value="#{msg.p_user_prenom} :"></h:outputText></td>
 						<td><p:inputText value="#{userIhm.selectedUser.prenomUser}">
 							</p:inputText></td>
 					</tr>
-					
+
 					<tr>
-						<td><h:outputText value="Login"></h:outputText></td>
+						<td><h:outputText value="#{msg.p_user_login} :"></h:outputText></td>
 						<td><p:inputText value="#{userIhm.selectedUser.loginUser}">
 							</p:inputText></td>
-					</tr> 
-					
+					</tr>
+
 					<tr>
-						<td><h:outputText value="Mot De Passe"></h:outputText></td>
-						<td><p:inputText 
-								value="#{userIhm.selectedUser.passwordUser}">
-							</p:inputText></td> 
-							
-					</tr> 
+						<td><h:outputText value="#{msg.p_user_password}"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.passwordUser}">
+							</p:inputText></td>
+					</tr>
 					<tr>
-                        <td><h:outputText value="Ajouter Role"></h:outputText></td>
-                        <td><h:selectOneMenu effect="fold" editable="true" 
-                                    value="#{userIhm.selectedItem}"  
-                                    style="width: auto;"> 
-                                    <f:selectItem itemLabel="Selectionnez Un Role" itemValue="#{null}"/>
-                                    <f:selectItems value="#{userIhm.users2roleItems}" />  
-                                </h:selectOneMenu></td>      
-                    </tr>
-                
+						<td><h:outputText value="#{msg.p_user_ajout_user}"></h:outputText></td>
+						<td><h:selectOneMenu effect="fold" editable="true"
+								value="#{userIhm.selectedItem}" style="width: auto;">
+								<f:selectItem itemLabel="Selectionnez Un Role"
+									itemValue="#{null}" />
+								<f:selectItems value="#{userIhm.users2roleItems}" />
+							</h:selectOneMenu></td>
+					</tr>
 				</table>
 				<br />
 				<br />
@@ -128,7 +126,7 @@
 					actionListener="#{userIhm.update()}"
 					style="background-color: white ; margin-left : 40 px ;"
 					oncomplete="if (#{userIhm.closeDialog}=true) PF('Modif').close();"
-				    action="#{userIhm.reload()}">
+					action="#{userIhm.reload()}">
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Modif').close()"
 					style="background-color: white ; margin-left : 40 px ;"
@@ -183,23 +181,23 @@
 							<h:graphicImage name="private/image/edit.png"
 								styleClass="actionButtons">
 								<p:tooltip for="update_user"
-									value=" Modifier l'utilisateur #{user.nomUser} #{user.prenomUser}" />
+									value=" Modifier l'utilisateur : #{user.nomUser}  #{user.prenomUser}" />
 							</h:graphicImage>
 						</p:commandLink>
 						<p:commandLink id="delete_user"
-                                onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
-                                action="#{userIhm.delete}"   >
-                                    
-                                <p:ajax update=":formTableUsers" delay="1" 
-                                listener="#{userIhm.reload()}"></p:ajax>
-                                <f:setPropertyActionListener value="#{user}"
-                                    target="#{userIhm.selectedUser}" />
-                                <h:graphicImage id="img_delete"
-                                    name="private/image/corbeille2.png" styleClass="actionButtons">
-                                </h:graphicImage>
-                                <p:tooltip id="toolTip" for="delete_user"
-                                    value="supprimer l'utilisateur #{user.nomUser} #{user.prenomUser} " />
-                            </p:commandLink>
+							onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
+							action="#{userIhm.delete}">
+
+							<p:ajax update=":formTableUsers" delay="1"
+								listener="#{userIhm.reload()}"></p:ajax>
+							<f:setPropertyActionListener value="#{user}"
+								target="#{userIhm.selectedUser}" />
+							<h:graphicImage id="img_delete"
+								name="private/image/corbeille2.png" styleClass="actionButtons">
+							</h:graphicImage>
+							<p:tooltip id="toolTip" for="delete_user"
+								value="supprimer l'utilisateur : #{user.nomUser}  #{user.prenomUser} " />
+						</p:commandLink>
 
 					</p:column>
 

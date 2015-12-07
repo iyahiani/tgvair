@@ -100,14 +100,26 @@
             id="dataTable" rowIndexVar="index" paginator="true" 
             selectionMode="single" selection="#{roleManagedBean.selectedItem}"
             rowKey="#{item.idRole}">
-            <p:column headerText="action" width="50" id="colonne_#{item.idRole}">
+          
+            <p:column headerText="#{msg.p_header_colonne_id}"
+                style="width:20px">
+                <h:outputText value="#{item.idRole}"></h:outputText>
+            </p:column>
+            <p:column headerText="#{msg.p_header_colonne_nom_technique}">
+                <h:outputText value="#{item.technicalNameRole}"></h:outputText>
+            </p:column>
+            <p:column headerText="#{msg.p_header_colonne_libelle}">
+                <h:outputText value="#{item.labelRole}"></h:outputText>
+            </p:column> 
+            
+              <p:column headerText="action" width="50" id="colonne_#{item.idRole}">
                 <p:commandLink id="delete_role" update="dataTable :idPageMessages"
                     action="#{roleManagedBean.delete}" onsuccess="#{roleManagedBean.reload()}"
                     onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.technicalNameRole} (#{item.labelRole}) ?')) return false">
                         <f:setPropertyActionListener value="#{role}"
                         target="#{roleManagedBean.selectedItem}" />
                     <h:graphicImage id="img_delete"
-                        name="private/image/data-delete.png" styleClass="actionButtons">
+                        name="private/image/corbeille2.png" styleClass="actionButtons">
                     </h:graphicImage>
                     <p:tooltip id="toolTip" for="delete_role"
                         value="#{msg.p_role_bouton_supprimer_tip} #{item.technicalNameRole} (#{item.labelRole})" />
@@ -118,23 +130,13 @@
                     oncomplete="PF('Modif').show()">
                     <f:setPropertyActionListener value="#{item}"
                         target="#{roleManagedBean.selectedItem}" />
-                    <h:graphicImage name="private/image/pencil_edit1.png"
+                    <h:graphicImage name="private/image/edit.png"
                         styleClass="actionButtons">
                         <p:tooltip for="update_item"
                             value="#{msg.p_role_dialog_modif_title} #{item.technicalNameRole} (#{item.labelRole})" />
                     </h:graphicImage>
                 </p:commandLink>
 
-            </p:column>
-            <p:column headerText="#{msg.p_header_colonne_id}"
-                style="width:20px">
-                <h:outputText value="#{item.idRole}"></h:outputText>
-            </p:column>
-            <p:column headerText="#{msg.p_header_colonne_nom_technique}">
-                <h:outputText value="#{item.technicalNameRole}"></h:outputText>
-            </p:column>
-            <p:column headerText="#{msg.p_header_colonne_libelle}">
-                <h:outputText value="#{item.labelRole}"></h:outputText>
             </p:column>
         </p:dataTable>
 

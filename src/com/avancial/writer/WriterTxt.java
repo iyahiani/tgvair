@@ -14,30 +14,22 @@ public class WriterTxt implements IWriter {
    FileWriter fw;
    protected IFormaterStrategy formaterStrategy;
 
-   public WriterTxt(String fileName) {
+   public WriterTxt(String fileName) throws IOException {
       this.setFileName(fileName);
 
       this.fichier = new File(fileName);
 
       // if file doesnt exists, then create it
       if (!this.fichier.exists()) {
-         try {
-            this.fichier.createNewFile();
-         } catch (IOException e) {
-
-            e.printStackTrace();
-         }
-      }
-      try {
-         this.fw = new FileWriter(this.fichier.getAbsoluteFile());
-      } catch (IOException e) {
-
-         e.printStackTrace();
-      }
+       
+     this.fichier.createNewFile();
+        
+     this.fw = new FileWriter(this.fichier.getAbsoluteFile());
+      
       this.bw = new BufferedWriter(this.fw);
 
    }
-
+   }
    public String getFileName() {
       return this.fileName;
    }
