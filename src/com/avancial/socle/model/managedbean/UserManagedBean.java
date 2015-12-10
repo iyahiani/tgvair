@@ -99,7 +99,10 @@ public class UserManagedBean implements Serializable {
          RequestContext.getCurrentInstance().update(":formTableUsers");
          
       } catch (ASocleException e) {
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "erreur création Utilisateur"));
+         RequestContext.getCurrentInstance().
+         showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         e.getClientMessage();
+         RequestContext.getCurrentInstance().addCallbackParam("notValid", true); 
          
       }
 	}

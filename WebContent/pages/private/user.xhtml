@@ -19,17 +19,12 @@
 			<p:graphicImage name="/private/image/enregistrement.gif" />
 		</p:dialog>
 
-
-
 		<p:commandLink oncomplete="PF('Ajout').show()"
 			actionListener="#{jobManagedBean.initProperties}">
 			<h:graphicImage id="add_job" name="private/image/plusVert.png">
 				<p:tooltip for="add_job" value="#{msg.p_user_header_ajout}" />
 			</h:graphicImage>
-
 		</p:commandLink>
-
-
 
 		<p:dialog widgetVar="Ajout" resizable="false"
 			header="#{msg.p_user_header_ajout}" id="ajout">
@@ -67,13 +62,22 @@
 				</table>
 				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
 					type="submit" actionListener="#{userIhm.add}"
-					onsuccess="if (#{roleManagedBean.closeDialog}=true) PF('Ajout').close()"
+					oncomplete="if (handleSaveRequest(xhr, status, args)) PF('Ajout').hide();"
 					update=":formTableUsers" action="#{userIhm.reload()}" />
 				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
 					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
 
 			</h:form>
 		</p:dialog>
+		<h:outputScript target="head">
+         function handleSaveRequest(xhr, status, args) {
+      
+           if( args.notValid || args.validationFailed ) 
+              return false;
+           return true; 
+          
+             } 
+        </h:outputScript>
 
 		<p:dialog id="modif" widgetVar="Modif" resizable="false"
 			draggable="false" header="#{msg.p_user_modif_dialogue_header}"
@@ -141,9 +145,9 @@
 				<p:dataTable value="#{userIhm.users}" rows="10" scrollable="true"
 					paginatorPosition="top" id="tableUser" var="user"
 					selectionMode="single" selection="#{userIhm.selectedUser}"
-					rowKey="#{user.idUser}" filteredValue="#{userIhm.filtredUser}" rowIndexVar="index"
-					emptyMessage="Pas d'Utilisateur" rowsPerPageTemplate="5,10,15"
-					paginator="true">
+					rowKey="#{user.idUser}" filteredValue="#{userIhm.filtredUser}"
+					rowIndexVar="index" emptyMessage="Pas d'Utilisateur"
+					rowsPerPageTemplate="5,10,15" paginator="true">
 					<p:ajax event="rowSelect" listener="#{userIhm.selectedUser}" />
 					<p:column headerText="ID Utilisateur">
 						<h:outputText value="#{user.idUser}">
