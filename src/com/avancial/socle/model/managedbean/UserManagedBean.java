@@ -71,13 +71,14 @@ public class UserManagedBean implements Serializable {
 	      this.selectedUser = (UserDataBean) event.getObject(); 
 	      
 	   } 
-	public void addRule(String detail) {
+	
+	  public void addRule(String detail) {
 		FacesContext.getCurrentInstance().addMessage("growlUser", new FacesMessage(FacesMessage.SEVERITY_INFO, "Information", detail));
 	}
 
-	public void addUser(ActionEvent event) {
+/*	public void addUser(ActionEvent event) {
 		System.out.println("Ajout user!!");
-	} 
+	} */
 	
 	public void add() {
 	   UserDataBean user = new UserDataBean() ; 

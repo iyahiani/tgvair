@@ -36,15 +36,24 @@
 				<socle:jobPlanifForm />
 				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
 					type="submit" actionListener="#{jobPlanifManagedBean.add}"
-					onsuccess="if (#{jobPlanifManagedBean.closeDialog}=true) PF('Ajout').close()"
+				oncomplete="if (handleSaveRequest(xhr, status, args)) PF('Ajout').hide();"
 					update=":dataTable" action="#{jobPlanifManagedBean.reload()}">
 				</p:commandButton>
 				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
 					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
 			</h:form>
 
-		</p:dialog>
-		<p:dialog id="modif" widgetVar="Modif" resizable="false" modal="true"
+		</p:dialog> 
+		<h:outputScript target="head">
+         function handleSaveRequest(xhr, status, args) {
+      
+           if( args.notValid || args.validationFailed ) 
+              return false;
+           return true; 
+          
+             } 
+         </h:outputScript>
+		<p:dialog id="modif" widgetVar="Modif" resizable="false" modal="true" 
 			header="#{msg.p_dialog_modif_title_jobPlanif}">
 			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
 				showDetail="true" />
@@ -80,7 +89,7 @@
 				listener="#{jobPlanifManagedBean.rowSelect}" />
 
 			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
-				<h:outputText value="#{item.idJobPlanif}"></h:outputText>
+				<h:outputText value="#{index+1}"></h:outputText>
 			</p:column>
 			<p:column headerText="#{msg.p_header_colonne_nom_technique}">
 				<h:outputText value="#{item.nomTechniqueJobPlanif}"></h:outputText>

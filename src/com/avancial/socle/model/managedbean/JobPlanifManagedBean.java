@@ -157,7 +157,10 @@ public class JobPlanifManagedBean extends AManageBean {
          RequestContext.getCurrentInstance().update(":dataTable");
          this.closeDialog = true; 
       }  catch (ASocleException e) {
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
+         RequestContext.getCurrentInstance().
+         showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         e.getClientMessage();
+         RequestContext.getCurrentInstance().addCallbackParam("notValid", true); 
             e.printStackTrace();
          }
       } 

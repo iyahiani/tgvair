@@ -1,170 +1,183 @@
 <ui:composition template="/pages/template/layout.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <ui:define name="title">#{p_job_titre}</ui:define>
-    <ui:define name="contenu">
-
-
-        <p:ajaxStatus onstart="PF('statusDialog').show()"
-            onsuccess="PF('statusDialog').hide()" />
-
-        <p:messages id="idPageMessages" autoUpdate="true" closable="true"
-            redisplay="false" showDetail="true" globalOnly="false" />
-
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-            closable="false" resizable="false" showHeader="false">
-            <p:graphicImage name="/private/image/enregistrement.gif" />
-        </p:dialog>
-        <p:dialog widgetVar="Ajout" resizable="false"
-            header="#{msg.p_dialog_ajout_title_job}" id="ajout">
-            <p:messages globalOnly="false" id="message_add" autoUpdate="true"
-                showDetail="true" />
-            <h:form>
-                <table>
-                    <tr>
-                        <td><h:outputText
-                                value="#{msg.p_dialog_libelle_nom_technique}"></h:outputText></td>
-                        <td><h:outputText value=" : "></h:outputText> <p:inputText
-                                value="#{jobManagedBean.nomTechnique}" required="true"
-                                requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
-                                placeholder="#{msg.p_dialog_place_holder_nom_technique}"></p:inputText></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
-                        <td><h:outputText value=" : "></h:outputText> <p:inputText
-                                value="#{jobManagedBean.libelle}" required="true"
-                                requiredMessage="#{msg.p_dialog_libelle}"
-                                placeholder="#{msg.p_dialog_place_holder_libelle}"></p:inputText></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="#{msg.p_dialog_libelle_classe}"></h:outputText></td>
-                        <td><h:outputText value=" : "></h:outputText> <p:inputText
-                                value="#{jobManagedBean.classe}" required="true"
-                                requiredMessage="#{msg.p_dialog_msg_requis_classe}"
-                                placeholder="#{msg.p_dialog_place_holder_classe}"></p:inputText></td>
-                    </tr>
-                </table>
-                <p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
-                    type="submit" actionListener="#{jobManagedBean.add}"
-                    onsuccess="if (#{jobManagedBean.closeDialog}=true) PF('Ajout').close()"
-                    update=":dataTable" action="#{jobManagedBean.reload()}" />
-                <p:commandButton immediate="true" onclick="PF('Ajout').close()"
-                    value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
-            </h:form>
-        </p:dialog>
+	<ui:define name="title">#{p_job_titre}</ui:define>
+	<ui:define name="contenu">
 
 
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
 
-        <p:dialog id="modif" widgetVar="Modif" resizable="false"
-            header="#{msg.p_dialog_modif_title_job}">
-            <p:messages globalOnly="false" id="message_upd" autoUpdate="true"
-                showDetail="true" />
-            <h:form>
-                <table>
-                    <tr>
-                        <td><h:outputText
-                                value="#{msg.p_dialog_libelle_nom_technique}"></h:outputText></td>
-                        <td><h:outputText value=" : "></h:outputText> <p:inputText
-                                value="#{jobManagedBean.selectedItem.nomTechniqueJob}"
-                                required="true"
-                                requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
-                                placeholder="#{msg.p_dialog_place_holder_nom_technique}"></p:inputText></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
-                        <td><h:outputText value=" : "></h:outputText> <p:inputText
-                                value="#{jobManagedBean.selectedItem.libelleJob}" required="true"
-                                requiredMessage="#{msg.p_dialog_msg_requis_libelle}"
-                                placeholder="#{msg.p_dialog_msg_requis_libelle}"></p:inputText></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
-                        <td><h:outputText value=" : "></h:outputText> <p:inputText
-                                value="#{jobManagedBean.selectedItem.classeJob}" required="true"
-                                requiredMessage="#{msg.p_dialog_msg_requis_classe}"
-                                placeholder="#{msg.p_dialog_place_holder_classe}"></p:inputText></td>
-                    </tr>
-                </table>
-                <br />
-                <br />
-                <p:commandButton value="#{msg.p_dialog_bouton_modifier_libelle}"
-                    type="submit" actionListener="#{jobManagedBean.update}"
-                    update=":idPageMessages"
-                    oncomplete="if (#{jobManagedBean.closeDialog}=true) PF('Modif').close()"></p:commandButton>
-                <p:commandButton immediate="true" onclick="PF('Modif').close()"
-                    value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel"></p:commandButton>
-            </h:form>
-        </p:dialog>
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
 
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
 
+		<p:dialog widgetVar="Ajout" resizable="false"
+			header="#{msg.p_dialog_ajout_title_job}" id="ajout">
+			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText
+								value="#{msg.p_dialog_libelle_nom_technique}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> 
+						<p:inputText
+								value="#{jobManagedBean.nomTechnique}" required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
+								placeholder="#{msg.p_dialog_place_holder_nom_technique}"></p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{jobManagedBean.libelle}" required="true"
+								requiredMessage="#{msg.p_dialog_libelle}"
+								placeholder="#{msg.p_dialog_place_holder_libelle}"></p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_dialog_libelle_classe}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{jobManagedBean.classe}" required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_classe}"
+								placeholder="#{msg.p_dialog_place_holder_classe}"></p:inputText></td>
+					</tr>
+				</table>
+				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
+					type="submit" actionListener="#{jobManagedBean.add}"
+					oncomplete="if (handleSaveRequest(xhr, status, args)) PF('Ajout').hide();"
+					update=":dataTable" action="#{jobManagedBean.reload()}" />
+				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
+					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
+			</h:form>
+		</p:dialog>
+		<h:outputScript target="head">
+         function handleSaveRequest(xhr, status, args) {
+      
+           if( args.notValid || args.validationFailed ) 
+              return false;
+           return true; 
+          
+             } 
+         </h:outputScript>
 
-        <p:commandLink oncomplete="PF('Ajout').show()"
-            actionListener="#{jobManagedBean.initProperties}">
-            <h:graphicImage id="add_job" name="private/image/plusVert.png">
-                <p:tooltip for="add_job" value="#{msg.p_bouton_ajouter_tip_job}" />
-            </h:graphicImage>
-        </p:commandLink>
-        <br />
-
-        <p:dataTable var="item" value="#{jobManagedBean.selectedItems}" id="dataTable"
-            rowIndexVar="index" paginator="true" selectionMode="single"
-            selection="#{jobManagedBean.selectedItem}" rowKey="#{item.idJob}">
-           
-            <p:column headerText="#{msg.p_header_colonne_id}"
-                style="width:20px">
-                <h:outputText value="#{item.idJob}"></h:outputText>
-            </p:column>
-            <p:column headerText="#{msg.p_header_colonne_nom_technique}">
-                <h:outputText value="#{item.nomTechniqueJob}"></h:outputText>
-            </p:column>
-            <p:column headerText="#{msg.p_header_colonne_libelle}">
-                <h:outputText value="#{item.libelleJob}"></h:outputText>
-            </p:column>
-
-            <p:column headerText="#{msg.p_colonne_header_classe}" >
-                    <h:graphicImage style="padding-right: 10px;" height="16px"
-                    width="16px" name="private/image/redcross.png"
-                    rendered="#{!item.isExisteClasse(item.classeJob)}">
-                </h:graphicImage>
-                <h:graphicImage height="16px" width="16px"
-                    name="private/image/check.png"
-                    rendered="#{item.isExisteClasse(item.classeJob)}" style="padding-right: 10px;">
-                </h:graphicImage>
-                <h:outputText value="#{item.classeJob}"></h:outputText>
-
-            </p:column>
-         <p:column headerText="action" width="50" id="colonne_#{item.idJob}">
-                <p:commandLink id="delete_job" update="dataTable :idPageMessages"
-                    action="#{jobManagedBean.delete}"
-                    onsuccess="#{jobManagedBean.reload()}"
-                    onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJob} (#{item.libelleJob}) ?')) return false">
-                    <f:setPropertyActionListener value="#{item}"
-                        target="#{jobManagedBean.selectedItem}" />
-                    <h:graphicImage id="img_delete"
-                        name="private/image/corbeille2.png" styleClass="actionButtons">
-                    </h:graphicImage>
-                    <p:tooltip id="toolTip" for="delete_job"
-                        value="#{msg.p_bouton_supprimer_tip_job} #{item.nomTechniqueJob} (#{item.libelleJob})" />
-                </p:commandLink>
-
-
-                <p:commandLink update=":modif" id="update_item" oncomplete="PF('Modif').show()">
-                    <f:setPropertyActionListener value="#{item}" target="#{jobManagedBean.selectedItem}" />
-                    
-                    <h:graphicImage name="private/image/edit.png"
-                        styleClass="actionButtons">
-                        <p:tooltip for="update_item"
-                            value="#{msg.p_bouton_modifier_tip_job} #{item.nomTechniqueJob} (#{item.libelleJob})" />
-                    </h:graphicImage>
-                </p:commandLink>
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			header="#{msg.p_dialog_modif_title_job}">
+			<p:messages globalOnly="false" id="message_upd" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText
+								value="#{msg.p_dialog_libelle_nom_technique}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{jobManagedBean.selectedItem.nomTechniqueJob}"
+								required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
+								placeholder="#{msg.p_dialog_place_holder_nom_technique}"></p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{jobManagedBean.selectedItem.libelleJob}"
+								required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_libelle}"
+								placeholder="#{msg.p_dialog_msg_requis_libelle}"></p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_dialog_Class}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{jobManagedBean.selectedItem.classeJob}" required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_classe}"
+								placeholder="#{msg.p_dialog_place_holder_classe}"></p:inputText></td>
+					</tr>
+				</table>
+				<br />
+				<br />
+				<p:commandButton value="#{msg.p_dialog_bouton_modifier_libelle}"
+					type="submit" actionListener="#{jobManagedBean.update}"
+					update=":idPageMessages"
+					oncomplete="if (#{jobManagedBean.closeDialog}=true) PF('Modif').close()"></p:commandButton>
+				<p:commandButton immediate="true" onclick="PF('Modif').close()"
+					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
 
 
-            </p:column>
-        </p:dataTable>
 
-    </ui:define>
+		<p:commandLink oncomplete="PF('Ajout').show()"
+			actionListener="#{jobManagedBean.initProperties}">
+			<h:graphicImage id="add_job" name="private/image/plusVert.png">
+				<p:tooltip for="add_job" value="#{msg.p_bouton_ajouter_tip_job}" />
+			</h:graphicImage>
+		</p:commandLink>
+		<br />
+
+		<p:dataTable var="item" value="#{jobManagedBean.selectedItems}"
+			id="dataTable" rowIndexVar="index" paginator="true"
+			selectionMode="single" selection="#{jobManagedBean.selectedItem}"
+			rowKey="#{item.idJob}">
+
+			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
+				<h:outputText value="#{index+1}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_colonne_nom_technique}">
+				<h:outputText value="#{item.nomTechniqueJob}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_colonne_libelle}">
+				<h:outputText value="#{item.libelleJob}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msg.p_colonne_header_classe}">
+				<h:graphicImage style="padding-right: 10px;" height="16px"
+					width="16px" name="private/image/redcross.png"
+					rendered="#{!item.isExisteClasse(item.classeJob)}">
+				</h:graphicImage>
+				<h:graphicImage height="16px" width="16px"
+					name="private/image/check.png"
+					rendered="#{item.isExisteClasse(item.classeJob)}"
+					style="padding-right: 10px;">
+				</h:graphicImage>
+				<h:outputText value="#{item.classeJob}"></h:outputText>
+
+			</p:column>
+			<p:column headerText="action" width="50" id="colonne_#{item.idJob}">
+				<p:commandLink id="delete_job" update="dataTable :idPageMessages"
+					action="#{jobManagedBean.delete}"
+					onsuccess="#{jobManagedBean.reload()}"
+					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.nomTechniqueJob} (#{item.libelleJob}) ?')) return false">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{jobManagedBean.selectedItem}" />
+					<h:graphicImage id="img_delete" name="private/image/corbeille2.png"
+						styleClass="actionButtons">
+					</h:graphicImage>
+					<p:tooltip id="toolTip" for="delete_job"
+						value="#{msg.p_bouton_supprimer_tip_job} #{item.nomTechniqueJob} (#{item.libelleJob})" />
+				</p:commandLink>
+
+
+				<p:commandLink update=":modif" id="update_item"
+					oncomplete="PF('Modif').show()">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{jobManagedBean.selectedItem}" />
+
+					<h:graphicImage name="private/image/edit.png"
+						styleClass="actionButtons">
+						<p:tooltip for="update_item"
+							value="#{msg.p_bouton_modifier_tip_job} #{item.nomTechniqueJob} (#{item.libelleJob})" />
+					</h:graphicImage>
+				</p:commandLink>
+
+
+			</p:column>
+		</p:dataTable>
+
+	</ui:define>
 </ui:composition>

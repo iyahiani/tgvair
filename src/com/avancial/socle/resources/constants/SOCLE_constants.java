@@ -30,6 +30,7 @@ public enum SOCLE_constants {
     * ID du statut des messages pour l'ajout des données
     */
    DIALOG_ADD_MESSAGES("message_add"),
+   DIALOG_ADD_MESSAGES_ERROR("message_add_error"),
    /**
     * ID du statut des messages pour l'update des données
     */

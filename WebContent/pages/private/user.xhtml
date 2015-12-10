@@ -141,7 +141,7 @@
 				<p:dataTable value="#{userIhm.users}" rows="10" scrollable="true"
 					paginatorPosition="top" id="tableUser" var="user"
 					selectionMode="single" selection="#{userIhm.selectedUser}"
-					rowKey="#{user.idUser}" filteredValue="#{userIhm.filtredUser}"
+					rowKey="#{user.idUser}" filteredValue="#{userIhm.filtredUser}" rowIndexVar="index"
 					emptyMessage="Pas d'Utilisateur" rowsPerPageTemplate="5,10,15"
 					paginator="true">
 					<p:ajax event="rowSelect" listener="#{userIhm.selectedUser}" />
