@@ -57,7 +57,7 @@ public class LancementImportManuel {
     //  InsertWithJDBC insertWithJDBC = new InsertWithJDBC();
       try {
          
-         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM_PROD.toString());
+         reader = new ReaderSSIM(APP_TgvAir.CHEMIN_SSIM.toString());
 
       } catch (IOException e1) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "SSIM", "Erreur Lecture SSIM"));
@@ -133,8 +133,8 @@ public class LancementImportManuel {
       
       TraitementsImportDataBean bean = new TraitementsImportDataBean();
       try {
-         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM_PROD.toString()).get("Date_Extraction"));
-         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM_PROD.toString()).get("Date_Fin"));
+         bean.setDateDebutSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Extraction"));
+         bean.setDateFinSSIM(GetPeriodeSSIM.getSSIMPeriode(APP_TgvAir.CHEMIN_SSIM.toString()).get("Date_Fin"));
       } catch (Exception e1) {
         
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Import", "Erreur Import SSIM"));

@@ -7,7 +7,11 @@
 
 	<ui:define name="title">#{msg.p_role_titre}</ui:define>
 	<ui:define name="contenu">
-
+     
+     
+     <f:metadata>
+     <f:event listener="#{roleManagedBean.reload}" type="preRenderView"></f:event>
+     </f:metadata>
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
 			onsuccess="PF('statusDialog').hide()" />
 
@@ -55,6 +59,7 @@
 		</p:dialog>
 		<h:outputScript target="head">
          function handleSaveRequest(xhr, status, args) {
+
            if( args.notValid || args.validationFailed ) 
               return false;
            return true; 
@@ -103,6 +108,7 @@
 			</h:graphicImage>
 		</p:commandLink>
 		<br />
+		
 		<p:dataTable var="item" value="#{roleManagedBean.selectedItems}" 
 			id="dataTable" rowIndexVar="index" paginator="true"
 			selectionMode="single" selection="#{roleManagedBean.selectedItem}"  
@@ -120,18 +126,7 @@
 			</p:column>
 
 			<p:column headerText="action" width="50" id="colonne_#{item.idRole}">
-				<p:commandLink id="delete_role" update="dataTable :idPageMessages"
-					actionListener="#{roleManagedBean.delete()}"
-					action="#{roleManagedBean.reload()}"
-					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.technicalNameRole} (#{item.labelRole}) ?')) return false">
-					<f:setPropertyActionListener value="#{role}"
-						target="#{roleManagedBean.selectedItem}" />
-					<h:graphicImage id="img_delete" name="private/image/corbeille2.png"
-						styleClass="actionButtons">
-					</h:graphicImage>
-					<p:tooltip id="toolTip" for="delete_role"
-						value="#{msg.p_role_bouton_supprimer_tip} #{item.technicalNameRole} (#{item.labelRole})" />
-				</p:commandLink>
+				
 				<p:commandLink update=":modif" id="update_item"
 					oncomplete="PF('Modif').show()">
 					<f:setPropertyActionListener value="#{item}"
@@ -142,11 +137,22 @@
 							value="#{msg.p_role_dialog_modif_title} #{item.technicalNameRole} (#{item.labelRole})" />
 					</h:graphicImage>
 				</p:commandLink>
+				
+				<p:commandLink id="delete_role" update="dataTable :idPageMessages"
+                    actionListener="#{roleManagedBean.delete()}"
+                    action="#{roleManagedBean.reload()}"
+                    onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.technicalNameRole} (#{item.labelRole}) ?')) return false">
+                    <f:setPropertyActionListener value="#{item}"
+                        target="#{roleManagedBean.selectedItem}" />
+                    <h:graphicImage id="img_delete" name="private/image/corbeille2.png"
+                        styleClass="actionButtons">
+                    </h:graphicImage>
+                    <p:tooltip id="toolTip" for="delete_role"
+                        value="#{msg.p_role_bouton_supprimer_tip} #{item.technicalNameRole} (#{item.labelRole})" />
+                </p:commandLink>
 
 			</p:column>
 		</p:dataTable>
-
-
 
 	</ui:define>
 </ui:composition>
