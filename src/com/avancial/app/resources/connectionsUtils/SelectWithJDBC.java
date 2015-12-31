@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.utils.StringToDate;
 /**
  * 
  * @author ismael.yahiani

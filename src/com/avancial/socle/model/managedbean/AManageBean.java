@@ -53,4 +53,12 @@ public abstract class AManageBean implements Serializable, IManagedBean {
       return null;
    }
 
+   public Boolean getCloseDialog() {
+      return this.closeDialog;
+   }
+
+   public void setCloseDialog(Boolean closeDialog) {
+      this.closeDialog = closeDialog;
+   }
+
 }

@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,13 +28,11 @@ public class UserDataBean implements Serializable {
     */
    private static final long serialVersionUID = 1L;
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    protected Long idUser;
    protected String nomUser;
    protected String prenomUser;
    protected String loginUser;
-   protected String passwordUser; 
- 
+   protected String passwordUser;
    protected String mailUser;
    protected String cpUser;
    protected String telephonePro1User;

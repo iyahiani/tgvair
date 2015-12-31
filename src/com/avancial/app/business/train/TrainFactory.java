@@ -12,8 +12,8 @@ import com.avancial.app.data.model.databean.TrainCatalogueAdapterDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.data.model.databean.TrainCatalogueToCompagnieDataBean;
 import com.avancial.app.resources.utils.GetTrainsNums;
-import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.resources.utils.TimeZoneOffSet;
+import com.avancial.socle.utils.StringToDate;
 
 /**
  * 

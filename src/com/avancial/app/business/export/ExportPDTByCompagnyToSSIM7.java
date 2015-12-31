@@ -14,13 +14,16 @@ import org.apache.log4j.Logger;
 import com.avancial.app.business.train.Service;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
-import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
-import com.avancial.app.resources.constants.APP_TgvAir;
+import com.avancial.app.model.managedbean.ParamGetterManagedBean;
+import com.avancial.app.resources.constants.APP_params;
 import com.avancial.app.resources.utils.FormatterInteger2String;
-import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.app.resources.utils.StringToFormatedString;
 import com.avancial.app.resources.utils.TimeZoneOffSet;
 import com.avancial.app.traitements.TraitementExportDataBean;
+import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
+import com.avancial.socle.params.exception.ParamNotFoundException;
+import com.avancial.socle.resources.constants.SOCLE_params;
+import com.avancial.socle.utils.StringToDate;
 import com.avancial.writer.FormaterLeftSpaces;
 import com.avancial.writer.FormaterStrategyFixedLength;
 import com.avancial.writer.IFormaterFixedLength;
@@ -30,48 +33,51 @@ import com.avancial.writer.WriterTxt;
 
 public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
 
-   Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class) ;
-   private int        cpt;
-   private int        varianceCirculation;
-   private Date       dateCourante;
-   private DateFormat df;
-   private IWriter    writer;
-   private int        numFichier;
-   private File file ;
-   
+   Logger                         log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
+   private int                    cpt;
+   private int                    varianceCirculation;
+   private Date                   dateCourante;
+   private DateFormat             df;
+   private IWriter                writer;
+   private int                    numFichier;
+   private File                   file;
+   private ParamGetterManagedBean paramGetter;
+
    /**
     * 
-    @author Yahiani Ismail
-    * @param Export des trains Compagnie Impactés par les 
-    *           modifications implementation de la class WriterSSIM pour ecrire dans un fichier
+    * @author Yahiani Ismail
+    * @param Export
+    *           des trains Compagnie Impactés par les modifications implementation de la class WriterSSIM pour ecrire dans un fichier
+    * @throws Exception
     */
-   public ExportPDTByCompagnyToSSIM7() {
+   public ExportPDTByCompagnyToSSIM7() throws Exception {
       this.cpt = 0;
       this.varianceCirculation = 0;
       this.dateCourante = new Date();
       this.df = new SimpleDateFormat("ddMMMyy");
       this.df.format(this.dateCourante);
       this.numFichier = 0;
+      this.paramGetter = new ParamGetterManagedBean();
    }
 
    /**
     * @author ismael.yahiani
     * @param tc2c
-    * @throws ParseException 
-    * exporter la liste des trains relatifs a la compagnie sous le format SSIM 7 
+    * @throws ParseException
+    *            exporter la liste des trains relatifs a la compagnie sous le format SSIM 7
     * 
     */
-   
+
    public void export(List<TrainCatalogue> listCatalogue, TraitementExportDataBean bean, Service service) throws ParseException {
-      
-      Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class); 
-      String compagnieName = listCatalogue.get(0).getCodeCompagnie() ; 
-      this.file = new File(compagnieName+StringToDate.toString(this.dateCourante)+bean.getHeureCreation()+".txt");
+
+      Logger log = Logger.getLogger(ExportPDTByCompagnyToSSIM7.class);
+      String compagnieName = listCatalogue.get(0).getCodeCompagnie();
+      this.file = new File(compagnieName + StringToDate.toString(this.dateCourante) + bean.getHeureCreation() + ".txt");
       try {
-         this.writer = new WriterTxt(APP_TgvAir.CHEMIN_SSIM7_PROD.toString()+ this.file);
-      } catch (IOException e1) {
-         
-         this.log.error("Erreur d'écriture Fichier SSIM"+e1.getMessage());
+         this.writer = new WriterTxt(this.paramGetter.getParam(SOCLE_params.PARAM_DIRECTORIES.getValue(), APP_params.PARAMS_DIRECTORIES_SSIM7.getValue()).getValue() + this.file);
+      } catch (IOException | ParamNotFoundException | ParamCollectionNotLoadedException e1) {
+
+         this.log.error("Erreur d'écriture Fichier SSIM" + e1.getMessage());
       }
       this.cpt = 0;
       try {
@@ -86,8 +92,8 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
          int[] beginsType4 = { 0, 1, 2, 5, 9, 11, 13, 14, 28, 29, 30, 33, 36, 39, 194, 200 };
          int[] lengthsType4 = { 1, 1, 3, 4, 2, 2, 1, 14, 1, 1, 3, 3, 3, 155, 6, 1 };
 
-         int[] beginsType5 = { 0, 1, 2, 5, 187,193, 194, 200 };
-         int[] lengthsType5 = { 1, 1, 3, 182,6,1, 6, 1 };
+         int[] beginsType5 = { 0, 1, 2, 5, 187, 193, 194, 200 };
+         int[] lengthsType5 = { 1, 1, 3, 182, 6, 1, 6, 1 };
 
          IFormaterFixedLength[] formatersType1 = new IFormaterFixedLength[6];
          IFormaterStrategy formater = new FormaterStrategyFixedLength(beginsType1, lengthsType1, formatersType1, null, false, new FormaterLeftSpaces());
@@ -114,14 +120,14 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
                this.writer.write(this.getEnrgType3(tc, c));
                this.writer.setFormaterStrategy(formater4);
                this.writer.write(this.getEnrgType4(tc, c));
-            } 
-           this.varianceCirculation = 0 ;
+            }
+            this.varianceCirculation = 0;
          }
 
          this.writer.setFormaterStrategy(formater5);
-         this.writer.write(this.getEnrgType5()); 
+         this.writer.write(this.getEnrgType5());
          this.writer.close();
-        
+
       } catch (IOException e) {
          log.error(e.getMessage());
       }
@@ -184,16 +190,20 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureDepart()));
       liste.add(TimeZoneOffSet.getGMTDiff());
       // tc2c.getGMTDepart()
-               // ajouter un test si CDG alors TN sinon "  "
-      if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
-         else liste.add("");// ajouter un test si CDG alors TN sinon "  "
+      // ajouter un test si CDG alors TN sinon " "
+      if (tc2c.getPointArretOrigine().getCodeGDSPointArret().equalsIgnoreCase("CDG"))
+         liste.add("TN");
+      else
+         liste.add("");// ajouter un test si CDG alors TN sinon " "
 
       liste.add(tc2c.getPointArretDestination().getCodeGDSPointArret());
       liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureArrivee()));
       liste.add(FormatterInteger2String.getFormatedIntToStr(c.getHeureArrivee()));
       liste.add(TimeZoneOffSet.getGMTDiff()); //
-      if (tc2c.getPointArretDestination().getCodeGDSPointArret().equalsIgnoreCase("CDG")) liste.add("TN");
-      else liste.add("");
+      if (tc2c.getPointArretDestination().getCodeGDSPointArret().equalsIgnoreCase("CDG"))
+         liste.add("TN");
+      else
+         liste.add("");
       liste.add("TRN");
       liste.add("C" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota1er())) + "Y" + StringToFormatedString.formaterQuotas(String.valueOf(tc2c.getQuota2eme())));
       liste.add("");
@@ -227,7 +237,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
                                                                          // le
                                                                          // code
                                                                          // IATA
-      
+
       liste.add(StringToFormatedString.formaterMatketingFlight(tc2c.getMarketingFlight()));
       this.cpt++;
       liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
@@ -243,7 +253,7 @@ public class ExportPDTByCompagnyToSSIM7 { // extends AExportFixedLength {
       liste.add("");
       this.cpt++;
       liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
-      liste.add("E") ;
+      liste.add("E");
       this.cpt++;
       liste.add(StringToFormatedString.formatterCompteurSSIM7(this.cpt));
       liste.add("\n");

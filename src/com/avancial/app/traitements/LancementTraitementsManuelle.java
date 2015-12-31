@@ -5,28 +5,25 @@ import java.io.Serializable;
 import org.apache.log4j.Logger;
 
 /**
- * Methodes pour le lancement les Imports et les Exports SSIM/SSIM7 depuis la fenetre
- * d'administration
+ * Methodes pour le lancement les Imports et les Exports SSIM/SSIM7 depuis la fenetre d'administration
  * 
  * @author ismael.yahiani
  * 
  */
 public class LancementTraitementsManuelle implements Serializable {
 
-   Logger logger = Logger.getLogger(LancementTraitementsManuelle.class);
-   private LancementImportManuel importManuel ; 
-   private LancementAdaptationManuel adaptationManuel ; 
-   private LancementExportManuel exportManuel ;
-   
-   
-   public LancementTraitementsManuelle() {
-       
-      this.importManuel = new LancementImportManuel() ; 
-      this.adaptationManuel = new LancementAdaptationManuel() ; 
-      this.exportManuel = new LancementExportManuel() ;
+   Logger                            logger = Logger.getLogger(LancementTraitementsManuelle.class);
+   private LancementImportManuel     importManuel;
+   private LancementAdaptationManuel adaptationManuel;
+   private LancementExportManuel     exportManuel;
+
+   public LancementTraitementsManuelle() throws Exception {
+
+      this.importManuel = new LancementImportManuel();
+      this.adaptationManuel = new LancementAdaptationManuel();
+      this.exportManuel = new LancementExportManuel();
    }
-    
-   
+
    public Logger getLogger() {
       return logger;
    }

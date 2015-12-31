@@ -9,19 +9,21 @@ public enum APP_TgvAir {
    NAVIGATION_COMPAGNIEAERIENNE("/pages/private/compagnieAerienne?faces-redirect=true"),
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"),
    NAVIGATION_ADMINISTRATION("/pages/private/Administration?faces-redirect=true"),
-   CHEMIN_SSIM_REC("\\\\dione\\nas75_TgvAir_Recette\\SSIM.txt"),
-   CHEMIN_SSIM("d:\\SSIM.txt "), 
-   CHEMIN_SSIM_PROD("\\\\dione\\nas75_TgvAir_Prod\\SSIM.txt"), 
-   
-   CHEMIN_SSIM7_DEV("d:\\"),
-   
-   CHEMIN_SSIM7_REC("\\\\reha\\mft46-ssim7-af-rec\\"),
-   CHEMIN_SSIM7_PROD("\\\\reha\\mft47-ssim7-af-prod\\"), 
-   
-   CHEMIN_SSIMARCHIVE_REC("\\\\dione\\nas75_TgvAir_Recette\\Archive\\"),
-   CHEMIN_SSIMARCHIVE_PROD("\\\\dione\\nas75_TgvAir_Prod\\Archive\\"),
-   
-   CHEMIN_APP_PROPERTIES("/classes/com/avancial/app/resources/app.properties") 
+   // CHEMIN_SSIM_REC("\\\\dione\\nas75_TgvAir_Recette\\SSIM.txt"),
+   // CHEMIN_SSIM("d:\\SSIM.txt "),
+   // CHEMIN_SSIM_PROD("\\\\dione\\nas75_TgvAir_Prod\\SSIM.txt"),
+
+   // CHEMIN_SSIM7_DEV("d:\\"),
+
+   // CHEMIN_SSIM7_REC("\\\\reha\\mft46-ssim7-af-rec\\"),
+   // CHEMIN_SSIM7_PROD("\\\\reha\\mft47-ssim7-af-prod\\"),
+
+   // CHEMIN_SSIMARCHIVE_REC("\\\\dione\\nas75_TgvAir_Recette\\Archive\\"),
+   // CHEMIN_SSIMARCHIVE_PROD("\\\\dione\\nas75_TgvAir_Prod\\Archive\\"),
+
+   CHEMIN_APP_PROPERTIES("/classes/com/avancial/app/resources/app.properties"),
+   SSIM_NOM_FICHIER("SSIM.txt")
+
    ;
 
    private String constante;

@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.utils.StringToDate;
 
 public class CirculationSemaineBuilder implements ICirculationSemaineBuilder {
    private Circulation circulation = new Circulation();

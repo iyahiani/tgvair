@@ -13,9 +13,12 @@
 		<property name="hibernate.max_fetch_depth">3</property>
 		<property name="connection.datasource">java:comp/env/jdbc/socle</property> 
 		 <property name="hibernate.cache.use_second_level_cache">false</property>
-        <property name="hibernate.jdbc.batch_size">20</property>
+        <property name="hibernate.jdbc.batch_size">20</property> 
+        <property name="hibernate.c3p0.timeout">180000</property>
 		<mapping resource="com/avancial/app/model/databean/mapping/circulationSSIM.hbm.xml"/> 
-	</session-factory> 
+	
+	</session-factory>  
+	
 	
 </hibernate-configuration> 
 

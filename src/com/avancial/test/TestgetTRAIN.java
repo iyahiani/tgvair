@@ -3,7 +3,7 @@ package com.avancial.test;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.utils.StringToDate;
 
 public class TestgetTRAIN {
 

@@ -1,7 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>avancial.fr</groupId>
 	<artifactId>tgvair</artifactId>
@@ -14,9 +12,7 @@
 			</url>
 			<!-- <releases> <enabled>false</enabled> </releases> <snapshots> <enabled>true</enabled> 
 				</snapshots> -->
-
 		</snapshotRepository>
-
 	</distributionManagement>
 	<build>
 
@@ -38,6 +34,7 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<configuration>
 						<webXml>WebContent\WEB-INF\web.xml</webXml>
+						<warName>tgvair</warName>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -45,6 +42,9 @@
 	</build>
 	<properties>
 		<slf4j.version>1.7.7</slf4j.version>
+		<sonar.exclusions>
+			src/com/avancial/socle/**
+		</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -80,7 +80,7 @@
 			<artifactId>jdom</artifactId>
 			<version>1.0</version>
 		</dependency>
-      
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -106,10 +106,10 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-	<dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
@@ -147,9 +147,9 @@
 				<groupId>javax.inject</groupId>
 				<artifactId>javax.inject</artifactId>
 				<version>1</version>
-			</dependency> 
-			
-        
+			</dependency>
+
+
 			<dependency>
 				<groupId>org.jboss.weld.servlet</groupId>
 				<artifactId>weld-servlet</artifactId>
@@ -209,12 +209,12 @@
 			<dependency>
 				<groupId>avancial.fr</groupId>
 				<artifactId>parser</artifactId>
-				<version>0.0.4-SNAPSHOT</version>
+				<version>1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>avancial.fr</groupId>
 				<artifactId>reader</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>

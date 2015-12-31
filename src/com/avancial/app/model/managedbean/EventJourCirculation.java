@@ -9,7 +9,7 @@ import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.HeureFormattage;
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.utils.StringToDate;
 
 public class EventJourCirculation extends DefaultScheduleEvent {
 	private static final long serialVersionUID = 1L;

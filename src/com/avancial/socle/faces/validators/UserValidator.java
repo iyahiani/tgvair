@@ -6,6 +6,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
+import com.avancial.socle.faces.validators.AValidator;
+
 /**
  * 
  * @author caglar.erdogan

@@ -7,14 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
-import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -26,7 +23,6 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.avancial.app.model.managedbean.jobManage.SchedMangBean;
 import com.avancial.socle.business.JobPlanifBean;
 import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
@@ -36,16 +32,15 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  * @author bruno.legloahec
  *
  */
-@WebServlet(loadOnStartup = 1, urlPatterns = "/init", name = "jobsServlet")
+@WebServlet(loadOnStartup = 1, urlPatterns = "/init")
 public class SocleInit extends HttpServlet {
-  
-   @Inject 
-   SchedMangBean sc ;
-   
-   public Scheduler sched;
-   Logger log = Logger.getLogger(SocleInit.class);
+   public Scheduler          sched;
+
+   /**
+    * 
+    */
    private static final long serialVersionUID = 1L;
-   
+
    /*
     * (non-Javadoc)
     * 
@@ -53,19 +48,15 @@ public class SocleInit extends HttpServlet {
     */
    @Override
    public void init() throws ServletException {
-      super.init(); 
-     
+      super.init();
       System.out.println("**********************************************");
       System.out.println("********  Application initialization  ********");
       System.out.println("**********************************************");
-      log.info("Quartz Socle initialisé");
       try {
          this.quartzInit();
          FacesContext.getCurrentInstance().getExternalContext().redirect(SOCLE_constants.NAVIGATION_ACCUEIL.name());
-         log.info("quartz SOCLE initialisé");
       } catch (SchedulerException | IOException e) {
          e.printStackTrace();
-         log.error("erreur d'initialisation de Quartz" + e.getMessage());
       }
    }
 
@@ -90,7 +81,6 @@ public class SocleInit extends HttpServlet {
             newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
             Scheduler sched = sf.getScheduler();
             JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
-
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
             sched.scheduleJob(job, trigger);
 
@@ -105,16 +95,5 @@ public class SocleInit extends HttpServlet {
       // Trigger the job to run on the next round minute
 
       this.sched.start();
-      this.log.info("Crone Job Started");
-     if(this.sched.isStarted())
-        this.sc.getContext().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(),
-              new FacesMessage(FacesMessage.SEVERITY_INFO, "", "JOBS"));
-      try {
-         Thread.sleep(600L);
-
-      } catch (InterruptedException e) {
-
-         e.printStackTrace();
-      }
    }
 }

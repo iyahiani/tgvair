@@ -10,28 +10,41 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <cc:interface></cc:interface>
 <cc:implementation>
+	<f:metadata>
+		<f:event listener="#{jobPlanifManagedBean.reload}"
+			type="preRenderView"></f:event>
+	</f:metadata>
 	<table>
-		<tr >
+
+		<tr>
 			<td><h:outputText value="#{msg.p_dialog_type_planification}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> 
+			
+			
 			<p:selectOneMenu
 					value="#{jobPlanifManagedBean.jobTypeSelected}"
-					id="selectJobPlanifType"
-					>
+					id="selectJobPlanifType">
+					<f:selectItem  
+					itemLabel="#{jobPlanifManagedBean.selectedItem.jobPlanif.jobPlanifTypeDataBean.libelleJobPlanifType}" 
+					itemValue="#{jobPlanifManagedBean.selectedItem.jobPlanif.jobPlanifTypeDataBean.libelleJobPlanifType}"></f:selectItem>
 					<f:selectItems value="#{jobPlanifManagedBean.listePlanifType}"
-						var="bean" itemLabel="#{bean.libelleJobPlanifType}"></f:selectItems> 
-						<f:ajax listener="#{jobPlanifManagedBean.valueChanged}"
-                        render="formModifJob"/>
+						var="bean" itemLabel="#{bean.libelleJobPlanifType}"></f:selectItems>
+					<f:ajax listener="#{jobPlanifManagedBean.valueChanged}"
+						render="formModifJob" />
 				</p:selectOneMenu></td>
 		</tr>
+		<!--
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_job}"></h:outputText></td>
-			<td><h:outputText value=" : "></h:outputText> <p:selectOneMenu
+			<td><h:outputText value=" : "></h:outputText>
+			 <p:selectOneMenu
 					value="#{jobPlanifManagedBean.jobSelected}" id="selectJob">
+					<f:selectItem itemLabel=""></f:selectItem>
 					<f:selectItems value="#{jobPlanifManagedBean.listeJob}" var="bean"
 						itemLabel="#{bean.libelleJob}"></f:selectItems>
 				</p:selectOneMenu></td>
-		</tr>
+		  </tr>
+		 -->
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
@@ -65,22 +78,27 @@
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_heures}"></h:outputText></td>
 			<td><h:outputText value=" : "></h:outputText> <p:inputText
-					value="#{jobPlanifManagedBean.selectedItem.heuresJobPlanif}" 
+					value="#{jobPlanifManagedBean.selectedItem.heuresJobPlanif}"
 					required="true" placeholder="#{msg.p_dialog_place_holder_heures}"></p:inputText></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_jour_mois}"
-			 rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>
-			<td><h:outputText value=" : " rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
+					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>
+			<td><h:outputText value=" : "
+					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
 					value="#{jobPlanifManagedBean.selectedItem.jourMoisJobPlanif}"
 					required="true"
-					placeholder="#{msg.p_dialog_place_holder_jour_mois}" rendered="#{jobPlanifManagedBean.isCrone()}"></p:inputText></td>
+					placeholder="#{msg.p_dialog_place_holder_jour_mois}"
+					rendered="#{jobPlanifManagedBean.isCrone()}"></p:inputText></td>
 		</tr>
 		<tr>
-			<td><h:outputText value="#{msg.p_dialog_libelle_mois}" rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>
-			<td><h:outputText value=" : " rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
+			<td><h:outputText value="#{msg.p_dialog_libelle_mois}"
+					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>
+			<td><h:outputText value=" : "
+					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
 					value="#{jobPlanifManagedBean.selectedItem.moisJobPlanif}"
-					required="true" placeholder="#{msg.p_dialog_place_holder_mois}" rendered="#{jobPlanifManagedBean.isCrone()}"></p:inputText></td>
+					required="true" placeholder="#{msg.p_dialog_place_holder_mois}"
+					rendered="#{jobPlanifManagedBean.isCrone()}"></p:inputText></td>
 		</tr>
 		<tr>
 			<tr>
@@ -92,14 +110,16 @@
 			</tr>
 
 
-			<td><h:outputText value="#{msg.p_dialog_libelle_annee}" rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>
-			<td><h:outputText value=" : " rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText 
-			rendered="#{jobPlanifManagedBean.isCrone()}"
+			<td><h:outputText value="#{msg.p_dialog_libelle_annee}"
+					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>
+			<td><h:outputText value=" : "
+					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText> <p:inputText
+					rendered="#{jobPlanifManagedBean.isCrone()}"
 					value="#{jobPlanifManagedBean.selectedItem.anneeJobPlanif}"
 					required="true" placeholder="#{msg.p_dialog_place_holder_annee}"></p:inputText></td>
 		</tr>
-
-
-	</table>
+		  
+	</table> 
+	
 </cc:implementation>
 </html>

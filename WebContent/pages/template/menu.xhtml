@@ -51,6 +51,10 @@
 			 rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobPlanif')}" />
 			 
 			
+			<p:menuitem value="#{msg.p_job_super_name}"  action="#{menu.goJobSuper}" title="Supervision des Jobs"
+             rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobSupervision')}" />
+             
+             
 			<p:menuitem value="#{msg.p_user_menu}" action="#{menu.goUser}" title="Gestion Des Utilisateurs"
 				 rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageUtilisateurs')}" />
 		    

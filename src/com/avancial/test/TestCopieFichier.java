@@ -3,24 +3,32 @@ package com.avancial.test;
 import java.io.File;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import org.junit.Test;
 
+import com.avancial.app.model.managedbean.ParamGetterManagedBean;
 import com.avancial.app.resources.constants.APP_TgvAir;
+import com.avancial.app.resources.constants.APP_params;
 import com.avancial.app.resources.utils.DeplacerFicher;
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.resources.constants.SOCLE_params;
+import com.avancial.socle.utils.StringToDate;
 
 public class TestCopieFichier {
 
+   @Inject
+   ParamGetterManagedBean paramGetter;
 
-   @Test 
-   
+   @Test
    public void copierFichier() throws Exception {
-      
-      File source= new File(APP_TgvAir.CHEMIN_SSIM.toString()) ;   
-      File dest= new File(APP_TgvAir.CHEMIN_SSIMARCHIVE_REC.toString()+"archiveSSIM"+ StringToDate.toStringByFormat(new Date(),"dateSansSeparateurs")+".txt") ; 
-      
-      DeplacerFicher.copierFile(source, dest); 
-     if ( source.delete() ) System.out.println("true"); 
-     else System.out.println("false");
+
+      File source = new File(this.paramGetter.getParam(SOCLE_params.PARAM_DIRECTORIES.getValue(), APP_params.PARAMS_DIRECTORIES_SSIM.getValue()) + APP_TgvAir.SSIM_NOM_FICHIER.getConstante());
+      File dest = new File(this.paramGetter.getParam(SOCLE_params.PARAM_DIRECTORIES.getValue(), APP_params.PARAMS_DIRECTORIES_SSIM_ARCHIVE.getValue()) + "archiveSSIM" + StringToDate.toStringByFormat(new Date(), "dateSansSeparateurs") + ".txt");
+
+      DeplacerFicher.copierFile(source, dest);
+      if (source.delete())
+         System.out.println("true");
+      else
+         System.out.println("false");
    }
 }

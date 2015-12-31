@@ -24,10 +24,10 @@ import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.app.business.train.Train;
 import com.avancial.app.business.train.TrainCatalogue;
 import com.avancial.app.business.train.circulation.Circulation;
-import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.parser.IParser;
 import com.avancial.parser.ParserFixedLength;
 import com.avancial.reader.IReader;
+import com.avancial.socle.utils.StringToDate;
 
 public class Lunch3 {
 

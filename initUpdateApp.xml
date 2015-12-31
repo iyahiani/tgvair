@@ -1,141 +1,141 @@
 <project name="appSocle" default="update" basedir=".">
-	<description>
-		Création d'un nouveau projet
-	</description>
-
-	<condition property="lecteur" value="c:">
-		<contains string="${user.name}" substring="legloahec" casesensitive="false" />
-	</condition>
-	<property name="lecteur" value="d:" />
-
-	<property name="source" location="${lecteur}\Users/${user.name}/Desktop/appSocle" />
-
-	<property name="source.webcontent" location="${source}/WebContent" />
-	<property name="dest.webcontent" location="WebContent/" />
-
-	<property name="source.webcontent.webinf" location="${source.webcontent}/WEB-INF" />
-	<property name="dest.webcontent.webinf" location="${dest.webcontent}/WEB-INF/" />
-
-	<property name="source.webcontent.metainf" location="${source.webcontent}/META-INF" />
-	<property name="dest.webcontent.metainf" location="${dest.webcontent}/META-INF/" />
-
-	<property name="source.webcontent.pages" location="${source.webcontent}/pages" />
-	<property name="dest.webcontent.pages" location="${dest.webcontent}/pages/" />
+    <description>
+        Création d'un nouveau projet
+    </description>
 
 
+    <condition property="lecteur" value="c:">
+        <contains string="${user.name}" substring="legloahec" casesensitive="false" />
+    </condition>
+    <property name="lecteur" value="d:" />
 
-	<property name="source.src" location="${source}/src" />
-	<property name="dest.src" location="src" />
-	<property name="source.src.socle" location="${source}/src/com/avancial/socle" />
-	<property name="dest.src.socle" location="src/com/avancial/socle/" />
-
-	<property name="dest.otherResources" location="Other Resources" />
-	<property name="source.otherResources" location="${source}/Other Resources/" />
+    <property name="source" location="${lecteur}\Users/${user.name}/Desktop/appSocle" />
 
 
-	<property name="dest.webcontent.pages" location="${dest.webcontent}/pages/" />
-	<property name="source.webcontent.pages" location="${source.webcontent}/pages/" />
+    <property name="source.webcontent" location="${source}/WebContent" />
+    <property name="dest.webcontent" location="WebContent/" />
 
-	<property name="dest.webcontent.resources" location="${dest.webcontent}/resources/" />
-	<property name="source.webcontent.resources" location="${source.webcontent}/resources/" />
+    <property name="source.webcontent.webinf" location="${source.webcontent}/WEB-INF" />
+    <property name="dest.webcontent.webinf" location="${dest.webcontent}/WEB-INF/" />
+
+    <property name="source.webcontent.metainf" location="${source.webcontent}/META-INF" />
+    <property name="dest.webcontent.metainf" location="${dest.webcontent}/META-INF/" />
+
+    <property name="source.webcontent.pages" location="${source.webcontent}/pages" />
+    <property name="dest.webcontent.pages" location="${dest.webcontent}/pages/" />
 
 
-	<property name="dest.webcontent.wsdl" location="${dest.webcontent}/wsdl/" />
+
+    <property name="source.src" location="${source}/src" />
+    <property name="dest.src" location="src" />
+    <property name="source.src.socle" location="${source}/src/com/avancial/socle" />
+    <property name="dest.src.socle" location="src/com/avancial/socle/" />
+
+    <property name="dest.otherResources" location="Other Resources" />
+    <property name="source.otherResources" location="${source}/Other Resources/" />
 
 
-	<target name="commun">
+    <property name="dest.webcontent.pages" location="${dest.webcontent}/pages/" />
+    <property name="source.webcontent.pages" location="${source.webcontent}/pages/" />
+
+    <property name="dest.webcontent.wsdl" location="${dest.webcontent}/wsdl/" />
+
+
+    <target name="commun">
 
 
 
 
 
 
-	</target>
+    </target>
 
-	<target name="update">
-		<echo>update du projet</echo>
-		<delete dir="${dest.src.socle}">
-		</delete>
-		<mkdir dir="${dest.src.socle}" />
+    <target name="update">
+        <echo>update du projet</echo>
+        <delete dir="${dest.src.socle}">
+        </delete>
+        <mkdir dir="${dest.src.socle}" />
 
-		<echo>Copie des sources du socle</echo>
-		<copy todir="${dest.src.socle}" verbose="true" overwrite="true">
-			<fileset dir="${source.src.socle}">
-			</fileset>
-		</copy>
+        <echo>Copie des sources du socle</echo>
+        <copy todir="${dest.src.socle}" verbose="true" overwrite="true">
+            <fileset dir="${source.src.socle}">
+            </fileset>
+        </copy>
 
 
-		<antcall target="commun">
-		</antcall>
-	</target>
+        <antcall target="commun">
+        </antcall>
+    </target>
 
-	<property name="sauve" location="${source}/sauve">
-	</property>
 
-	<target name="check_was" unless="file.exists">
-		<!-- Vérification du repértoire source -->
-		<available type="dir" property="file.exists" file="${source}">
-		</available>
-	</target>
 
-	<target name="update-failed" depends="check_was" if="${file.exists}">
+    <property name="sauve" location="${source}/sauve">
+    </property>
 
-	</target>
 
-	<target name="init">
+    <target name="check_was" unless="file.exists">
+        <!-- Vérification du repértoire source -->
+        <available type="dir" property="file.exists" file="${source}">
+        </available>
+    </target>
 
-		<echo>init du projet</echo>
+    <target name="update-failed" depends="check_was" if="${file.exists}">
 
-		<echo>Copie des sources</echo>
-		<copy todir="${dest.src}" verbose="true" overwrite="true">
-			<fileset dir="${source.src}">
-			</fileset>
-		</copy>
+    </target>
 
-		<antcall target="commun">
-		</antcall>
-		<echo>Copie Web-Content</echo>
+    <target name="init">
 
-		<echo>Copie du pom.xml</echo>
-		<copy todir="." overwrite="true">
-			<fileset file="${source}/pom.xml">
-			</fileset>
-		</copy>
+        <echo>init du projet</echo>
 
-		<echo>Copie du répertoire WEB-INF</echo>
-		<copy todir="${dest.webcontent.webinf}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.webinf}" />
-		</copy>
+        <echo>Copie des sources</echo>
+        <copy todir="${dest.src}" verbose="true" overwrite="true">
+            <fileset dir="${source.src}">
+            </fileset>
+        </copy>
 
-		<echo>Creation du répertoire Other Ressources</echo>
-		<mkdir dir="${dest.otherResources}" />
 
-		<echo>Copie du répertoire META-INF</echo>
-		<copy todir="${dest.webcontent.metainf}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.metainf}" />
-		</copy>
+        <antcall target="commun">
+        </antcall>
+        <echo>Copie Web-Content</echo>
 
-		<echo>Copie des resources</echo>
-		<copy todir="${dest.otherResources}" verbose="true" overwrite="true">
-			<fileset dir="${source.otherResources}">
-				<exclude name="socle/" />
-			</fileset>
-		</copy>
+        <echo>Copie du pom.xml</echo>
+        <copy todir="." overwrite="true">
+            <fileset file="${source}/pom.xml">
+            </fileset>
+        </copy>
 
-		<echo>Copie des pages</echo>
-		<copy todir="${dest.webcontent.pages}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.pages}">
+        <echo>Copie du répertoire WEB-INF</echo>
+        <copy todir="${dest.webcontent.webinf}" verbose="true" overwrite="true">
+            <fileset dir="${source.webcontent.webinf}" />
+        </copy>
 
-			</fileset>
-		</copy>
+        <echo>Creation du répertoire Other Ressources</echo>
+        <mkdir dir="${dest.otherResources}" />
 
-		<echo>Copie des pages</echo>
-		<copy todir="${dest.webcontent.resources}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.resources}">
+        <echo>Copie du répertoire META-INF</echo>
+        <copy todir="${dest.webcontent.metainf}" verbose="true" overwrite="true">
+            <fileset dir="${source.webcontent.metainf}" />
+        </copy>
 
-			</fileset>
-		</copy>
 
-	</target>
+
+        <echo>Copie des resources</echo>
+        <copy todir="${dest.otherResources}" verbose="true" overwrite="true">
+            <fileset dir="${source.otherResources}">
+                <exclude name="socle/" />
+            </fileset>
+        </copy>
+
+        <echo>Copie des pages</echo>
+        <copy todir="${dest.webcontent.pages}" verbose="true" overwrite="true">
+            <fileset dir="${source.webcontent.pages}">
+
+            </fileset>
+        </copy>
+
+
+    </target>
+
+
 
 </project>

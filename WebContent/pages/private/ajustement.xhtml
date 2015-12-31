@@ -33,7 +33,8 @@
 								<f:selectItems var="train" value="#{ajustement.listTrains}"
 									itemLabel="#{train.toString()}" itemValue="#{train.idTrain}" />
 							</p:selectOneMenu>
-					         <p:commandButton style="position: absolute; right: 40px;" icon="ui-icon-info" update=":dlg" oncomplete="PF('dlg').show();"
+					         <p:commandButton style="position: absolute; right: 40px;" 
+					         icon="ui-icon-info" update=":dlg" oncomplete="PF('dlg').show();"
 					         title="Inofrmations"></p:commandButton>
 						</h:form>
 					</div>
@@ -50,7 +51,8 @@
 										value="#{ajustement.schedule_0.schedule}" draggable="false"
 										resizable="false" tooltip="true" view="month"
 										initialDate="#{ajustement.schedule_0.initialDate}"
-										ignoreTimezone="false" allDay="true" showHeader="false" rendered="#{ajustement.schedule_0.isRendered}"
+										ignoreTimezone="false" allDay="true" showHeader="false" 
+										rendered="#{ajustement.schedule_0.isRendered}"
 										editable="true" widgetVar="myschedule_0" >
 										<p:ajax event="eventSelect"
 											listener="#{ajustement.onEventSelect}" update="eventDetails"

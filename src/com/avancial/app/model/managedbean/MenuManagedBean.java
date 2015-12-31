@@ -6,6 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.avancial.app.resources.constants.APP_TgvAir;
+import com.avancial.socle.model.managedbean.SocleMenuManagedBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
@@ -16,7 +17,12 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  */
 @Named("menu")
 @SessionScoped
-public class MenuManagedBean implements Serializable {
+public class MenuManagedBean extends SocleMenuManagedBean  {
+   
+
+   /**
+    * 
+    */
    private static final long serialVersionUID = 1L;
 
    public static String goAccueil() {
@@ -36,6 +42,10 @@ public class MenuManagedBean implements Serializable {
 
    public static String goUser() {
       return SOCLE_constants.NAVIGATION_USER.toString();
+   }
+   
+   public static String goJobSuper() {
+      return SOCLE_constants.NAVIGATION_JOB_SUPERVISION.toString();
    }
 
    public static String goAjustement() {

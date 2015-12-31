@@ -11,11 +11,13 @@
 
 
 <cc:interface>
+
 </cc:interface>
 
 <cc:implementation> 
-
-
+<f:metadata>
+            <f:event listener="#{jobPlanifManagedBean.reload}" type="preRenderView"></f:event>
+        </f:metadata>
 	<table> 
 	
 		<tr>
@@ -103,7 +105,26 @@
 					placeholder="#{msg.p_dialog_place_holder_heures}"
 					title="Heures : 0,..,23 ou *"
 					></p:inputText></td>
-		</tr>
+		</tr> 
+		<tr>
+                        <td><h:outputText value="Selectionnez les Jours: " 
+                        rendered="#{jobPlanifManagedBean.isDaily()}" /> 
+                        <p:inplace id="checkBoxes" label=" Cliquez ici" effect="slide" 
+                        rendered="#{jobPlanifManagedBean.isDaily()}">
+                             <h:selectManyCheckbox layout="pageDirection" 
+                                rendered="#{jobPlanifManagedBean.isDaily()}" 
+                                    value="#{jobPlanifManagedBean.listSelectedJours}">
+                                    <f:selectItem itemValue="1" itemLabel="#{msg.p_ckeckBox_lundi}" />
+                                    <f:selectItem itemValue="2" itemLabel="#{msg.p_ckeckBox_mardi}" />
+                                    <f:selectItem itemValue="3" itemLabel="#{msg.p_ckeckBox_mercredi}" />
+                                    <f:selectItem itemValue="4" itemLabel="#{msg.p_ckeckBox_jeudi}" />
+                                    <f:selectItem itemValue="5" itemLabel="#{msg.p_ckeckBox_vendredi} " />
+                                    <f:selectItem itemValue="6" itemLabel="#{msg.p_ckeckBox_samedi}" />
+                                    <f:selectItem itemValue="7" itemLabel="#{msg.p_ckeckBox_dimanche}" />
+                                </h:selectManyCheckbox>
+                            </p:inplace>
+                        </td>
+                    </tr>  
 		<tr>
 			<td><h:outputText value="#{msg.p_dialog_libelle_jour_mois}"
 					rendered="#{jobPlanifManagedBean.isCrone()}"></h:outputText></td>

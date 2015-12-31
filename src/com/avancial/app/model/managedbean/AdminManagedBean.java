@@ -19,8 +19,6 @@ import com.avancial.app.data.controller.dao.ServiceDAO;
 import com.avancial.app.data.model.databean.CompagnieAerienneDataBean;
 import com.avancial.app.data.model.databean.ServiceDataBean;
 import com.avancial.app.traitements.LancementTraitementsManuelle;
-import com.avancial.socle.data.controller.dao.UserDao;
-import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -32,101 +30,102 @@ public class AdminManagedBean extends AManageBean {
    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
-   private boolean finish;
-   private SchedulerFactory sf;
-   private Scheduler sched;
-   private List<CompagnieAerienneDataBean> listCompagnies = new CompagnieAerienneDao().getAllCodeCompagnie();
-   /*private Date dateDebut ; 
-   private Date dateFin ;*/
-   private String compagnie ;  
-   private List<ServiceDataBean> listServices ; 
-   private ServiceDataBean selectedService ;
-  
-   private  LancementTraitementsManuelle lancementTraitementsManuelle ; 
-   
-   Logger logger = Logger.getLogger(AdminManagedBean.class) ;
-   
-   public AdminManagedBean() { 
-  
-    this.lancementTraitementsManuelle  = new LancementTraitementsManuelle() ;
+   private static final long               serialVersionUID = 1L;
+   private boolean                         finish;
+   private SchedulerFactory                sf;
+   private Scheduler                       sched;
+   private List<CompagnieAerienneDataBean> listCompagnies   = new CompagnieAerienneDao().getAllCodeCompagnie();
+   /*
+    * private Date dateDebut ; private Date dateFin ;
+    */
+   private String                          compagnie;
+   private List<ServiceDataBean>           listServices;
+   private ServiceDataBean                 selectedService;
+
+   private LancementTraitementsManuelle    lancementTraitementsManuelle;
+
+   Logger                                  logger           = Logger.getLogger(AdminManagedBean.class);
+
+   public AdminManagedBean() throws Exception {
+
+      this.lancementTraitementsManuelle = new LancementTraitementsManuelle();
    }
- 
-   
-   @PostConstruct 
+
+   @PostConstruct
    public void init() {
-      this.listServices = new ServiceDAO().getAll() ;
-   
+      this.listServices = new ServiceDAO().getAll();
+
    }
-   
+
    public void rowSelect(SelectEvent event) {
 
-      this.selectedService = (ServiceDataBean) event.getObject(); 
-      
-   } 
- 
- 
+      this.selectedService = (ServiceDataBean) event.getObject();
 
-   
-   public void reload() {
-      this.listServices = new ServiceDAO().getAll() ;
    }
-   
+
+   public void reload() {
+      this.listServices = new ServiceDAO().getAll();
+   }
+
+   @Override
    public String update() throws ASocleException {
       super.update();
-           ServiceDAO dao = new ServiceDAO();
-         try {
-            dao.update(this.selectedService);
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Service", "Service modifié"));
-            this.closeDialog = true;
-            RequestContext.getCurrentInstance().update(":form_admin"); 
-            this.reload(); 
-            this.logger.info("Service Modifier");
-         } catch (ASocleException e) {
-            e.printStackTrace();
-            this.logger.error("Ereur Modification Service");
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
-         }
-      
+      ServiceDAO dao = new ServiceDAO();
+      try {
+         dao.update(this.selectedService);
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Service", "Service modifié"));
+         this.closeDialog = true;
+         RequestContext.getCurrentInstance().update(":form_admin");
+         this.reload();
+         this.logger.info("Service Modifier");
+      } catch (ASocleException e) {
+         e.printStackTrace();
+         this.logger.error("Ereur Modification Service");
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+      }
+
       return null;
    }
-  
-   
-   /** 
-    * lancement Manuel de l'import SSIM 
+
+   /**
+    * lancement Manuel de l'import SSIM
+    * 
+    * @return null
+    * @throws Exception
+    */
+   public String lancerImport() throws Exception {
+
+      this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();
+      // this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
+      // this.logger.info("SUCCES Import SSIM");
+
+      return null;
+   }
+
+   /**
+    * 
+    * 
+    * lancement manuel de l'export SSIM 7
+    * 
     * @return null
     */
-   public String lancerImport() {
-      
-      this.lancementTraitementsManuelle.getImportManuel().traitementImportSSIM();       
-      //this.lancementTraitementsManuelle.getAdaptationManuel().traitementAdaptation();
-     // this.logger.info("SUCCES Import SSIM");  
-      
-       return null;
-    }
-
-/**
-* 
-* 
-* lancement manuel de l'export SSIM 7 
-* 
-* @return null
-*/
    public String lancerExport() {
-        
-     this.lancementTraitementsManuelle.getExportManuel().traitementExport();
-     
+
+      this.lancementTraitementsManuelle.getExportManuel().traitementExport();
+
       return null;
    }
-   
-   
+
+   @Override
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
 
+   @Override
    public void setCloseDialog(Boolean closeDialog) {
       this.closeDialog = closeDialog;
    }
+
    public boolean isFinish() {
       return this.finish;
    }
@@ -135,7 +134,6 @@ public class AdminManagedBean extends AManageBean {
       this.finish = finish;
    }
 
-   
    public SchedulerFactory getSf() {
       return this.sf;
    }
@@ -167,41 +165,40 @@ public class AdminManagedBean extends AManageBean {
    public void setCompagnie(String compagnie) {
       this.compagnie = compagnie;
    }
-  /* public Date getDateDebut() {
-      return this.dateDebut;
-   }
-   public void setDateDebut(Date dateDebut) {
-      this.dateDebut = dateDebut;
-   }
-   public Date getDateFin() {
-      return this.dateFin;
-   }
-   public void setDateFin(Date dateFin) {
-      this.dateFin = dateFin;
-   }*/
+
+   /*
+    * public Date getDateDebut() { return this.dateDebut; } public void setDateDebut(Date dateDebut) { this.dateDebut = dateDebut; } public Date getDateFin() { return this.dateFin; } public void setDateFin(Date dateFin) { this.dateFin = dateFin; }
+    */
    public LancementTraitementsManuelle getLancementTraitementsManuelle() {
       return this.lancementTraitementsManuelle;
    }
+
    public void setLancementTraitementsManuelle(LancementTraitementsManuelle lancementTraitementsManuelle) {
       this.lancementTraitementsManuelle = lancementTraitementsManuelle;
    }
+
    public Logger getLogger() {
       return this.logger;
    }
+
    public void setLogger(Logger logger) {
       this.logger = logger;
    }
+
    public List<ServiceDataBean> getListServices() {
       return this.listServices;
    }
+
    public void setListServices(List<ServiceDataBean> listServices) {
       this.listServices = listServices;
    }
+
    public ServiceDataBean getSelectedService() {
       return this.selectedService;
    }
+
    public void setSelectedService(ServiceDataBean selectedService) {
       this.selectedService = selectedService;
-   }  
+   }
 
 }

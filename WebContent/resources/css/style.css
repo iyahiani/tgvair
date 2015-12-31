@@ -1,3 +1,8 @@
+
+.nagios {
+    visibility: hidden
+}
+
 .ui-widget, .ui-widget .ui-widget, .ui-widget-header {
 	font-size: 90% !important;
 }
@@ -439,5 +444,9 @@ BloggerSans
 	border-style: ridge ; 
 	border-width: thin;  
 	border-color: blue; 
-	
+}
+
+
+.nagios {
+    visibility: hidden
 }

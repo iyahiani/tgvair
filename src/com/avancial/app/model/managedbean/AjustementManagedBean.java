@@ -25,9 +25,9 @@ import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.data.controller.dao.CirculationDAO;
 import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
-import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.model.managedbean.AManageBean;
 import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.utils.StringToDate;
 
 /**
  * 

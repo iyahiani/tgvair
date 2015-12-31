@@ -25,6 +25,7 @@ public class PointArretDataBean implements Serializable {
    @Id
    @GeneratedValue//(strategy = GenerationType.AUTO)
    @Column(unique=true, nullable=false) 
+   
    private Integer idPointArret ; 
    
    @Column(nullable=false, length=100 ) 

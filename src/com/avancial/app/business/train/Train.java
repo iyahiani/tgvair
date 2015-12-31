@@ -22,8 +22,8 @@ import com.avancial.app.business.train.circulation.IObservableCirculationSemaine
 import com.avancial.app.business.train.circulation.JourCirculation;
 import com.avancial.app.business.train.circulation.ObservableCirculationBuilder;
 import com.avancial.app.data.model.databean.PointArretDataBean;
-import com.avancial.app.resources.utils.StringToDate;
 import com.avancial.socle.utils.CalculeJoursFeriers;
+import com.avancial.socle.utils.StringToDate;
 
 public class Train implements ITrain {
 

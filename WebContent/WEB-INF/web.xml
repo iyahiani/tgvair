@@ -12,6 +12,7 @@ version="3.0">
     <extension>otf</extension>
     <mime-type>application/font-sfnt</mime-type>
   </mime-mapping>
+  
   <servlet>
         <servlet-name>FacesServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

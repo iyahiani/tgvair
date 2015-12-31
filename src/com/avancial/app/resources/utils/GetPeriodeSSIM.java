@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import com.avancial.app.business.reader.ReaderSSIM;
 import com.avancial.reader.IReader;
+import com.avancial.socle.utils.StringToDate;
 
 public class GetPeriodeSSIM {
 

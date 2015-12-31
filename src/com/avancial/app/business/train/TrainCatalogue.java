@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.avancial.app.business.train.circulation.Circulation;
 import com.avancial.app.data.model.databean.PointArretDataBean;
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.utils.StringToDate;
 
 /**
  * @author bruno

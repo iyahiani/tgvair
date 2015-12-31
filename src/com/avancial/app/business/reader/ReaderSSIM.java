@@ -31,19 +31,21 @@ public class ReaderSSIM implements IReader {
       String ligne, temp;
 
       ligne = this.br.readLine();
+      // Certaines lignes sont scindées en deux dans les enr. de type 3
+      // On les concatène.
+
       if (ligne != null && ligne.length() < 12 && ligne.charAt(0) == '3') {
          temp = this.br.readLine();
          ligne = ligne.concat(temp);
          return ligne;
       }
       return ligne;
-   } 
-   
-   public void closeReader(){
+   }
+
+   public void closeReader() {
       try {
          this.br.close();
       } catch (IOException e) {
-         
          e.printStackTrace();
       }
    }

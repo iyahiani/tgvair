@@ -3,7 +3,6 @@ package com.avancial.socle.model.managedbean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -31,17 +30,17 @@ import com.avancial.socle.utils.CalculeJoursFeriers;
 @RequestScoped
 public class LoginManagedBean implements Serializable {
 
-   //Logger log =Logger.getLogger(LoginManagedBean.class);
-   private static final long serialVersionUID = 1L;
-   private String login;
-   private String password;
+   private static final long   serialVersionUID = 1L;
+   private String              login;
+   private String              password;
+
    @Inject
-   private IhmManagedBean ihmManagedBean;
+   private IhmManagedBean      ihmManagedBean;
    @Inject
    private SecurityManagedBean securityManagedBean;
 
    // Dao de gestion des utilisateurs
-   private UserDao utilisateurDao = new UserDao();
+   private UserDao             utilisateurDao   = new UserDao();
 
    /**
     * Initialisation de l'url courante
@@ -55,8 +54,8 @@ public class LoginManagedBean implements Serializable {
             this.ihmManagedBean.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
          }
       }
-   }  
-   
+   }
+
    /**
     * Execute la connexion
     * 
@@ -64,13 +63,22 @@ public class LoginManagedBean implements Serializable {
     * 
     * @throws IOException
     */
+
+   public String motDePasseOublier() {
+      Calendar jour = Calendar.getInstance();
+      if (CalculeJoursFeriers.listJoursFeriers(jour).contains(jour))
+         return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString();
+      return SOCLE_constants.NAVIGATION_INFO_MOT_DE_PASSE.toString();
+   }
+
    public void login() throws IOException {
       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
       HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
       String url = this.ihmManagedBean.getOriginalURL();
-      String redirectURL =null ;
+      // System.out.println("login");
       try {
          request.login(this.login, this.password);
+         // System.out.println("login : " + this.login);
          UserDataBean user = this.utilisateurDao.getUserByLogin(this.login);
          if (null != user) {
 
@@ -78,11 +86,11 @@ public class LoginManagedBean implements Serializable {
             this.securityManagedBean.init();
 
             this.ihmManagedBean.setOriginalURL(null);
-          //  log.info("utilisateur connecté"+this.login);
-         } 
-          
-         externalContext.redirect(url); 
-         
+
+         }
+
+         externalContext.redirect(url);
+
       } catch (ServletException e) {
          ContextController.addErrorMessage("login_connexion_erreur");
       }
@@ -94,12 +102,10 @@ public class LoginManagedBean implements Serializable {
     * 
     * @return l'url de la page d'accueil
     */
-  
    public String logout() {
       try {
          HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
          request.logout();
-        // log.info("utilisateur déconnecté"+this.login);
          this.ihmManagedBean.setCurrentUser(null);
          this.securityManagedBean.init();
          ContextController.addInfoMessage("login_deconnexion_ok");
@@ -107,23 +113,14 @@ public class LoginManagedBean implements Serializable {
       } catch (ServletException e) {
          e.printStackTrace();
       }
-      
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
-   
-   public String motDePasseOublier() {  
-      Calendar jour =Calendar.getInstance() ;
-      if (CalculeJoursFeriers.listJoursFeriers(jour).contains(jour)) 
-         return SOCLE_constants.NAVIGATION_MDPOUBLIE.toString(); 
-      return SOCLE_constants.NAVIGATION_INFO_MOT_DE_PASSE.toString() ; 
-   }
-   
+
    /**
     * Gère le bouton annuler pour retourner à la page d'accueil
     * 
-    * @return l'url de la page d'accueil 
-    */ 
-   
+    * @return l'url de la page d'accueil
+    */
    public static String cancel() {
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
@@ -133,17 +130,15 @@ public class LoginManagedBean implements Serializable {
     * 
     * @return the password
     */
-   
    public String getPassword() {
       return this.password;
    }
 
    /**
     * setter the password
-    * @param password
     * 
+    * @param password
     */
-   
    public void setPassword(String password) {
       this.password = password;
    }
@@ -153,17 +148,15 @@ public class LoginManagedBean implements Serializable {
     * 
     * @return the login
     */
-   
    public String getLogin() {
       return this.login;
    }
-   
+
    /**
     * setter the login
     * 
     * @param login
     */
-   
    public void setLogin(String login) {
       this.login = login;
    }

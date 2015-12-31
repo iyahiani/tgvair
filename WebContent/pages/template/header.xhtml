@@ -10,39 +10,37 @@
 	<h:form id="formHeader">
 		<p:growl id="growl" globalOnly="true" />
 
-<div id="header">
+
+		<div id="header">
 			<table id="table_header">
 				<tr>
-					<td id="col_header_left">
-					<socle:international logo="#{true}"	langue="#{false}"></socle:international>
-					</td> 
-					<td id="col_header_center" >
-					
-					<div id="welcome">
-					<socle:infosUser
-							refreshRole="#{false}"></socle:infosUser>
-							</div>
-							</td>
-					<td id="col_header_right">
-					<p:commandButton type="submit"
+					<td id="col_header_left"><socle:international logo="#{true}"
+							langue="#{false}"></socle:international></td>
+					<td id="col_header_center">
+
+						<div id="welcome">
+							<socle:infosUser refreshRole="#{false}"></socle:infosUser>
+						</div>
+					</td>
+					<td id="col_header_right"><p:commandButton type="submit"
 							value="#{msg.libelle_deconnexion}"
 							action="#{ihmManagedBean.logout()}"
-							rendered="#{ihmManagedBean.isLogged()}" update="formHeader" /> <h:graphicImage
+							rendered="#{ihmManagedBean.isLogged()}" update="formHeader" /> 
+							<h:graphicImage
 							id="img" name="private/image/attention2.png" height="16px"
 							width="16px"
 							rendered="#{!socleStateManagedBean.dataBaseConnected}" /> <p:tooltip
 							styleClass="message_important " value="#{msg.connexion_bdd_ko}"
-							for="img" showEffect="clip" hideEffect="explode" /> 
-							<p:commandButton
+							for="img" showEffect="clip" hideEffect="explode" /> <p:commandButton
 							type="submit" id="bouttonConnexion"
 							value="#{msg.libelle_connexion}"
 							action="#{ihmManagedBean.goLogin}"
-							rendered="#{!ihmManagedBean.isLogged()}" 
-							update="formHeader" styleClass="ui-button"
+							rendered="#{!ihmManagedBean.isLogged()}" update="formHeader"
+							styleClass="ui-button"
 							disabled="#{!socleStateManagedBean.dataBaseConnected}" /></td>
 				</tr>
 			</table>
-		<hr />
+			<hr />
 		</div>
 
 	</h:form>

@@ -1,6 +1,5 @@
 package com.avancial.app.model.managedbean;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,10 +17,6 @@ import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
-import com.avancial.app.data.controller.dao.CirculationDAO;
-import com.avancial.app.data.controller.dao.ServiceDAO;
-import com.avancial.app.data.controller.dao.TrainCatalogueDAO;
-import com.avancial.app.data.model.databean.TrainCatalogueDataBean;
 import com.avancial.app.resources.utils.Encrypte;
 import com.avancial.app.resources.utils.HashGenerationException;
 import com.avancial.socle.data.controller.dao.RoleDao;
@@ -45,311 +40,308 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @Named("userIhm")
 @ViewScoped
 public class UserManagedBean extends AManageBean {
-	private static final long serialVersionUID = 1L;
-	private String codePostal;
-	private String commentaire;
-	private String email;
-	private String fax;
-	private String login; 
-	private String password;
-	private String nom;
-	private String numero;
-	private String prenom;
-	private boolean robot;
-	private String rue;
-	private UserDataBean selectedUser;
-	private String telephone;
-	private List<UserDataBean> users;
-	private String ville; 
-	@Inject 
-	private IhmManagedBean ihmManagedBean ; 
-	private RoleDataBean role ; 
-	private List<UserDataBean> filtredUser; 
-	private Boolean closeDialog ;
-	private List<RoleDataBean> users2RoleDataBean ;
-   private String selectedItem ; 
-	int i = 0 ;
-	List<SelectItem> users2roleItems ;
-  
-	
-	public UserManagedBean() {
-	   this.closeDialog = false ;
-		this.users = new ArrayList<>();
-		this.users.addAll(new UserDao().getAll()); 
-		this.users2RoleDataBean= new RoleDao().getAll() ;
-		this.users2roleItems = new ArrayList<>();
-	  
-	for (RoleDataBean userDataBean : this.users2RoleDataBean) {
-      this.users2roleItems.add(new SelectItem(userDataBean.getLabelRole())) ;
+   private static final long  serialVersionUID = 1L;
+   private String             codePostal;
+   private String             commentaire;
+   private String             email;
+   private String             fax;
+   private String             login;
+   private String             password;
+   private String             nom;
+   private String             numero;
+   private String             prenom;
+   private boolean            robot;
+   private String             rue;
+   private UserDataBean       selectedUser;
+   private String             telephone;
+   private List<UserDataBean> users;
+   private String             ville;
+   @Inject
+   private IhmManagedBean     ihmManagedBean;
+   private RoleDataBean       role;
+   private List<UserDataBean> filtredUser;
+   private Boolean            closeDialog;
+   private List<RoleDataBean> users2RoleDataBean;
+   private String             selectedItem;
+   int                        i                = 0;
+   List<SelectItem>           users2roleItems;
+
+   public UserManagedBean() {
+      this.closeDialog = false;
+      this.users = new ArrayList<>();
+      this.users.addAll(new UserDao().getAll());
+      this.users2RoleDataBean = new RoleDao().getAll();
+      this.users2roleItems = new ArrayList<>();
+
+      for (RoleDataBean userDataBean : this.users2RoleDataBean) {
+         this.users2roleItems.add(new SelectItem(userDataBean.getLabelRole()));
+      }
    }
-	}
-	
-	 @PostConstruct 
-	   public void init() {
-	      this.users= new UserDao().getAll() ; 
-	   } 
-	 
-	  public void selectedUser(SelectEvent event) {
 
-	      this.selectedUser = (UserDataBean) event.getObject(); 
-	      
-	   } 
-	public void addRule(String detail) {
-		FacesContext.getCurrentInstance().addMessage("growlUser", new FacesMessage(FacesMessage.SEVERITY_INFO, "Information", detail));
-	}
+   @PostConstruct
+   public void init() {
+      this.users = new UserDao().getAll();
+   }
 
-	public void addUser(ActionEvent event) {
-		System.out.println("Ajout user!!");
-	} 
-	
-	@Override
+   public void selectedUser(SelectEvent event) {
+
+      this.selectedUser = (UserDataBean) event.getObject();
+
+   }
+
+   public void addRule(String detail) {
+      FacesContext.getCurrentInstance().addMessage("growlUser", new FacesMessage(FacesMessage.SEVERITY_INFO, "Information", detail));
+   }
+
+   public void addUser(ActionEvent event) {
+      // System.out.println("Ajout user!!");
+   }
+
+   @Override
    public String add() {
-	   UserDataBean user = new UserDataBean() ; 
-	   UserDao dao = new UserDao() ; 
-	   user.setNomUser(this.nom);
-	   user.setPrenomUser(this.prenom); 
-	   user.setLoginUser(this.login); 
-	   try {
+      UserDataBean user = new UserDataBean();
+      UserDao dao = new UserDao();
+      user.setNomUser(this.nom);
+      user.setPrenomUser(this.prenom);
+      user.setLoginUser(this.login);
+      try {
          user.setPasswordUser(Encrypte.generateSHA1(this.password));
       } catch (HashGenerationException e1) {
          e1.printStackTrace();
-      } 
-	   user.setDateCreateUser(new Date());
-	   user.setDateUpdateUser(new Date());
-	   user.setUserCreateUser(this.ihmManagedBean.getCurrentUser());
-	   user.setUserUpdateUser(this.ihmManagedBean.getCurrentUser()); 
-	   user.setRobotUser(false); 
-	   user.setTomcatRoleUser("user"); 
-	   try {
+      }
+      user.setDateCreateUser(new Date());
+      user.setDateUpdateUser(new Date());
+      user.setUserCreateUser(this.ihmManagedBean.getCurrentUser());
+      user.setUserUpdateUser(this.ihmManagedBean.getCurrentUser());
+      user.setRobotUser(false);
+      user.setTomcatRoleUser("user");
+      try {
          dao.save(user);
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Utilisateur Créer."));
          RequestContext.getCurrentInstance().update(":formTableUsers");
-         this.closeDialog = true ;
+         this.closeDialog = true;
       } catch (ASocleException e) {
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "erreur création Utilisateur"));
-         
-      } 
-	   return null ;
-	}
-   
-	@Override
+
+      }
+      return null;
+   }
+
+   @Override
    public String update() {
-	   UserDataBean bean = new UserDataBean()   ; 
-	   UserDao dao = new UserDao() ;
-	   User2RoleDataBean u2rDataBean = new User2RoleDataBean() ;
-	   RoleDao roleDao = new RoleDao() ; 
-	   User2RoleDao u2rDao = new User2RoleDao();
-	   bean.setIdUser(this.selectedUser.getIdUser());
-	   bean.setNomUser(this.selectedUser.getNomUser() );
-	   bean.setPrenomUser(this.selectedUser.getPrenomUser()); 
-	   bean.setLoginUser(this.selectedUser.getLoginUser() );
-	   
-	   try {
+      UserDataBean bean = new UserDataBean();
+      UserDao dao = new UserDao();
+      User2RoleDataBean u2rDataBean = new User2RoleDataBean();
+      RoleDao roleDao = new RoleDao();
+      User2RoleDao u2rDao = new User2RoleDao();
+      bean.setIdUser(this.selectedUser.getIdUser());
+      bean.setNomUser(this.selectedUser.getNomUser());
+      bean.setPrenomUser(this.selectedUser.getPrenomUser());
+      bean.setLoginUser(this.selectedUser.getLoginUser());
+
+      try {
          bean.setPasswordUser(Encrypte.generateSHA1(this.selectedUser.getPasswordUser()));
       } catch (HashGenerationException e1) {
          e1.printStackTrace();
       }
-	   
-	   bean.setDateCreateUser(this.selectedUser.getDateCreateUser());
-	   bean.setDateUpdateUser(this.selectedUser.getDateUpdateUser());
-	   bean.setUserCreateUser(this.selectedUser.getUserCreateUser());
-	   bean.setUserUpdateUser(this.selectedUser.getUserUpdateUser());
-	   bean.setRobotUser(this.selectedUser.getRobotUser());
-	   bean.setTomcatRoleUser(this.selectedUser.getTomcatRoleUser()); 
-	   
-	   if (!this.selectedItem.isEmpty()) {
-	      u2rDataBean.setRoleDataBean(roleDao.getUser2RoleByRole(this.selectedItem).get(0));
-	      u2rDataBean.setIdUser(bean.getIdUser()); 
-	      
-	   }
-	   try {
-	      dao.update(bean);
-	      if (userExist(bean)) {
-	         u2rDataBean.setIdUser2Role(u2rDao.getUser2RoleByIdUser
-	               (bean.getIdUser()).get(0).getIdUser2Role());
-	         u2rDao.update(u2rDataBean);
-	      }
-	      else {
-	         u2rDao.save(u2rDataBean);
-	      }
-	      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "L'Utilisateur"+bean.getNomUser()+"--"+bean.getPrenomUser()+" a été modifié."));
-	      RequestContext.getCurrentInstance().update(":formTableUsers");
+
+      bean.setDateCreateUser(this.selectedUser.getDateCreateUser());
+      bean.setDateUpdateUser(this.selectedUser.getDateUpdateUser());
+      bean.setUserCreateUser(this.selectedUser.getUserCreateUser());
+      bean.setUserUpdateUser(this.selectedUser.getUserUpdateUser());
+      bean.setRobotUser(this.selectedUser.getRobotUser());
+      bean.setTomcatRoleUser(this.selectedUser.getTomcatRoleUser());
+
+      if (!this.selectedItem.isEmpty()) {
+         u2rDataBean.setRoleDataBean(roleDao.getUser2RoleByRole(this.selectedItem).get(0));
+         u2rDataBean.setIdUser(bean.getIdUser());
+
+      }
+      try {
+         dao.update(bean);
+         if (userExist(bean)) {
+            u2rDataBean.setIdUser2Role(u2rDao.getUser2RoleByIdUser(bean.getIdUser()).get(0).getIdUser2Role());
+            u2rDao.update(u2rDataBean);
+         } else {
+            u2rDao.save(u2rDataBean);
+         }
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "L'Utilisateur" + bean.getNomUser() + "--" + bean.getPrenomUser() + " a été modifié."));
+         RequestContext.getCurrentInstance().update(":formTableUsers");
          this.closeDialog = true;
-	   } catch (ASocleException e) {
-	      FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Erreur lors de la mise à jour."));
-	   }
-	   return null ;
-	}
-	
-	private boolean userExist(UserDataBean bean) { 
-	   User2RoleDao u2rDao = new User2RoleDao();
-	   if(!u2rDao.getUser2RoleByIdUser(bean.getIdUser()).isEmpty()) 
-	      return true ;
-	   return false ;
-	}
-	
-	
-	 @Override
-	   public String delete() throws ASocleException {
-	    super.delete();
+      } catch (ASocleException e) {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Erreur lors de la mise à jour."));
+      }
+      return null;
+   }
 
-	      if (null != this.selectedUser) {
-	         UserDao dao = new UserDao();
-	         try {
-	            dao.delete(this.selectedUser);
-	            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Utilisateur supprimé"));
-	            RequestContext.getCurrentInstance().update(":formTableUsers");
-	            this.closeDialog = true;
-	         } catch (ASocleException e) {
-	            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non supprimé"));
-	         }
-	      } else {
-	         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "veuillez selectionner une ligne"));
-	         this.closeDialog = true;
-	      }
-	      return null;
-	 }
-	
-	public void reload() { 
-	   
-	   this.users.clear();
-	   this.users = new UserDao().getAll();
-	}
-	
-	public void cancelUser() {
-		this.codePostal = null;
-		this.commentaire = null;
-		this.email = null;
-		this.fax = null;
-		this.login = null;
-		this.nom = null;
-		this.prenom = null;
-		this.telephone = null;
-		this.nom = null;
-		this.numero = null;
-		this.rue = null;
-		this.ville = null;
-	}
+   private boolean userExist(UserDataBean bean) {
+      User2RoleDao u2rDao = new User2RoleDao();
+      if (!u2rDao.getUser2RoleByIdUser(bean.getIdUser()).isEmpty())
+         return true;
+      return false;
+   }
 
-	public void deleteUser(UserDataBean user) {
-		this.users.remove(user);
-	}
+   @Override
+   public String delete() throws ASocleException {
+      super.delete();
 
-	public String getCodePostal() {
-		return this.codePostal;
-	}
+      if (null != this.selectedUser) {
+         UserDao dao = new UserDao();
+         try {
+            dao.delete(this.selectedUser);
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Utilisateur supprimé"));
+            RequestContext.getCurrentInstance().update(":formTableUsers");
+            this.closeDialog = true;
+         } catch (ASocleException e) {
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non supprimé"));
+         }
+      } else {
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "veuillez selectionner une ligne"));
+         this.closeDialog = true;
+      }
+      return null;
+   }
 
-	public String getCommentaire() {
-		return this.commentaire;
-	}
+   public void reload() {
 
-	public String getEmail() {
-		return this.email;
-	}
+      this.users.clear();
+      this.users = new UserDao().getAll();
+   }
 
-	public String getExpression(String name) {
-		return ERegexUser.valueOf(name).getExpression();
-	}
+   public void cancelUser() {
+      this.codePostal = null;
+      this.commentaire = null;
+      this.email = null;
+      this.fax = null;
+      this.login = null;
+      this.nom = null;
+      this.prenom = null;
+      this.telephone = null;
+      this.nom = null;
+      this.numero = null;
+      this.rue = null;
+      this.ville = null;
+   }
 
-	public String getFax() {
-		return this.fax;
-	}
+   public void deleteUser(UserDataBean user) {
+      this.users.remove(user);
+   }
 
-	public String getInvalidInputKeys() {
-		return Arrays.toString(EKeys.getInvalidInputKeys());
-	}
+   public String getCodePostal() {
+      return this.codePostal;
+   }
 
-	public String getLogin() {
-		return this.login;
-	}
+   public String getCommentaire() {
+      return this.commentaire;
+   }
 
-	public String getNom() {
-		return this.nom;
-	}
+   public String getEmail() {
+      return this.email;
+   }
 
-	public String getNumero() {
-		return this.numero;
-	}
+   public String getExpression(String name) {
+      return ERegexUser.valueOf(name).getExpression();
+   }
 
-	public String getPrenom() {
-		return this.prenom;
-	}
+   public String getFax() {
+      return this.fax;
+   }
 
-	public String getRue() {
-		return this.rue;
-	}
+   public String getInvalidInputKeys() {
+      return Arrays.toString(EKeys.getInvalidInputKeys());
+   }
 
-	public UserDataBean getSelectedUser() {
-		return this.selectedUser;
-	}
+   public String getLogin() {
+      return this.login;
+   }
 
-	public String getTelephone() {
-		return this.telephone;
-	}
+   public String getNom() {
+      return this.nom;
+   }
 
-	public List<UserDataBean> getUsers() {
-		return this.users;
-	}
+   public String getNumero() {
+      return this.numero;
+   }
 
-	public String getVille() {
-		return this.ville;
-	}
+   public String getPrenom() {
+      return this.prenom;
+   }
 
-	public boolean isRobot() {
-		return this.robot;
-	}
+   public String getRue() {
+      return this.rue;
+   }
 
-	public void setCodePostal(String codePostal) {
-		this.codePostal = codePostal;
-	}
+   public UserDataBean getSelectedUser() {
+      return this.selectedUser;
+   }
 
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
-	}
+   public String getTelephone() {
+      return this.telephone;
+   }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+   public List<UserDataBean> getUsers() {
+      return this.users;
+   }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+   public String getVille() {
+      return this.ville;
+   }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+   public boolean isRobot() {
+      return this.robot;
+   }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+   public void setCodePostal(String codePostal) {
+      this.codePostal = codePostal;
+   }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+   public void setCommentaire(String commentaire) {
+      this.commentaire = commentaire;
+   }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+   public void setEmail(String email) {
+      this.email = email;
+   }
 
-	public void setRobot(boolean robot) {
-		this.robot = robot;
-	}
+   public void setFax(String fax) {
+      this.fax = fax;
+   }
 
-	public void setRue(String rue) {
-		this.rue = rue;
-	}
+   public void setLogin(String login) {
+      this.login = login;
+   }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+   public void setNom(String nom) {
+      this.nom = nom;
+   }
 
-	public void setVille(String ville) {
-		this.ville = ville;
-	}
+   public void setNumero(String numero) {
+      this.numero = numero;
+   }
 
-	public void updateUser(UserDataBean user) {
-		this.selectedUser = user;
-	}
+   public void setPrenom(String prenom) {
+      this.prenom = prenom;
+   }
+
+   public void setRobot(boolean robot) {
+      this.robot = robot;
+   }
+
+   public void setRue(String rue) {
+      this.rue = rue;
+   }
+
+   public void setTelephone(String telephone) {
+      this.telephone = telephone;
+   }
+
+   public void setVille(String ville) {
+      this.ville = ville;
+   }
+
+   public void updateUser(UserDataBean user) {
+      this.selectedUser = user;
+   }
 
    public void setSelectedUser(UserDataBean selectedUser) {
       this.selectedUser = selectedUser;
@@ -383,10 +375,12 @@ public class UserManagedBean extends AManageBean {
       this.ihmManagedBean = ihmManagedBean;
    }
 
+   @Override
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
 
+   @Override
    public void setCloseDialog(Boolean closeDialog) {
       this.closeDialog = closeDialog;
    }

@@ -7,8 +7,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import com.avancial.app.resources.utils.Encrypte;
-import com.avancial.app.resources.utils.HashGenerationException;
+import com.avancial.socle.utils.Encrypte;
+import com.avancial.socle.utils.HashGenerationException;
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.exceptions.ASocleException;

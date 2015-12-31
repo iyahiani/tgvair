@@ -27,7 +27,6 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
 @SessionScoped
 public class IhmManagedBean implements Serializable {
 
- //  Logger log = Logger.getLogger(IhmManagedBean.class) ;
    private static final long       serialVersionUID = 1L;
    private UserDataBean            currentUser;
    private List<User2RoleDataBean> roles;
@@ -51,14 +50,11 @@ public class IhmManagedBean implements Serializable {
    public String logout() {
       try {
          HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-         request.logout(); 
-        
+         request.logout();
          this.setCurrentUser(null);
          ContextController.addInfoMessage("login_deconnexion_ok");
-         
       } catch (ServletException e) {
          e.printStackTrace();
-       //  log.error("deconnexion de l'uitilisateur"+ this.getCurrentUser().getNomUser());
       }
       return SOCLE_constants.NAVIGATION_ACCUEIL.toString();
    }
@@ -72,11 +68,10 @@ public class IhmManagedBean implements Serializable {
       ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
       this.setOriginalURL((String) externalContext.getRequestMap().get(RequestDispatcher.FORWARD_REQUEST_URI));
       // FIXME A Commenter
-      
       if (this.getOriginalURL() == null) {
          this.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
       }
-      //if (this.isLogged()) log.info("connexion de l'uitilisateur"+ this.getCurrentUser().getNomUser());
+
       return SOCLE_constants.NAVIGATION_LOGIN.toString();
    }
 
@@ -85,7 +80,6 @@ public class IhmManagedBean implements Serializable {
     * 
     * @return the currentUser
     */
-   
    public UserDataBean getCurrentUser() {
       return this.currentUser;
    }
@@ -95,7 +89,6 @@ public class IhmManagedBean implements Serializable {
     * 
     * @param currentUser
     */
-   
    public void setCurrentUser(UserDataBean currentUser) {
       this.currentUser = currentUser;
    }
@@ -105,7 +98,6 @@ public class IhmManagedBean implements Serializable {
     * 
     * @return the originalURL
     */
-   
    public String getOriginalURL() {
       return this.originalURL;
    }

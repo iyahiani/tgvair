@@ -6,10 +6,8 @@ package com.avancial.app.model.managedbean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-import com.avancial.app.resources.constants.APP_TgvAir;
 import com.avancial.socle.params.AParamGetter;
 import com.avancial.socle.params.IParamReader;
-import com.avancial.socle.params.ParamReaderFileGeneric;
 import com.avancial.socle.params.beans.IParamBean;
 
 /**
@@ -23,6 +21,11 @@ import com.avancial.socle.params.beans.IParamBean;
 @Named("paramGetterBean")
 @ApplicationScoped
 public class ParamGetterManagedBean extends AParamGetter {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   public static String      PARAM_APP        = "app";
 
    /**
     * Constructeur
@@ -32,9 +35,9 @@ public class ParamGetterManagedBean extends AParamGetter {
    public ParamGetterManagedBean() throws Exception {
       super();
       // On instancie les Paramètres de l'appli
-      ParamReaderFileGeneric app = new ParamReaderFileGeneric(this.getPathToWebInf() + APP_TgvAir.CHEMIN_APP_PROPERTIES.toString());
-      app.loadParams("app");
-      this.add(app);
+      // ParamReaderFileGeneric app = new ParamReaderFileGeneric(this.getPathToWebInf() + APP_TgvAir.CHEMIN_APP_PROPERTIES.toString());
+      // app.loadParams(PARAM_APP);
+      // this.add(app);
    }
 
 }

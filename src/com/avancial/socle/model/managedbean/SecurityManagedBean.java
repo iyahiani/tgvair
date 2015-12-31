@@ -44,7 +44,6 @@ public class SecurityManagedBean implements Serializable {
     */
    public SecurityManagedBean() {
       this.listeItem2Role = new HashMap<>();
-//      System.out.println("SecurityManagedBean.SecurityManagedBean()");
    }
 
    /**
@@ -71,7 +70,9 @@ public class SecurityManagedBean implements Serializable {
       Boolean result = false;
       Item2RoleDataBean bean = this.listeItem2Role.get(itemName);
       if (null != bean)
-         result = bean.getIsRendered();
+      {
+         return bean.getIsRendered();
+      }
       return result;
    }
 

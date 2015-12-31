@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.avancial.app.data.model.databean.CirculationAdapterDataBean;
-import com.avancial.app.resources.utils.StringToDate;
+import com.avancial.socle.utils.StringToDate;
 
 public class Circulation implements ICirculation {
 
